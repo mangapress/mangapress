@@ -1,11 +1,7 @@
 # Manga+Press Comic Manager
-Contributors: Jess Green
-Donate link: http://www.manga-press.com/
-Tags: webcomics, online comics
-Requires at least: 3.5
-Tested up to: 3.4.2
-Stable tag: 2.8
-License: GPLv2
+* Contributors: Jess Green
+* Donate link: http://www.manga-press.com/
+* License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
 
