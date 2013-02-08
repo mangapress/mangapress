@@ -245,4 +245,3 @@ class MangaPress_Bootstrap
     }
 
 }
-?>

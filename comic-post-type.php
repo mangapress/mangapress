@@ -163,4 +163,3 @@ class ComicPostType extends PostType
     }
 
 }
-?>

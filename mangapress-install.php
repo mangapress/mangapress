@@ -147,4 +147,3 @@ class MangaPress_Install
         return self::$_default_options;
     }
 }
-?>

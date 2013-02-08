@@ -16,4 +16,3 @@ if( !defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
 delete_option('mangapress_options');
 delete_option('mangapress_ver');
 delete_option('mangapress_db_ver');
-?>
