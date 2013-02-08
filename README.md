@@ -30,8 +30,6 @@ Fixes a problem with the Manga+Press Options page. A path issue in the framework
 
 
 ## Changelog
-### 2.8
-   * 2.8 Alpha
 
 ### 2.7
    * 2.7.3
