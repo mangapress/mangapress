@@ -1,18 +1,19 @@
 <?php
 /**
- * @package WordPress
- * @subpackage Options
- * @author Jess Green <jgreen@nerdery.com>
- * @version $Id$
+ * MangaPress_Framework
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress
  */
 
 /**
- * options
- * Created Jan 30, 2012 @ 9:23:16 AM
+ * MangaPress_Options
  *
- * @author Jess Green <jgreen@nerdery.com>
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress_Options
+ * @version $Id$
  */
-abstract class Options extends FrameWork_Helper
+abstract class MangaPress_Options
 {
 
     /**
@@ -63,6 +64,25 @@ abstract class Options extends FrameWork_Helper
     }
 
     /**
+     * Set options
+     *
+     * @param array $options
+     * @return \MangaPress_FrameWork_Helper
+     */
+    public function set_options($options)
+    {
+
+        foreach ($options as $option_name => $value) {
+            $method = 'set_' . $option_name;
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Register settings, sections and fields
      *
      * @return void
@@ -72,7 +92,7 @@ abstract class Options extends FrameWork_Helper
 
         if (defined('DOING_AJAX') && DOING_AJAX)
             return;
-        
+
         /*
          * register_setting()
          * Settings should be stored as an array in the options table to
@@ -101,9 +121,14 @@ abstract class Options extends FrameWork_Helper
         $this->output_settings_fields();
     }
 
+    /**
+     * Add settings fields and call the output function for each field
+     *
+     * @return void
+     */
     public function output_settings_fields()
     {
-        
+
         $field_sections = $this->_option_fields;
 
         foreach ($field_sections as $field_section => $field) {
@@ -148,6 +173,11 @@ abstract class Options extends FrameWork_Helper
         return $this->_options_group;
     }
 
+    /**
+     *
+     * @param type $page
+     * @return \MangaPress_Options
+     */
     public function set_option_page($page)
     {
         $this->_option_page = $page;
@@ -173,7 +203,7 @@ abstract class Options extends FrameWork_Helper
      * Sets the options fields sections.
      *
      * @param type $sections
-     * @return \Options
+     * @return \MangaPress_Options
      */
     public function set_sections($sections)
     {
@@ -264,27 +294,6 @@ abstract class Options extends FrameWork_Helper
 
     }
 
-    public function set_view($view)
-    {
-        $this->_view = $view;
-
-        return $this;
-    }
-
-    public function get_view()
-    {
-        if (!($this->_view instanceof View)) {
-            return new WP_Error('not_view', '$this->_view is not an instance of View');
-        }
-
-        return $this->_view;
-    }
-
-    public function init()
-    {
-        return $this;
-    }
-
     /**
      * settings_section_cb()
      * Outputs Settings Sections
@@ -318,7 +327,8 @@ abstract class Options extends FrameWork_Helper
     abstract public function settings_field_cb($option);
 
     /**
-     *
+     * Sanitize options
+     * 
      * @param array $options Array of options to be sanitized
      * @return array Sanitized options array
      */
@@ -326,4 +336,3 @@ abstract class Options extends FrameWork_Helper
 
 }
 
-?>

@@ -1,7 +1,25 @@
 <?php
+/**
+ * MangaPress_Framework
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress
+ */
 
-class Checkbox extends Element
+/**
+ * MangaPress_Checkbox
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress_Checkbox
+ * @version $Id$
+ */
+class MangaPress_Checkbox extends MangaPress_Element
 {
+    /**
+     * Display form element
+     *
+     * @return string
+     */
     public function __toString()
     {
         $label = '';
@@ -24,7 +42,7 @@ class Checkbox extends Element
             else
                 $attr_arr[] = "{$name}=\"" . $default . "\"";
         }
-        
+
         $attr = implode(" ", $attr_arr);
 
         $checked = checked($default, $this->get_value(), false);
@@ -37,4 +55,3 @@ class Checkbox extends Element
 
     }
 }
-?>

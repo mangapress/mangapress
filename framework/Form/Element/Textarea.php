@@ -1,52 +1,29 @@
 <?php
 /**
- * @package Framework
- * @subpackage Textarea
+ * MangaPress_Framework
+ *
  * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress
  */
-class Textarea extends Element
+
+/**
+ * MangaPress_Textarea
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress_Textarea
+ * @version $Id$
+ */
+class MangaPress_Textarea extends MangaPress_Element
 {
-        public function  __construct() {
-        $args = func_get_args();
 
-        $this->_name = $args['0'];
-        $this->setAttributes('name', $this->_name);
-
-    }
-
+    /**
+     * Echo form element
+     * 
+     * @return string
+     */
     public function __toString()
     {
-        $attrArray = array();
-        $form_name = $this->getForm_ID();
-        foreach($this->_attr as $attr => $value) {
-            if ($attr != 'name' && $attr != 'value') {
-                $attrArray[] = "$attr=\"$value\"";
-            } else {
-                $attrArray[] = "$attr=\"{$form_name}[$value]\"";
-            }
-        }
-
-        $attr = implode(' ', $attrArray);
-
-        $htmlArray = array(
-            'open'    => '<p>',
-            'content' => '',
-            'closing' => '<p>',
-        );
-
-        $label = '';
-        if (!empty($this->_label)) {
-            $id = $this->getAttributes('id');
-            $class = " class=\"label-$id\"";
-            $label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
-        }
-
-        $htmlArray['content'] = $label . "<textarea $attr>%$this->_name%</textarea>\r\n";
-
-        $this->_html = implode(' ', $htmlArray);
-
         return $this->_html;
     }
 
 }
-?>

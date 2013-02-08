@@ -1,21 +1,27 @@
 <?php
 /**
- * PostType_Class
- * Change PostType to match the name of your custom post type. Should be some-
- * thing like MyPostType_Class.
+ * MangaPress_Framework
  *
- * @package PostType_Class
- * @subpackage PluginFramework
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @version $Id: post-type-class.php 4 2011-06-15 00:50:16Z ardath.ksheyna78 $
+ * @package MangaPress
+ */
+
+/**
+ * MangaPress_PostType
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress_PostType
+ * @version $Id$
  *
  * @todo Add meta box callbacks
  */
-class PostType extends FrameWork_Helper
+class MangaPress_PostType extends MangaPress_FrameWork_Helper
 {
-    protected $_name;
-    protected $_label_single;
-    protected $_label_plural;
+    /**
+     * Default post-type capabilities. Not used.
+     *
+     * @var array
+     */
     protected $_capabilities = array(
         'edit_post',
         'read_post',
@@ -25,8 +31,19 @@ class PostType extends FrameWork_Helper
         'publish_posts',
         'read_private_posts',
     );
+
+    /**
+     * Taxonomies associated with post-type
+     *
+     * @var array
+     */
     protected $_taxonomies   = array();
 
+    /**
+     * Default post-type arguments
+     *
+     * @var array
+     */
     protected $_args         = array(
         'labels'               => '',
         'description'          => '',
@@ -38,8 +55,6 @@ class PostType extends FrameWork_Helper
         'menu_position'        => 5,
         'menu_icon'            => '',
         'capability_type'      => 'post',
-        //'capabilities'         => '',
-        //'map_meta_cap'         => false,
         'hierarchical'         => false,
         'supports'             => '',
         'register_meta_box_cb' => '',
@@ -51,40 +66,50 @@ class PostType extends FrameWork_Helper
         'show_in_nav_menus'    => true,
     );
 
+    /**
+     * Set default fields
+     * See {@link http://codex.wordpress.org/Function_Reference/register_post_type}
+     *
+     * @var array
+     */
     protected $_supports     = array('title');
 
-    protected $_nonce;
-
-    protected $_metaboxes    = array();
-
-    protected $_styles       = array();
-
-    protected $_scripts      = array();
-    
-    protected $_rewrite_rules = array();
-    
-    protected $_templates = array();
-    
+    /**
+     * View object for enqueuing JS/CSS
+     * 
+     * @var MangaPress_View
+     */
     protected $_view;
-
-
+    /**
+     * Init. Register post-type. Called by init hook
+     *
+     * @return void
+     */
     public function init()
     {
-                
         register_post_type($this->_name, $this->_args);
-                
-        add_action('generate_rewrite_rules', array($this, 'rewrite'));
-        add_action('template_include', array($this, 'template_include'));
-        
     }
 
+    /**
+     * Set View object for enqueing JS/CSS files
+     *
+     * @param MangaPress_View $view
+     * @return \MangaPress_PostType
+     */
     public function set_view($view)
     {
         $this->_view = $view;
-        
+
         return $this;
     }
-    
+
+    /**
+     * Set post-type arguments
+     *
+     * @global string $plugin_dir
+     * @param array $args
+     * @return \MangaPress_PostType
+     */
     public function set_arguments($args)
     {
         global $plugin_dir;
@@ -119,8 +144,6 @@ class PostType extends FrameWork_Helper
                 'menu_position'        => $menu_position,
                 'menu_icon'            => $menu_icon,
                 'capability_type'      => $capability_type,
-                //'capabilities'         => $this->_capabilities,
-                //'map_meta_cap'         => $map_meta_cap,
                 'hierarchical'         => $hierarchical,
                 'supports'             => $supports,
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
@@ -137,6 +160,12 @@ class PostType extends FrameWork_Helper
         return $this;
     }
 
+    /**
+     * Set post-type taxonomies
+     *
+     * @param array $taxonomies
+     * @return \MangaPress_PostType
+     */
     public function set_taxonomies($taxonomies)
     {
         $this->_taxonomies = $taxonomies;
@@ -144,6 +173,12 @@ class PostType extends FrameWork_Helper
         return $this;
     }
 
+    /**
+     * Set the default fields that the post-type supports
+     *
+     * @param array $supports
+     * @return \MangaPress_PostType
+     */
     public function set_support($supports)
     {
         $this->_supports = $supports;
@@ -151,110 +186,12 @@ class PostType extends FrameWork_Helper
         return $this;
     }
 
-    public function set_metaboxes($meta_boxes = array())
-    {
-        $this->_metaboxes = $meta_boxes;
-
-        return $this;
-    }
-    
-    public function set_templates($templates = array())
-    {
-        $this->_templates = $templates;
-        
-        return $this;
-    }
-    
-    public function meta_box_cb()
-    {
-        global $post;
-        
-        // rewrite this function
-    }
-    
     /**
-     * Set an array of custom rewrite rules for post-type
-     * 
-     * @param type $rules
-     * @return PostType_Class 
-     */
-    public function set_rewrite_rules($rules = array())
-    {
-        $this->_rewrite_rules = $rules;
-        
-        return $this;
-    }
-
-    /**
-     * Handles saving of meta-data for post-type
-     * 
-     * @param integer $post_id
-     * @return int|array
-     */
-    public function save_post($post_id)
-    {
-        
-        // verify this came from the our screen and with proper authorization,
-        // because save_post can be triggered at other times
-        if ( !wp_verify_nonce( $_POST[$this->_name . '_nonce'], $this->_name . '-nonce' ))
-            return $post_id;
-
-        //
-        // verify if this is an auto save routine. If it is our form has not been submitted, so we dont want
-        // to do anything
-        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-            return $post_id;
-
-        // Check permissions
-        if ( $this->_name == $_POST['post_type'] ) {
-            if ( !current_user_can( 'edit_' . $this->_args['capability_type'], $post_id ) ) {
-                return $post_id;
-            }
-        }
-        
-        // save data here
-        // for now, no sanitization
-        $metabox_ID = $this->_metaboxes[0]->_form_properties['id'];
-        $meta_key = "{$metabox_ID}_meta";
-        
-        $data = $_POST[$metabox_ID];
-
-        if (!add_post_meta($post_id, $meta_key, $data, true)) {
-            update_post_meta($post_id, $meta_key, $data);
-        }
-
-        return $data;
-
-    }
-        
-    /**
-     *
-     * @global type $wp_rewrite 
-     * 
+     * Meta-box callback class
      * @return void
      */
-    public function rewrite()
+    public function meta_box_cb()
     {
-        global $wp_rewrite;        
-        
-        $rules = array_merge($this->_rewrite_rules, $wp_rewrite->rules);
-        
-        $wp_rewrite->rules = apply_filters('rewrite_rules_array', $rules);
-    }
-    
-    /**
-     * Returns default templates or loads a specified template when found.
-     * 
-     * @param array $template Array of template paths relative to current theme.
-     * @return array
-     */
-    public function template_include($template)
-    {       
-//        if ('' == locate_template($this->_templates, true)) {
-//            load_template(MP_ABSPATH . 'templates/latest-comic.php');
-//        }
-        
-        return $template;
+        // override this method in extending class
     }
 }
-?>

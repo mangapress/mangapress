@@ -1,18 +1,64 @@
 <?php
+/**
+ * MangaPress_Framework
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress
+ */
 
-abstract class FrameWork_Helper
+/**
+ * MangaPress_FrameWork_Helper
+ * Abstract class used to define basic functionality for extending classes
+ *
+ * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress_View
+ * @version $Id$
+ */
+abstract class MangaPress_FrameWork_Helper
 {
-    public $name;
-    public $label_single;
-    public $label_plural;
-    
+
+    /**
+     * Object name (post-type or taxonomy)
+     * @var string
+     */
     protected $_name;
+
+    /**
+     * Human-readable singular name
+     *
+     * @var string
+     */
     protected $_label_single;
+
+    /**
+     * Human-readable plural name
+     *
+     * @var string
+     */
     protected $_label_plural;
+
+    /**
+     * Object arguments
+     * @var array
+     */
     protected $_args;
 
+    /**
+     * Init method
+     */
     abstract public function init();
-    
+
+    /**
+     * Set arguments method
+     */
+    abstract public function set_arguments($args);
+
+    /**
+     * PHP5 constructor method
+     *
+     * @param array $options
+     * @return void
+     */
     public function __construct($options = null)
     {
         if (is_array($options)) {
@@ -20,14 +66,36 @@ abstract class FrameWork_Helper
                  ->init();
         }
     }
-    
+
+    /**
+     * Set object name
+     *
+     * @param string $object_name
+     * @return \MangaPress_FrameWork_Helper
+     */
     public function set_name($object_name)
     {
-        $this->name = $this->_name = $object_name;
-        
+        $this->_name = $object_name;
+
         return $this;
     }
-    
+
+    /**
+     * Get object name
+     * 
+     * @return string
+     */
+    public function get_name()
+    {
+        return $this->_name;
+    }
+
+    /**
+     * Set options
+     *
+     * @param array $options
+     * @return \MangaPress_FrameWork_Helper
+     */
     public function set_options($options)
     {
 
@@ -37,31 +105,35 @@ abstract class FrameWork_Helper
                 $this->$method($value);
             }
         }
-        
+
         return $this;
     }
-    
+
+    /**
+     * Set human-readable singular name
+     *
+     * @param string $object_single_name
+     * @return \MangaPress_FrameWork_Helper
+     */
     public function set_singlename($object_single_name)
     {
-        $this->label_single = $this->_label_single = $object_single_name;
-        
+        $this->_label_single = $object_single_name;
+
         return $this;
     }
-    
+
+    /**
+     * Set human-readable plural name
+     *
+     * @param string $object_pluralname
+     * @return \MangaPress_FrameWork_Helper
+     */
     public function set_pluralname($object_pluralname)
     {
 
-        $this->label_plural = $this->_label_plural = $object_pluralname;
-        
+        $this->_label_plural = $object_pluralname;
+
         return $this;
     }
-    
-    public function set_arguments($args)
-    {
-        $this->_args = $args;
-        
-        return $this;
-    }
-    
+
 }
-?>

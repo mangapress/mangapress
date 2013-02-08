@@ -11,12 +11,12 @@
  * @version $Id$
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class View_OptionsPage extends View
+class View_OptionsPage extends MangaPress_View
 {
     public function __construct($options = null)
     {
         parent::__construct($options);
-        
+
         $options = add_options_page(
             __("Manga+Press Options", MP_DOMAIN),
             __("Manga+Press Options", MP_DOMAIN),
@@ -24,10 +24,10 @@ class View_OptionsPage extends View
             'mangapress-options-page',
             array($this, 'page')
         );
-        
+
         $this->set_hook($options);
     }
-    
+
     public function page()
     {
         include_once 'scripts/page.options.php';
