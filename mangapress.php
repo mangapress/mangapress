@@ -103,6 +103,13 @@ class MangaPress_Bootstrap
     protected static $_options_data;
 
     /**
+     * Instance of MangaPress_Bootstrap
+     *
+     * @var MangaPress_Bootstrap
+     */
+    protected static $_instance;
+
+    /**
      * MangaPress Posts object
      *
      * @var \MangaPress_Posts
@@ -112,21 +119,18 @@ class MangaPress_Bootstrap
     /**
      * Static function used to initialize Bootstrap
      *
-     * @global MangaPress_Bootstrap $mp
-     * @global MangaPress_Settings $options_page
-     *
      * @return void
      */
     public static function init()
     {
-        global $mp, $options_page;
+        global $mp;
 
         self::set_options();
 
         load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
 
-        $mp           = new MangaPress_Bootstrap();
-        $mp->_posts   = new MangaPress_Posts();
+        self::$_instance  = new self();
+        $mp->_posts       = new MangaPress_Posts();
         self::$_options_data = new MangaPress_Settings();
     }
 
@@ -145,7 +149,7 @@ class MangaPress_Bootstrap
      *
      * @return void
      */
-    public function __construct()
+    protected function __construct()
     {
 
         $mp_options = $this->get_options();
@@ -256,12 +260,26 @@ class MangaPress_Bootstrap
 
     /**
      * Get options data class
-     * 
+     *
      * @return MangaPress_Settings
      */
     public static function get_options_data()
     {
         return self::$_options_data;
+    }
+
+    /**
+     * Get instance of MangaPress_Bootstrap
+     *
+     * @return MangaPress_Bootstrap
+     */
+    public static function get_instance()
+    {
+        if (null == self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
     }
 
     /**

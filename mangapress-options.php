@@ -345,15 +345,13 @@ class MangaPress_Settings extends MangaPress_Options
     /**
      * Call-back for outputting settings fields
      *
-     * @global type $mp
      * @param type $option Current option array
      * @return void
      */
     public function settings_field_cb($option)
     {
-        global $mp;
 
-        $mp_options = $mp->get_options();
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
         $class = ucwords($option['type']);
         $value = $mp_options[$option['section']][$option['name']];
@@ -379,15 +377,14 @@ class MangaPress_Settings extends MangaPress_Options
      * Call-back for outputting settings fields (select drop-downs)
      * with custom values.
      *
-     * @global type $mp
      * @param type $option Current option array
      * @return void
      */
     public function ft_basic_page_dropdowns_cb($option)
     {
-        global $mp;
 
-        $mp_options = $mp->get_options();
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
         $value = $mp_options[$option['section']][$option['name']];
 
         $pages   = get_pages();
@@ -488,9 +485,9 @@ ul.comic-nav li:before{ content: ""; }
      */
     public function sanitize_options($options)
     {
-        global $mp;
 
-        $mp_options        = $mp->get_options();
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
         $section           = key($options);
         $available_options = $this->options_fields();
         $new_options        = $mp_options;
