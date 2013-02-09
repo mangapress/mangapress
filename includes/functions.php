@@ -9,6 +9,9 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
+define('MP_CATEGORY_PARENTS', 1);
+define('MP_CATEGORY_CHILDREN', 2);
+define('MP_CATEGORY_ALL', 3);
 
 /*------------------------------------------------------------------------------
  * Manga+Press Hook Functions
@@ -324,10 +327,17 @@ function mpp_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, 
               . "INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
 
         if ( $in_same_cat && !$group_by_parent) {
-            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, false);
+            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
 
-            // we need a check for parents
-            $join .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id IN (" . implode(',', $cat_array) . ")";
+            // if $cat_array returns empty
+            $terms_in = "";
+            if (!empty($cat_array)) {
+                $terms_in = "AND tt.term_id IN (" . implode(',', $cat_array) . ")";
+            } else {
+                $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_ALL);
+            }
+
+            $join .= " AND tt.taxonomy = '{$taxonomy}' {$terms_in}";
         }
 
         if ( $in_same_cat && $group_by_parent) {
@@ -417,7 +427,7 @@ function mpp_get_boundary_comic($in_same_cat = false, $group_by_parent = false, 
     $excluded_categories = array();
     if ($in_same_cat || !empty($excluded_categories)) {
         if ($in_same_cat && !$group_by_parent) {
-            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, false);
+            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
         }
 
         if ( $in_same_cat && $group_by_parent) {
@@ -505,12 +515,14 @@ function mpp_comic_version()
  *
  * @return array
  */
-function _mangapress_get_object_terms($object_ID, $taxonomy, $exclude_with_parents = true)
+function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_PARENTS)
 {
     global $wpdb;
 
-    if ($exclude_with_parents) {
+    if ($get == MP_CATEGORY_PARENTS) {
         $parents = "AND tt.parent = 0";
+    } else if ($get == MP_CATEGORY_CHILDREN) {
+        $parents = "AND tt.parent != 0";
     } else {
         $parents = "";
     }
