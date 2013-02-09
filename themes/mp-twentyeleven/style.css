@@ -1,16 +1,16 @@
 /*
-Theme Name: Manga+Press Bundled Theme
-Theme URI: http://mange-press.jes.gs
+Theme Name: Manga+Press Bundled Theme for TwentyEleven
+Theme URI: http://www.mange-press.com
 Description: Default bundled theme for Manga+Press. Requires WordPress' TwentyEleven theme.
-Version: 1.0
-Author: Jessica Green
+Version: 1.1
+Author: Jess Green
 Author URI: http://www.jes.gs/
 Template: twentyeleven
 Tags: comics, comic theme, manga press, webcomics, online comics
 */
 
 /* comic navigation */
-nav#comic-navigation {   
+nav#comic-navigation {
     text-align: center;
     margin: 5px 0 10px 0;
     padding: 0;
