@@ -195,6 +195,9 @@ class MangaPress_Settings extends MangaPress_Options
                     'callback' => array($this, 'settings_field_cb'),
                 ),
             ),
+            'permalink' => array(
+
+            ),
             'comic_page' => array(
                 'banner_width'        => array(
                     'id'    => 'banner-width',
@@ -293,6 +296,10 @@ class MangaPress_Settings extends MangaPress_Options
             'basic'      => array(
                 'title'       => __('Basic Options', MP_DOMAIN),
                 'description' => __('This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; pages, number of comics per page, and grouping comics together by category.', MP_DOMAIN),
+            ),
+            'permalink'  => array(
+                'title'       => __('Comic Permalink Options', MP_DOMAIN),
+                'description' => __('', MP_DOMAIN),
             ),
             'comic_page' => array(
                 'title'       => __('Comic Page Options', MP_DOMAIN),
@@ -538,6 +545,10 @@ ul.comic-nav li:before{ content: ""; }
                 'comic_page_width'    => intval($options['comic_page']['comic_page_width']),
                 'comic_page_height'   => intval($options['comic_page']['comic_page_height']),
             );
+        }
+
+        if ($section == 'permalink') {
+            $new_options['permalink'] = array();
         }
 
         $options = array_merge($mp_options, $new_options);
