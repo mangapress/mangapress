@@ -33,17 +33,12 @@ class View_OptionsPage extends MangaPress_View
         include_once 'scripts/page.options.php';
     }
 
-    public function get_settings_page_tabs()
-    {
-         $tabs = array(
-            'basic'      => 'Basic Manga+Press Options',
-            'comic_page' => 'Comic Page Options',
-            'nav'        => 'Navigation Options',
-         );
-
-         return $tabs;
-    }
-
+    /**
+     * Display options tabs
+     *
+     * @param string $current Current tab
+     * @return void
+     */
     public function options_page_tabs($current = 'basic')
     {
         if ( isset ( $_GET['tab'] ) ) {
@@ -52,13 +47,14 @@ class View_OptionsPage extends MangaPress_View
             $current = 'basic';
         }
 
-        $tabs = $this->get_settings_page_tabs();
+        $tabs = MangaPress_Bootstrap::get_options_data()->options_sections();
+
         $links = array();
-        foreach( $tabs as $tab => $name ){
+        foreach( $tabs as $tab => $tab_data ){
             if ( $tab == $current ){
-                $links[] = "<a class=\"nav-tab nav-tab-active\" href=\"?page=mangapress-options-page&tab={$tab}\">{$name}</a>";
+                $links[] = "<a class=\"nav-tab nav-tab-active\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
             } else {
-                $links[] = "<a class=\"nav-tab\" href=\"?page=mangapress-options-page&tab={$tab}\">{$name}</a>";
+                $links[] = "<a class=\"nav-tab\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
             };
         }
 
@@ -72,7 +68,7 @@ class View_OptionsPage extends MangaPress_View
 
     public function get_current_tab()
     {
-        $tabs = array_keys($this->get_settings_page_tabs());
+        $tabs = array_keys(MangaPress_Bootstrap::get_options_data()->options_sections());
 
         if (isset($_GET['tab']) && in_array($_GET['tab'], $tabs)) {
             return $_GET['tab'];

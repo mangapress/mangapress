@@ -96,6 +96,13 @@ class MangaPress_Bootstrap
     protected static $_options;
 
     /**
+     * Setting data class
+     *
+     * @var MangaPress_Settings
+     */
+    protected static $_options_data;
+
+    /**
      * MangaPress Posts object
      *
      * @var \MangaPress_Posts
@@ -104,6 +111,9 @@ class MangaPress_Bootstrap
 
     /**
      * Static function used to initialize Bootstrap
+     *
+     * @global MangaPress_Bootstrap $mp
+     * @global MangaPress_Settings $options_page
      *
      * @return void
      */
@@ -117,7 +127,7 @@ class MangaPress_Bootstrap
 
         $mp           = new MangaPress_Bootstrap();
         $mp->_posts   = new MangaPress_Posts();
-        $options_page = new MangaPress_Settings();
+        self::$_options_data = new MangaPress_Settings();
     }
 
     /**
@@ -242,6 +252,16 @@ class MangaPress_Bootstrap
     public function get_options()
     {
         return self::$_options;
+    }
+
+    /**
+     * Get options data class
+     * 
+     * @return MangaPress_Settings
+     */
+    public static function get_options_data()
+    {
+        return self::$_options_data;
     }
 
     /**

@@ -43,7 +43,7 @@ class MangaPress_Install
                 'comicarchive_page_template' => 0,
             ),
             'permalink'  => array(
-
+                ''
             ),
             'comic_page' => array(
                 'make_thumb'          => 0,
