@@ -94,11 +94,19 @@ class MangaPress_View
         );
 
         wp_register_style(
-                "{$this->_name}-edit-screen", $this->locate_stylesheet($default_edit_styles), null, $this->_ver, 'screen'
+            "{$this->_name}-edit-screen",
+            $this->locate_stylesheet($default_edit_styles),
+            null,
+            $this->_ver,
+            'screen'
         );
 
         wp_register_style(
-                "{$this->_name}-post-screen", $this->locate_stylesheet($default_post_styles), null, $this->_ver, 'screen'
+            "{$this->_name}-post-screen",
+            $this->locate_stylesheet($default_post_styles),
+            null,
+            $this->_ver,
+            'screen'
         );
 
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
@@ -184,7 +192,7 @@ class MangaPress_View
      * @return string|boolean
      */
     public function locate_stylesheet($style_sheets)
-    {
+    {        
         $located = '';
         foreach ((array) $style_sheets as $style_sheet) {
             if (!$style_sheet)
