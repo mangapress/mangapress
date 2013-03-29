@@ -93,7 +93,7 @@ class MangaPress_Bootstrap
      *
      * @var array
      */
-    protected static $_options;
+    protected $_options;
 
     /**
      * Setting data class
@@ -125,8 +125,6 @@ class MangaPress_Bootstrap
     {
         global $mp;
 
-        self::set_options();
-
         load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
 
         self::$_instance  = new self();
@@ -151,16 +149,32 @@ class MangaPress_Bootstrap
      */
     protected function __construct()
     {
-
-        $mp_options = $this->get_options();
-
+        $this->set_options();
+        
         /*
          * Navigation style
          */
         wp_register_style('mangapress-nav', MP_URLPATH . 'css/nav.css', null, MP_VERSION, 'screen');
 
         add_action('template_include', 'mpp_comic_single_page');
+        
+        $this->_load_current_options();
+        
+        if (get_option('mangapress_upgrade') == 'yes') {
+            MangaPress_Install::do_upgrade();
+        }
 
+    }
+    
+    /**
+     * Load current plugin options
+     * 
+     * @return void
+     */
+    private function _load_current_options()
+    {
+        $mp_options = $this->get_options();
+        
         /*
          * Disable/Enable Default Navigation CSS
          */
@@ -202,6 +216,18 @@ class MangaPress_Bootstrap
             add_filter('template_include', 'mpp_comic_archivepage');
 
         /*
+         * Comic Page size
+         */
+        if ($mp_options['comic_page']['generate_comic_page']){
+            add_image_size(
+                'comic-page',
+                $mp_options['comic_page']['comic_page_width'],
+                $mp_options['comic_page']['comic_page_height'],
+                false
+            );
+        }
+        
+        /*
          * Comic Thumbnail Banner
          */
         add_image_size (
@@ -215,23 +241,7 @@ class MangaPress_Bootstrap
          * Comic Thumbnail size for Comics Listing screen
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
-
-        /*
-         * Comic Page size
-         */
-        if ($mp_options['comic_page']['generate_comic_page']){
-            add_image_size(
-                'comic-page',
-                $mp_options['comic_page']['comic_page_width'],
-                $mp_options['comic_page']['comic_page_height'],
-                false
-            );
-        }
-
-        if (get_option('mangapress_upgrade') == 'yes') {
-            MangaPress_Install::do_upgrade();
-        }
-
+        
     }
 
     /**
@@ -243,9 +253,9 @@ class MangaPress_Bootstrap
      *
      * @return void
      */
-    public static function set_options()
+    public function set_options()
     {
-        self::$_options = maybe_unserialize(get_option('mangapress_options'));
+       $this->_options = maybe_unserialize(get_option('mangapress_options'));
     }
 
     /**
@@ -255,7 +265,7 @@ class MangaPress_Bootstrap
      */
     public function get_options()
     {
-        return self::$_options;
+        return $this->_options;
     }
 
     /**
