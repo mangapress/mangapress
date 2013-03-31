@@ -58,20 +58,6 @@ if (!defined('MP_LANG'))
 if (!defined('MP_DOMAIN'))
     define('MP_DOMAIN', $plugin_folder);
 
-include_once('framework/FrameworkHelper.php');
-include_once('framework/PostType.php');
-include_once('framework/Taxonomy.php');
-include_once('framework/View.php');
-include_once('framework/Options.php');
-include_once('framework/Form/Element.php');
-
-include_once('includes/functions.php');
-include_once('includes/template-functions.php');
-include_once('comic-post-type.php');
-include_once('mangapress-install.php');
-include_once('mangapress-posts.php');
-include_once('mangapress-options.php');
-
 register_activation_hook(__FILE__, array('MangaPress_Install', 'do_activate'));
 register_deactivation_hook( __FILE__, array('MangaPress_Install', 'do_deactivate'));
 
@@ -94,13 +80,6 @@ class MangaPress_Bootstrap
      * @var array
      */
     protected $_options;
-
-    /**
-     * Setting data class
-     *
-     * @var MangaPress_Settings
-     */
-    protected static $_options_data;
 
     /**
      * Instance of MangaPress_Bootstrap
@@ -129,7 +108,6 @@ class MangaPress_Bootstrap
 
         self::$_instance  = new self();
         $mp->_posts       = new MangaPress_Posts();
-        self::$_options_data = new MangaPress_Settings();
     }
 
     /**
@@ -149,6 +127,7 @@ class MangaPress_Bootstrap
      */
     protected function __construct()
     {
+        $this->_includes();
         $this->set_options();
         
         /*
@@ -166,6 +145,22 @@ class MangaPress_Bootstrap
 
     }
     
+    /**
+     * Inlcude needed files on init
+     * 
+     * @return void
+     */
+    private function _includes()
+    {
+        include_once('includes/lib/helper.php');
+        include_once('includes/lib/post-type.php');
+        include_once('includes/lib/taxonomy.php');
+        include_once('includes/functions.php');
+        include_once('includes/template-functions.php');
+        include_once('mangapress-install.php');
+        include_once('mangapress-posts.php');        
+    }
+
     /**
      * Load current plugin options
      * 
