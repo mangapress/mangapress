@@ -83,28 +83,26 @@ class MangaPress_Posts
             ),            
         ));
         
-        $this->_post_type = new MangaPress_PostType(
-                array(
-                    'name'          => 'mangapress_comic',
-                    'pluralname'    => 'Comics',
-                    'singlename' => 'Comic',
-                    'arguments'     => array(
-                        'supports'      => array(
-                            'title',
-                            'comments',
-                            'thumbnails',
-                        ),
-                        
-                        'menu_icon' => MP_URLPATH . 'images/menu_icon.png',
-                        'rewrite'   => array(
-                            'slug' => 'comic',
-                        ),
-                        'taxonomies' => array(
-                            $taxonomy->get_name(),
-                        ),
-                    ),
-                )
-        );
+        $this->_post_type = new MangaPress_PostType(array(
+            'name'          => 'mangapress_comic',
+            'pluralname'    => 'Comics',
+            'singlename' => 'Comic',
+            'arguments'     => array(
+                'supports'      => array(
+                    'title',
+                    'comments',
+                    'thumbnails',
+                ),
+
+                'menu_icon' => MP_URLPATH . 'images/menu_icon.png',
+                'rewrite'   => array(
+                    'slug' => 'comic',
+                ),
+                'taxonomies' => array(
+                    $taxonomy->get_name(),
+                ),
+            ),
+        ));
     }
 
     /**
@@ -160,11 +158,11 @@ class MangaPress_Posts
     {
 
         $columns = array(
-                "cb"          => "<input type=\"checkbox\" />",
-                "thumbnail"   => "Thumbnail",
-                "title"       => "Comic Title",
-                "series"      => "Series",
-                "description" => "Description",
+            "cb"          => "<input type=\"checkbox\" />",
+            "thumbnail"   => __("Thumbnail", MP_DOMAIN),
+            "title"       => __("Comic Title", MP_DOMAIN),
+            "series"      => __("Series", MP_DOMAIN),
+            "description" => __("Description", MP_DOMAIN),
         );
 
         return $columns;

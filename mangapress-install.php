@@ -28,41 +28,6 @@ class MangaPress_Install
     protected $_type;
 
     /**
-     * Default options array
-     *
-     * @var array
-     */
-    protected static $_default_options =  array(
-            'basic' => array(
-                'order_by'                   => 'post_date',
-                'group_comics'               => 0,
-                'group_by_parent'            => 0,
-                'latestcomic_page'           => 0,
-                'comicarchive_page'          => 0,
-                'latestcomic_page_template'  => 0,
-                'comicarchive_page_template' => 0,
-            ),
-            'permalink'  => array(
-                ''
-            ),
-            'comic_page' => array(
-                'make_thumb'          => 0,
-                'insert_banner'       => 0,
-                'banner_width'        => 420,
-                'banner_height'       => 100,
-                'comic_post_count'    => 10,
-                'generate_comic_page' => 0,
-                'comic_page_width'    => 600,
-                'comic_page_height'   => 1000,
-            ),
-            'nav' => array(
-                'nav_css'    => 'custom_css',
-                'insert_nav' => false,
-            ),
-        );
-
-
-    /**
      * Static function for plugin activation.
      *
      * @return void
@@ -106,7 +71,7 @@ class MangaPress_Install
 
         }
 
-        flush_rewrite_rules(false);
+        flush_rewrite_rules();
     }
 
     /**
@@ -116,7 +81,7 @@ class MangaPress_Install
      */
     public static function do_deactivate()
     {
-        flush_rewrite_rules(false);
+        flush_rewrite_rules();
     }
 
     /**
@@ -135,15 +100,5 @@ class MangaPress_Install
         update_option('mangapress_ver', MP_VERSION);
 
         delete_option( 'mangapress_upgrade' );
-    }
-
-    /**
-     * Returns default options
-     *
-     * @return array
-     */
-    public static function get_default_options()
-    {
-        return self::$_default_options;
     }
 }
