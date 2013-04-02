@@ -1,80 +1,32 @@
 <?php
-/**
- * @package MangaPress
- * @subpackage Pages
- * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
- */
-/**
- * @package Pages
- * @subpackage Options
- * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
- */
-class View_OptionsPage extends MangaPress_View
-{
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+    die('You are not allowed to call this page directly.');
 
-        $options = add_options_page(
-            __("Manga+Press Options", MP_DOMAIN),
-            __("Manga+Press Options", MP_DOMAIN),
-            'manage_options',
-            'mangapress-options-page',
-            array($this, 'page')
-        );
+if ( ! current_user_can('manage_options') )
+    wp_die(
+        __(
+            'You do not have sufficient permissions '
+            . 'to manage options for this blog.',
+            'mangapress'
+        )
+    );
 
-        $this->set_hook($options);
-    }
-
-    public function page()
-    {
-        include_once 'scripts/page.options.php';
-    }
-
-    /**
-     * Display options tabs
-     *
-     * @param string $current Current tab
-     * @return void
-     */
-    public function options_page_tabs($current = 'basic')
-    {
-        if ( isset ( $_GET['tab'] ) ) {
-            $current = $_GET['tab'];
-        } else {
-            $current = 'basic';
-        }
-
-        $tabs = MangaPress_Bootstrap::get_options_data()->options_sections();
-
-        $links = array();
-        foreach( $tabs as $tab => $tab_data ){
-            if ( $tab == $current ){
-                $links[] = "<a class=\"nav-tab nav-tab-active\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
-            } else {
-                $links[] = "<a class=\"nav-tab\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
-            };
-        }
-
-        echo get_screen_icon();
-        echo '<h2 class="nav-tab-wrapper">';
-
-        foreach ( $links as $link )
-            echo $link;
-        echo '</h2>';
-    }
-
-    public function get_current_tab()
-    {
-        $tabs = array_keys(MangaPress_Bootstrap::get_options_data()->options_sections());
-
-        if (isset($_GET['tab']) && in_array($_GET['tab'], $tabs)) {
-            return $_GET['tab'];
-        } else {
-            return 'basic';
-        }
-    }
-
-}
+    $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'basic' );
+?>
+<script type="text/javascript">
+     SyntaxHighlighter.all();
+</script>
+<div class="wrap">
+    <?php $this->options_page_tabs() ?>
+    
+    <form action="options.php" method="post" id="mangapress_options_form">
+        <?php settings_fields('mangapress_options'); ?>
+        
+        <?php do_settings_sections("mangapress_options-{$tab}"); ?>
+                
+        <p>
+            <?php submit_button(); ?>
+        </p>
+        
+    </form>
+</div>

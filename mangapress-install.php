@@ -28,11 +28,31 @@ class MangaPress_Install
     protected $_type;
 
     /**
+     * Instance of MangaPress_Install
+     * @var \MangaPress_Install
+     */
+    protected static $_instance;
+
+    /**
+     * Get instance of
+     *
+     * @return MangaPress_Install
+     */
+    public static function get_instance()
+    {
+        if (self::$_instance == null) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    /**
      * Static function for plugin activation.
      *
      * @return void
      */
-    public static function do_activate()
+    public function do_activate()
     {
         global $wp_version;
 
@@ -67,7 +87,7 @@ class MangaPress_Install
         } elseif (self::$_version == '') {
 
             add_option( 'mangapress_ver', MP_VERSION, '', 'no');
-            add_option( 'mangapress_options', serialize( self::$_default_options ), '', 'no' );
+            add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
 
         }
 
@@ -79,7 +99,7 @@ class MangaPress_Install
      *
      * @return void
      */
-    public static function do_deactivate()
+    public function do_deactivate()
     {
         flush_rewrite_rules();
     }
@@ -89,10 +109,11 @@ class MangaPress_Install
      *
      * @return void
      */
-    public static function do_upgrade()
+    public function do_upgrade()
     {
         $options = get_option('mangapress_options');
-
+        $defaults = MangaPress_Options::get_default_options();
+        var_dump(array_diff($options, $defaults));
         // add new option to the array
         $options['permalink'] = self::$_default_options['permalink'];
 
@@ -100,5 +121,7 @@ class MangaPress_Install
         update_option('mangapress_ver', MP_VERSION);
 
         delete_option( 'mangapress_upgrade' );
+
+        flush_rewrite_rules();
     }
 }
