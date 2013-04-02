@@ -157,7 +157,7 @@ final class MangaPress_Options
     {
         
         $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-        
+
         $value = $mp_options[$option['section']][$option['name']];
 
         $pages   = get_pages();
@@ -413,8 +413,86 @@ final class MangaPress_Options
      * @param array $options
      * @return array
      */
-    public function sanitize_options(array $options)
+    public function sanitize_options($options)
     {
-        return $options;
+        if (!$options)
+            return $options;
+        
+        $mp_options        = MangaPress_Bootstrap::get_instance()->get_options();        
+        $section           = key($options);
+        $available_options = $this->options_fields();
+        $new_options       = $mp_options;
+
+        if ($section == 'nav'){
+
+            $new_options['nav']['insert_nav'] = intval($options['nav']['insert_nav']);
+
+            //
+            // if the value of the option doesn't match the correct values in the array, then
+            // the value of the option is set to its default.
+            $nav_css_values = array_keys($available_options['nav']['nav_css']['value']);
+
+            if (in_array($mp_options['nav']['nav_css'], $nav_css_values)){
+                $new_options['nav']['nav_css'] = strval($options['nav']['nav_css']);
+            } else {
+                $new_options['nav']['nav_css'] = 'default_css';
+            }
+        }
+
+        if ($section == 'basic') {
+            $order_by_values = array_keys($available_options['basic']['order_by']['value']);
+            //
+            // Converting the values to their correct data-types should be enough for now...
+            $new_options['basic'] = array(
+                'order_by'        => (in_array($options['basic']['order_by'], $order_by_values))
+                                            ? strval($options['basic']['order_by']) : 'post_date',
+                'group_comics'    => $this->_sanitize_integer($options, 'basic', 'group_comics'),
+                'group_by_parent' => $this->_sanitize_integer($options, 'basic', 'group_by_parent'),
+            );
+
+            if ($options['basic']['latestcomic_page'] !== 'no_val'){
+                $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
+            } else {
+                $new_options['basic']['latestcomic_page'] = 0;
+            }
+
+            $new_options['basic']['latestcomic_page_template'] 
+                    = $this->_sanitize_integer($options, 'basic', 'latestcomic_page_template');
+
+            if ($options['basic']['comicarchive_page'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
+            } else {
+                $new_options['basic']['comicarchive_page'] = 0;
+            }
+
+            $new_options['basic']['comicarchive_page_template'] 
+                    = intval($options['basic']['comicarchive_page_template']);
+        }
+
+        if ($section == 'comic_page') {
+            $new_options['comic_page'] = array(
+                'comic_post_count'    => $this->_sanitize_integer($options, 'comic_page', 'comic_post_count'),
+                'generate_comic_page' => $this->_sanitize_integer($options, 'comic_page','generate_comic_page'),
+                'comic_page_width'    => $this->_sanitize_integer($options, 'comic_page','comic_page_width'),
+                'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
+            );
+        }
+
+        return array_merge($mp_options, $new_options);
+    }
+    
+    /**
+     * Sanitize integers
+     * 
+     * @param array $option_array
+     * @param string $section
+     * @param string $name
+     * 
+     * @return mixed
+     */
+    private function _sanitize_integer($option_array, $section, $name)
+    {
+        return isset($option_array[$section][$name]) 
+                ? intval($option_array[$section][$name]) : 0;                
     }
 }
