@@ -14,6 +14,8 @@
  */
 final class MangaPress_Options
 {
+    const OPTIONS_GROUP_NAME = 'mangapress_options';
+    
     /**
      * Default options array
      *
@@ -44,9 +46,32 @@ final class MangaPress_Options
         ),
     );
     
+    /**
+     * PHP5 Constructor function
+     * 
+     * @return void
+     */
     public function __construct()
     {
-        ;
+        add_action('admin_init', array($this, 'admin_init'));
+    }
+    
+    /**
+     * Run admin_init functions
+     * 
+     * @return void
+     */
+    public function admin_init()
+    {
+        register_setting(
+            self::OPTIONS_GROUP_NAME,
+            self::OPTIONS_GROUP_NAME,
+            array($this, 'sanitize_options')
+        );
+        
+        // register settings section
+        
+        // output settings fields
     }
     
     /**
@@ -250,5 +275,15 @@ final class MangaPress_Options
     {
         return array_keys($this->options_sections());
     }
-
+    
+    /**
+     * Sanitize options
+     * 
+     * @param array $options
+     * @return array
+     */
+    public function sanitize_options(array $options)
+    {
+        return $options;
+    }
 }

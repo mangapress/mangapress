@@ -113,7 +113,7 @@ class MangaPress_Install
     {
         $options = get_option('mangapress_options');
         $defaults = MangaPress_Options::get_default_options();
-        var_dump(array_diff($options, $defaults));
+
         // add new option to the array
         $options['permalink'] = self::$_default_options['permalink'];
 

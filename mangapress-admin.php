@@ -20,14 +20,7 @@ final class MangaPress_Admin
      * @var string
      */
     const ADMIN_PAGE_SLUG = 'mangapress-options-page';
-    
-    /**
-     * Instance of MangaPress_Options
-     * 
-     * @var MangaPress_Options
-     */
-    private $_options;
-    
+        
     /**
      * Constructor method
      * @return void
@@ -48,7 +41,7 @@ final class MangaPress_Admin
             __("Manga+Press Options", MP_DOMAIN),
             __("Manga+Press Options", MP_DOMAIN),
             'manage_options',
-            'mangapress-options-page',
+            self::ADMIN_PAGE_SLUG,
             array($this, 'load_page')
         );        
     }
