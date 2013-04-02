@@ -60,7 +60,7 @@ final class MangaPress_Admin
      */
     public function load_page()
     {
-        require_once MP_ABSPATH . '/pages/options.php';
+        require_once MP_ABSPATH . '/includes/pages/options.php';
     }
     
     /**
