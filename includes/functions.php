@@ -20,9 +20,7 @@ define('MP_CATEGORY_ALL', 3);
 /**
  * Handles display for the latest comic page.
  *
- * @global object $mp MangaPress bootstrap object
- * @global object $post WordPress Post
- * @global array $_wp_additional_image_sizes Array defining thumbnail names and dimensions.
+ * @global WP_Post $post WordPress Post
  *
  * @since 2.7
  * @param string $template
@@ -30,14 +28,15 @@ define('MP_CATEGORY_ALL', 3);
  */
 function mpp_filter_latest_comic($content)
 {
-    global $post, $mp, $_wp_additional_image_sizes;
+    global $post;
 
-    $mp_options = $mp->get_options();
+    $image_sizes = get_intermediate_image_sizes();
+
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     if (!($post->post_name == $mp_options['basic']['latestcomic_page'])) {
         return $content;
     } else {
-        global $thumbnail_size, $single_comic_query;
 
         $single_comic_query = mpp_get_latest_comic();
 
@@ -49,7 +48,7 @@ function mpp_filter_latest_comic($content)
         }
 
         $thumbnail_size = 'comic-page';
-        if (!isset($_wp_additional_image_sizes['comic-page'])) {
+        if (!isset($image_sizes['comic-page'])) {
             $thumbnail_size = 'large';
         }
 
@@ -57,8 +56,12 @@ function mpp_filter_latest_comic($content)
 
         setup_postdata($post);
 
+        $file = locate_template(array('templates/content/latest-comic.php'))
+                    ? locate_template(array('templates/content/latest-comic.php'))
+                    : MP_ABSPATH . 'templates/content/latest-comic.php';
+
         ob_start();
-        load_template(MP_ABSPATH . 'templates/content/latest-comic.php', true);
+        require $file;
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -99,7 +102,6 @@ function mpp_get_latest_comic()
 /**
  * Overrides mpp_filter_latest_comic() with a template.
  *
- * @global object $mp MangaPress bootstrap object
  * @global object $wp_query
  *
  * @since 2.7
@@ -108,9 +110,10 @@ function mpp_get_latest_comic()
  */
 function mpp_latest_comic_page($template)
 {
-    global $wp_query, $mp;
+    global $wp_query;
 
-    $mp_options = $mp->get_options();
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
     $object     = $wp_query->get_queried_object();
 
     if (isset($object->post_name) && $object->post_name == $mp_options['basic']['latestcomic_page']) {
@@ -165,8 +168,6 @@ function mpp_series_template($template)
 /**
  * comic_archivepage()
  *
- *
- * @global object $mp MangaPress bootstrap object
  * @global object $post WordPress Post
  *
  * @since 2.7
@@ -175,9 +176,9 @@ function mpp_series_template($template)
  */
 function mpp_comic_archivepage($template)
 {
-    global $wp_query, $mp;
+    global $wp_query;
 
-    $mp_options = $mp->get_options();
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $object = $wp_query->get_queried_object();
 
@@ -202,8 +203,7 @@ function mpp_comic_archivepage($template)
  * filter_comic_archivepage()
  *
  *
- * @global object $mp MangaPress bootstrap object
- * @global object $post WordPress Post
+ * @global WP_Post $post WordPress Post
  *
  * @since 2.6
  * @param string $content Page content (from the_content())
@@ -211,16 +211,20 @@ function mpp_comic_archivepage($template)
  */
 function mpp_filter_comic_archivepage($content)
 {
-    global $post, $mp;
+    global $post;
 
-    $mp_options = $mp->get_options();
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     if (!($post->post_name == $mp_options['basic']['comicarchive_page'])) {
         return $content;
     } else {
 
+        $file = locate_template(array('templates/content/comic-archive.php'))
+                    ? locate_template(array('templates/content/comic-archive.php'))
+                    : MP_ABSPATH . 'templates/content/comic-archive.php';
+
         ob_start();
-        load_template(MP_ABSPATH . 'templates/content/comic-archive.php', true);
+        require $file;
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -306,7 +310,7 @@ function mpp_comic_insert_navigation($content)
  * @param string $excluded_categories Optional. Excluded categories IDs.
  * @param string $previous Optional. Whether to retrieve next or previous post.
  *
- * @global object $post
+ * @global WP_Post $post
  * @global wpdb $wpdb
  *
  * @return string
@@ -408,6 +412,8 @@ function mpp_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, 
  * May be deprecated once WordPress Trac #17807 is resolved, possibly in WP 3.5
  *
  * @since 2.7
+ *
+ * @global WP_Post $post WordPress post object
  *
  * @param bool $in_same_cat Optional. Whether returned post should be in same category.
  * @param string $taxonomy Optional. Which taxonomy to pull from.

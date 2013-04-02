@@ -14,7 +14,7 @@ if ( ! current_user_can('manage_options') )
     $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'basic' );
 ?>
 <script type="text/javascript">
-     SyntaxHighlighter.all()
+     SyntaxHighlighter.all();
 </script>
 <div class="wrap">
     <?php $this->options_page_tabs() ?>

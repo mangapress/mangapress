@@ -1,63 +1,72 @@
 <?php
 /**
- * MangaPress_Framework
- *
+ * WordPress_PostType_Framework
+ * 
+ * So wish WordPress would drop PHP 5.2 support.
+ * Namespaces would be very handy
+ * 
+ * @package WordPress_PostType_Framework
+ * @subpackage MangaPress_FrameWork_Helper
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress
+ * @version $Id$
  */
-
 /**
  * MangaPress_FrameWork_Helper
- * Abstract class used to define basic functionality for extending classes
+ * This abstract class contains basic properties and methods
+ * used by the PostType and Taxonomy classes.
  *
+ * @package MangaPress_FrameWork_Helper
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_View
- * @version $Id$
  */
 abstract class MangaPress_FrameWork_Helper
 {
 
     /**
-     * Object name (post-type or taxonomy)
+     * Object name
+     *
      * @var string
      */
     protected $_name;
 
     /**
-     * Human-readable singular name
+     * Object singular (human-readable) label
      *
      * @var string
      */
     protected $_label_single;
 
     /**
-     * Human-readable plural name
+     * Object plural (human-readable) label
      *
      * @var string
      */
     protected $_label_plural;
-
+    
+    /**
+     * Text domain string for i8n
+     * Must be set before arguments!
+     * 
+     * @var string
+     */
+    protected $_textdomain = '';
+    
     /**
      * Object arguments
+     *
      * @var array
      */
     protected $_args;
 
     /**
-     * Init method
+     * Object init
+     *
+     * @return void
      */
     abstract public function init();
 
     /**
-     * Set arguments method
-     */
-    abstract public function set_arguments($args);
-
-    /**
-     * PHP5 constructor method
-     *
-     * @param array $options
-     * @return void
+     * PHP5 Constructor method
+     * @param array $options Optional. Pass Object parameters on construct
      */
     public function __construct($options = null)
     {
@@ -68,10 +77,10 @@ abstract class MangaPress_FrameWork_Helper
     }
 
     /**
-     * Set object name
+     * Set the object name
      *
      * @param string $object_name
-     * @return \MangaPress_FrameWork_Helper
+     * @return JesGS_FrameWork_Helper
      */
     public function set_name($object_name)
     {
@@ -79,7 +88,7 @@ abstract class MangaPress_FrameWork_Helper
 
         return $this;
     }
-
+    
     /**
      * Get object name
      * 
@@ -91,14 +100,13 @@ abstract class MangaPress_FrameWork_Helper
     }
 
     /**
-     * Set options
+     * Set object options
      *
      * @param array $options
-     * @return \MangaPress_FrameWork_Helper
+     * @return JesGS_FrameWork_Helper
      */
     public function set_options($options)
     {
-
         foreach ($options as $option_name => $value) {
             $method = 'set_' . $option_name;
             if (method_exists($this, $method)) {
@@ -110,10 +118,10 @@ abstract class MangaPress_FrameWork_Helper
     }
 
     /**
-     * Set human-readable singular name
+     * Set the object's singular label
      *
      * @param string $object_single_name
-     * @return \MangaPress_FrameWork_Helper
+     * @return MangaPress_FrameWork_Helper
      */
     public function set_singlename($object_single_name)
     {
@@ -123,15 +131,35 @@ abstract class MangaPress_FrameWork_Helper
     }
 
     /**
-     * Set human-readable plural name
+     * Set the object's plural label
      *
      * @param string $object_pluralname
-     * @return \MangaPress_FrameWork_Helper
+     * @return MangaPress_FrameWork_Helper
      */
     public function set_pluralname($object_pluralname)
     {
 
         $this->_label_plural = $object_pluralname;
+
+        return $this;
+    }
+    
+    public function set_textdomain($textdomain)
+    {
+        $this->_textdomain = $textdomain;
+        
+        return $this;
+    }
+    
+    /**
+     * Set object arguments
+     *
+     * @param array $args
+     * @return MangaPress_FrameWork_Helper
+     */
+    public function set_arguments($args = array())
+    {
+        $this->_args = $args;
 
         return $this;
     }

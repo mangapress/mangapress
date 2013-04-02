@@ -58,25 +58,13 @@ if (!defined('MP_LANG'))
 if (!defined('MP_DOMAIN'))
     define('MP_DOMAIN', $plugin_folder);
 
-include_once('framework/FrameworkHelper.php');
-include_once('framework/PostType.php');
-include_once('framework/Taxonomy.php');
-include_once('framework/View.php');
-include_once('framework/Options.php');
-include_once('framework/Form/Element.php');
+require_once MP_ABSPATH . '/mangapress-install.php';
 
-include_once('includes/functions.php');
-include_once('includes/template-functions.php');
-include_once('comic-post-type.php');
-include_once('mangapress-install.php');
-include_once('mangapress-posts.php');
-include_once('mangapress-options.php');
+$install = MangaPress_Install::get_instance();
+register_activation_hook(__FILE__, array($install, 'do_activate'));
+register_deactivation_hook(__FILE__, array($install, 'do_deactivate'));
 
-register_activation_hook(__FILE__, array('MangaPress_Install', 'do_activate'));
-register_deactivation_hook( __FILE__, array('MangaPress_Install', 'do_deactivate'));
-
-add_action('init', array('MangaPress_Bootstrap', 'init'));
-add_action('setup_theme', array('MangaPress_Bootstrap', 'setup_theme'));
+add_action('plugins_loaded', array('MangaPress_Bootstrap', 'load_plugin'));
 
 /**
  * Plugin bootstrap class.
@@ -93,41 +81,59 @@ class MangaPress_Bootstrap
      *
      * @var array
      */
-    protected static $_options;
+    protected $_options;
+
+    /**
+     * Instance of MangaPress_Bootstrap
+     *
+     * @var MangaPress_Bootstrap
+     */
+    protected static $_instance;
 
     /**
      * MangaPress Posts object
      *
      * @var \MangaPress_Posts
      */
-    protected $_posts;
+    protected $_posts_helper;
 
+    /**
+     * Options helper object
+     *
+     * @var \MangaPress_Options
+     */
+    protected $_options_helper;
+    
+    /**
+     * Admin page helper
+     * 
+     * @var MangaPress_Admin
+     */
+    protected $_admin_helper;
+    
     /**
      * Static function used to initialize Bootstrap
      *
      * @return void
      */
-    public static function init()
+    public static function load_plugin()
     {
-        global $mp, $options_page;
-
-        self::set_options();
-
-        load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
-
-        $mp           = new MangaPress_Bootstrap();
-        $mp->_posts   = new MangaPress_Posts();
-        $options_page = new MangaPress_Settings();
+        self::_includes();
+        self::$_instance  = new self();
     }
 
     /**
-     * Because register_theme_directory() can't run on init.
+     * Get instance of MangaPress_Bootstrap
      *
-     * @return void
+     * @return MangaPress_Bootstrap
      */
-    public static function setup_theme()
+    public static function get_instance()
     {
-        register_theme_directory('plugins/' . MP_FOLDER . '/themes');
+        if (null == self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
     }
 
     /**
@@ -135,17 +141,112 @@ class MangaPress_Bootstrap
      *
      * @return void
      */
-    public function __construct()
+    protected function __construct()
     {
 
+        load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
+
+        $this->set_options();
+
+        add_action('setup_theme', array($this, 'setup_theme'));
+        add_action('init', array($this, 'init'));        
+        add_action('template_include', 'mpp_comic_single_page');        
+    }
+
+    /**
+     * Because register_theme_directory() can't run on init.
+     *
+     * @return void
+     */
+    public function setup_theme()
+    {
+        register_theme_directory('plugins/' . MP_FOLDER . '/themes');
+    }
+
+    /**
+     * Run init functionality
+     *
+     * @see init() hook
+     * @return void
+     */
+    public function init()
+    {
+        $this->_admin_helper   = new MangaPress_Admin();
+        $this->_options_helper = new MangaPress_Options();
+        $this->_posts_helper   = new MangaPress_Posts();
+
+        $this->_load_current_options();
+
+        if (get_option('mangapress_upgrade') == 'yes') {
+            MangaPress_Install::do_upgrade();
+        }
+    }
+    
+    /**
+     * Get a MangaPress helper
+     * 
+     * @param string $helper_name Allowed values: admin, options, posts
+     * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\WP_Error
+     */
+    public function get_helper($helper_name)
+    {
+        $helper = "_{$helper_name}_helper";
+        if (property_exists($this, $helper)) {
+            return $this->$helper;
+        }
+        
+        return new WP_Error('_mangapress_helper_access', 'No helper exists by that name');
+    }
+
+    /**
+     * Set MangaPress options. This method should run every time
+     * MangaPress options are updated.
+     *
+     * @uses init()
+     * @see MangaPress_Bootstrap::init()
+     *
+     * @return void
+     */
+    public function set_options()
+    {
+        $this->_options = maybe_unserialize(get_option('mangapress_options'));
+    }
+
+    /**
+     * Get MangaPress options
+     *
+     * @return array
+     */
+    public function get_options()
+    {
+        return $this->_options;
+    }
+
+    /**
+     * Inlcude needed files on init
+     *
+     * @return void
+     */
+    private static function _includes()
+    {
+        include_once('includes/lib/helper.php');
+        include_once('includes/lib/post-type.php');
+        include_once('includes/lib/taxonomy.php');
+        include_once('includes/functions.php');
+        include_once('includes/template-functions.php');
+        include_once('mangapress-admin.php');
+        include_once('mangapress-options.php');
+        include_once('mangapress-posts.php');
+    }
+
+    /**
+     * Load current plugin options
+     *
+     * @return void
+     */
+    private function _load_current_options()
+    {
         $mp_options = $this->get_options();
-
-        /*
-         * Navigation style
-         */
-        wp_register_style('mangapress-nav', MP_URLPATH . 'css/nav.css', null, MP_VERSION, 'screen');
-
-        add_action('template_include', 'mpp_comic_single_page');
 
         /*
          * Disable/Enable Default Navigation CSS
@@ -188,6 +289,18 @@ class MangaPress_Bootstrap
             add_filter('template_include', 'mpp_comic_archivepage');
 
         /*
+         * Comic Page size
+         */
+        if ($mp_options['comic_page']['generate_comic_page']){
+            add_image_size(
+                'comic-page',
+                $mp_options['comic_page']['comic_page_width'],
+                $mp_options['comic_page']['comic_page_height'],
+                false
+            );
+        }
+
+        /*
          * Comic Thumbnail Banner
          */
         add_image_size (
@@ -202,46 +315,6 @@ class MangaPress_Bootstrap
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
 
-        /*
-         * Comic Page size
-         */
-        if ($mp_options['comic_page']['generate_comic_page']){
-            add_image_size(
-                'comic-page',
-                $mp_options['comic_page']['comic_page_width'],
-                $mp_options['comic_page']['comic_page_height'],
-                false
-            );
-        }
-
-        if (get_option('mangapress_upgrade') == 'yes') {
-            MangaPress_Install::do_upgrade();
-        }
-
-    }
-
-    /**
-     * Set MangaPress options. This method should run every time
-     * MangaPress options are updated.
-     *
-     * @uses init()
-     * @see MangaPress_Bootstrap::init()
-     *
-     * @return void
-     */
-    public static function set_options()
-    {
-        self::$_options = maybe_unserialize(get_option('mangapress_options'));
-    }
-
-    /**
-     * Get MangaPress options
-     *
-     * @return array
-     */
-    public function get_options()
-    {
-        return self::$_options;
     }
 
     /**
@@ -251,6 +324,17 @@ class MangaPress_Bootstrap
      */
     public function wp_enqueue_scripts()
     {
+        /*
+         * Navigation style
+         */
+        wp_register_style(
+            'mangapress-nav',
+            MP_URLPATH . 'css/nav.css',
+            null,
+            MP_VERSION,
+            'screen'
+        );
+
         wp_enqueue_style('mangapress-nav');
     }
 

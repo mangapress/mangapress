@@ -1,25 +1,23 @@
 <?php
 /**
- * MangaPress_Framework
+ * WordPress_PostType_Framework
  *
+ * @package WordPress_PostType_Framework
+ * @subpackage MangaPress_PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress
+ * @version $Id$
  */
-
 /**
  * MangaPress_PostType
- *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * 
  * @package MangaPress_PostType
- * @version $Id$
- *
- * @todo Add meta box callbacks
+ * @author Jess Green <jgreen@psy-dreamer.com>
  */
 class MangaPress_PostType extends MangaPress_FrameWork_Helper
 {
+
     /**
-     * Default post-type capabilities. Not used.
-     *
+     * PostType Capabilities
      * @var array
      */
     protected $_capabilities = array(
@@ -33,14 +31,14 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
     );
 
     /**
-     * Taxonomies associated with post-type
+     * Taxonomies attached to PostType
      *
      * @var array
      */
     protected $_taxonomies   = array();
 
     /**
-     * Default post-type arguments
+     * Object arguments
      *
      * @var array
      */
@@ -53,11 +51,11 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
         'show_ui'              => true,
         'show_in_menu'         => true,
         'menu_position'        => 5,
-        'menu_icon'            => '',
+        'menu_icon'            => null,
         'capability_type'      => 'post',
         'hierarchical'         => false,
-        'supports'             => '',
-        'register_meta_box_cb' => '',
+        'supports'             => false,
+        'register_meta_box_cb' => null,
         'taxonomies'           => array(),
         'permalink_epmask'     => EP_PERMALINK,
         'has_archive'          => false,
@@ -67,70 +65,42 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
     );
 
     /**
-     * Set default fields
-     * See {@link http://codex.wordpress.org/Function_Reference/register_post_type}
-     *
-     * @var array
-     */
-    protected $_supports     = array('title');
-
-    /**
-     * View object for enqueuing JS/CSS
-     * 
-     * @var MangaPress_View
-     */
-    protected $_view;
-    /**
-     * Init. Register post-type. Called by init hook
+     * Object init
      *
      * @return void
      */
     public function init()
     {
+
         register_post_type($this->_name, $this->_args);
+
     }
 
-    /**
-     * Set View object for enqueing JS/CSS files
-     *
-     * @param MangaPress_View $view
-     * @return \MangaPress_PostType
-     */
-    public function set_view($view)
-    {
-        $this->_view = $view;
-
-        return $this;
-    }
 
     /**
-     * Set post-type arguments
+     * Set object arguments
      *
-     * @global string $plugin_dir
-     * @param array $args
-     * @return \MangaPress_PostType
+     * @param array $args Array of arguments. Optional
+     * @return JesGS_PostType
      */
-    public function set_arguments($args)
+    public function set_arguments($args = array())
     {
-        global $plugin_dir;
-
         $args = array_merge($this->_args, $args);
         extract($args);
-
+        
         $labels
             = array(
-                'name'               => $this->_label_plural,
-                'singular_name'      => $this->_label_single,
-                'add_new'            => __('Add New ' . $this->_label_single, $plugin_dir),
-                'add_new_item'       => __('Add New ' . $this->_label_single, $plugin_dir),
-                'edit_item'          => __('Edit ' . $this->_label_single, $plugin_dir),
-                'view_item'          => __('View ' . $this->_label_single, $plugin_dir),
-                'search_items'       => __('Search ' . $this->_label_single, $plugin_dir),
-                'not_found'          => __($this->_label_single . ' not found', $plugin_dir),
-                'not_found_in_trash' => __($this->_label_single . ' not found in Trash', $plugin_dir),
-                'parent_item_colon'  => __($this->_label_single . ': ', $plugin_dir),
+                'name'               => __($this->_label_plural, $this->_textdomain),
+                'singular_name'      => __($this->_label_single, $this->_textdomain),
+                'add_new'            => __('Add New ' . $this->_label_single, $this->_textdomain),
+                'add_new_item'       => __('Add New ' . $this->_label_single, $this->_textdomain),
+                'edit_item'          => __('Edit ' . $this->_label_single, $this->_textdomain),
+                'view_item'          => __('View ' . $this->_label_single, $this->_textdomain),
+                'search_items'       => __('Search ' . $this->_label_single, $this->_textdomain),
+                'not_found'          => __($this->_label_single . ' not found', $this->_textdomain),
+                'not_found_in_trash' => __($this->_label_single . ' not found in Trash', $this->_textdomain),
+                'parent_item_colon'  => __($this->_label_single . ': ', $this->_textdomain),
             );
-
 
         $args =
             array(
@@ -146,7 +116,7 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
                 'capability_type'      => $capability_type,
                 'hierarchical'         => $hierarchical,
                 'supports'             => $supports,
-                'register_meta_box_cb' => array($this, 'meta_box_cb'),
+                'register_meta_box_cb' => $register_meta_box_cb,
                 'taxonomies'           => $taxonomies,
                 'permalink_epmask'     => EP_PERMALINK,
                 'has_archive'          => $has_archive,
@@ -161,10 +131,10 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
     }
 
     /**
-     * Set post-type taxonomies
+     * Set object taxonomies
      *
      * @param array $taxonomies
-     * @return \MangaPress_PostType
+     * @return JesGS_PostType
      */
     public function set_taxonomies($taxonomies)
     {
@@ -173,25 +143,4 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
         return $this;
     }
 
-    /**
-     * Set the default fields that the post-type supports
-     *
-     * @param array $supports
-     * @return \MangaPress_PostType
-     */
-    public function set_support($supports)
-    {
-        $this->_supports = $supports;
-
-        return $this;
-    }
-
-    /**
-     * Meta-box callback class
-     * @return void
-     */
-    public function meta_box_cb()
-    {
-        // override this method in extending class
-    }
 }
