@@ -229,14 +229,15 @@ class MangaPress_Bootstrap
      */
     private static function _includes()
     {
-        include_once('includes/lib/helper.php');
-        include_once('includes/lib/post-type.php');
-        include_once('includes/lib/taxonomy.php');
-        include_once('includes/functions.php');
-        include_once('includes/template-functions.php');
-        include_once('mangapress-admin.php');
-        include_once('mangapress-options.php');
-        include_once('mangapress-posts.php');
+        require_once MP_ABSPATH . 'includes/lib/form/element.php';
+        require_once MP_ABSPATH . 'includes/lib/helper.php';
+        require_once MP_ABSPATH . 'includes/lib/post-type.php';
+        require_once MP_ABSPATH . 'includes/lib/taxonomy.php';
+        require_once MP_ABSPATH . 'includes/functions.php';
+        require_once MP_ABSPATH . 'includes/template-functions.php';
+        require_once MP_ABSPATH . 'mangapress-admin.php';
+        require_once MP_ABSPATH . 'mangapress-options.php';
+        require_once MP_ABSPATH . 'mangapress-posts.php';
     }
 
     /**
