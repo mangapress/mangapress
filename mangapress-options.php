@@ -63,6 +63,10 @@ final class MangaPress_Options
      */
     public function admin_init()
     {
+        
+        if (defined('DOING_AJAX') && DOING_AJAX)
+              return;
+        
         register_setting(
             self::OPTIONS_GROUP_NAME,
             self::OPTIONS_GROUP_NAME,
@@ -70,10 +74,137 @@ final class MangaPress_Options
         );
         
         // register settings section
+        $sections = $this->options_sections();
+        foreach ($sections as $section_name => $data) {
+            add_settings_section(
+                self::OPTIONS_GROUP_NAME . "-{$section_name}",
+                $data['title'],
+                array($this, 'settings_section_cb'),
+                self::OPTIONS_GROUP_NAME . "-{$section_name}"
+            );
+        }
         
         // output settings fields
+        $this->output_settings_fields();
     }
     
+    /**
+     * Outputs the settings fields
+     *
+     * @return void
+     */
+    public function output_settings_fields()
+    {
+        $admin = MangaPress_Bootstrap::get_instance()->get_helper('admin');
+        
+        $field_sections = $this->options_fields();
+        $current_tab    = $admin->get_current_tab();
+        $fields         = $field_sections[$current_tab];
+
+        foreach ($fields as $field_name => $field) {
+            add_settings_field(
+                "{$current_tab}-options-{$field['id']}",
+                (isset($field['title']) ? $field['title'] : " "),
+                $field['callback'],
+                "mangapress_options-{$current_tab}",
+                "mangapress_options-{$current_tab}",
+                array_merge(array('name' => $field_name, 'section' => $current_tab), $field)
+            );
+        }
+    }
+
+
+    /**
+     * Call-back for outputting settings fields
+     *
+     * @global type $mp
+     * @param type $option Current option array
+     * @return void
+     */
+    public function settings_field_cb($option)
+    {
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        
+        $class = ucwords($option['type']);
+        $value = $mp_options[$option['section']][$option['name']];
+
+        if ($class !== ""){
+            $attributes  = array(
+                'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
+                'id'    => $option['id'],
+                'value' => $value,
+            );
+
+            $element = "MangaPress_{$class}";
+            echo new $element(array(
+                'attributes'  => $attributes,
+                'description' => isset($option['description']) ? $option['description'] : '',
+                'default'     => isset($option['value']) ? $option['value'] : $option['default'],
+                'validation'  => $option['valid']
+            ));
+        }
+    }
+    
+   /**
+     * Call-back for outputting settings fields (select drop-downs)
+     * with custom values.
+     *
+     * @global type $mp
+     * @param type $option Current option array
+     * @return void
+     */
+    public function ft_basic_page_dropdowns_cb($option)
+    {
+        
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
+        $value = $mp_options[$option['section']][$option['name']];
+
+        $pages   = get_pages();
+        $options = array_merge(array(), $option['value']);
+        foreach($pages as $page) {
+            $options[$page->post_name] = $page->post_title;
+        }
+
+        echo new MangaPress_Select(array(
+            'attributes'  => array(
+                'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
+                'id'    => $option['id'],
+                'value' => $value,
+            ),
+            'description' => isset($option['description']) ? $option['description'] : '',
+            'default'     => $options,
+            'validation'  => $option['valid']
+        ));
+
+    }
+
+    /**
+     * Call-back for outputting settings fields display box
+     *
+     * @param array $option Optional. Current option array
+     * @return void
+     */
+    public function ft_navigation_css_display_cb($option = array())
+    {
+        require_once MP_ABSPATH . 'includes/pages/nav-css.php';
+    }
+    
+    /**
+     * settings_section_cb()
+     * Outputs Settings Sections
+     *
+     * @param string $section Name of section
+     * @return void
+     */
+    public function settings_section_cb($section)
+    {
+        $options = $this->options_sections();
+        $current = (substr($section['id'], strpos($section['id'], '-') + 1));
+        echo "<p>{$options[$current]['description']}</p>";
+    }
+
+
     /**
      * Returns default options
      * Used by MangaPress_Install to handle defaults on activation
@@ -282,8 +413,86 @@ final class MangaPress_Options
      * @param array $options
      * @return array
      */
-    public function sanitize_options(array $options)
+    public function sanitize_options($options)
     {
-        return $options;
+        if (!$options)
+            return $options;
+        
+        $mp_options        = MangaPress_Bootstrap::get_instance()->get_options();        
+        $section           = key($options);
+        $available_options = $this->options_fields();
+        $new_options       = $mp_options;
+
+        if ($section == 'nav'){
+
+            $new_options['nav']['insert_nav'] = intval($options['nav']['insert_nav']);
+
+            //
+            // if the value of the option doesn't match the correct values in the array, then
+            // the value of the option is set to its default.
+            $nav_css_values = array_keys($available_options['nav']['nav_css']['value']);
+
+            if (in_array($mp_options['nav']['nav_css'], $nav_css_values)){
+                $new_options['nav']['nav_css'] = strval($options['nav']['nav_css']);
+            } else {
+                $new_options['nav']['nav_css'] = 'default_css';
+            }
+        }
+
+        if ($section == 'basic') {
+            $order_by_values = array_keys($available_options['basic']['order_by']['value']);
+            //
+            // Converting the values to their correct data-types should be enough for now...
+            $new_options['basic'] = array(
+                'order_by'        => (in_array($options['basic']['order_by'], $order_by_values))
+                                            ? strval($options['basic']['order_by']) : 'post_date',
+                'group_comics'    => $this->_sanitize_integer($options, 'basic', 'group_comics'),
+                'group_by_parent' => $this->_sanitize_integer($options, 'basic', 'group_by_parent'),
+            );
+
+            if ($options['basic']['latestcomic_page'] !== 'no_val'){
+                $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
+            } else {
+                $new_options['basic']['latestcomic_page'] = 0;
+            }
+
+            $new_options['basic']['latestcomic_page_template'] 
+                    = $this->_sanitize_integer($options, 'basic', 'latestcomic_page_template');
+
+            if ($options['basic']['comicarchive_page'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
+            } else {
+                $new_options['basic']['comicarchive_page'] = 0;
+            }
+
+            $new_options['basic']['comicarchive_page_template'] 
+                    = intval($options['basic']['comicarchive_page_template']);
+        }
+
+        if ($section == 'comic_page') {
+            $new_options['comic_page'] = array(
+                'comic_post_count'    => $this->_sanitize_integer($options, 'comic_page', 'comic_post_count'),
+                'generate_comic_page' => $this->_sanitize_integer($options, 'comic_page','generate_comic_page'),
+                'comic_page_width'    => $this->_sanitize_integer($options, 'comic_page','comic_page_width'),
+                'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
+            );
+        }
+
+        return array_merge($mp_options, $new_options);
+    }
+    
+    /**
+     * Sanitize integers
+     * 
+     * @param array $option_array
+     * @param string $section
+     * @param string $name
+     * 
+     * @return mixed
+     */
+    private function _sanitize_integer($option_array, $section, $name)
+    {
+        return isset($option_array[$section][$name]) 
+                ? intval($option_array[$section][$name]) : 0;                
     }
 }

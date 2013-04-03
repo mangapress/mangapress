@@ -58,7 +58,16 @@ if (!defined('MP_LANG'))
 if (!defined('MP_DOMAIN'))
     define('MP_DOMAIN', $plugin_folder);
 
-require_once MP_ABSPATH . '/mangapress-install.php';
+require_once MP_ABSPATH . 'includes/lib/form/element.php';
+require_once MP_ABSPATH . 'includes/lib/helper.php';
+require_once MP_ABSPATH . 'includes/lib/post-type.php';
+require_once MP_ABSPATH . 'includes/lib/taxonomy.php';
+require_once MP_ABSPATH . 'includes/functions.php';
+require_once MP_ABSPATH . 'includes/template-functions.php';
+require_once MP_ABSPATH . 'mangapress-install.php';
+require_once MP_ABSPATH . 'mangapress-admin.php';
+require_once MP_ABSPATH . 'mangapress-options.php';
+require_once MP_ABSPATH . 'mangapress-posts.php';
 
 $install = MangaPress_Install::get_instance();
 register_activation_hook(__FILE__, array($install, 'do_activate'));
@@ -118,7 +127,6 @@ class MangaPress_Bootstrap
      */
     public static function load_plugin()
     {
-        self::_includes();
         self::$_instance  = new self();
     }
 
@@ -223,23 +231,6 @@ class MangaPress_Bootstrap
     }
 
     /**
-     * Inlcude needed files on init
-     *
-     * @return void
-     */
-    private static function _includes()
-    {
-        include_once('includes/lib/helper.php');
-        include_once('includes/lib/post-type.php');
-        include_once('includes/lib/taxonomy.php');
-        include_once('includes/functions.php');
-        include_once('includes/template-functions.php');
-        include_once('mangapress-admin.php');
-        include_once('mangapress-options.php');
-        include_once('mangapress-posts.php');
-    }
-
-    /**
      * Load current plugin options
      *
      * @return void
@@ -299,16 +290,6 @@ class MangaPress_Bootstrap
                 false
             );
         }
-
-        /*
-         * Comic Thumbnail Banner
-         */
-        add_image_size (
-            'comic-banner',
-            $mp_options['comic_page']['banner_width'],
-            $mp_options['comic_page']['banner_height'],
-            true
-        );
 
         /*
          * Comic Thumbnail size for Comics Listing screen
