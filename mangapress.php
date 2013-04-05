@@ -70,6 +70,7 @@ require_once MP_ABSPATH . 'mangapress-options.php';
 require_once MP_ABSPATH . 'mangapress-posts.php';
 
 $install = MangaPress_Install::get_instance();
+
 register_activation_hook(__FILE__, array($install, 'do_activate'));
 register_deactivation_hook(__FILE__, array($install, 'do_deactivate'));
 
@@ -157,7 +158,7 @@ class MangaPress_Bootstrap
         $this->set_options();
 
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init'));        
+        add_action('init', array($this, 'init'), 50);        
         add_action('template_include', 'mpp_comic_single_page');        
     }
 

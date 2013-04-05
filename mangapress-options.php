@@ -117,8 +117,7 @@ final class MangaPress_Options
     /**
      * Call-back for outputting settings fields
      *
-     * @global type $mp
-     * @param type $option Current option array
+     * @param array $option Current option array
      * @return void
      */
     public function settings_field_cb($option)

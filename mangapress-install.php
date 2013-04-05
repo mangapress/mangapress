@@ -91,7 +91,11 @@ class MangaPress_Install
 
         }
 
-        flush_rewrite_rules();
+        // this addresses issue #7 on GitHub. This action only runs
+        // on activation, and is removed with the next page load
+        // but it clears/resets the permalink cache so you can view your
+        // comic.
+        add_action('init', 'flush_rewrite_rules');
     }
 
     /**
