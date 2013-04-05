@@ -287,13 +287,12 @@ class MangaPress_Posts
         if ($image_html == '')
             return '';
         
-        $image_html .= "<p class=\"hide-if-no-js\"><a href=\"#\" data-action=\""
-                    . self::ACTION_REMOVE_IMAGE . "\" data-nonce=\""
-                    . wp_create_nonce(self::NONCE_INSERT_COMIC) . "\" id=\"js-remove-comic-thumbnail\">"
-                    . esc_html__( 'Remove Comic image', MP_DOMAIN )
-                    . "</a></p>";
+        ob_start();
+        require_once MP_ABSPATH . 'includes/pages/set-image-link.php';
+        $html = ob_get_contents();
+        ob_end_clean();
         
-        return $image_html;
+        return $html;
     }
     
     /**
@@ -303,12 +302,11 @@ class MangaPress_Posts
      */
     public function get_remove_image_html()
     {
-        $html = "<a id=\"choose-from-library-link\" href=\"#\" data-nonce=\""
-                . wp_create_nonce(self::NONCE_INSERT_COMIC) . "\" data-action=\"" . esc_attr(self::ACTION_GET_IMAGE_HTML) . "\""
-                . " data-choose=\"" .  esc_attr__('Choose a Comic Image', MP_DOMAIN) . "\""
-                . " data-update=\"" . esc_attr__('Set as Comic Image', MP_DOMAIN) . "\">"
-                . __( 'Set Comic Image', MP_DOMAIN)
-                . "</a>";
+        
+        ob_start();
+        require_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
+        $html = ob_get_contents();
+        ob_end_clean();
         
         return $html;
     }
