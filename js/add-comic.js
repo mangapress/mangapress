@@ -8,7 +8,7 @@ var MANGAPRESS = MANGAPRESS || {};
 
     MANGAPRESS.library_frame = false;
 
-    $('#comic-image').on('click', '#choose-from-library-link', function(e){
+    $(document).on('click', '#choose-from-library-link', function(e){
         e.preventDefault();
         
         var $thumbnailInput = $('#js-mangapress-comic-image'),
@@ -55,7 +55,7 @@ var MANGAPRESS = MANGAPRESS || {};
         MANGAPRESS.library_frame.open();
     });
     
-    $('#comic-image').on('click', '#js-remove-comic-thumbnail', function(e){
+    $(document).on('click', '#js-remove-comic-thumbnail', function(e){
         e.preventDefault();
         var $thumbnailInput = $('#js-mangapress-comic-image'),
             $imageFrame     = $('#js-image-frame'),           
@@ -67,7 +67,6 @@ var MANGAPRESS = MANGAPRESS || {};
             };
 
         $thumbnailInput.val('');
-        $imageFrame.html(MANGAPRESS.imageFrame);
         $.post(ajaxurl, data, function(data){
              $imageFrame.html(data.html);
         });

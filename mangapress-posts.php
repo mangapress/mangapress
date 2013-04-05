@@ -260,15 +260,16 @@ class MangaPress_Posts
         
         // get image
         $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
-        if ($image_ID) {
-            $action = isset($_POST['action']) ? $_POST['action'] : self::ACTION_REMOVE_IMAGE;
-            
-            header("Content-type: application/json");
-            if ($action == self::ACTION_GET_IMAGE_HTML){
+        $action = isset($_POST['action']) ? $_POST['action'] : self::ACTION_REMOVE_IMAGE;
+        
+        header("Content-type: application/json");
+        if ($action == self::ACTION_GET_IMAGE_HTML){
+            $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
+            if ($image_ID) {
                 echo json_encode(array('html' => $this->get_image_html($image_ID),));
-            } else {
-                echo json_encode(array('html' => $this->get_remove_image_html(),));
             }
+        } else {
+            echo json_encode(array('html' => $this->get_remove_image_html(),));
         }
                                 
         die();
@@ -313,7 +314,8 @@ class MangaPress_Posts
     }
 
     /**
-     * Save post meta data
+     * Save post meta data. By default, Manga+Press uses the _thumbnail_id
+     * meta key. This is the same meta key used for the post featured image.
      * 
      * @param int $post_id
      * @param WP_Post $post
@@ -325,8 +327,21 @@ class MangaPress_Posts
         if ($post->post_type !== self::POST_TYPE)
             return $post_id;
         
-        do_action('do_save_mangapress_comic', $post_id, $post);
+        if (empty($_POST))
+            return $post_id;
         
+        if (!wp_verify_nonce($_POST['_insert_comic'], self::NONCE_INSERT_COMIC))
+            return $post_id;
+        
+        
+        // allow plugins and themes to override
+        do_action('do_save_mangapress_comic', $post_id, $post);
+
+        if (isset($_POST['_mangapress_comic_image'])) { 
+            set_post_thumbnail($post_id, intval($_POST['_mangapress_comic_image']));
+        }
+        
+        return $post_id;
         
     }
     
