@@ -308,7 +308,7 @@ class MangaPress_Bootstrap
          */
         wp_register_style(
             'mangapress-nav',
-            MP_URLPATH . 'css/nav.css',
+            MP_URLPATH . 'assets/css/nav.css',
             null,
             MP_VERSION,
             'screen'

@@ -103,7 +103,7 @@ class MangaPress_Posts
                     'thumbnails',
                 ),
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
-                'menu_icon' => MP_URLPATH . 'images/menu_icon.png',
+                'menu_icon' => MP_URLPATH . 'assets/images/menu_icon.png',
                 'rewrite'   => array(
                     'slug' => 'comic',
                 ),
@@ -168,7 +168,7 @@ class MangaPress_Posts
         wp_enqueue_media();
         wp_register_script(
             'mangapress-media-popup',
-            plugins_url( '/js/add-comic.js', __FILE__ ),
+            plugins_url( '/css/js/add-comic.js', __FILE__ ),
             array( 'jquery' ),
             MP_VERSION,
             true
