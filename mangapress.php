@@ -40,9 +40,6 @@ $plugin_folder = plugin_basename(dirname(__FILE__));
 if (!defined('MP_VERSION'))
     define('MP_VERSION', '2.8-alpha');
 
-if (!defined('MP_DB_VERSION'))
-    define('MP_DB_VERSION', '1.1');
-
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
 
