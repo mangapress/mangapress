@@ -248,7 +248,7 @@ final class MangaPress_Options
                     'title' => __('Group Comics', MP_DOMAIN),
                     'valid' => 'boolean',
                     'description' => __('Group comics by category. This option will ignore the parent category, and group according to the child-category.', MP_DOMAIN),
-                    'default' => 0,
+                    'default' => 1,
                     'callback' => array($this, 'settings_field_cb'),
                 ),
                 'group_by_parent'      => array(
@@ -257,7 +257,7 @@ final class MangaPress_Options
                     'title' => __('Use Parent Category', MP_DOMAIN),
                     'valid' => 'boolean',
                     'description' => __('Group comics by top-most parent category. Use this option if you have sub-categories but want your navigation to function using the parent category.', MP_DOMAIN),
-                    'default'     => 0,
+                    'default'     => 1,
                     'callback'    => array($this, 'settings_field_cb'),
                 ),
                 'latestcomic_page'  => array(
@@ -277,7 +277,7 @@ final class MangaPress_Options
                     'title'       => __('Use Template', MP_DOMAIN),
                     'description' => __('Use theme template for Latest Comic Page.', MP_DOMAIN),
                     'valid'       => 'boolean',
-                    'default'     => 0,
+                    'default'     => 1,
                     'callback' => array($this, 'settings_field_cb'),
                 ),
                 'comicarchive_page' => array(
@@ -297,7 +297,7 @@ final class MangaPress_Options
                     'title'       => __('Use Template', MP_DOMAIN),
                     'description' => __('Use theme template for Comic Archive Page.', MP_DOMAIN),
                     'valid'       => 'boolean',
-                    'default'     => 0,
+                    'default'     => 1,
                     'callback' => array($this, 'settings_field_cb'),
                 ),
             ),
@@ -476,7 +476,7 @@ final class MangaPress_Options
                 'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
             );
         }
-
+        
         return array_merge($mp_options, $new_options);
     }
     
