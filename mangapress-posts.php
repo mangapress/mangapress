@@ -81,21 +81,23 @@ class MangaPress_Posts
     {
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
-            'name' => 'mangapress_series',
+            'name'       => 'mangapress_series',
             'singlename' => 'Series',
             'pluralname' => 'Series',
-            'objects' => array('mangapress_comic'),
-            'arguments' => array(
+            'objects'    => array('mangapress_comic'),
+            'arguments'  => array(
                 'hierarchical' => true,
-                'query_var' => 'series',
-                'rewrite' => array('slug' => 'series'),
+                'query_var'    => 'series',
+                'rewrite'      => array(
+                    'slug' => 'series'
+                ),
             ),            
         ));
         
         $this->_post_type = new MangaPress_PostType(array(
             'name'          => self::POST_TYPE,
             'pluralname'    => 'Comics',
-            'singlename' => 'Comic',
+            'singlename'    => 'Comic',
             'arguments'     => array(
                 'supports'      => array(
                     'title',
@@ -168,7 +170,7 @@ class MangaPress_Posts
         wp_enqueue_media();
         wp_register_script(
             'mangapress-media-popup',
-            plugins_url( '/css/js/add-comic.js', __FILE__ ),
+            plugins_url( '/assets/js/add-comic.js', __FILE__ ),
             array( 'jquery' ),
             MP_VERSION,
             true
@@ -330,8 +332,7 @@ class MangaPress_Posts
         
         if (!wp_verify_nonce($_POST['_insert_comic'], self::NONCE_INSERT_COMIC))
             return $post_id;
-        
-        
+                
         // allow plugins and themes to override
         do_action('do_save_mangapress_comic', $post_id, $post);
 
