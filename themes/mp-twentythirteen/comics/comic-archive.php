@@ -8,8 +8,8 @@
  * @version $Id$
  */
 get_header();?>
-<div id="primary">
-    <div id="content" role="main">
+<div id="primary" class="content-area">
+    <div id="content" class="site-content" role="main">
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             <header class="entry-header">
                 <h1 class="entry-title"><?php the_title(); ?></h1>
