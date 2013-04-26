@@ -82,8 +82,9 @@ class MangaPress_Posts
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
             'name'       => 'mangapress_series',
+            'textdomain' => MP_DOMAIN,
             'singlename' => 'Series',
-            'pluralname' => 'Series',
+            'pluralname' => 'Series',            
             'objects'    => array('mangapress_comic'),
             'arguments'  => array(
                 'hierarchical' => true,
@@ -96,8 +97,9 @@ class MangaPress_Posts
         
         $this->_post_type = new MangaPress_PostType(array(
             'name'          => self::POST_TYPE,
+            'textdomain'    => MP_DOMAIN,
             'pluralname'    => 'Comics',
-            'singlename'    => 'Comic',
+            'singlename'    => 'Comic',            
             'arguments'     => array(
                 'supports'      => array(
                     'title',

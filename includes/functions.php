@@ -116,9 +116,15 @@ function mpp_latest_comic_page($template)
 
     $object     = $wp_query->get_queried_object();
 
-    if (isset($object->post_name) && $object->post_name == $mp_options['basic']['latestcomic_page']) {
+    if (isset($object->post_name) 
+            && $object->post_name == $mp_options['basic']['latestcomic_page']) {
 
-        $latest_template = apply_filters('template_include_latest_comic', array('comics/latest-comic.php'));
+        $latest_template = apply_filters(
+            'template_include_latest_comic',
+            array(
+                'comics/latest-comic.php',
+            )
+        );
         $template = locate_template($latest_template);
 
         // if template can't be found, then look for query defaults...
@@ -255,7 +261,13 @@ function mpp_comic_single_page($template)
 
     if (isset($object->post_type) && $object->post_type == 'mangapress_comic' && is_single()) {
 
-        $single_comic_templates = apply_filters('template_include_single_comic', array('comics/single-comic.php'));
+        $single_comic_templates = apply_filters(
+            'template_include_single_comic',
+            array(
+                'comics/single-comic.php',
+                'single-comic.php',
+            )
+        );
 
         if ('' == locate_template($single_comic_templates, true)) {
 
