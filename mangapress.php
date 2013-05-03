@@ -274,9 +274,10 @@ class MangaPress_Bootstrap
         /*
          * Comic Archive Page template override
          */
-        if ((bool)$mp_options['basic']['comicarchive_page_template'])
+        if ((bool)$mp_options['basic']['comicarchive_page_template']) {
             add_filter('template_include', 'mpp_comic_archivepage');
-
+        }
+        
         /*
          * Comic Page size
          */
