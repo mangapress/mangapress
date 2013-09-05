@@ -13,8 +13,8 @@ var MANGAPRESS = MANGAPRESS || {};
         
         var $thumbnailInput = $('#js-mangapress-comic-image'),
             $imageFrame     = $('#js-image-frame'),
-            nonce = $(this).attr('data-nonce'),
-            action = $(this).attr('data-action');
+            nonce           = $(this).attr('data-nonce'),
+            action          = $(this).attr('data-action');
         
         if (MANGAPRESS.library_frame) {
             MANGAPRESS.library_frame.open();
@@ -59,8 +59,8 @@ var MANGAPRESS = MANGAPRESS || {};
         e.preventDefault();
         var $thumbnailInput = $('#js-mangapress-comic-image'),
             $imageFrame     = $('#js-image-frame'),           
-            nonce = $(this).attr('data-nonce'),
-            action = $(this).attr('data-action'),
+            nonce           = $(this).attr('data-nonce'),
+            action          = $(this).attr('data-action'),
             data = {
                 nonce  : nonce,
                 action : action
