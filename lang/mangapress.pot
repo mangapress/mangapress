@@ -14,8 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-SearchPath-0: R:\\public_html\\mangapress\\content\\plugins"
-"\\mangapress\n"
+"X-Poedit-SearchPath-0: \mangapress\n"
 
 #: mangapress/mangapress-options.php:235
 msgid "Order By"
@@ -168,6 +167,14 @@ msgstr ""
 msgid "Sorry, you must be an Administrator in order to use Manga+Press"
 msgstr ""
 
+#: mangapress/mangapress-posts.php:101
+msgid "Comics"
+msgstr ""
+
+#: mangapress/mangapress-posts.php:102
+msgid "Comic"
+msgstr ""
+
 #: mangapress/mangapress-posts.php:130
 msgid "Comic Image"
 msgstr ""
@@ -188,6 +195,8 @@ msgstr ""
 msgid "Comic Title"
 msgstr ""
 
+#: mangapress/mangapress-posts.php:85
+#: mangapress/mangapress-posts.php:86
 #: mangapress/mangapress-posts.php:249
 msgid "Series"
 msgstr ""
@@ -283,6 +292,10 @@ msgstr ""
 
 #: mangapress/includes/pages/remove-image-link.php:14
 msgid "Set Comic Image"
+msgstr ""
+
+#: mangapress/includes/pages/set-image-link.php:18
+msgid "Remove Comic image"
 msgstr ""
 
 #: mangapress/includes/pages/options.php:8
