@@ -463,9 +463,10 @@ final class MangaPress_Options
             } else {
                 $new_options['basic']['comicarchive_page'] = 0;
             }
-
+            
+            // damned checkboxes...fffuuuu
             $new_options['basic']['comicarchive_page_template'] 
-                    = intval($options['basic']['comicarchive_page_template']);
+                    = $this->_sanitize_integer($options, 'basic', 'comicarchive_page_template');
         }
 
         if ($section == 'comic_page') {
