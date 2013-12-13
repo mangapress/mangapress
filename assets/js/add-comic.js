@@ -1,5 +1,5 @@
 /**
- * Create namespace
+ * Plugin namespace
  * @type namespace
  */
 var MANGAPRESS = MANGAPRESS || {};

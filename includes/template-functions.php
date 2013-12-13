@@ -28,7 +28,7 @@ if (!function_exists('is_comic')) {
     {
         if (is_integer($post)) {
             $post = get_post($post);
-        };
+        }
 
         if (is_null($post)) {
             global $post;
@@ -39,6 +39,8 @@ if (!function_exists('is_comic')) {
         return ($post_type == 'mangapress_comic');
     }
 }
+
+
 /**
  * @since 1.0 RC1
  *
@@ -58,6 +60,8 @@ if (!function_exists('is_comic_page')) {
 
     }
 }
+
+
 /**
  *
  * @since 1.0 RC1
@@ -82,6 +86,7 @@ if (!function_exists('is_comic_archive_page')) {
 
     }
 }
+
 
 /**
  * mangapress_comic_navigation()

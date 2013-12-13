@@ -2,7 +2,7 @@
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
     die('You are not allowed to call this page directly.');
 
-if ( ! current_user_can('manage_options') )
+if ( ! current_user_can('manage_options') ){
     wp_die(
         __(
             'You do not have sufficient permissions '
@@ -10,7 +10,7 @@ if ( ! current_user_can('manage_options') )
             'mangapress'
         )
     );
-
+}
     $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'basic' );
 ?>
 <script type="text/javascript">

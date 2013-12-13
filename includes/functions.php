@@ -99,10 +99,11 @@ function mpp_get_latest_comic()
     return $single_comic_query;
 }
 
+
 /**
  * Overrides mpp_filter_latest_comic() with a template.
  *
- * @global object $wp_query
+ * @global WP_Query $wp_query
  *
  * @since 2.7
  * @param string $template
@@ -116,35 +117,31 @@ function mpp_latest_comic_page($template)
 
     $object     = $wp_query->get_queried_object();
 
-    if (isset($object->post_name) 
-            && $object->post_name == $mp_options['basic']['latestcomic_page']) {
-
-        $latest_template = apply_filters(
-            'template_include_latest_comic',
-            array(
-                'comics/latest-comic.php',
-            )
-        );
-        $template = locate_template($latest_template);
-
-        // if template can't be found, then look for query defaults...
-        if (!$template) {
-            return get_page_template();
-        } else {
-            return $template;
-        }
-
-    } else {
-
+    if (!isset($object->post_name) 
+            && !($object->post_name == $mp_options['basic']['latestcomic_page'])) {
         return $template;
-
     }
+
+    $latest_template = apply_filters(
+        'template_include_latest_comic',
+        array('comics/latest-comic.php',)
+    );
+    $template = locate_template($latest_template);
+
+    // if template can't be found, then look for query defaults...
+    if (!$template) {
+        return get_page_template();
+    } else {
+        return $template;
+    }
+
 }
+
 
 /**
  * Turns taxonomies associated with comics into comic archives.
  *
- * @global object $wp_query
+ * @global WP_Query $wp_query
  * @param string $template
  *
  * @return void|string
@@ -153,23 +150,21 @@ function mpp_series_template($template)
 {
     global $wp_query;
 
-    if ($wp_query->is_tax) {
+    // is the query is not a taxonomy query, then return
+    $object = $wp_query->get_queried_object();
 
-        $object = $wp_query->get_queried_object();
-
-        if (isset($object->taxonomy) && $object->taxonomy == 'mangapress_series'){
-
-            if ('' == locate_template(array('comics/archives.php'), true)) {
-                return get_archive_template();
-            }
-
-        } else {
-            return $template;
-        }
-    } else {
-       return $template;
+    if (!isset($object->taxonomy) || !($object->taxonomy == 'mangapress_series')){
+        return $template;
     }
+    
+    $template = locate_template(array('comics/archives.php'), true);
+    if ($template == '') {
+        return get_archive_template();
+    }
+    
+    return $template;
 }
+
 
 /**
  * comic_archivepage()
@@ -188,20 +183,23 @@ function mpp_comic_archivepage($template)
 
     $object = $wp_query->get_queried_object();
 
-    if (isset($object->post_name) && $object->post_name == $mp_options['basic']['comicarchive_page']) {
-        $archive_templates = apply_filters('template_include_comic_archive', array('comics/comic-archive.php'));
-
-        // if template can't be found, then look for query defaults...
-        if ('' == locate_template($archive_templates, true)) {
-            return get_page_template();
-        }
-
-    } else {
-
+    if (!isset($object->post_name) 
+            || !($object->post_name == $mp_options['basic']['comicarchive_page'])) {
         return $template;
-
     }
+    
+    $archive_templates = apply_filters(
+        'template_include_comic_archive',
+        array('comics/comic-archive.php')
+    );
 
+    // if template can't be found, then look for query defaults...
+    $template = locate_template($archive_templates, true);
+    if ($template == '') {
+        return get_page_template();
+    }
+    
+    return $template;
 }
 
 
@@ -259,28 +257,28 @@ function mpp_comic_single_page($template)
 
     $object = $wp_query->get_queried_object();
 
-    if (isset($object->post_type) && $object->post_type == 'mangapress_comic' && is_single()) {
-
-        $single_comic_templates = apply_filters(
-            'template_include_single_comic',
-            array(
-                'comics/single-comic.php',
-                'single-comic.php',
-            )
-        );
-
-        if ('' == locate_template($single_comic_templates, true)) {
-
-            load_template(MP_ABSPATH . 'templates/single-comic.php');
-        }
-
-    } else {
-
+    if (!isset($object->post_type) 
+            || !($object->post_type == 'mangapress_comic' && is_single())) {
         return $template;
-
     }
 
+    $single_comic_templates = apply_filters(
+        'template_include_single_comic',
+        array(
+            'comics/single-comic.php',
+            'single-comic.php',
+        )
+    );
+    
+    $template = locate_template($single_comic_templates, true);
+    
+    if ($template == '') {
+        load_template(MP_ABSPATH . 'templates/single-comic.php');
+    } else {
+        load_template($template);
+    }        
 }
+
 
 /**
  * mpp_comic_insert_navigation()
