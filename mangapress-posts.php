@@ -7,200 +7,291 @@
 
 /**
  * MangaPress Posts class
- * Handles functionality for the Comic post-type
- *
+ * 
  * @package MangaPress
  * @subpackage MangaPress_Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
-class MangaPress_Posts
+class MangaPress_Posts extends ComicPostType
 {
     /**
-     * Get image html
+     * Ajax action hook for adding comic images
      * 
      * @var string
      */
-    const ACTION_GET_IMAGE_HTML = 'mangapress-get-image-html';
+    private $_ajax_action_add_comic    = 'add-comic';
     
     /**
-     * Remove image html and return Add Image string
+     * Ajax action hook for removing comic images
      * 
      * @var string
-     */
-    const ACTION_REMOVE_IMAGE  = 'mangapress-remove-image';
+     */    
+    private $_ajax_action_remove_comic = 'remove-comic';
     
     /**
      * Nonce string
-     *
-     * @var string
-     */
-    const NONCE_INSERT_COMIC = 'mangapress_comic-insert-comic';
-    
-    /**
-     * Post-type name
      * 
      * @var string
-     */
-    const POST_TYPE = 'mangapress_comic';
+     */    
+    private $_nonce_insert_comic       = 'mangapress_comic-insert-comic';
     
     /**
-     * Class for initializing custom post-type
-     *
-     * @var MangaPress_PostType
-     */
-    private $_post_type = null;
-
-    /**
-     * Constructor
+     * Constructor 
      */
     public function __construct()
-    {
-        $this->_register_post_type();
-
+    {        
+        
+        parent::__construct();
+        
         // Setup Manga+Press Post Options box
-        add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
-        add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
-        add_action('save_post', array($this, 'save_post'), 500, 2);
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        if (is_admin()){
+            add_action("wp_ajax_{$this->_ajax_action_add_comic}", array($this, 'wp_ajax_comic_handler'));
+            add_action("wp_ajax_{$this->_ajax_action_remove_comic}", array($this, 'wp_ajax_comic_handler'));
+        }
         
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
         add_action('manage_posts_custom_column', array($this, 'comics_headers'));
         add_filter('manage_edit-mangapress_comic_columns', array($this, 'comics_columns'));
-
-    }
-
-    /**
-     * Register the post-type
-     *
-     * @return void
-     */
-    private function _register_post_type()
-    {
-        // register taxonomy
-        $taxonomy = new MangaPress_Taxonomy(array(
-            'name'       => 'mangapress_series',
-            'textdomain' => MP_DOMAIN,
-            'singlename' => 'Series',
-            'pluralname' => 'Series',            
-            'objects'    => array('mangapress_comic'),
-            'arguments'  => array(
-                'hierarchical' => true,
-                'query_var'    => 'series',
-                'rewrite'      => array(
-                    'slug' => 'series'
-                ),
-            ),            
-        ));
         
-        $this->_post_type = new MangaPress_PostType(array(
-            'name'          => self::POST_TYPE,
-            'textdomain'    => MP_DOMAIN,
-            'pluralname'    => 'Comics',
-            'singlename'    => 'Comic',            
-            'arguments'     => array(
-                'supports'      => array(
-                    'title',
-                    'comments',
-                    'thumbnails',
-                ),
-                'register_meta_box_cb' => array($this, 'meta_box_cb'),
-                'menu_icon' => MP_URLPATH . 'assets/images/menu_icon.png',
-                'rewrite'   => array(
-                    'slug' => 'comic',
-                ),
-                'taxonomies' => array(
-                    $taxonomy->get_name(),
-                ),
-            ),
-        ));
+        add_filter('attachment_fields_to_edit', array($this, 'attachment_fields_to_edit'), null, 2);
+        add_action('admin_head-media-upload-popup', array($this, 'media_upload_popup_scripts'));
+        
     }
     
     /**
-     * Meta box call-back function.
-     *
-     * @return void
-     */
-    public function meta_box_cb()
-    {
-        add_meta_box(
-            'comic-image',
-            __('Comic Image', MP_DOMAIN),
-            array($this, 'comic_meta_box_cb'),
-            $this->_post_type->get_name(),
-            'normal',
-            'high'
-        );
-
-        /*
-         * Because we don't need this...the comic image is the "Featured Image"
-         * TODO add an option for users to override this "functionality"
-         */
-        remove_meta_box('postimagediv', 'mangapress_comic', 'side');
-
-    }
-
-    /**
-     * Comic meta box
+     * Meta-box callback for outputting Add Comic box.
      * 
-     * @return void
+     * @global type $post_ID 
      */
     public function comic_meta_box_cb()
     {
-        require_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
+        global $post_ID;
+        
+        $thumbnail_id = get_post_thumbnail_id($post_ID);
+        
+        if ($thumbnail_id == '') {
+            $image_popup_url = $this->_get_iframe_src_url($post_ID);
+        ?>
+        <a href="<?php echo $image_popup_url; ?>" title="<?php esc_attr__( 'Set Comic Image', MP_DOMAIN ) ?>" id="set-comic-image" class="thickbox">Set Comic Image</a>        
+        <?php
+        
+        } else {
+            echo $this->_admin_post_comic_html($thumbnail_id, $post_ID);
+        }
+        
     }
-    
+
     /**
-     * Enqueue scripts for post-edit and post-add screens
+     * Private helper function for creating Media Library popup box.
      * 
-     * @global WP_Post $post
-     * @return void
+     * @param integer $post_ID Post ID
+     * @return string 
      */
-    public function enqueue_scripts()
+    private function _get_iframe_src_url($post_ID)
     {
-        $current_screen = get_current_screen();
+        $iframe_url = add_query_arg(array(
+                        'post_id'   => $post_ID,
+                        'tab'       => 'library',
+                        'post_type' => 'mangapress_comic',
+                        'TB_iframe' => 1,
+                        'width'     => '640',
+                        'height'    => '322'
+                    ),
+                    admin_url('media-upload.php')
+                );
         
-        if (!isset($current_screen->post_type) || !isset($current_screen->base))
-            return;
-        
-        if (!($current_screen->post_type == self::POST_TYPE && $current_screen->base == 'post'))
-            return;
-        
-        // Include in admin_enqueue_scripts action hook
-        wp_enqueue_media();
-        wp_register_script(
-            'mangapress-media-popup',
-            plugins_url( '/assets/js/add-comic.js', __FILE__ ),
-            array( 'jquery' ),
-            MP_VERSION,
-            true
-        );
-
-        wp_localize_script(
-            'mangapress-media-popup',
-            'MANGAPRESS',
-            array(
-                'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
-                'button' => __('Insert Comic into Post', MP_DOMAIN),
-            )
-        );
-
-        wp_enqueue_script('mangapress-media-popup');
+        return $iframe_url;
     }
     
     /**
-     * Modify header columns for Comic Post-type
+     * Enqueue upload scripts
+     * 
+     * @return void 
+     */
+    public function media_upload_popup_scripts()
+    {
+        wp_enqueue_script(MP_DOMAIN . '-media-script');
+    }
+
+    /**
+     * Adds an add image link to media popup.
+     * 
+     * @param array $form_fields Available fields in Media Library popup.
+     * @param object $post Current post object
+     * @return string 
+     */
+    public function attachment_fields_to_edit($form_fields, $post)
+    {
+
+        if (strpos(get_post_mime_type($post->ID), 'image') === false)
+            return $form_fields;
+
+        if (!isset($_GET['post_type']) || $_GET['post_type'] !== 'mangapress_comic')
+            return $form_fields;
+        
+        if (intval($_GET['post_id']) == 0)
+            return $form_fields;
+        
+        $form_fields['mangapress_comic'] = array(
+            'label' => __('Manga+Press', MP_DOMAIN),
+            'input' => 'html',
+        );
+        
+        $parent_post_id = intval($_GET['post_id']);
+        $nonce = wp_create_nonce($this->_nonce_insert_comic);
+        $fields = "<p>"
+                . "<a href=\"#\" data-post-parent=\"{$parent_post_id}\" " 
+                . "data-attachment-id=\"{$post->ID}\" data-nonce=\"{$nonce}\" " 
+                . "class=\"manga-press-add-comic-link\">Use As Comic Image</a>"
+                . "</p>";
+        
+        $form_fields['mangapress_comic']['html'] = $fields;
+        
+        return $form_fields;
+    }
+    
+    /**
+     * Handler function for Ajax calls.
+     * 
+     * @return string 
+     */
+    public function wp_ajax_comic_handler() 
+    {
+
+        header('Content-type: application/json');
+        
+        $nonce_action = ($_POST['action'] == 'add-comic')
+                            ? $this->_nonce_insert_comic
+                            : "set_comic_thumbnail-{$_POST['post_parent']}";
+
+        if (!wp_verify_nonce($_POST['nonce'], $nonce_action)) {
+            // send a JSON response
+            echo json_encode(array(
+                'error' => 'invalid-nonce',
+                'msg'   => 'Nonce has either expired or is invalid. '
+                           . 'Please re-open Media Library modal and try again.'
+            ));
+            exit();
+        }
+        
+        if ($_POST['attachment_id'] == '' || $_POST['attachment_id'] == 0) {
+            
+            echo json_encode(array(
+                'error' => 'no-attachment-id',
+                'msg'   => 'Attachment ID is blank.'
+            ));
+            exit();
+        }
+        
+        if ($_POST['action'] == 'add-comic') {
+            $html = $this->_admin_post_comic_html($_POST['attachment_id'], $_POST['post_parent']);
+            $this->_set_post_comic_image($_POST['attachment_id'], $_POST['post_parent']);
+        } else {
+            $html = $this->_admin_post_comic_html(null, $_POST['post_parent']);
+            $this->_delete_post_comic_image($_POST['post_parent']);
+        }
+        
+        echo json_encode(array(
+            'html'        => $html,
+            'post_parent' => intval($_POST['post_parent']),
+        ));
+        
+        die();
+            
+    }
+    
+    /**
+     * Private helper function for returning Add Comic thumbnail html
+     * 
+     * @global array $_wp_additional_image_sizes
+     * @param integer $thumbnail_id
+     * @param integer $post_parent
+     * @return string
+     */
+    private function _admin_post_comic_html($thumbnail_id = '', $post_parent = '')
+    {
+        global $_wp_additional_image_sizes;
+        
+	$set_thumbnail_link = '<p class="hide-if-no-js"><a title="' 
+                            . esc_attr__( 'Set Comic Image', MP_DOMAIN ) . '" href="' 
+                            . esc_url( $this->_get_iframe_src_url($post_parent) ) 
+                            . '" id="set-comic-image" class="thickbox">%s</a></p>';
+        
+	$content = sprintf($set_thumbnail_link, esc_html__(  'Set Comic Image', MP_DOMAIN ));
+
+	if ( $thumbnail_id && get_post( $thumbnail_id ) ) {
+            
+            if ( !isset( $_wp_additional_image_sizes['comic-page'] ) ) {
+                $thumbnail_html = wp_get_attachment_image( $thumbnail_id, 'medium');
+            } else {
+                $thumbnail_html = wp_get_attachment_image( $thumbnail_id, 'comic-page' );
+            }
+            
+            if ( !empty( $thumbnail_html ) ) {
+                    $ajax_nonce = wp_create_nonce( "set_comic_thumbnail-{$post_parent}" );
+                    $content = sprintf($set_thumbnail_link, $thumbnail_html);
+                    $content .= '<p class="hide-if-no-js">'
+                             . '<a href="#" data-nonce="' . $ajax_nonce . '" data-post-parent="' . $post_parent . '" id="remove-comic-thumbnail">'
+                             . esc_html__( 'Remove Comic image', MP_DOMAIN ) . '</a></p>';
+            }
+                        
+	}
+
+	return apply_filters( 'mangapress_admin_post_thumbnail_html', $content );
+        
+    }
+    
+    /**
+     * Private helper function for setting comic thumbnail as featured image.
+     * 
+     * @global array $_wp_additional_image_sizes
+     * @param integer $thumbnail_id
+     * @param integer $post_parent
+     * @return boolean
+     */    
+    private function _set_post_comic_image($thumbnail_id, $post_parent)
+    {
+        
+        $attachment_post = get_post($thumbnail_id);
+        $attachment_post->post_parent = $post_parent;
+        
+        wp_update_post($attachment_post);
+        
+        return set_post_thumbnail($post_parent, $thumbnail_id);
+    }
+    
+    /**
+     * Removes the post from featured image when deleted.
+     * 
+     * @param integer $post_parent
+     * @return boolean
+     */
+    private function _delete_post_comic_image($post_parent)
+    {
+        $thumbnail_id = get_post_thumbnail_id($post_parent);
+        
+        $attachment_post = get_post($thumbnail_id);
+        $attachment_post->post_parent = 0;
+        
+        wp_update_post($attachment_post);
+        
+        return delete_post_thumbnail($post_parent);
+        
+    }
+    
+    /**
+     * mpp_custom_columns()
      *
-     * @global WP_Post $post
-     * @param array $column
-     * @return void
+     * @since 2.7
+     *
      */
     public function comics_headers($column)
     {
         global $post;
-
+        
         if ("cb" == $column) {
             echo "<input type=\"checkbox\" value=\"{$post->ID}\" name=\"post[]\" />";
         } elseif ("thumbnail" == $column) {
@@ -232,118 +323,24 @@ class MangaPress_Posts
             echo $post->post_author;
         }
     }
-
     /**
-     * Modify comic columns for Comics screen
+     * mpp_comic_columns()
      *
-     * @param array $columns
-     * @return array
+     * @since 2.7
+     *
      */
     public function comics_columns($columns)
     {
 
         $columns = array(
-            "cb"          => "<input type=\"checkbox\" />",
-            "thumbnail"   => __("Thumbnail", MP_DOMAIN),
-            "title"       => __("Comic Title", MP_DOMAIN),
-            "series"      => __("Series", MP_DOMAIN),
-            "description" => __("Description", MP_DOMAIN),
+                "cb"          => "<input type=\"checkbox\" />",
+                "thumbnail"   => "Thumbnail",
+                "title"       => "Comic Title",
+                "series"      => "Series",
+                "description" => "Description",
         );
 
         return $columns;
-    }
-    
-    /**
-     * Retrieve image HTML
-     * 
-     * @return void
-     */
-    public function get_image_html_ajax()
-    {
-        // nonce verification
-        
-        // get image
-        $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
-        $action = isset($_POST['action']) ? $_POST['action'] : self::ACTION_REMOVE_IMAGE;
-        
-        header("Content-type: application/json");
-        if ($action == self::ACTION_GET_IMAGE_HTML){
-            $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
-            if ($image_ID) {
-                echo json_encode(array('html' => $this->get_image_html($image_ID),));
-            }
-        } else {
-            echo json_encode(array('html' => $this->get_remove_image_html(),));
-        }
-                                
-        die();
-    }
-    
-    /**
-     * Retrieve image html
-     * 
-     * @param integer $post_id
-     * @return string
-     */
-    public function get_image_html($image_ID)
-    {
-        $image_html = wp_get_attachment_image($image_ID, 'medium');
-        if ($image_html == '')
-            return '';
-        
-        ob_start();
-        require_once MP_ABSPATH . 'includes/pages/set-image-link.php';
-        $html = ob_get_contents();
-        ob_end_clean();
-        
-        return $html;
-    }
-    
-    /**
-     * Reset comic image html
-     * 
-     * @return string
-     */
-    public function get_remove_image_html()
-    {
-        
-        ob_start();
-        require_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
-        $html = ob_get_contents();
-        ob_end_clean();
-        
-        return $html;
-    }
 
-    /**
-     * Save post meta data. By default, Manga+Press uses the _thumbnail_id
-     * meta key. This is the same meta key used for the post featured image.
-     * 
-     * @param int $post_id
-     * @param WP_Post $post
-     * 
-     * @return void
-     */
-    public function save_post($post_id, $post)
-    {
-        if ($post->post_type !== self::POST_TYPE)
-            return $post_id;
-        
-        if (empty($_POST))
-            return $post_id;
-        
-        if (!wp_verify_nonce($_POST['_insert_comic'], self::NONCE_INSERT_COMIC))
-            return $post_id;
-                
-        // allow plugins and themes to override
-        do_action('do_save_mangapress_comic', $post_id, $post);
-
-        if (isset($_POST['_mangapress_comic_image'])) { 
-            set_post_thumbnail($post_id, intval($_POST['_mangapress_comic_image']));
-        }
-        
-        return $post_id;
-        
     }
-    
 }

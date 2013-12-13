@@ -42,16 +42,15 @@ if (!function_exists('is_comic')) {
 /**
  * @since 1.0 RC1
  *
- * @global WP_Query $wp_query
+ * @global array $mp_options
  * @return bool
  */
 if (!function_exists('is_comic_page')) {
     function is_comic_page()
     {
-        global $wp_query;
+        global $mp, $wp_query;
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
+        $mp_options = $mp->get_options();
         $query      = $wp_query->get_queried_object();
 
         return ($wp_query->is_page && ($query->post_name == $mp_options['basic']['latestcomic_page']));
@@ -62,16 +61,15 @@ if (!function_exists('is_comic_page')) {
  *
  * @since 1.0 RC1
  *
- * @global WP_Query $wp_query
+ * @global array $mp_options
  * @return bool
  */
 if (!function_exists('is_comic_archive_page')) {
     function is_comic_archive_page()
     {
-        global $wp_query;
+        global $mp, $wp_query;
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
+        $mp_options = $mp->get_options();
         $query      = $wp_query->get_queried_object();
 
         $is_comic_archive_page
@@ -98,8 +96,9 @@ if (!function_exists('is_comic_archive_page')) {
  */
 function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $echo = true)
 {
+    global $mp;
 
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+    $mp_options = $mp->get_options();
 
     $defaults = array(
         'container'      => 'nav',

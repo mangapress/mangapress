@@ -1,6 +1,0 @@
-{
-    "name": "jesgs/mangapress",
-    "require": {
-        "php": ">=5.2.0"
-    }
-}
