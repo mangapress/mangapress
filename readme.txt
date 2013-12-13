@@ -3,8 +3,8 @@ Contributors: Jess Green
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 3.5
-Tested up to: 3.5.1
-Stable tag: 2.7.4
+Tested up to: 3.8
+Stable tag: 2.7.5
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,6 +15,11 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
+= 2.7.5 =
+   * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
+   * Fixed undefined index errors caused by checkboxes when settings page is updated
+   * Tested works with WordPress 3.8
+
 = 2.7.4 =
    * Fixed SQL bugs relating to "Group By Category" option
 
@@ -36,6 +41,11 @@ Fixes a problem with the Manga+Press Options page. A path issue in the framework
 == Changelog ==
 
 = 2.7 =
+   * 2.7.5
+      * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
+      * Fixed undefined index errors caused by checkboxes when settings page is updated
+      * Tested works with WordPress 3.8
+
    * 2.7.4
       * Fixed SQL bugs relating to "Group By Category" option
 

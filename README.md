@@ -10,28 +10,17 @@ Manga+Press is a webcomic management system for WordPress.
 Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
-#### 2.8
-
-#### 2.7.3
-   * Added "Group By Category" parent option
-
-#### 2.7.2
-   * Added Spanish Language support.
-   * Fixed issues with comic navigation.
-   * Addressing query-usage on Latest Comic page.
-
-#### 2.7 Beta 3
-Updates processing for templates.
-
-#### 2.7 Beta 2
-Fixes a problem with the Manga+Press Options page. A path issue in the framework may prevent option fields from displaying properly.
-
-
 ## Changelog
-### 2.8
-   * 2.8-alpha
 
 ### 2.7
+   * 2.7.5
+      * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
+      * Fixed undefined index errors caused by checkboxes when settings page is updated
+      * Tested works with WordPress 3.8
+
+   * 2.7.4
+      * Fixed SQL bugs relating to "Group By Category" option
+
    * 2.7.3
       * Added "Group By Category" parent option
 
