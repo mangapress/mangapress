@@ -21,6 +21,11 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
    * Adjusted template stack for single comics
    * Added new Media Library popup (eliminating legacy ThickBox dependency)
 
+= 2.7.5 =
+   * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
+   * Fixed undefined index errors caused by checkboxes when settings page is updated
+   * Tested works with WordPress 3.8
+
 = 2.7.4 =
    * Fixed SQL bugs relating to "Group By Category" option
 
@@ -44,6 +49,11 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
    * Added bundled theme for TwentyEleven, TwentyTwelve, and TwentyThirteen
 
 = 2.7 =
+   * 2.7.5
+      * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
+      * Fixed undefined index errors caused by checkboxes when settings page is updated
+      * Tested works with WordPress 3.8
+
    * 2.7.4
       * Fixed SQL bugs relating to "Group By Category" option
 

@@ -14,7 +14,7 @@
  Author URI: http://www.jes.gs
 */
 /*
- * (c) 2013 Jessica C Green
+ * (c) 2014 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -59,16 +59,18 @@ class MangaPress_Install
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         // Check for capability
-        if ( !current_user_can('activate_plugins') )
+        if ( !current_user_can('activate_plugins') ){
             wp_die( __('Sorry, you do not have suffient permissions to activate this plugin.', 'mangapress') );
-
+        }
+        
         // Get the capabilities for the administrator
         $role = get_role('administrator');
 
         // Must have admin privileges in order to activate.
-        if ( empty($role) )
+        if ( empty($role) ) {
             wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress') );
-
+        }
+        
         if ( version_compare ($wp_version, '3.0', '<=')) {
             wp_die(
                   'Sorry, only WordPress 3.0 and later are supported.'
@@ -115,13 +117,6 @@ class MangaPress_Install
      */
     public function do_upgrade()
     {
-        $options = get_option('mangapress_options');
-        $defaults = MangaPress_Options::get_default_options();
-
-        // add new option to the array
-        $options['permalink'] = $defaults['permalink'];
-
-        update_option('mangapress_options', $options);
         update_option('mangapress_ver', MP_VERSION);
 
         delete_option( 'mangapress_upgrade' );
