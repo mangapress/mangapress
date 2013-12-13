@@ -511,35 +511,41 @@ ul.comic-nav li:before{ content: ""; }
             $new_options['basic'] = array(
                 'order_by'        => (in_array($options['basic']['order_by'], $order_by_values))
                                             ? strval($options['basic']['order_by']) : 'post_date',
-                'group_comics'    => intval($options['basic']['group_comics']),
-                'group_by_parent' => intval($options['basic']['group_by_parent']),
+                'group_comics'    => isset($options['basic']['group_comics']) 
+                                                ? intval($options['basic']['group_comics']) : 0,
+                'group_by_parent' => isset($options['basic']['group_by_parent'])
+                                            ? intval($options['basic']['group_by_parent']) : 0,
             );
 
             if ($options['basic']['latestcomic_page'] !== 'no_val'){
                 $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
             }
 
-            $new_options['basic']['latestcomic_page_template'] = intval($options['basic']['latestcomic_page_template']);
+            $new_options['basic']['latestcomic_page_template'] = isset($options['basic']['latestcomic_page_template'])
+                                                                ? intval($options['basic']['latestcomic_page_template']) : 0;
 
             if ($options['basic']['comicarchive_page'] !== 'no_val'){
                 $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
             }
 
-            $new_options['basic']['comicarchive_page_template'] = intval($options['basic']['comicarchive_page_template']);
+            $new_options['basic']['comicarchive_page_template'] = isset($options['basic']['comicarchive_page_template']) 
+                                                                    ? intval($options['basic']['comicarchive_page_template']) : 0;
         }
 
         if ($section == 'comic_page') {
             $new_options['comic_page'] = array(
-                'make_thumb'          => intval($options['comic_page']['make_thumb']),
+                'make_thumb'          => isset($options['comic_page']['make_thumb'])
+                                            ? intval($options['comic_page']['make_thumb']) : 0,
                 'banner_width'        => intval($options['comic_page']['banner_width']),
                 'banner_height'       => intval($options['comic_page']['banner_height']),
                 'comic_post_count'    => intval($options['comic_page']['comic_post_count']),
-                'generate_comic_page' => intval($options['comic_page']['generate_comic_page']),
+                'generate_comic_page' => isset($options['comic_page']['generate_comic_page']) 
+                                            ? intval($options['comic_page']['generate_comic_page']) : 0,
                 'comic_page_width'    => intval($options['comic_page']['comic_page_width']),
                 'comic_page_height'   => intval($options['comic_page']['comic_page_height']),
             );
         }
-
+        
         $options = array_merge($mp_options, $new_options);
 
         return $options;
