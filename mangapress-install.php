@@ -119,7 +119,7 @@ class MangaPress_Install
         $defaults = MangaPress_Options::get_default_options();
 
         // add new option to the array
-        $options['permalink'] = self::$_default_options['permalink'];
+        $options['permalink'] = $defaults['permalink'];
 
         update_option('mangapress_options', $options);
         update_option('mangapress_ver', MP_VERSION);
