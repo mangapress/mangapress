@@ -110,7 +110,7 @@ class MangaPress_PostType extends MangaPress_FrameWork_Helper
      * @param array $args
      * @return \MangaPress_PostType
      */
-    public function set_arguments($args)
+    public function set_arguments($args = array())
     {
         global $plugin_dir;
 

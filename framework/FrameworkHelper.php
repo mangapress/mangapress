@@ -51,7 +51,7 @@ abstract class MangaPress_FrameWork_Helper
     /**
      * Set arguments method
      */
-    abstract public function set_arguments($args);
+    abstract public function set_arguments($args = array());
 
     /**
      * PHP5 constructor method
