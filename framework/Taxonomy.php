@@ -60,7 +60,7 @@ class MangaPress_Taxonomy extends MangaPress_FrameWork_Helper
      * @param array $args Arguments array
      * @return \MangaPress_Taxonomy
      */
-    public function set_arguments($args)
+    public function set_arguments($args = array())
     {
         global $plugin_dir;
 
