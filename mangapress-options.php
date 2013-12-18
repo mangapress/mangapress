@@ -482,7 +482,7 @@ ul.comic-nav li:before{ content: ""; }
     public function sanitize_options($options)
     {
         global $mp;
-
+        
         $mp_options        = $mp->get_options();
         $section           = key($options);
         $available_options = $this->options_fields();
@@ -517,6 +517,7 @@ ul.comic-nav li:before{ content: ""; }
                                             ? intval($options['basic']['group_by_parent']) : 0,
             );
 
+            $new_options['basic']['latestcomic_page'] = "";
             if ($options['basic']['latestcomic_page'] !== 'no_val'){
                 $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
             }
@@ -524,6 +525,7 @@ ul.comic-nav li:before{ content: ""; }
             $new_options['basic']['latestcomic_page_template'] = isset($options['basic']['latestcomic_page_template'])
                                                                 ? intval($options['basic']['latestcomic_page_template']) : 0;
 
+            $new_options['basic']['comicarchive_page'] = "";
             if ($options['basic']['comicarchive_page'] !== 'no_val'){
                 $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
             }
