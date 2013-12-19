@@ -251,7 +251,13 @@ function mpp_comic_single_page($template)
 
     if (isset($object->post_type) && $object->post_type == 'mangapress_comic' && is_single()) {
 
-        $single_comic_templates = apply_filters('template_include_single_comic', array('comics/single-comic.php'));
+        $single_comic_templates = apply_filters(
+            'template_include_single_comic',
+            array(
+                'comics/single-comic.php',
+                'single-comic.php',
+            )
+        );
 
         if ('' == locate_template($single_comic_templates, true)) {
 
