@@ -22,34 +22,39 @@ class MangaPress_Posts
      * @var string
      */
     const ACTION_GET_IMAGE_HTML = 'mangapress-get-image-html';
-    
+
+
     /**
      * Remove image html and return Add Image string
      * 
      * @var string
      */
     const ACTION_REMOVE_IMAGE  = 'mangapress-remove-image';
-    
+
+
     /**
      * Nonce string
      *
      * @var string
      */
     const NONCE_INSERT_COMIC = 'mangapress_comic-insert-comic';
-    
+
+
     /**
      * Post-type name
      * 
      * @var string
      */
     const POST_TYPE = 'mangapress_comic';
-    
+
+
     /**
      * Class for initializing custom post-type
      *
      * @var MangaPress_PostType
      */
     private $_post_type = null;
+
 
     /**
      * Constructor
@@ -61,7 +66,7 @@ class MangaPress_Posts
         // Setup Manga+Press Post Options box
         add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
         add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
-        add_action('save_post', array($this, 'save_post'), 500, 2);
+        add_action('save_post_mangapress_comic', array($this, 'save_post'), 500, 2);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         
         /*
@@ -71,6 +76,7 @@ class MangaPress_Posts
         add_filter('manage_edit-mangapress_comic_columns', array($this, 'comics_columns'));
 
     }
+
 
     /**
      * Register the post-type
@@ -117,6 +123,7 @@ class MangaPress_Posts
             ),
         ));
     }
+
     
     /**
      * Meta box call-back function.
@@ -142,6 +149,7 @@ class MangaPress_Posts
 
     }
 
+
     /**
      * Comic meta box
      * 
@@ -151,7 +159,8 @@ class MangaPress_Posts
     {
         require_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
     }
-    
+
+
     /**
      * Enqueue scripts for post-edit and post-add screens
      * 
@@ -189,6 +198,7 @@ class MangaPress_Posts
 
         wp_enqueue_script('mangapress-media-popup');
     }
+    
     
     /**
      * Modify header columns for Comic Post-type
@@ -233,6 +243,7 @@ class MangaPress_Posts
         }
     }
 
+    
     /**
      * Modify comic columns for Comics screen
      *
@@ -253,6 +264,7 @@ class MangaPress_Posts
         return $columns;
     }
     
+    
     /**
      * Retrieve image HTML
      * 
@@ -263,12 +275,12 @@ class MangaPress_Posts
         // nonce verification
         
         // get image
-        $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
-        $action = isset($_POST['action']) ? $_POST['action'] : self::ACTION_REMOVE_IMAGE;
+        $image_ID = filter_input(INPUT_POST, 'id') ? filter_input(INPUT_POST, 'id') : false;
+        $action   = filter_input(INPUT_POST, 'action') 
+                    ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
         
         header("Content-type: application/json");
         if ($action == self::ACTION_GET_IMAGE_HTML){
-            $image_ID = isset($_POST['id']) ? absint($_POST['id']) : false;
             if ($image_ID) {
                 echo json_encode(array('html' => $this->get_image_html($image_ID),));
             }
@@ -278,6 +290,7 @@ class MangaPress_Posts
                                 
         die();
     }
+
     
     /**
      * Retrieve image html
@@ -298,6 +311,7 @@ class MangaPress_Posts
         
         return $html;
     }
+
     
     /**
      * Reset comic image html
@@ -315,6 +329,7 @@ class MangaPress_Posts
         return $html;
     }
 
+    
     /**
      * Save post meta data. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
@@ -332,14 +347,12 @@ class MangaPress_Posts
         if (empty($_POST))
             return $post_id;
         
-        if (!wp_verify_nonce($_POST['_insert_comic'], self::NONCE_INSERT_COMIC))
+        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
-                
-        // allow plugins and themes to override
-        do_action('do_save_mangapress_comic', $post_id, $post);
 
-        if (isset($_POST['_mangapress_comic_image'])) { 
-            set_post_thumbnail($post_id, intval($_POST['_mangapress_comic_image']));
+        $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
+        if ($image_ID) { 
+            set_post_thumbnail($post_id, $image_ID);
         }
         
         return $post_id;
