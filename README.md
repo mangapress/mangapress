@@ -130,8 +130,6 @@ environment but works fine on the server my sites are hosted at, which is a LAMP
 
 For updates, you can visit http://www.manga-press.com/
 
-Uses icons from the Fugue icon set found at http://p.yusukekamiyamane.com/
-
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
