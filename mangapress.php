@@ -180,7 +180,9 @@ class MangaPress_Bootstrap
         $this->_posts_helper   = new MangaPress_Posts();
 
         $this->_load_current_options();
-
+        
+        add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+        
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::do_upgrade();
         }
@@ -315,5 +317,21 @@ class MangaPress_Bootstrap
 
         wp_enqueue_style('mangapress-nav');
     }
-
+    
+    
+    /**
+     * Enqueue admin-related styles
+     * 
+     * @return void
+     */
+    public function admin_enqueue_scripts()
+    {
+        wp_enqueue_style(
+            'mangapress-icons',
+            plugins_url('assets/css/font.css', __FILE__),
+            null,
+            MP_VERSION,
+            'screen'
+        );
+    }
 }

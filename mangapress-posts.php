@@ -113,7 +113,7 @@ class MangaPress_Posts
                     'thumbnails',
                 ),
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
-                'menu_icon' => MP_URLPATH . 'assets/images/menu_icon.png',
+                'menu_icon' => null,
                 'rewrite'   => array(
                     'slug' => 'comic',
                 ),
