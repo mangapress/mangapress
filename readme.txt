@@ -17,8 +17,12 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 == Upgrade Notice ==
 = 2.8 =
    * Added bundled theme for TwentyEleven, TwentyTwelve, and TwentyThirteen
+   * Corrected 404 issues for custom post-type after activation
    * Adjusted template stack for single comics
    * Added new Media Library popup (eliminating legacy ThickBox dependency)
+     * Added WordPress 3.5 Media Library window
+   * Code review and cleanup   
+   * Removed legacy options (Comic Banner)
 
 = 2.7.5 =
    * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
@@ -46,8 +50,12 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 == Changelog ==
 = 2.8 =
    * Added bundled theme for TwentyEleven, TwentyTwelve, and TwentyThirteen
+   * Corrected 404 issues for custom post-type after activation
    * Adjusted template stack for single comics
    * Added new Media Library popup (eliminating legacy ThickBox dependency)
+     * Added WordPress 3.5 Media Library window
+   * Code review and cleanup   
+   * Removed legacy options (Comic Banner)
 
 = 2.7 =
    * 2.7.5

@@ -16,8 +16,8 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
    * Corrected 404 issues for custom post-type after activation
    * Adjusted template stack for single comics
    * Added new Media Library popup (eliminating legacy ThickBox dependency)
-   * Code review and cleanup
-   * Added WordPress 3.5 Media Library window
+     * Added WordPress 3.5 Media Library window
+   * Code review and cleanup   
    * Removed legacy options (Comic Banner)
 
 ### 2.7
