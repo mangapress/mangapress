@@ -218,7 +218,8 @@ class MangaPress_Posts
             $thumbnail_html = get_the_post_thumbnail($post->ID, 'comic-admin-thumb', array('class' => 'wp-caption'));
 
             if ($thumbnail_html) {
-                echo $thumbnail_html;
+                $edit_link = get_edit_post_link($post->ID, 'display');
+                echo "<a href=\"{$edit_link}\">{$thumbnail_html}</a>";
             } else {
                 echo "No image";
             }
