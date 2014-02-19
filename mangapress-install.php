@@ -28,59 +28,49 @@ class MangaPress_Install
     protected $_type;
 
     /**
-     * Default options array
-     *
-     * @var array
+     * Instance of MangaPress_Install
+     * @var \MangaPress_Install
      */
-    protected static $_default_options =  array(
-            'basic' => array(
-                'order_by'                   => 'post_date',
-                'group_comics'               => 0,
-                'group_by_parent'            => 0,
-                'latestcomic_page'           => 0,
-                'comicarchive_page'          => 0,
-                'latestcomic_page_template'  => 0,
-                'comicarchive_page_template' => 0,				
-            ),
-            'comic_page' => array(
-                'make_thumb'          => 0,
-                'insert_banner'       => 0,
-                'banner_width'        => 420,
-                'banner_height'       => 100,
-                'comic_post_count'    => 10,
-                'generate_comic_page' => 0,
-                'comic_page_width'    => 600,
-                'comic_page_height'   => 1000,
-            ),
-            'nav' => array(
-                'nav_css'    => 'custom_css',
-                'insert_nav' => false,
-            ),
-        );
+    protected static $_instance;
 
+    /**
+     * Get instance of
+     *
+     * @return MangaPress_Install
+     */
+    public static function get_instance()
+    {
+        if (self::$_instance == null) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
 
     /**
      * Static function for plugin activation.
      *
      * @return void
      */
-    public static function do_activate()
+    public function do_activate()
     {
         global $wp_version;
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         // Check for capability
-        if ( !current_user_can('activate_plugins') )
+        if ( !current_user_can('activate_plugins') ){
             wp_die( __('Sorry, you do not have suffient permissions to activate this plugin.', 'mangapress') );
-
+        }
+        
         // Get the capabilities for the administrator
         $role = get_role('administrator');
 
         // Must have admin privileges in order to activate.
-        if ( empty($role) )
+        if ( empty($role) ) {
             wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress') );
-
+        }
+        
         if ( version_compare ($wp_version, '3.0', '<=')) {
             wp_die(
                   'Sorry, only WordPress 3.0 and later are supported.'
@@ -93,13 +83,13 @@ class MangaPress_Install
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
         if (version_compare(self::$_version, MP_VERSION, '<') && !(self::$_version == '')) {
-                        
+
             add_option( 'mangapress_upgrade', 'yes', '', 'no');
 
         } elseif (self::$_version == '') {
 
             add_option( 'mangapress_ver', MP_VERSION, '', 'no');
-            add_option( 'mangapress_options', serialize( self::$_default_options ), '', 'no' );
+            add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
 
         }
 
@@ -108,7 +98,6 @@ class MangaPress_Install
         // but it clears/resets the permalink cache so you can view your
         // comic.
         add_action('init', 'flush_rewrite_rules');
-
     }
 
     /**
@@ -116,7 +105,7 @@ class MangaPress_Install
      *
      * @return void
      */
-    public static function do_deactivate()
+    public function do_deactivate()
     {
         flush_rewrite_rules();
     }
@@ -126,22 +115,12 @@ class MangaPress_Install
      *
      * @return void
      */
-    public static function do_upgrade()
+    public function do_upgrade()
     {
-        $options = get_option('mangapress_options');
-
         update_option('mangapress_ver', MP_VERSION);
-        
+
         delete_option( 'mangapress_upgrade' );
-    }
-    
-    /**
-     * Returns default options
-     * 
-     * @return array
-     */
-    public static function get_default_options()
-    {
-        return self::$_default_options;
+
+        flush_rewrite_rules();
     }
 }

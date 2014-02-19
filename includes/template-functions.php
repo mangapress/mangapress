@@ -28,7 +28,7 @@ if (!function_exists('is_comic')) {
     {
         if (is_integer($post)) {
             $post = get_post($post);
-        };
+        }
 
         if (is_null($post)) {
             global $post;
@@ -39,37 +39,43 @@ if (!function_exists('is_comic')) {
         return ($post_type == 'mangapress_comic');
     }
 }
+
+
 /**
  * @since 1.0 RC1
  *
- * @global array $mp_options
+ * @global WP_Query $wp_query
  * @return bool
  */
 if (!function_exists('is_comic_page')) {
     function is_comic_page()
     {
-        global $mp, $wp_query;
+        global $wp_query;
 
-        $mp_options = $mp->get_options();
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
         $query      = $wp_query->get_queried_object();
 
         return ($wp_query->is_page && ($query->post_name == $mp_options['basic']['latestcomic_page']));
 
     }
 }
+
+
 /**
  *
  * @since 1.0 RC1
  *
- * @global array $mp_options
+ * @global WP_Query $wp_query
  * @return bool
  */
 if (!function_exists('is_comic_archive_page')) {
     function is_comic_archive_page()
     {
-        global $mp, $wp_query;
+        global $wp_query;
 
-        $mp_options = $mp->get_options();
+        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+
         $query      = $wp_query->get_queried_object();
 
         $is_comic_archive_page
@@ -80,6 +86,7 @@ if (!function_exists('is_comic_archive_page')) {
 
     }
 }
+
 
 /**
  * mangapress_comic_navigation()
@@ -96,9 +103,8 @@ if (!function_exists('is_comic_archive_page')) {
  */
 function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $echo = true)
 {
-    global $mp;
 
-    $mp_options = $mp->get_options();
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $defaults = array(
         'container'      => 'nav',
