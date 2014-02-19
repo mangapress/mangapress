@@ -42,7 +42,7 @@ add_action('wp_enqueue_scripts', 'mangapress_theme_load_twentyeleven_css');
  */
 function mangapress_theme_load_twentyeleven_css()
 {
-    $src = WP_CONTENT_URL . '/themes/twentyeleven/style.css';
+    $src = get_template_directory_uri() . '/style.css';
     wp_register_style('twentyeleven', $src, null, MP_VERSION);
     
     wp_enqueue_style('twentyeleven');

@@ -1,25 +1,21 @@
 /*
-Theme Name: Manga+Press Bundled Theme for TwentyThirteen
+Theme Name: Manga+Press Bundled Theme for TwentyTwelve
 Theme URI: http://www.mange-press.com
-Description: Default bundled theme for Manga+Press. Requires WordPress' TwentyThirteen theme.
+Description: Default bundled theme for Manga+Press. Requires WordPress' TwentyFourteen theme.
 Version: 1.1
 Author: Jess Green
 Author URI: http://www.jes.gs/
-Template: twentythirteen
+Template: twentyfourteen
 Tags: comics, comic theme, manga press, webcomics, online comics
 */
 
-.mangapress-comic-img {
-    margin: 0 auto;
-    width: 100%;
-    height: auto;
-}
-
 /* comic navigation */
 #comic-navigation {
-    text-align: center;
-    margin: 5px auto 10px;
-    max-width: 604px;
+    text-align: left;
+    margin: 5px 0 10px 0;
+    padding: 0;
+    clear: both;
+    float: none;
 }
 
 #comic-navigation a {
@@ -39,7 +35,7 @@ ul.comic-nav  {
     white-space: nowrap;
 }
 
-ul.comic-nav > li {
+ul.comic-nav li {
     display: inline;
     list-style-type: none;
 }

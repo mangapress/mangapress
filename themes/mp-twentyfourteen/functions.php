@@ -34,16 +34,16 @@ function _disable_options($options)
     
 }
 
-add_action('wp_enqueue_scripts', 'mangapress_theme_load_twentythirteen_css');
+add_action('wp_enqueue_scripts', 'mangapress_theme_load_twentyfourteen_css');
 /**
  * Load the stylesheet from the TwentyEleven Theme
  * 
  * @return void
  */
-function mangapress_theme_load_twentythirteen_css()
+function mangapress_theme_load_twentyfourteen_css()
 {
     $src = get_template_directory_uri() . '/style.css';
-    wp_register_style('twentythirteen', $src, null, MP_VERSION);
+    wp_register_style('twentyfourteen', $src, null, MP_VERSION);
     
-    wp_enqueue_style('twentythirteen');
+    wp_enqueue_style('twentyfourteen');
 }
