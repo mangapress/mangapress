@@ -12,7 +12,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 
 ## Changelog
 #### 2.8
-   * Added bundled theme for TwentyEleven, TwentyTwelve, and TwentyThirteen
+   * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
    * Updated admin interface to fit WordPress 3.8
    * Corrected 404 issues for custom post-type after activation
    * Adjusted template stack for single comics
