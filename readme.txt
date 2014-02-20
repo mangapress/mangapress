@@ -173,7 +173,7 @@ Archive Page to your two newly created pages.
 1. screenshot-1.jpg
 2. screenshot-2.jpg
 3. screenshot-3.jpg
-
+4. screenshot-4.jpg
 == Credits ==
 
 (c) 2008-2014 Jessica C. Green

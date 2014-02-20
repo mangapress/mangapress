@@ -116,9 +116,9 @@ function mpp_latest_comic_page($template)
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $object     = $wp_query->get_queried_object();
-
+    
     if (!isset($object->post_name) 
-            && !($object->post_name == $mp_options['basic']['latestcomic_page'])) {
+            || !($object->post_name == $mp_options['basic']['latestcomic_page'])) {
         return $template;
     }
 
