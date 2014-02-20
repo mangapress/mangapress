@@ -11,6 +11,9 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Changelog
+#### 2.9
+   * Updated navigation CSS
+
 #### 2.8
    * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
    * Updated admin interface to fit WordPress 3.8
@@ -64,7 +67,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 moved to Posts and Uninstall Manga+Press is located under Plugins.
 
 #### 2.6b
-   * Changed handling of plugin options so that they are compatible with Wordpress 2.8 and higher. They are now stored in one
+   * Changed handling of plugin options so that they are compatible with WordPress 2.8 and higher. They are now stored in one
 entry in the options table instead of being spread out over multiple entries. Moved Manga+Press options page to Settings,
 Uninstall to Plugins, and Post New Comic to Posts. Removed /admin, /css, /js as they were no longer necessary for the plugin to
 function.
@@ -82,13 +85,13 @@ the front page and automatically modifying The Loop for the latest comic page. R
 #### 2.0.1-beta
    * Corrected a minor bug in update_options. Banner skin wouldn't be uploaded even if "use banner skin" option were checked and
 user had selected an image for upload. Also corrected a jQuery UI Tabs bug in the user admin area that is present when Manga+Press
-is used with Wordpress 2.8
+is used with WordPress 2.8
 
 ### 2.0
 
 #### 2.0-beta
    * Major reworking of code in mangapress-classes.php and mangapress-functions.php
-   * Reworked code of add_comic() function so it is compatible with the Wordpress post db and Media Library
+   * Reworked code of add_comic() function so it is compatible with the WordPress post db and Media Library
    * removed create directory for series option
    * added wp_sidebar_comic()
 
