@@ -122,50 +122,37 @@ function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $e
     $args = wp_parse_args($args, $defaults);
     $args = apply_filters('mangapress_comic_navigation_args', $args);
     $args = (object) $args;
+    global $post;
 
-    if (is_null($query)) {
-        global $wp_query;
+    $group = true; (bool)$mp_options['basic']['group_comics'];
+    $by_parent = (bool)$mp_options['basic']['group_by_parent'];
+    
+    $next_post  = get_adjacent_post(true, null, false, 'mangapress_series');
+    $prev_post  = get_adjacent_post(true, null, true, 'mangapress_series');
+    
+    add_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+    $last_post  = get_boundary_post(true, null, false, 'mangapress_series');
+    $first_post = get_boundary_post(true, null, true, 'mangapress_series');
+    remove_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');
 
-        $query = $wp_query;
-    }
+    $current_page = $post->ID; // use post ID this time.
 
-    $is_comic = ($query->post->post_type == "mangapress_comic");
+    $next_page = !isset($next_post->ID)
+               ? $current_page : $next_post->ID;
 
-    if ($query->is_post_type_archive && $is_comic) {
-        $query->set('posts_per_page', '1');
-    } elseif ($query->is_single && $is_comic) {
-        global $post;
+    $prev_page = !isset($prev_post->ID)
+               ? $current_page : $prev_post->ID;
 
-        $group = (bool)$mp_options['basic']['group_comics'];
-        $by_parent = (bool)$mp_options['basic']['group_by_parent'];
+    $last      = !isset($last_post[0]->ID)
+               ? $current_page : $last_post[0]->ID;
 
-        $next_post  = mpp_get_adjacent_comic($group, $by_parent, 'mangapress_series', null, false);
-        $prev_post  = mpp_get_adjacent_comic($group, $by_parent, 'mangapress_series', null, true);
-        $last_post  = mpp_get_boundary_comic($group, $by_parent, 'mangapress_series', null, false);
-        $first_post = mpp_get_boundary_comic($group, $by_parent, 'mangapress_series', null, true);
+    $first     = !isset($first_post[0]->ID)
+               ? $current_page : $first_post[0]->ID;
 
-        $current_page = $post->ID; // use post ID this time.
-
-        $next_page = !isset($next_post->ID)
-                   ? $current_page : $next_post->ID;
-
-        $prev_page = !isset($prev_post->ID)
-                   ? $current_page : $prev_post->ID;
-
-        $last      = !isset($last_post[0]->ID)
-                   ? $current_page : $last_post[0]->ID;
-
-        $first     = !isset($first_post[0]->ID)
-                   ? $current_page : $first_post[0]->ID;
-
-        $first_url = get_permalink($first);
-        $last_url  = get_permalink($last);
-        $next_url  = get_permalink($next_page);
-        $prev_url  = get_permalink($prev_page);
-
-    } else {
-        return false;
-    }
+    $first_url = get_permalink($first);
+    $last_url  = get_permalink($last);
+    $next_url  = get_permalink($next_page);
+    $prev_url  = get_permalink($prev_page);
 
     $show_container = false;
     $comic_nav      = "";
