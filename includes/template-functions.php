@@ -108,9 +108,12 @@ function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $e
 
     $defaults = array(
         'container'      => 'nav',
-        'container_attr' => array('id' => 'comic-navigation'),
+        'container_attr' => array(
+            'id'    => 'comic-navigation',
+            'class' => 'comic-nav-hlist-wrapper',
+        ),
         'items_wrap'     => '<ul%1$s>%2$s</ul>',
-        'items_wrap_attr' => array('class' => 'comic-nav'),
+        'items_wrap_attr' => array('class' => 'comic-nav-hlist'),
         'link_wrap'      => 'li',
         'link_before'    => '',
         'link_after'     => '',
