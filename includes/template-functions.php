@@ -101,9 +101,10 @@ if (!function_exists('is_comic_archive_page')) {
  * @param bool $echo Specifies whether to echo comic navigation or return it as a string
  * @return string Returns navigation string if $echo is set to false.
  */
-function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $echo = true)
+function mangapress_comic_navigation($args = array(), $echo = true)
 {
-
+    global $post;
+    
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $defaults = array(
@@ -119,11 +120,10 @@ function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $e
         'link_after'     => '',
     );
 
-    $args = wp_parse_args($args, $defaults);
-    $args = apply_filters('mangapress_comic_navigation_args', $args);
-    $args = (object) $args;
-    global $post;
-
+    $parsed_args = wp_parse_args($args, $defaults);
+    $r = apply_filters('mangapress_comic_navigation_args', $parsed_args);
+    $args = (object) $r;
+    
     $group = true; (bool)$mp_options['basic']['group_comics'];
     $by_parent = (bool)$mp_options['basic']['group_by_parent'];
     
@@ -137,17 +137,10 @@ function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $e
 
     $current_page = $post->ID; // use post ID this time.
 
-    $next_page = !isset($next_post->ID)
-               ? $current_page : $next_post->ID;
-
-    $prev_page = !isset($prev_post->ID)
-               ? $current_page : $prev_post->ID;
-
-    $last      = !isset($last_post[0]->ID)
-               ? $current_page : $last_post[0]->ID;
-
-    $first     = !isset($first_post[0]->ID)
-               ? $current_page : $first_post[0]->ID;
+    $next_page = !isset($next_post->ID) ? $current_page : $next_post->ID;
+    $prev_page = !isset($prev_post->ID) ? $current_page : $prev_post->ID;
+    $last      = !isset($last_post[0]->ID) ? $current_page : $last_post[0]->ID;
+    $first     = !isset($first_post[0]->ID) ? $current_page : $first_post[0]->ID;
 
     $first_url = get_permalink($first);
     $last_url  = get_permalink($last);

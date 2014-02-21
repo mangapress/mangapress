@@ -240,42 +240,15 @@ class MangaPress_Bootstrap
         /*
          * Disable/Enable Default Navigation CSS
          */
-        if ($mp_options['nav']['nav_css'] == 'default_css')
+        if ($mp_options['nav']['nav_css'] == 'default_css') {
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
+        }
 
         /*
          * Comic Navigation
          */
-        if ($mp_options['nav']['insert_nav'])
+        if ($mp_options['nav']['insert_nav']) {
             add_action('the_content', 'mpp_comic_insert_navigation');
-
-        /*
-         * Lastest Comic Page
-         */
-        if ((bool)$mp_options['basic']['latestcomic_page']
-                && !(bool)$mp_options['basic']['latestcomic_page_template']) {
-            add_filter('the_content', 'mpp_filter_latest_comic');
-        }
-
-        /*
-         * Latest Comic Page template override
-         */        
-        if ((bool)$mp_options['basic']['latestcomic_page_template']) {
-            add_filter('template_include', 'mpp_latest_comic_page');
-        }
-        /*
-         * Comic Archive Page
-         */
-        if ((bool)$mp_options['basic']['comicarchive_page']
-                && !(bool)$mp_options['basic']['comicarchive_page_template']) {
-            add_filter('the_content', 'mpp_filter_comic_archivepage');
-        }
-
-        /*
-         * Comic Archive Page template override
-         */
-        if ((bool)$mp_options['basic']['comicarchive_page_template']) {
-            add_filter('template_include', 'mpp_comic_archivepage');
         }
         
         /*
