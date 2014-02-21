@@ -13,6 +13,7 @@
  * Manga+Press Hook Functions
  */
 
+
 /**
  * Handles display for the latest comic page.
  *
@@ -58,6 +59,7 @@ function mpp_filter_latest_comic($content)
 
     return apply_filters('the_latest_comic_content', $content);
 }
+
 
 /**
  * Retrieves the most recent comic
@@ -227,6 +229,7 @@ function mpp_filter_comic_archivepage($content)
 
 }
 
+
 /**
  * mpp_comic_single_page()
  * Uses a template to create comic navigation.
@@ -283,7 +286,7 @@ function mpp_comic_insert_navigation($content)
 {
     global $post;
 
-    if (!($post->post_type == 'mangapress_comic' && is_single())){
+    if (!($post->post_type == 'mangapress_comic' && is_single())) {
         return $content;
     } else {
         $navigation = mangapress_comic_navigation(null, null, false);
@@ -294,6 +297,7 @@ function mpp_comic_insert_navigation($content)
     }
 
 }
+
 
 /**
  * mpp_get_adjacent_comic()
@@ -308,6 +312,7 @@ function mpp_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, 
 {
     _deprecated_function(__FUNCTION__, '2.9', 'get_adjacent_post()');
 }
+
 
 /**
  * mpp_get_boundary_comic()
@@ -333,6 +338,7 @@ function mpp_comic_version()
 {
     echo MP_VERSION;
 }
+
 
 /**
  * Retrieve term IDs. Either child-cats or parent-cats.
