@@ -28,8 +28,6 @@ final class MangaPress_Options
             'group_by_parent'            => 0,
             'latestcomic_page'           => 0,
             'comicarchive_page'          => 0,
-            'latestcomic_page_template'  => 0,
-            'comicarchive_page_template' => 0,
         ),
         'permalink'  => array(
             ''
@@ -271,15 +269,6 @@ final class MangaPress_Options
                     'default'  => 0,
                     'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
                 ),
-                'latestcomic_page_template' => array(  // New option in 3.0
-                    'id'    => 'latestcomic-page-template',
-                    'type'  => 'checkbox',
-                    'title'       => __('Use Template', MP_DOMAIN),
-                    'description' => __('Use theme template for Latest Comic Page.', MP_DOMAIN),
-                    'valid'       => 'boolean',
-                    'default'     => 1,
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
                 'comicarchive_page' => array(
                     'id'    => 'archive-page',
                     'type'  => 'select',
@@ -290,15 +279,6 @@ final class MangaPress_Options
                     'valid' => 'array',
                     'default' => 0,
                     'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
-                ),
-                'comicarchive_page_template' => array(  // New option in 3.0
-                    'id'    => 'comicarchive-page-template',
-                    'type'  => 'checkbox',
-                    'title'       => __('Use Template', MP_DOMAIN),
-                    'description' => __('Use theme template for Comic Archive Page.', MP_DOMAIN),
-                    'valid'       => 'boolean',
-                    'default'     => 1,
-                    'callback' => array($this, 'settings_field_cb'),
                 ),
             ),
             'comic_page' => array(

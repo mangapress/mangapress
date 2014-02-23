@@ -153,8 +153,11 @@ class MangaPress_Bootstrap
         $this->set_options();
 
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init'), 50);        
-        add_action('template_include', 'mpp_comic_single_page');        
+        add_action('init', array($this, 'init'), 50);
+        add_action('init', array($this, 'init_url_endpoints'), 555);
+        add_filter('template_include', 'mpp_comic_single_page');  
+        add_filter('template_include', 'mpp_comic_archivepage');
+        add_filter('template_include', 'mpp_latest_comic_page');
     }
 
     /**
@@ -185,7 +188,7 @@ class MangaPress_Bootstrap
         
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::do_upgrade();
-        }
+        }        
     }
     
     /**
@@ -227,6 +230,22 @@ class MangaPress_Bootstrap
     {
         return $this->_options;
     }
+    
+    /**
+     * Get one option from options array
+     *  
+     * @param string $section Option section
+     * @param string $option_name Option name
+     * @return boolean|mixed
+     */
+    public function get_option($section, $option_name)
+    {
+        if (!isset(self::$_options[$section][$option_name])) {
+            return false;
+        }
+        
+        return self::$_options[$section][$option_name];
+    }
 
     /**
      * Load current plugin options
@@ -244,13 +263,14 @@ class MangaPress_Bootstrap
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
         }
 
+        
         /*
          * Comic Navigation
          */
         if ($mp_options['nav']['insert_nav']) {
             add_action('the_content', 'mpp_comic_insert_navigation');
         }
-        
+                
         /*
          * Comic Page size
          */
@@ -270,6 +290,21 @@ class MangaPress_Bootstrap
 
     }
 
+    
+    function init_url_endpoints()
+    {
+        $mp_options = $this->get_options();
+        
+        if (!$mp_options['basic']['latestcomic_page']) {
+            add_rewrite_rule('^latest-comic$', 'index.php', 'top'); 
+        }
+        
+        if (!$mp_options['basic']['comicarchive_page']) {
+            add_rewrite_rule('^past-comics$', 'index.php', 'top');
+        }
+    }
+
+    
     /**
      * Enqueue default navigation stylesheet
      *

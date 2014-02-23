@@ -9,156 +9,9 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
-/*------------------------------------------------------------------------------
- * Manga+Press Hook Functions
- */
+require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
+require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
 
-
-/**
- * Handles display for the latest comic page.
- *
- * @global WP_Post $post WordPress Post
- *
- * @since 2.7
- * @param string $content. Post content
- * @return string
- */
-function mpp_filter_latest_comic($content)
-{
-    global $post, $wp_query;    
-
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
-    if (!($post->post_name == $mp_options['basic']['latestcomic_page'])) {
-        return $content;
-    }
-
-    $image_sizes = get_intermediate_image_sizes();
-    $wp_query = mpp_get_latest_comic();
-
-    if (!$wp_query){
-        return apply_filters(
-            'the_latest_comic_content_error',
-            '<p class="error">No Latest Comic was found.</p>'
-        );
-    }
-
-    $thumbnail_size = isset($image_sizes['comic-page']) 
-                        ? $image_sizes['comic-page'] : 'large';
-    
-    $post = $wp_query->posts[0];
-
-    setup_postdata($post);
-    
-    $template_file_found = locate_template(array('templates/content/latest-comic.php'));
-    $file = $template_file_found
-                ? $template_file_found : MP_ABSPATH . 'templates/content/latest-comic.php';
-
-    ob_start();
-    require $file;
-    $content = ob_get_clean();    
-    
-    wp_reset_query();
-    
-    return apply_filters('the_latest_comic_content', $content);
-}
-
-
-/**
- * Retrieves the most recent comic
- *
- * @since 2.7.2
- * @return \WP_Query
- */
-function mpp_get_latest_comic()
-{
-    global $wpdb;
-
-    $sql = "SELECT post_name FROM {$wpdb->posts} "
-         . "WHERE post_type=\"mangapress_comic\" "
-         . "AND post_status=\"publish\" "
-         . "ORDER BY post_date DESC LIMIT 1";
-
-    $post_name = $wpdb->get_var($sql);
-
-    if (!$post_name) {
-        return false;
-    }
-
-    $single_comic_query = new WP_Query(array(
-        'name'      => $post_name,
-        'post_type' => 'mangapress_comic',
-    ));
-
-    return $single_comic_query;
-}
-
-
-/**
- * Start a Latest Comic loop
- * 
- * @global WP_Query $wp_query
- * @return void
- */
-function mpp_start_latest_comic()
-{
-    global $wp_query;
-    
-    do_action('latest_comic_start');
-    
-    $wp_query = mpp_get_latest_comic();
-}
-
-
-/**
- * End Latest Comic loop
- * 
- * @global WP_Query $wp_query
- * @return void
- */
-function mpp_end_latest_comic()
-{
-    global $wp_query;
-    do_action('latest_comic_end');
-    
-    wp_reset_query();
-}
-
-
-/**
- * mpp_latest_comic_page()
- * Set Latest Comic page template
- *
- * @global WP_Query $wp_query
- *
- * @since 2.7
- * @param string $template
- * @return string|void
- */
-function mpp_latest_comic_page($template)
-{
-    global $wp_query;
-
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
-    $object     = $wp_query->get_queried_object();
-    
-    if (!isset($object->post_name) 
-            || !($object->post_name == $mp_options['basic']['latestcomic_page'])) {
-        return $template;
-    }
-
-    $template = locate_template(array('comics/latest-comic.php'));
-
-    // if template can't be found, then look for query defaults...
-    if (!$template) {
-        add_filter('the_content', 'mpp_filter_latest_comic');
-        return get_page_template();
-    } else {
-        return $template;
-    }
-
-}
 
 
 /**
@@ -172,14 +25,8 @@ function mpp_latest_comic_page($template)
  */
 function mpp_comic_archivepage($template)
 {
-    global $wp_query;
 
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
-    $object = $wp_query->get_queried_object();
-
-    if (!isset($object->post_name) 
-            || !($object->post_name == $mp_options['basic']['comicarchive_page'])) {
+    if (!mpp_is_queried_page('comicarchive_page')) {
         return $template;
     }
      
@@ -190,6 +37,31 @@ function mpp_comic_archivepage($template)
     }
     
     return $template;
+}
+
+
+/**
+ * Checks queried object against settings to see if query is for either
+ * latest comic or comic archive.
+ * 
+ * @since 2.9
+ * 
+ * @global WP_Query $wp_query
+ * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page
+ * @return boolean
+ */
+function mpp_is_queried_page($option)
+{
+    global $wp_query;
+
+    $page = MangaPress_Bootstrap::get_instance()->get_option('basic', $option);
+    $object = $wp_query->get_queried_object();
+    if (!isset($object->post_name) 
+            || !($object->post_name == $page)) {
+        return false;
+    }
+    
+    return true;
 }
 
 
@@ -390,6 +262,3 @@ function _mangapress_set_post_type_for_boundary($query)
 {
     $query->set('post_type', 'mangapress_comic');
 }
-
-add_filter('template_include', 'mpp_comic_archivepage');
-add_filter('template_include', 'mpp_latest_comic_page');
