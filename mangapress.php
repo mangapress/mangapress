@@ -81,6 +81,7 @@ add_action('plugins_loaded', array('MangaPress_Bootstrap', 'load_plugin'));
 class MangaPress_Bootstrap
 {
 
+
     /**
      * Options array
      *
@@ -88,6 +89,7 @@ class MangaPress_Bootstrap
      */
     protected $_options;
 
+   
     /**
      * Instance of MangaPress_Bootstrap
      *
@@ -102,20 +104,23 @@ class MangaPress_Bootstrap
      */
     protected $_posts_helper;
 
+   
     /**
      * Options helper object
      *
      * @var \MangaPress_Options
      */
     protected $_options_helper;
-    
+
+
     /**
      * Admin page helper
      * 
      * @var MangaPress_Admin
      */
     protected $_admin_helper;
-    
+
+
     /**
      * Static function used to initialize Bootstrap
      *
@@ -125,6 +130,7 @@ class MangaPress_Bootstrap
     {
         self::$_instance  = new self();
     }
+
 
     /**
      * Get instance of MangaPress_Bootstrap
@@ -140,6 +146,7 @@ class MangaPress_Bootstrap
         return self::$_instance;
     }
 
+
     /**
      * PHP5 constructor method
      *
@@ -147,18 +154,19 @@ class MangaPress_Bootstrap
      */
     protected function __construct()
     {
-
+        
         load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
 
         $this->set_options();
 
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init'), 50);
-        add_action('init', array($this, 'init_url_endpoints'), 555);
+        add_action('init', array($this, 'init_url_endpoints'));
+        add_action('init', array($this, 'init'));        
         add_filter('template_include', 'mpp_comic_single_page');  
         add_filter('template_include', 'mpp_comic_archivepage');
-        add_filter('template_include', 'mpp_latest_comic_page');
+        add_filter('template_include', 'mpp_latest_comic_page');        
     }
+
 
     /**
      * Because register_theme_directory() can't run on init.
@@ -170,6 +178,7 @@ class MangaPress_Bootstrap
         register_theme_directory('plugins/' . MP_FOLDER . '/themes');
     }
 
+
     /**
      * Run init functionality
      *
@@ -177,7 +186,7 @@ class MangaPress_Bootstrap
      * @return void
      */
     public function init()
-    {
+    {       
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
         $this->_posts_helper   = new MangaPress_Posts();
@@ -188,8 +197,13 @@ class MangaPress_Bootstrap
         
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::do_upgrade();
+        }
+        
+        if (filter_input(INPUT_GET, 'activate') === 'true') {
+            flush_rewrite_rules();
         }        
     }
+
     
     /**
      * Get a MangaPress helper
@@ -207,6 +221,7 @@ class MangaPress_Bootstrap
         return new WP_Error('_mangapress_helper_access', 'No helper exists by that name');
     }
 
+
     /**
      * Set MangaPress options. This method should run every time
      * MangaPress options are updated.
@@ -221,6 +236,7 @@ class MangaPress_Bootstrap
         $this->_options = maybe_unserialize(get_option('mangapress_options'));
     }
 
+
     /**
      * Get MangaPress options
      *
@@ -230,7 +246,8 @@ class MangaPress_Bootstrap
     {
         return $this->_options;
     }
-    
+
+
     /**
      * Get one option from options array
      *  
@@ -240,12 +257,13 @@ class MangaPress_Bootstrap
      */
     public function get_option($section, $option_name)
     {
-        if (!isset(self::$_options[$section][$option_name])) {
+        if (!isset($this->_options[$section][$option_name])) {
             return false;
         }
         
-        return self::$_options[$section][$option_name];
+        return $this->_options[$section][$option_name];
     }
+
 
     /**
      * Load current plugin options
@@ -296,11 +314,11 @@ class MangaPress_Bootstrap
         $mp_options = $this->get_options();
         
         if (!$mp_options['basic']['latestcomic_page']) {
-            add_rewrite_rule('^latest-comic$', 'index.php', 'top'); 
+            add_rewrite_rule('latest-comic/?$', 'index.php', 'top'); 
         }
         
         if (!$mp_options['basic']['comicarchive_page']) {
-            add_rewrite_rule('^past-comics$', 'index.php', 'top');
+            add_rewrite_rule('past-comics/?$', 'index.php', 'top');
         }
     }
 
