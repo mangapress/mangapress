@@ -156,15 +156,12 @@ class MangaPress_Bootstrap
     {
         
         load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
-
-        $this->set_options();
-
+        
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init_url_endpoints'));
         add_action('init', array($this, 'init'));        
         add_filter('template_include', 'mpp_comic_single_page');  
         add_filter('template_include', 'mpp_comic_archivepage');
-        add_filter('template_include', 'mpp_latest_comic_page');        
+        add_filter('template_include', 'mpp_latest_comic_page');
     }
 
 
@@ -186,21 +183,20 @@ class MangaPress_Bootstrap
      * @return void
      */
     public function init()
-    {       
+    {   
+        $this->set_options();
+        
+        $this->_posts_helper   = new MangaPress_Posts();
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
-        $this->_posts_helper   = new MangaPress_Posts();
 
         $this->_load_current_options();
+        $this->init_url_endpoints();
         
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::do_upgrade();
-        }
-        
-        if (filter_input(INPUT_GET, 'activate') === 'true') {
-            flush_rewrite_rules();
         }        
     }
 
