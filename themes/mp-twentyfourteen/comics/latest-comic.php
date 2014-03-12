@@ -12,7 +12,7 @@ get_header(); ?>
     <div id="primary" class="content-area">
         <div id="content" class="site-content" role="main">
         <?php 
-            mpp_start_latest_comic();
+            mangapress_start_latest_comic();
             while (have_posts()) : the_post(); ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <?php twentyfourteen_post_thumbnail(); ?>
@@ -37,7 +37,7 @@ get_header(); ?>
                 <?php comments_template('', true); ?>
 
             <?php endwhile; // end of the loop. ?>
-        <?php mpp_end_latest_comic();?>
+        <?php mangapress_end_latest_comic();?>
     </div><!-- #content -->
     <?php get_sidebar( 'content' ); ?>
     </div><!-- #primary -->

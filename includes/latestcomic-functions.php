@@ -21,7 +21,7 @@ function mangapress_get_latest_comic()
     global $wpdb;
 
     $sql = "SELECT post_name FROM {$wpdb->posts} "
-         . "WHERE post_type=\"mangapress_comic\" "
+         . "WHERE post_type=\"" . MangaPress_Posts::POST_TYPE . "\" "
          . "AND post_status=\"publish\" "
          . "ORDER BY post_date DESC LIMIT 1";
 
@@ -33,7 +33,7 @@ function mangapress_get_latest_comic()
 
     $single_comic_query = new WP_Query(array(
         'name'      => $post_name,
-        'post_type' => 'mangapress_comic',
+        'post_type' => MangaPress_Posts::POST_TYPE,
     ));
 
     return $single_comic_query;
@@ -42,11 +42,11 @@ function mangapress_get_latest_comic()
 
 /**
  * Start a Latest Comic loop
- * 
+ * @since 2.9
  * @global WP_Query $wp_query
  * @return void
  */
-function mpp_start_latest_comic()
+function mangapress_start_latest_comic()
 {
     global $wp_query;
     
@@ -58,11 +58,11 @@ function mpp_start_latest_comic()
 
 /**
  * End Latest Comic loop
- * 
+ * @since 2.9
  * @global WP_Query $wp_query
  * @return void
  */
-function mpp_end_latest_comic()
+function mangapress_end_latest_comic()
 {
     global $wp_query;
     do_action('latest_comic_end');
