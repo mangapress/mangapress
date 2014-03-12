@@ -16,7 +16,7 @@
  * @since 2.7.2
  * @return \WP_Query
  */
-function mpp_get_latest_comic()
+function mangapress_get_latest_comic()
 {
     global $wpdb;
 
@@ -52,7 +52,7 @@ function mpp_start_latest_comic()
     
     do_action('latest_comic_start');
     
-    $wp_query = mpp_get_latest_comic();
+    $wp_query = mangapress_get_latest_comic();
 }
 
 

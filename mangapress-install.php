@@ -119,6 +119,6 @@ class MangaPress_Install
 
         delete_option( 'mangapress_upgrade' );
 
-        flush_rewrite_rules();
+        flush_rewrite_rules(false);
     }
 }

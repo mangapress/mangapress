@@ -127,10 +127,9 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     $group = true; (bool)$mp_options['basic']['group_comics'];
     $by_parent = (bool)$mp_options['basic']['group_by_parent'];
     
-    $next_post  = get_adjacent_post(true, null, false, 'mangapress_series');
-    $prev_post  = get_adjacent_post(true, null, true, 'mangapress_series');
-    
     add_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+    $next_post  = get_adjacent_post(true, null, false, 'mangapress_series');
+    $prev_post  = get_adjacent_post(true, null, true, 'mangapress_series');        
     $last_post  = get_boundary_post(true, null, false, 'mangapress_series');
     $first_post = get_boundary_post(true, null, true, 'mangapress_series');
     remove_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');

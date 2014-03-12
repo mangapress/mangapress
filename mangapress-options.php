@@ -447,6 +447,8 @@ final class MangaPress_Options
             // damned checkboxes...fffuuuu
             $new_options['basic']['comicarchive_page_template'] 
                     = $this->_sanitize_integer($options, 'basic', 'comicarchive_page_template');
+            
+            flush_rewrite_rules(false);
         }
 
         if ($section == 'comic_page') {

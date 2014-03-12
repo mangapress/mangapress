@@ -159,9 +159,10 @@ class MangaPress_Bootstrap
         
         add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'));        
-        add_filter('template_include', 'mpp_comic_single_page');  
-        add_filter('template_include', 'mpp_comic_archivepage');
-        add_filter('template_include', 'mpp_latest_comic_page');
+        add_filter('single_template', 'mangapress_single_comic_template');  
+//        add_filter('template_include', 'mpp_comic_archivepage');
+        add_filter('template_include', 'mangapress_latestcomic_template');
+        add_filter('template_include', 'mangapress_latestcomic_page_template');
     }
 
 
@@ -282,7 +283,7 @@ class MangaPress_Bootstrap
          * Comic Navigation
          */
         if ($mp_options['nav']['insert_nav']) {
-            add_action('the_content', 'mpp_comic_insert_navigation');
+            add_action('the_content', 'mangapress_comic_insert_navigation');
         }
                 
         /*
