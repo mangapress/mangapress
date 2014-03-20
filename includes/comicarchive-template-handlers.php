@@ -65,12 +65,12 @@ function mangapress_comicarchive_page_template($template)
  */
 function mangapress_create_comicarchive_page($content)
 {
-    global $post;
+    global $post, $wp_query;
 
     if (!mangapress_is_queried_page('comicarchive_page')) {
         return $content;
     }
-    
+    $old_query = $wp_query;
     $wp_query = mangapress_get_all_comics_for_archive();
 
     if (!$wp_query){
@@ -79,6 +79,13 @@ function mangapress_create_comicarchive_page($content)
             '<p class="error">No comics were found.</p>'
         );
     }
+
+    ob_start();
+    require mangapress_get_content_template('comicarchive_page');
+    $content = ob_get_clean();
+    $wp_query = $old_query;
+
+    return apply_filters('the_comicarchive_content', $content);
     
 }
 
@@ -87,6 +94,6 @@ function mangapress_pre_get_posts(WP_Query $query)
     if (!did_action('_mangapress_pre_archives_get_posts')) {
         return $query;
     }
-    
+//    var_dump($query); die();
 }
 add_filter('pre_get_posts', 'mangapress_pre_get_posts');
