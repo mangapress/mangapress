@@ -10,7 +10,9 @@
  */
 
 require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
+require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
 require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
+require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
 
 
 /**
