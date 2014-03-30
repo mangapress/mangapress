@@ -46,7 +46,14 @@ class MangaPress_Posts
      * @var string
      */
     const POST_TYPE = 'mangapress_comic';
-
+    
+    
+    /**
+     * Default archive date format
+     * 
+     * @var string
+     */
+    const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
 
     /**
      * Class for initializing custom post-type
