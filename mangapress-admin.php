@@ -86,11 +86,8 @@ final class MangaPress_Admin
      */
     public function options_page_tabs($current = 'basic')
     {
-        if (isset($_GET['tab'])) {
-            $current = $_GET['tab'];
-        } else {
-            $current = 'basic';
-        }
+        $current = filter_input(INPUT_GET, 'tab') 
+                        ? filter_input(INPUT_GET, 'tab') : 'basic';
 
         $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
         $tabs = $options->options_sections();
@@ -104,7 +101,6 @@ final class MangaPress_Admin
             }
         }
 
-        echo get_screen_icon();
         echo '<h2 class="nav-tab-wrapper">';
 
         foreach ($links as $link) {
@@ -122,10 +118,11 @@ final class MangaPress_Admin
     public function get_current_tab()
     {
         $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
-        $tabs = $options->get_options_sections();
-
-        if (isset($_GET['tab']) && in_array($_GET['tab'], $tabs)) {
-            return $_GET['tab'];
+        $tabs    = $options->get_options_sections();
+        
+        $current_tab = filter_input(INPUT_GET, 'tab');
+        if (in_array($current_tab, $tabs)) {
+            return $current_tab;
         } else {
             return 'basic';
         }
