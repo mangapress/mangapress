@@ -9,7 +9,7 @@
  */
 
 /**
- * Template handler for Latest Comic end-point
+ * Template handler for Comic Archive end-point
  *
  * @global WP $wp
  * @param string $template
@@ -33,7 +33,7 @@ function mangapress_comicarchive_template($template)
 
 
 /**
- * Template handler for Latest Comic page
+ * Template handler for Comic Archive page
  *
  * @param string $template Default template if requested template is not found
  * @return string
