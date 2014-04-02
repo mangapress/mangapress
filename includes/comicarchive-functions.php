@@ -24,7 +24,7 @@ function mangapress_get_all_comics_for_archive()
     foreach ($series_tax as $series) {
         $series_ids[] = $series->term_id;
     }
-    
+    // TODO Move add/remove filter calls to separate functions
     do_action('_mangapress_pre_archives_get_posts');
     add_filter('posts_orderby', 'mangapress_orderby');
     add_filter('posts_fields', 'mangapress_archive_select_fields');
