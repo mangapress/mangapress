@@ -94,6 +94,5 @@ function mangapress_pre_get_posts(WP_Query $query)
     if (!did_action('_mangapress_pre_archives_get_posts')) {
         return $query;
     }
-//    var_dump($query); die();
 }
 add_filter('pre_get_posts', 'mangapress_pre_get_posts');

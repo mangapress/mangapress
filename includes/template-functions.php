@@ -88,6 +88,29 @@ if (!function_exists('is_comic_archive_page')) {
 }
 
 
+function mangapress_get_comic_term_ID($post = 0)
+{
+    $post = get_post($post);
+    if (!isset($post->term_ID)) {
+        return false;
+    }
+    
+    return $post->term_ID;
+}
+
+
+
+
+function mangapress_get_comic_term_title($post = 0)
+{
+    $post = get_post($post);
+    if (!isset($post->term_name)) {
+        return false;
+    }
+    
+    return $post->term_name;
+}
+
 /**
  * mangapress_comic_navigation()
  *

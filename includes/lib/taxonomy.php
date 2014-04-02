@@ -56,7 +56,7 @@ class MangaPress_Taxonomy extends MangaPress_FrameWork_Helper
      * @param array $args
      * @return JesGS_Taxonomy
      */
-    public function set_arguments($args)
+    public function set_arguments($args = array())
     {
 
         $args = array_merge($this->_args, $args);

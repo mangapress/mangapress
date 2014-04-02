@@ -46,7 +46,15 @@ class MangaPress_Posts
      * @var string
      */
     const POST_TYPE = 'mangapress_comic';
+
     
+    /**
+     * Taxonomy name for Series
+     * 
+     * @var string
+     */
+    const TAX_SERIES = 'mangapress_series';
+
     
     /**
      * Default archive date format
@@ -94,7 +102,7 @@ class MangaPress_Posts
     {
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
-            'name'       => 'mangapress_series',
+            'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
             'pluralname' => __('Series', MP_DOMAIN),
