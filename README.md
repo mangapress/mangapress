@@ -124,19 +124,13 @@ Archive Page to your two newly created pages.
 ## Credits
 
 (c) 2008-2013 Jess C. Green
-
-Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com.
-Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a
-fix) and webserver configuration info; for example, Manga+Press was developed using a WAMP (Windows, Apache, MySQL, PHP)
+Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info; for example, Manga+Press was developed using a WAMP (Windows, Apache, MySQL, PHP)
 environment but works fine on the server my sites are hosted at, which is a LAMP environment. Be as detailed as possible.
 
-For updates, you can visit http://www.manga-press.com/
+For updates and development progress, visit http://www.manga-press.com/
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
