@@ -1,12 +1,10 @@
 <?php
 /**
+ * Manga+Press Template functions
+ * 
+ * @todo Update docblocks
+ * 
  * @package Manga_Press
- * @subpackage Includes
- * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
- */
-/**
- * @package Includes
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
  * @author Jess Green <jgreen@psy-dreamer.com>
@@ -88,8 +86,48 @@ if (!function_exists('is_comic_archive_page')) {
 }
 
 
+/**
+ * Retrieve the previous post in The Loop. We have our reasons
+ * 
+ * @global WP_Query $wp_query
+ * @return WP_Post|false
+ */
+function mangapress_get_previous_post_in_loop()
+{
+    global $wp_query;
+    
+    if ($wp_query->current_post == -1 || $wp_query->current_post == 0) {
+        return false;
+    }
+            
+    return $wp_query->posts[$wp_query->current_post - 1];
+}
+
+
+/**
+ * Get the next post in the loop. Might come in handy.
+ * 
+ * @global WP_Query $wp_query
+ * @return WP_Post|false
+ */
+function mangapress_get_next_post_in_loop()
+{
+    global $wp_query;
+    
+    if ($wp_query->current_post == ($wp_query->found_posts - 1)) {
+        return false;
+    }
+            
+    return $wp_query->posts[$wp_query->current_post + 1];
+}
+
+
 function mangapress_get_comic_term_ID($post = 0)
 {
+    if ($post === false) {
+        return false;
+    }
+    
     $post = get_post($post);
     if (!isset($post->term_ID)) {
         return false;
