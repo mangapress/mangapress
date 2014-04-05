@@ -89,6 +89,13 @@ function mangapress_create_comicarchive_page($content)
     
 }
 
+
+/**
+ * Filter for hooking into mangapress_comic-specific WP_Query object
+ * 
+ * @param WP_Query $query
+ * @return \WP_Query
+ */
 function mangapress_pre_get_posts(WP_Query $query)
 {
     if (!did_action('_mangapress_pre_archives_get_posts')) {
