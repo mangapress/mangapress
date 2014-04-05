@@ -375,7 +375,8 @@ final class MangaPress_Options
 
         return apply_filters('mangapress_options_sections', $sections);
     }
-    
+
+
     /**
      * Get option sections. Returned as an array based on the array keys from $sections
      * 
@@ -385,7 +386,8 @@ final class MangaPress_Options
     {
         return array_keys($this->options_sections());
     }
-    
+
+
     /**
      * Sanitize options
      * 
@@ -462,6 +464,7 @@ final class MangaPress_Options
         
         return array_merge($mp_options, $new_options);
     }
+
     
     /**
      * Sanitize integers

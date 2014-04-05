@@ -19,11 +19,6 @@ function mangapress_get_all_comics_for_archive()
     global $wp_actions;
     // TODO Ordering options
     // TODO Sort parameters for taxonomies
-    $series_tax = get_terms('mangapress_series');
-    $series_ids = array();
-    foreach ($series_tax as $series) {
-        $series_ids[] = $series->term_id;
-    }
     // TODO Move add/remove filter calls to separate functions
     do_action('_mangapress_pre_archives_get_posts');
     add_filter('posts_orderby', 'mangapress_orderby');
@@ -32,14 +27,6 @@ function mangapress_get_all_comics_for_archive()
     $archives = new WP_Query(array(
         'post_type'       => 'mangapress_comic',
         'posts_per_page'  => -1,
-        'tax_query'      => array(
-            'relation' => 'AND',
-            array(
-                'taxonomy'   => 'mangapress_series',
-                'field'      => 'id',
-                'terms'      => $series_ids,
-            ),
-        )        
     ));
     if (isset($wp_actions['_mangapress_pre_archives_get_posts'])) {
         unset($wp_actions['_mangapress_pre_archives_get_posts']);
@@ -101,7 +88,8 @@ function mangapress_archive_select_fields($fields, WP_Query $query = null)
 function mangapress_archive_join($join)
 {
     global $wpdb;   
- 
+
+    $join .= " INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
     $join .= " INNER JOIN {$wpdb->terms} ON ({$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->terms}.term_id)";
  
     return $join;
