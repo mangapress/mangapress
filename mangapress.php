@@ -306,7 +306,7 @@ class MangaPress_Bootstrap
     }
 
     
-    function init_url_endpoints()
+    public function init_url_endpoints()
     {
         $mp_options = $this->get_options();
         

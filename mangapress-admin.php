@@ -66,7 +66,10 @@ final class MangaPress_Admin
             self::ADMIN_PAGE_SLUG,
             array($this, 'load_page')
         );
+        
+        add_action("load-{$mangapress_page_hook}", array($this, 'load_help_tabs'));
     }
+
 
     /**
      * Load the admin page
@@ -78,6 +81,51 @@ final class MangaPress_Admin
         require_once MP_ABSPATH . '/includes/pages/options.php';
     }
 
+    
+    /**
+     * Load contextual help tabs
+     * 
+     * @return void
+     */
+    public function load_help_tabs()
+    {
+        $screen = get_current_screen();
+        
+        $tab = $this->get_current_tab();
+        $screen->add_help_tab($this->get_help_tabs($tab));
+    }
+    
+    
+    /**
+     * Get help tab data for current option tab
+     * 
+     * @param string $option_tab
+     * @return array
+     */
+    public function get_help_tabs($option_tab)
+    {
+        $help_tabs = array(
+            'basic'      => array(
+                'id'      => 'help_basic',
+                'title'   => __('Basic Options Help'),
+                'content' => '',
+            ),
+            'comic_page' => array(
+                'id'      => 'help_comic_page',
+                'title'   => __('Comic Page Options Help'),
+                'content' => '',                
+            ),
+            'nav'        => array(
+                'id'      => 'help_nav',
+                'title'   => __('Navigation Options Help'),
+                'content' => '',                
+            ),
+        );
+        
+        return $help_tabs[$option_tab];
+    }
+    
+    
     /**
      * Display options tabs
      *
@@ -86,7 +134,7 @@ final class MangaPress_Admin
      */
     public function options_page_tabs($current = 'basic')
     {
-        $current = filter_input(INPUT_GET, 'tab') 
+        $current = filter_input(INPUT_GET, 'tab')
                         ? filter_input(INPUT_GET, 'tab') : 'basic';
 
         $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
@@ -110,6 +158,7 @@ final class MangaPress_Admin
         echo '</h2>';
     }
 
+
     /**
      * Create options page tabs
      *
@@ -127,6 +176,7 @@ final class MangaPress_Admin
             return 'basic';
         }
     }
+
 
     /**
      * Enqueue scripts for admin
