@@ -13,6 +13,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 ## Changelog
 #### 2.9
    * Updated navigation CSS
+   * Eliminated "Order By" Option. Now defaults to date.
 
 #### 2.8
    * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen

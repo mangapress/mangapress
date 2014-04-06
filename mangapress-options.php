@@ -23,7 +23,6 @@ final class MangaPress_Options
      */
     protected static $_default_options =  array(
         'basic' => array(
-            'order_by'                   => 'post_date',
             'group_comics'               => 0,
             'group_by_parent'            => 0,
             'latestcomic_page'           => 0,
@@ -228,18 +227,6 @@ final class MangaPress_Options
          */
         $options = array(
             'basic' => array(
-                'order_by' => array(
-                    'id'    => 'order-by',
-                    'title' => __('Order By', MP_DOMAIN),
-                    'type'  => 'select',
-                    'value' => array(
-                        'post_date' => __('Date', MP_DOMAIN),
-                        'post_id'   => __('Post ID', MP_DOMAIN),
-                    ),
-                    'valid'   => 'array',
-                    'default' => 'post_date',
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
                 'group_comics'      => array(
                     'id'    => 'group-comics',
                     'type'  => 'checkbox',
@@ -421,12 +408,9 @@ final class MangaPress_Options
         }
 
         if ($section == 'basic') {
-            $order_by_values = array_keys($available_options['basic']['order_by']['value']);
             //
             // Converting the values to their correct data-types should be enough for now...
             $new_options['basic'] = array(
-                'order_by'        => (in_array($options['basic']['order_by'], $order_by_values))
-                                            ? strval($options['basic']['order_by']) : 'post_date',
                 'group_comics'    => $this->_sanitize_integer($options, 'basic', 'group_comics'),
                 'group_by_parent' => $this->_sanitize_integer($options, 'basic', 'group_by_parent'),
             );
