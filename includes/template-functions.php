@@ -1,9 +1,9 @@
 <?php
 /**
  * Manga+Press Template functions
- * 
+ *
  * @todo Update docblocks
- * 
+ *
  * @package Manga_Press
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
@@ -88,36 +88,36 @@ if (!function_exists('is_comic_archive_page')) {
 
 /**
  * Retrieve the previous post in The Loop. We have our reasons
- * 
+ *
  * @global WP_Query $wp_query
  * @return WP_Post|false
  */
 function mangapress_get_previous_post_in_loop()
 {
     global $wp_query;
-    
+
     if ($wp_query->current_post == -1 || $wp_query->current_post == 0) {
         return false;
     }
-            
+
     return $wp_query->posts[$wp_query->current_post - 1];
 }
 
 
 /**
  * Get the next post in the loop. Might come in handy.
- * 
+ *
  * @global WP_Query $wp_query
  * @return WP_Post|false
  */
 function mangapress_get_next_post_in_loop()
 {
     global $wp_query;
-    
+
     if ($wp_query->current_post == ($wp_query->found_posts - 1)) {
         return false;
     }
-            
+
     return $wp_query->posts[$wp_query->current_post + 1];
 }
 
@@ -127,12 +127,12 @@ function mangapress_get_comic_term_ID($post = 0)
     if ($post === false) {
         return false;
     }
-    
+
     $post = get_post($post);
     if (!isset($post->term_ID)) {
         return false;
     }
-    
+
     return $post->term_ID;
 }
 
@@ -145,7 +145,7 @@ function mangapress_get_comic_term_title($post = 0)
     if (!isset($post->term_name)) {
         return false;
     }
-    
+
     return $post->term_name;
 }
 
@@ -165,7 +165,7 @@ function mangapress_get_comic_term_title($post = 0)
 function mangapress_comic_navigation($args = array(), $echo = true)
 {
     global $post;
-    
+
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $defaults = array(
@@ -184,16 +184,14 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     $parsed_args = wp_parse_args($args, $defaults);
     $r = apply_filters('mangapress_comic_navigation_args', $parsed_args);
     $args = (object) $r;
-    
-    $group = true; (bool)$mp_options['basic']['group_comics'];
+
+    $group = (bool)$mp_options['basic']['group_comics'];
     $by_parent = (bool)$mp_options['basic']['group_by_parent'];
-    
-    add_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');
-    $next_post  = get_adjacent_post(true, null, false, 'mangapress_series');
-    $prev_post  = get_adjacent_post(true, null, true, 'mangapress_series');        
-    $last_post  = get_boundary_post(true, null, false, 'mangapress_series');
-    $first_post = get_boundary_post(true, null, true, 'mangapress_series');
-    remove_action('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+
+    $next_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, false);
+    $prev_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, true);
+    $last_post  = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, false);
+    $first_post = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, true);
 
     $current_page = $post->ID; // use post ID this time.
 
