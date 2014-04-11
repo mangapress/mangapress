@@ -162,6 +162,7 @@ class MangaPress_Bootstrap
         add_filter('single_template', 'mangapress_single_comic_template');  
         add_filter('template_include', 'mangapress_latestcomic_template');
         add_filter('template_include', 'mangapress_latestcomic_page_template');
+        add_filter('template_include', 'mangapress_comicarchive_template');
         add_filter('template_include', 'mangapress_comicarchive_page_template');
     }
 
