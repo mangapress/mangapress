@@ -307,6 +307,12 @@ class MangaPress_Bootstrap
     }
 
     
+    /**
+     * Add new end-points if no latest comic page or archive page has
+     * been selected.
+     * 
+     * @return void
+     */
     public function init_url_endpoints()
     {
         $mp_options = $this->get_options();

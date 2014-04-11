@@ -122,6 +122,12 @@ function mangapress_get_next_post_in_loop()
 }
 
 
+/**
+ * Get comic term ID.
+ * 
+ * @param WP_Post|int $post WordPress post object or post ID
+ * @return false|int
+ */
 function mangapress_get_comic_term_ID($post = 0)
 {
     if ($post === false) {
@@ -138,7 +144,12 @@ function mangapress_get_comic_term_ID($post = 0)
 
 
 
-
+/**
+ * Get comic slug
+ * 
+ * @param WP_Post|int $post WordPress post object or post ID
+ * @return false|string
+ */
 function mangapress_get_comic_term_title($post = 0)
 {
     $post = get_post($post);
@@ -148,6 +159,7 @@ function mangapress_get_comic_term_title($post = 0)
 
     return $post->term_name;
 }
+
 
 /**
  * mangapress_comic_navigation()

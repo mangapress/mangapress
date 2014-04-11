@@ -9,6 +9,7 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
+require_once MP_ABSPATH . 'includes/query.php';
 require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
 require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
 require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
@@ -159,10 +160,7 @@ function _mangapress_set_post_type_for_boundary($query)
 
 /**
  * Clone of WordPress function get_adjacent_post()
- * Handles looking for previos and next comics. Needed because get_adjacent_post()
- * will only handle category, and not other taxonomies. Addresses issue with
- * get_adjacent_post() from {@link http://core.trac.wordpress.org/ticket/17807 WordPress Trac #17807}
- * May be deprecated once WordPress Trac #17807 is resolved, possibly in WP 3.5
+ * Handles looking for previos and next comics. 
  *
  * @since 2.7
  *
@@ -266,12 +264,10 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
     return $result;
 }
 
+
 /**
  * Clone of WordPress function get_boundary_post(). Retrieves first and last
- * comic posts. Needed because get_boundary_post() will only handle category,
- * and not other taxonomies. Addresses issues with get_boundary_post() in
- * {@link http://core.trac.wordpress.org/ticket/17807 WordPress Trac #17807}
- * May be deprecated once WordPress Trac #17807 is resolved, possibly in WP 3.5
+ * comic posts. 
  *
  * @since 2.7
  *
