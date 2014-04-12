@@ -193,7 +193,6 @@ class MangaPress_Bootstrap
         $this->_options_helper = new MangaPress_Options();
 
         $this->_load_current_options();
-        $this->init_url_endpoints();
         
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         
@@ -304,26 +303,6 @@ class MangaPress_Bootstrap
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
 
-    }
-
-    
-    /**
-     * Add new end-points if no latest comic page or archive page has
-     * been selected.
-     * 
-     * @return void
-     */
-    public function init_url_endpoints()
-    {
-        $mp_options = $this->get_options();
-        
-        if (!$mp_options['basic']['latestcomic_page']) {
-            add_rewrite_rule('latest-comic/?$', 'index.php', 'top'); 
-        }
-        
-        if (!$mp_options['basic']['comicarchive_page']) {
-            add_rewrite_rule('past-comics/?$', 'index.php', 'top');
-        }
     }
 
     
