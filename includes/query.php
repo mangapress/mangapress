@@ -9,16 +9,24 @@
 /**
  * Modify queries for Comics
  * 
+ * @global wpdb $wpdb WordPress DB oject
  * @param WP_Query $query
  */
 function _mangapress_comics_pre_get_posts($query)
 {
-    if ($query->get('post_type') !== MangaPress_Posts::POST_TYPE) {
+    global $wpdb;
+    
+    if ($query->get('post_type') !== MangaPress_Posts::POST_TYPE || is_admin()) {
         return;
     }
-    
+
+    $is_taxonomy = $wpdb->get_var("SELECT * FROM {$wpdb->term_taxonomy} WHERE taxonomy='" . MangaPress_Posts::TAX_SERIES. "'");    
+    if (!$is_taxonomy) {
+        return;
+    }
+        
     add_filter('posts_join', 'mangapress_join');
-    
+
     if ($query->is_single()) {
         add_filter('posts_fields', 'mangapress_select_fields');
     }

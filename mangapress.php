@@ -159,11 +159,6 @@ class MangaPress_Bootstrap
         
         add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'));        
-        add_filter('single_template', 'mangapress_single_comic_template');  
-        add_filter('template_include', 'mangapress_latestcomic_template');
-        add_filter('template_include', 'mangapress_latestcomic_page_template');
-        add_filter('template_include', 'mangapress_comicarchive_template');
-        add_filter('template_include', 'mangapress_comicarchive_page_template');
     }
 
 
@@ -195,6 +190,11 @@ class MangaPress_Bootstrap
         $this->_load_current_options();
         
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+        add_filter('template_include', 'mangapress_single_comic_template');  
+        add_filter('template_include', 'mangapress_latestcomic_template');
+        add_filter('template_include', 'mangapress_latestcomic_page_template');
+        add_filter('template_include', 'mangapress_comicarchive_template');
+        add_filter('template_include', 'mangapress_comicarchive_page_template');
         
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::do_upgrade();

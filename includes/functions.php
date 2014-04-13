@@ -82,10 +82,10 @@ function mangapress_single_comic_template($template)
 
     $templates = array('comics/single-comic.php', 'single-comic.php',);
     
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
         return $template;
     }
-    
+//var_dump($template);
     /**
      * mangapress_comic_single
      * replaces: template_include_single_comic
@@ -94,7 +94,7 @@ function mangapress_single_comic_template($template)
      * @return string
      */        
     $template = locate_template(apply_filters('mangapress_comic_single', $templates), true);
-    
+    var_dump($template);
     if ($template == '') {
         return MP_ABSPATH . 'templates/single-comic.php';
     } else {
