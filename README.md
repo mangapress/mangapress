@@ -11,6 +11,10 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Changelog
+### 2.8.1
+   * Corrected E_STRICT notice on plugin activation
+   * Updated font icons
+
 #### 2.8
    * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
    * Updated admin interface to fit WordPress 3.8
@@ -120,7 +124,7 @@ Archive Page to your two newly created pages.
 
 ## Credits
 
-(c) 2008-2013 Jess C. Green
+(c) 2008-2014 Jess C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com.
 Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a
