@@ -11,9 +11,14 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Changelog
+
 #### 2.9
    * Updated navigation CSS
    * Eliminated "Order By" Option. Now defaults to date.
+
+### 2.8.1
+   * Corrected E_STRICT notice on plugin activation
+   * Updated font icons
 
 #### 2.8
    * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
@@ -124,9 +129,8 @@ Archive Page to your two newly created pages.
 
 ## Credits
 
-(c) 2008-2013 Jess C. Green
-Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info; for example, Manga+Press was developed using a WAMP (Windows, Apache, MySQL, PHP)
-environment but works fine on the server my sites are hosted at, which is a LAMP environment. Be as detailed as possible.
+(c) 2008-2014 Jess C. Green
+Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info. Be as detailed as possible.
 
 For updates and development progress, visit http://www.manga-press.com/
 
