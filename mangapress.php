@@ -57,10 +57,11 @@ if (!defined('MP_LANG'))
 if (!defined('MP_DOMAIN'))
     define('MP_DOMAIN', $plugin_folder);
 
-require_once MP_ABSPATH . 'includes/lib/form/element.php';
-require_once MP_ABSPATH . 'includes/lib/helper.php';
-require_once MP_ABSPATH . 'includes/lib/post-type.php';
-require_once MP_ABSPATH . 'includes/lib/taxonomy.php';
+require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
+require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
+require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
+require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
+require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
 require_once MP_ABSPATH . 'includes/functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'mangapress-install.php';
@@ -124,6 +125,13 @@ class MangaPress_Bootstrap
      */
     protected $_admin_helper;
 
+
+    /**
+     * Flash Message helper
+     *
+     * @var Mangapress_FlashMessages
+     */
+    protected $_flashmessage_helper;
 
     /**
      * Static function used to initialize Bootstrap
@@ -190,9 +198,13 @@ class MangaPress_Bootstrap
         $this->_posts_helper   = new MangaPress_Posts();
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
+        $this->flashmessages_helper = new MangaPress_FlashMessages(array(
+            'transient_name' => 'mangapress_messages'
+        ));
 
         $this->_load_current_options();
-        
+//        $this->_load_flash_messages();
+
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_filter('template_include', 'mangapress_single_comic_template');  
         add_filter('template_include', 'mangapress_latestcomic_template');

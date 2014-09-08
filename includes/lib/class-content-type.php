@@ -11,14 +11,14 @@
  * @version $Id$
  */
 /**
- * MangaPress_FrameWork_Helper
+ * MangaPress_ContentType
  * This abstract class contains basic properties and methods
  * used by the PostType and Taxonomy classes.
  *
- * @package MangaPress_FrameWork_Helper
+ * @package MangaPress_ContentType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-abstract class MangaPress_FrameWork_Helper
+abstract class MangaPress_ContentType
 {
 
     /**
@@ -80,7 +80,7 @@ abstract class MangaPress_FrameWork_Helper
      * Set the object name
      *
      * @param string $object_name
-     * @return JesGS_FrameWork_Helper
+     * @return MangaPress_ContentType
      */
     public function set_name($object_name)
     {
@@ -103,7 +103,7 @@ abstract class MangaPress_FrameWork_Helper
      * Set object options
      *
      * @param array $options
-     * @return JesGS_FrameWork_Helper
+     * @return MangaPress_ContentType
      */
     public function set_options($options)
     {
@@ -121,7 +121,7 @@ abstract class MangaPress_FrameWork_Helper
      * Set the object's singular label
      *
      * @param string $object_single_name
-     * @return MangaPress_FrameWork_Helper
+     * @return MangaPress_ContentType
      */
     public function set_singlename($object_single_name)
     {
@@ -134,7 +134,7 @@ abstract class MangaPress_FrameWork_Helper
      * Set the object's plural label
      *
      * @param string $object_pluralname
-     * @return MangaPress_FrameWork_Helper
+     * @return MangaPress_ContentType
      */
     public function set_pluralname($object_pluralname)
     {
@@ -155,7 +155,7 @@ abstract class MangaPress_FrameWork_Helper
      * Set object arguments
      *
      * @param array $args
-     * @return MangaPress_FrameWork_Helper
+     * @return MangaPress_ContentType
      */
     public function set_arguments($args = array())
     {

@@ -180,6 +180,8 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
     $cat_array = array();
     if ($group_by_parent) {
         $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+    } else {
+        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_PARENTS);
     }
 
     return get_adjacent_post($in_same_cat, $cat_array, $previous, $taxonomy);
@@ -209,6 +211,8 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
     $cat_array = array();
     if ($group_by_parent) {
         $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+    } else {
+        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_PARENTS);
     }
 
     return get_boundary_post($in_same_cat, $cat_array, $start, $taxonomy);
