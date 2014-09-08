@@ -202,9 +202,10 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 
     $next_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, false);
     $prev_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, true);
+    add_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
     $last_post  = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, false);
     $first_post = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, true);
-
+    remove_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
     $current_page = $post->ID; // use post ID this time.
 
     $next_page = !isset($next_post->ID) ? $current_page : $next_post->ID;

@@ -28,9 +28,6 @@ final class MangaPress_Options
             'latestcomic_page'           => 0,
             'comicarchive_page'          => 0,
         ),
-        'permalink'  => array(
-            ''
-        ),
         'comic_page' => array(
             'comic_post_count'    => 10,
             'generate_comic_page' => 0,
@@ -145,8 +142,7 @@ final class MangaPress_Options
      * Call-back for outputting settings fields (select drop-downs)
      * with custom values.
      *
-     * @global type $mp
-     * @param type $option Current option array
+     * @param array $option Current option array
      * @return void
      */
     public function ft_basic_page_dropdowns_cb($option)
@@ -215,7 +211,6 @@ final class MangaPress_Options
    /**
      * Helper function for creating default options fields.
      *
-     * @param array $options Option fields array.
      * @return array
      */
     public function options_fields()
@@ -340,7 +335,6 @@ final class MangaPress_Options
    /**
      * Helper function for setting default options sections.
      *
-     * @param array $sections Options sections/tabs
      * @return array
      */
     public function options_sections()

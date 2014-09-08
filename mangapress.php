@@ -40,11 +40,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-<<<<<<< HEAD
     define('MP_VERSION', '2.9-alpha');
-=======
-    define('MP_VERSION', '2.8.1');
->>>>>>> 2.8
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);

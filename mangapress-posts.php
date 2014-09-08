@@ -353,7 +353,7 @@ class MangaPress_Posts
      * @param int $post_id
      * @param WP_Post $post
      * 
-     * @return void
+     * @return int
      */
     public function save_post($post_id, $post)
     {

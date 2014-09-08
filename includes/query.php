@@ -15,12 +15,13 @@
 function _mangapress_comics_pre_get_posts($query)
 {
     global $wpdb;
-    
+
     if ($query->get('post_type') !== MangaPress_Posts::POST_TYPE || is_admin()) {
         return;
     }
 
-    $is_taxonomy = $wpdb->get_var("SELECT * FROM {$wpdb->term_taxonomy} WHERE taxonomy='" . MangaPress_Posts::TAX_SERIES. "'");    
+    $sql = "SELECT * FROM {$wpdb->term_taxonomy} WHERE taxonomy='" . MangaPress_Posts::TAX_SERIES. "'";
+    $is_taxonomy = $wpdb->get_var($sql);
     if (!$is_taxonomy) {
         return;
     }
