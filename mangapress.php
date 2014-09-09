@@ -9,7 +9,7 @@
  Plugin Name: Manga+Press Comic Manager
  Plugin URI: http://www.manga-press.com/
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
- Version: 2.8
+ Version: 2.8.1.1
  Author: Jessica Green
  Author URI: http://www.jes.gs
 */
@@ -36,7 +36,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '2.8');
+    define('MP_VERSION', '2.8.1.1');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
@@ -108,14 +108,14 @@ class MangaPress_Bootstrap
      * @var \MangaPress_Options
      */
     protected $_options_helper;
-    
+
     /**
      * Admin page helper
-     * 
+     *
      * @var MangaPress_Admin
      */
     protected $_admin_helper;
-    
+
     /**
      * Static function used to initialize Bootstrap
      *
@@ -153,8 +153,8 @@ class MangaPress_Bootstrap
         $this->set_options();
 
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init'), 50);        
-        add_action('template_include', 'mpp_comic_single_page');        
+        add_action('init', array($this, 'init'), 50);
+        add_action('template_include', 'mpp_comic_single_page');
     }
 
     /**
@@ -180,17 +180,18 @@ class MangaPress_Bootstrap
         $this->_posts_helper   = new MangaPress_Posts();
 
         $this->_load_current_options();
-        
+
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-        
-        if (get_option('mangapress_upgrade') == 'yes') {
-            MangaPress_Install::do_upgrade();
+
+        if (get_option('mangapress_upgrade') == 'yes' ||
+            get_option('mangapress_ver') !== MP_VERSION) {
+            MangaPress_Install::get_instance()->do_upgrade();
         }
     }
-    
+
     /**
      * Get a MangaPress helper
-     * 
+     *
      * @param string $helper_name Allowed values: admin, options, posts
      * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\WP_Error
      */
@@ -200,7 +201,7 @@ class MangaPress_Bootstrap
         if (property_exists($this, $helper)) {
             return $this->$helper;
         }
-        
+
         return new WP_Error('_mangapress_helper_access', 'No helper exists by that name');
     }
 
@@ -253,13 +254,13 @@ class MangaPress_Bootstrap
          * Lastest Comic Page
          */
         if ((bool)$mp_options['basic']['latestcomic_page']
-                && !(bool)$mp_options['basic']['latestcomic_page_template']) {
+            && !(bool)$mp_options['basic']['latestcomic_page_template']) {
             add_filter('the_content', 'mpp_filter_latest_comic');
         }
 
         /*
          * Latest Comic Page template override
-         */        
+         */
         if ((bool)$mp_options['basic']['latestcomic_page_template']) {
             add_filter('template_include', 'mpp_latest_comic_page');
         }
@@ -267,7 +268,7 @@ class MangaPress_Bootstrap
          * Comic Archive Page
          */
         if ((bool)$mp_options['basic']['comicarchive_page']
-                && !(bool)$mp_options['basic']['comicarchive_page_template']) {
+            && !(bool)$mp_options['basic']['comicarchive_page_template']) {
             add_filter('the_content', 'mpp_filter_comic_archivepage');
         }
 
@@ -277,7 +278,7 @@ class MangaPress_Bootstrap
         if ((bool)$mp_options['basic']['comicarchive_page_template']) {
             add_filter('template_include', 'mpp_comic_archivepage');
         }
-        
+
         /*
          * Comic Page size
          */
@@ -317,11 +318,11 @@ class MangaPress_Bootstrap
 
         wp_enqueue_style('mangapress-nav');
     }
-    
-    
+
+
     /**
      * Enqueue admin-related styles
-     * 
+     *
      * @return void
      */
     public function admin_enqueue_scripts()
