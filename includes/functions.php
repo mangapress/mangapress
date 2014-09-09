@@ -81,36 +81,29 @@ function mangapress_single_comic_template($template)
     global $post;
 
     $templates = array('comics/single-comic.php', 'single-comic.php',);
-    
+
     if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
         return $template;
     }
-//var_dump($template);
-    /**
-     * mangapress_comic_single
-     * replaces: template_include_single_comic
-     * 
-     * @since 2.9
-     * @return string
-     */        
-    $template = locate_template(apply_filters('mangapress_comic_single', $templates), true);
-    var_dump($template);
+
+    $template = locate_template( $templates );
+
     if ($template == '') {
         return MP_ABSPATH . 'templates/single-comic.php';
     } else {
         return $template;
-    }        
+    }
 }
 
 
 /**
- * mpp_comic_insert_navigation()
+ * mangapress_comic_insert_navigation()
  * Inserts navigation on single comic pages when Insert Navigation is enabled.
  *
  * @since 2.8
  *
- * @global object $post Wordpress post object.
- *
+ * @global object $post WordPress post object.
+ * @param string $content Post content
  * @return string
  */
 function mangapress_comic_insert_navigation($content)
