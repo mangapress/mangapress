@@ -166,15 +166,14 @@ function _mangapress_set_post_type_for_boundary($query)
  * @global WP_Post $post
  * @return string
  */
-function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $previous = true)
+function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
+                                                                            $excluded_categories = '', $previous = true)
 {
     global $post;
 
-    $cat_array = array();
-    if ($group_by_parent) {
+    $cat_array = null;
+    if ($in_same_cat && $group_by_parent) {
         $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
-    } else {
-        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_PARENTS);
     }
 
     return get_adjacent_post($in_same_cat, $cat_array, $previous, $taxonomy);
@@ -197,15 +196,14 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
  *
  * @return object
  */
-function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $start = true)
+function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
+                                                                                $excluded_categories = '', $start = true)
 {
     global $post;
 
-    $cat_array = array();
-    if ($group_by_parent) {
+    $cat_array = null;
+    if ($in_same_cat && $group_by_parent) {
         $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
-    } else {
-        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_PARENTS);
     }
 
     return get_boundary_post($in_same_cat, $cat_array, $start, $taxonomy);
@@ -218,7 +216,7 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
  * @global wpdb $wpdb
  * @param integer $object_ID Object ID
  * @param mixed $taxonomy Taxonomy name or array of names
- * @param boolean $exclude_with_parents Whether or not to get child-cats or top-level cats
+ * @param integer $get Whether or not to get child-cats or top-level cats
  *
  * @return array
  */

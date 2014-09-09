@@ -210,7 +210,7 @@ class MangaPress_Bootstrap
         add_filter('template_include', 'mangapress_comicarchive_page_template');
         
         if (get_option('mangapress_upgrade') == 'yes') {
-            MangaPress_Install::do_upgrade();
+            MangaPress_Install::get_instance()->do_upgrade();
         }        
     }
 
