@@ -10,44 +10,19 @@ Tags: comics, comic theme, manga press, webcomics, online comics
 */
 
 /* comic navigation */
-#comic-navigation {
+.comic-nav-hlist-wrapper {
     text-align: left;
     margin: 5px 0 10px 0;
     padding: 0;
+    clear: both;
+    float: none;
 }
 
-#comic-navigation a {
-    font-size: 16px;
-    text-decoration: none;
-    padding: 3px 10px;
+.comic-nav-hlist {
+    list-style: none;
 }
 
-.comic-nav-span {
-    padding: 3px 10px;
-    text-decoration: none;
-}
-
-ul.comic-nav  {
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-}
-
-ul.comic-nav li {
-    display: inline;
-    list-style-type: none;
-}
-
-ul.comic-nav a:link,
-ul.comic-nav a:visited {
-    color: #ccc;
-    text-decoration: none;
-}
-
-ul.comic-nav a:hover {
-    text-decoration: none;
-}
-
-ul.comic-nav li:before{
-    content: "";
+.comic-nav-hlist > li {
+    float: left;
+    margin-right: 10px;
 }

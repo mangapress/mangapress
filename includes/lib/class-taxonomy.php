@@ -13,7 +13,7 @@
  * @package MangaPress_Taxonomy
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_Taxonomy extends MangaPress_FrameWork_Helper
+class MangaPress_Taxonomy extends MangaPress_ContentType
 {
 
     /**

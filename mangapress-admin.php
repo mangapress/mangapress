@@ -66,7 +66,10 @@ final class MangaPress_Admin
             self::ADMIN_PAGE_SLUG,
             array($this, 'load_page')
         );
+
+        add_action("load-{$mangapress_page_hook}", array($this, 'load_help_tabs'));
     }
+
 
     /**
      * Load the admin page
@@ -78,6 +81,78 @@ final class MangaPress_Admin
         require_once MP_ABSPATH . '/includes/pages/options.php';
     }
 
+
+    /**
+     * Load contextual help tabs
+     *
+     * @return void
+     */
+    public function load_help_tabs()
+    {
+        $screen = get_current_screen();
+
+        $tab = $this->get_current_tab();
+        $screen->add_help_tab($this->get_help_tabs($tab));
+    }
+
+
+    /**
+     * Get help tab data for current option tab
+     *
+     * @param string $option_tab
+     * @return array
+     */
+    public function get_help_tabs($option_tab)
+    {
+        $help_tabs = array(
+            'basic'      => array(
+                'id'      => 'help_basic',
+                'title'   => __('Basic Options Help'),
+                'content' => $this->get_help_tab_contents(),
+            ),
+            'comic_page' => array(
+                'id'      => 'help_comic_page',
+                'title'   => __('Comic Page Options Help'),
+                'content' => $this->get_help_tab_contents('comic_page'),
+            ),
+            'nav'        => array(
+                'id'      => 'help_nav',
+                'title'   => __('Navigation Options Help'),
+                'content' => $this->get_help_tab_contents('nav'),
+            ),
+        );
+
+        return $help_tabs[$option_tab];
+    }
+
+
+    /**
+     * Get help tab contents from file
+     *
+     * @param string $help_tab Name of tab content to get
+     * @return string
+     */
+    public function get_help_tab_contents($help_tab = 'basic')
+    {
+        ob_start();
+        switch($help_tab) {
+            case 'basic' :
+                require_once MP_ABSPATH . '/includes/pages/help-basic.php';
+                break;
+            case 'comic_page':
+                require_once MP_ABSPATH . '/includes/pages/help-comic-page.php';
+                break;
+            case 'nav':
+                require_once MP_ABSPATH . '/includes/pages/help-nav.php';
+                break;
+            default:
+                // have a default response
+        }
+
+        return ob_get_clean();
+    }
+
+
     /**
      * Display options tabs
      *
@@ -86,11 +161,8 @@ final class MangaPress_Admin
      */
     public function options_page_tabs($current = 'basic')
     {
-        if (isset($_GET['tab'])) {
-            $current = $_GET['tab'];
-        } else {
-            $current = 'basic';
-        }
+        $current = filter_input(INPUT_GET, 'tab')
+                        ? filter_input(INPUT_GET, 'tab') : 'basic';
 
         $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
         $tabs = $options->options_sections();
@@ -104,7 +176,6 @@ final class MangaPress_Admin
             }
         }
 
-        echo get_screen_icon();
         echo '<h2 class="nav-tab-wrapper">';
 
         foreach ($links as $link) {
@@ -114,6 +185,7 @@ final class MangaPress_Admin
         echo '</h2>';
     }
 
+
     /**
      * Create options page tabs
      *
@@ -122,18 +194,20 @@ final class MangaPress_Admin
     public function get_current_tab()
     {
         $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
-        $tabs = $options->get_options_sections();
+        $tabs    = $options->get_options_sections();
 
-        if (isset($_GET['tab']) && in_array($_GET['tab'], $tabs)) {
-            return $_GET['tab'];
+        $current_tab = filter_input(INPUT_GET, 'tab');
+        if (in_array($current_tab, $tabs)) {
+            return $current_tab;
         } else {
             return 'basic';
         }
     }
 
+
     /**
      * Enqueue scripts for admin
-     * 
+     *
      * @global string $mangapress_page_hook
      * @param string $hook
      */

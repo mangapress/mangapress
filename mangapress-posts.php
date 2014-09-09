@@ -47,6 +47,21 @@ class MangaPress_Posts
      */
     const POST_TYPE = 'mangapress_comic';
 
+    
+    /**
+     * Taxonomy name for Series
+     * 
+     * @var string
+     */
+    const TAX_SERIES = 'mangapress_series';
+
+    
+    /**
+     * Default archive date format
+     * 
+     * @var string
+     */
+    const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
 
     /**
      * Class for initializing custom post-type
@@ -87,7 +102,7 @@ class MangaPress_Posts
     {
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
-            'name'       => 'mangapress_series',
+            'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
             'pluralname' => __('Series', MP_DOMAIN),
@@ -338,7 +353,7 @@ class MangaPress_Posts
      * @param int $post_id
      * @param WP_Post $post
      * 
-     * @return void
+     * @return int
      */
     public function save_post($post_id, $post)
     {

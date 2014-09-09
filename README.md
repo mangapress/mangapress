@@ -11,9 +11,15 @@ Manga+Press is a webcomic management system for WordPress.
 Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Changelog
+### 2.9
+   * Updated navigation CSS
+   * Eliminated "Order By" Option. Now defaults to date.
 
-### 2.8.1.1
+### 2.8
+
+#### 2.8.1.1
    * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
+
 
 #### 2.8.1
    * Corrected E_STRICT notice on plugin activation
@@ -71,7 +77,10 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
    * Fixed bugs that were present in 2.5. Manga+Press options page now located under Settings, Post New Comic page has been moved to Posts and Uninstall Manga+Press is located under Plugins.
 
 #### 2.6b
-   * Changed handling of plugin options so that they are compatible with Wordpress 2.8 and higher. They are now stored in one entry in the options table instead of being spread out over multiple entries. Moved Manga+Press options page to Settings, Uninstall to Plugins, and Post New Comic to Posts. Removed /admin, /css, /js as they were no longer necessary for the plugin to function.
+   * Changed handling of plugin options so that they are compatible with WordPress 2.8 and higher. They are now stored in one
+entry in the options table instead of being spread out over multiple entries. Moved Manga+Press options page to Settings,
+Uninstall to Plugins, and Post New Comic to Posts. Removed /admin, /css, /js as they were no longer necessary for the plugin to
+function.
 
 ### 2.5
 
@@ -79,13 +88,15 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
    * 2.1 renamed to 2.5. Eliminated the banner skin option and all functions attached. Feature can be duplicated with a little CSS positioning. Option for creating a banner from uploaded comic or uploading a seperate banner still remains, as well as the option to set banner width & height. Removed both the Manga+Press help and Template Tag pages. Will be hosted in a help wiki on the Manga+Press website. Made changes to the Post Comic page. Also reworded the "New Version" text. Created options to have the comic banner & navigation included at the top of The Loop on the home page, as well automatically filtering comic categories from the front page and automatically modifying The Loop for the latest comic page. Removed the make banner option.
 
 #### 2.0.1-beta
-   * Corrected a minor bug in update_options. Banner skin wouldn't be uploaded even if "use banner skin" option were checked and user had selected an image for upload. Also corrected a jQuery UI Tabs bug in the user admin area that is present when Manga+Press is used with Wordpress 2.8
+   * Corrected a minor bug in update_options. Banner skin wouldn't be uploaded even if "use banner skin" option were checked and
+user had selected an image for upload. Also corrected a jQuery UI Tabs bug in the user admin area that is present when Manga+Press
+is used with WordPress 2.8
 
 ### 2.0
 
 #### 2.0-beta
    * Major reworking of code in mangapress-classes.php and mangapress-functions.php
-   * Reworked code of add_comic() function so it is compatible with the Wordpress post db and Media Library
+   * Reworked code of add_comic() function so it is compatible with the WordPress post db and Media Library
    * removed create directory for series option
    * added wp_sidebar_comic()
 
@@ -117,8 +128,7 @@ reference. See website for a fix.
 
 (c) 2008-2014 Jess C. Green
 
-Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info; for example, Manga+Press was developed using a WAMP (Windows, Apache, MySQL, PHP)
-environment but works fine on the server my sites are hosted at, which is a LAMP environment. Be as detailed as possible.
+Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info. Be as detailed as possible.
 
 For updates and development progress, visit http://www.manga-press.com/
 

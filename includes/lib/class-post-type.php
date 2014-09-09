@@ -13,7 +13,7 @@
  * @package MangaPress_PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_PostType extends MangaPress_FrameWork_Helper
+class MangaPress_PostType extends MangaPress_ContentType
 {
 
     /**

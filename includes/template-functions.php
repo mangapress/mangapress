@@ -1,12 +1,10 @@
 <?php
 /**
+ * Manga+Press Template functions
+ *
+ * @todo Update docblocks
+ *
  * @package Manga_Press
- * @subpackage Includes
- * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
- */
-/**
- * @package Includes
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
  * @author Jess Green <jgreen@psy-dreamer.com>
@@ -89,6 +87,81 @@ if (!function_exists('is_comic_archive_page')) {
 
 
 /**
+ * Retrieve the previous post in The Loop. We have our reasons
+ *
+ * @global WP_Query $wp_query
+ * @return WP_Post|false
+ */
+function mangapress_get_previous_post_in_loop()
+{
+    global $wp_query;
+
+    if ($wp_query->current_post == -1 || $wp_query->current_post == 0) {
+        return false;
+    }
+
+    return $wp_query->posts[$wp_query->current_post - 1];
+}
+
+
+/**
+ * Get the next post in the loop. Might come in handy.
+ *
+ * @global WP_Query $wp_query
+ * @return WP_Post|false
+ */
+function mangapress_get_next_post_in_loop()
+{
+    global $wp_query;
+
+    if ($wp_query->current_post == ($wp_query->found_posts - 1)) {
+        return false;
+    }
+
+    return $wp_query->posts[$wp_query->current_post + 1];
+}
+
+
+/**
+ * Get comic term ID.
+ * 
+ * @param WP_Post|int $post WordPress post object or post ID
+ * @return false|int
+ */
+function mangapress_get_comic_term_ID($post = 0)
+{
+    if ($post === false) {
+        return false;
+    }
+
+    $post = get_post($post);
+    if (!isset($post->term_ID)) {
+        return false;
+    }
+
+    return $post->term_ID;
+}
+
+
+
+/**
+ * Get comic slug
+ * 
+ * @param WP_Post|int $post WordPress post object or post ID
+ * @return false|string
+ */
+function mangapress_get_comic_term_title($post = 0)
+{
+    $post = get_post($post);
+    if (!isset($post->term_name)) {
+        return false;
+    }
+
+    return $post->term_name;
+}
+
+
+/**
  * mangapress_comic_navigation()
  *
  * Displays navigation for post specified by $post_id.
@@ -101,68 +174,49 @@ if (!function_exists('is_comic_archive_page')) {
  * @param bool $echo Specifies whether to echo comic navigation or return it as a string
  * @return string Returns navigation string if $echo is set to false.
  */
-function mangapress_comic_navigation(WP_Query $query = null, $args = array(), $echo = true)
+function mangapress_comic_navigation($args = array(), $echo = true)
 {
+    global $post;
 
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $defaults = array(
         'container'      => 'nav',
-        'container_attr' => array('id' => 'comic-navigation'),
+        'container_attr' => array(
+            'id'    => 'comic-navigation',
+            'class' => 'comic-nav-hlist-wrapper',
+        ),
         'items_wrap'     => '<ul%1$s>%2$s</ul>',
-        'items_wrap_attr' => array('class' => 'comic-nav'),
+        'items_wrap_attr' => array('class' => 'comic-nav-hlist'),
         'link_wrap'      => 'li',
         'link_before'    => '',
         'link_after'     => '',
     );
 
-    $args = wp_parse_args($args, $defaults);
-    $args = apply_filters('mangapress_comic_navigation_args', $args);
-    $args = (object) $args;
+    $parsed_args = wp_parse_args($args, $defaults);
+    $r = apply_filters('mangapress_comic_navigation_args', $parsed_args);
+    $args = (object) $r;
 
-    if (is_null($query)) {
-        global $wp_query;
+    $group = (bool)$mp_options['basic']['group_comics'];
+    $by_parent = (bool)$mp_options['basic']['group_by_parent'];
 
-        $query = $wp_query;
-    }
+    $next_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, false);
+    $prev_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, true);
+    add_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+    $last_post  = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, false);
+    $first_post = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, true);
+    remove_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+    $current_page = $post->ID; // use post ID this time.
 
-    $is_comic = ($query->post->post_type == "mangapress_comic");
+    $next_page = !isset($next_post->ID) ? $current_page : $next_post->ID;
+    $prev_page = !isset($prev_post->ID) ? $current_page : $prev_post->ID;
+    $last      = !isset($last_post[0]->ID) ? $current_page : $last_post[0]->ID;
+    $first     = !isset($first_post[0]->ID) ? $current_page : $first_post[0]->ID;
 
-    if ($query->is_post_type_archive && $is_comic) {
-        $query->set('posts_per_page', '1');
-    } elseif ($query->is_single && $is_comic) {
-        global $post;
-
-        $group = (bool)$mp_options['basic']['group_comics'];
-        $by_parent = (bool)$mp_options['basic']['group_by_parent'];
-
-        $next_post  = mpp_get_adjacent_comic($group, $by_parent, 'mangapress_series', null, false);
-        $prev_post  = mpp_get_adjacent_comic($group, $by_parent, 'mangapress_series', null, true);
-        $last_post  = mpp_get_boundary_comic($group, $by_parent, 'mangapress_series', null, false);
-        $first_post = mpp_get_boundary_comic($group, $by_parent, 'mangapress_series', null, true);
-
-        $current_page = $post->ID; // use post ID this time.
-
-        $next_page = !isset($next_post->ID)
-                   ? $current_page : $next_post->ID;
-
-        $prev_page = !isset($prev_post->ID)
-                   ? $current_page : $prev_post->ID;
-
-        $last      = !isset($last_post[0]->ID)
-                   ? $current_page : $last_post[0]->ID;
-
-        $first     = !isset($first_post[0]->ID)
-                   ? $current_page : $first_post[0]->ID;
-
-        $first_url = get_permalink($first);
-        $last_url  = get_permalink($last);
-        $next_url  = get_permalink($next_page);
-        $prev_url  = get_permalink($prev_page);
-
-    } else {
-        return false;
-    }
+    $first_url = get_permalink($first);
+    $last_url  = get_permalink($last);
+    $next_url  = get_permalink($next_page);
+    $prev_url  = get_permalink($prev_page);
 
     $show_container = false;
     $comic_nav      = "";

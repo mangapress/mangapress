@@ -55,7 +55,7 @@ class MangaPress_Install
     public function do_activate()
     {
         global $wp_version;
-
+        
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         // Check for capability
@@ -92,12 +92,10 @@ class MangaPress_Install
             add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
 
         }
-
-        // this addresses issue #7 on GitHub. This action only runs
-        // on activation, and is removed with the next page load
-        // but it clears/resets the permalink cache so you can view your
-        // comic.
-        add_action('init', 'flush_rewrite_rules');
+        
+        MangaPress_Bootstrap::get_instance()->init();
+        
+        flush_rewrite_rules(false);
     }
 
     /**
@@ -107,7 +105,7 @@ class MangaPress_Install
      */
     public function do_deactivate()
     {
-        flush_rewrite_rules();
+        delete_option('rewrite_rules');
     }
 
     /**
@@ -121,6 +119,6 @@ class MangaPress_Install
 
         delete_option( 'mangapress_upgrade' );
 
-        flush_rewrite_rules();
+        flush_rewrite_rules(false);
     }
 }
