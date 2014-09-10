@@ -189,7 +189,8 @@ class MangaPress_Bootstrap
      * @return void
      */
     public function init()
-    {   
+    {
+
         $this->set_options();
         
         $this->_posts_helper   = new MangaPress_Posts();
@@ -199,6 +200,7 @@ class MangaPress_Bootstrap
             'transient_name' => 'mangapress_messages'
         ));
 
+        $this->_post_activation_cleanup();
         $this->_load_current_options();
 //        $this->_load_flash_messages();
 
@@ -208,7 +210,7 @@ class MangaPress_Bootstrap
         add_filter('template_include', 'mangapress_latestcomic_page_template');
         add_filter('template_include', 'mangapress_comicarchive_template');
         add_filter('template_include', 'mangapress_comicarchive_page_template');
-        
+
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::get_instance()->do_upgrade();
         }        
@@ -319,7 +321,20 @@ class MangaPress_Bootstrap
 
     }
 
-    
+
+    /**
+     * Handle certain items that need to happen on activation but after or during init
+     *
+     * @return void
+     */
+    private function _post_activation_cleanup()
+    {
+        if (did_action('activate_mangapress/mangapress.php')) {
+            MangaPress_Install::get_instance()->after_plugin_activation();
+        }
+    }
+
+
     /**
      * Enqueue default navigation stylesheet
      *

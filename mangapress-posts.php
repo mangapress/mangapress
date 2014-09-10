@@ -357,18 +357,21 @@ class MangaPress_Posts
      */
     public function save_post($post_id, $post)
     {
-        if ($post->post_type !== self::POST_TYPE)
+        if ($post->post_type !== self::POST_TYPE || empty($_POST))
             return $post_id;
-        
-        if (empty($_POST))
-            return $post_id;
-        
+
         if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
 
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) { 
             set_post_thumbnail($post_id, $image_ID);
+        }
+
+        // if no terms have been assigned, assign the default
+        if (!filter_input(INPUT_POST, 'tax_input')) {
+            $default_cat = get_option('mangapress_default_category');
+            wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
         }
         
         return $post_id;

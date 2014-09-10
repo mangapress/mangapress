@@ -92,11 +92,37 @@ class MangaPress_Install
             add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
 
         }
-        
+
         MangaPress_Bootstrap::get_instance()->init();
-        
+
         flush_rewrite_rules(false);
     }
+
+
+    /**
+     * Run routines after plugin has been activated
+     *
+     * @todo check for existing terms in Series
+     *
+     * @return void
+     */
+    public function after_plugin_activation()
+    {
+        // create a default series category
+        $term = wp_insert_term(
+            'Default Series',
+            MangaPress_Posts::TAX_SERIES,
+            array(
+                'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
+                'slug'        => 'default-series',
+            )
+        );
+
+        if (!($term instanceof WP_Error)) {
+            add_option('mangapress_default_category', $term['term_id'], '', 'no');
+        }
+    }
+
 
     /**
      * Static function for plugin deactivation.
