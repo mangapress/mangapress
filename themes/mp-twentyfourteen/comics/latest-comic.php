@@ -37,13 +37,8 @@ get_header(); ?>
                 <?php comments_template('', true); ?>
 
             <?php endwhile; // end of the loop. ?>
-<<<<<<< HEAD
         <?php mangapress_end_latest_comic();?>
     </div><!-- #content -->
-=======
-        <?php mpp_end_latest_comic();?>
-        </div><!-- #content -->
->>>>>>> 2.8
     <?php get_sidebar( 'content' ); ?>
     </div><!-- #primary -->
 </div>
