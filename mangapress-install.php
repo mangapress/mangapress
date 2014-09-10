@@ -108,6 +108,11 @@ class MangaPress_Install
      */
     public function after_plugin_activation()
     {
+        // if the option already exists, exit
+        if (get_option('mangapress_default_category')) {
+            return;
+        }
+
         // create a default series category
         $term = wp_insert_term(
             'Default Series',
