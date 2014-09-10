@@ -12,10 +12,10 @@ get_header();
 
 <div id="primary" class="content-area">
     <div id="content" class="site-content" role="main">
-        <?php $latest_comic = mpp_get_latest_comic(); ?>
+        <?php mangapress_start_latest_comic(); ?>
         <?php
-        if ($latest_comic->have_posts()) :
-            while ($latest_comic->have_posts()) : $latest_comic->the_post();
+        if (have_posts()) :
+            while (have_posts()) : the_post();
                 ?>
 
 
@@ -31,7 +31,7 @@ get_header();
                     <nav id="comic-navigation" class="navigation post-navigation" role="navigation">
                         <h1 class="screen-reader-text"><?php _e( 'Post navigation', 'twentythirteen' ); ?></h1>
                         <div class="nav-links">
-                            <?php mangapress_comic_navigation($latest_comic, array('container' => '')); ?>
+                            <?php mangapress_comic_navigation(null, array('container' => '')); ?>
                         </div>
                     </nav>
 
@@ -59,6 +59,7 @@ get_header();
                 <?php comments_template('', true); ?>
 
             <?php endwhile; // end of the loop. ?>
+            <?php mangapress_end_latest_comic(); ?>
         <?php
         else :
             locate_template(array('parts/404.php'), true);
