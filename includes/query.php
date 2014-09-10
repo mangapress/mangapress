@@ -30,10 +30,21 @@ function _mangapress_comics_pre_get_posts($query)
 
     if ($query->is_single()) {
         add_filter('posts_fields', 'mangapress_select_fields');
+    } else {
+        add_filter('posts_distinct', 'mangapress_distinct_rows');
     }
 }
 add_filter('pre_get_posts', '_mangapress_comics_pre_get_posts');
 
+
+/**
+ * Set DISTINCT for comic queries
+ * @return string
+ */
+function mangapress_distinct_rows()
+{
+    return "DISTINCT";
+}
 
 /**
  * Change orderby parameter for archive-specific loop
@@ -84,8 +95,8 @@ function mangapress_join($join)
 {
     global $wpdb;   
 
-    $join .= " LEFT JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-    $join .= " LEFT JOIN {$wpdb->terms} ON ({$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->terms}.term_id)";
+    $join .= " INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
+    $join .= " INNER JOIN {$wpdb->terms} ON ({$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->terms}.term_id)";
 
     return $join;
 }
