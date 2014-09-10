@@ -12,6 +12,8 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Changelog
 ### 2.9
+*Development version. Use at your own risk*
+
    * Updated navigation CSS
    * Removed "Order By" Option. Now defaults to date.
    * Removed "Use Theme Template" options. Now defaults to using theme templates.
