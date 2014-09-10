@@ -46,6 +46,7 @@ function mangapress_distinct_rows()
     return "DISTINCT";
 }
 
+
 /**
  * Change orderby parameter for archive-specific loop
  * 
