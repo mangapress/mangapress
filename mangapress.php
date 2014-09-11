@@ -125,7 +125,7 @@ class MangaPress_Bootstrap
     /**
      * Flash Message helper
      *
-     * @var Mangapress_FlashMessages
+     * @var MangaPress_FlashMessages
      */
     protected $_flashmessage_helper;
 
@@ -200,9 +200,7 @@ class MangaPress_Bootstrap
             'transient_name' => 'mangapress_messages'
         ));
 
-        $this->_post_activation_cleanup();
         $this->_load_current_options();
-//        $this->_load_flash_messages();
 
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_filter('single_template', 'mangapress_single_comic_template');
@@ -222,7 +220,7 @@ class MangaPress_Bootstrap
      * Get a MangaPress helper
      *
      * @param string $helper_name Allowed values: admin, options, posts
-     * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\WP_Error
+     * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\MangaPress_FlashMessages|\WP_Error
      */
     public function get_helper($helper_name)
     {
@@ -319,19 +317,6 @@ class MangaPress_Bootstrap
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
 
-    }
-
-
-    /**
-     * Handle certain items that need to happen on activation but after or during init
-     *
-     * @return void
-     */
-    private function _post_activation_cleanup()
-    {
-        if (did_action('activate_mangapress/mangapress.php')) {
-            MangaPress_Install::get_instance()->after_plugin_activation();
-        }
     }
 
 

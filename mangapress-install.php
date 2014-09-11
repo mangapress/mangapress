@@ -13,12 +13,15 @@
  */
 class MangaPress_Install
 {
+
+
     /**
      * Current MangaPress DB version
      *
      * @var string
      */
     protected static $_version;
+
 
     /**
      * What type is the object? Activation, deactivation or upgrade?
@@ -27,11 +30,20 @@ class MangaPress_Install
      */
     protected $_type;
 
+
+    /**
+     * Instance of Bootstrap class
+     * @var \MangaPress_Bootstrap
+     */
+    protected $_bootstrap;
+
+
     /**
      * Instance of MangaPress_Install
      * @var \MangaPress_Install
      */
     protected static $_instance;
+
 
     /**
      * Get instance of
@@ -46,6 +58,7 @@ class MangaPress_Install
 
         return self::$_instance;
     }
+
 
     /**
      * Static function for plugin activation.
@@ -93,7 +106,8 @@ class MangaPress_Install
 
         }
 
-        MangaPress_Bootstrap::get_instance()->init();
+        $this->_bootstrap = MangaPress_Bootstrap::get_instance();
+        $this->after_plugin_activation();
 
         flush_rewrite_rules(false);
     }
@@ -108,6 +122,7 @@ class MangaPress_Install
      */
     public function after_plugin_activation()
     {
+
         // if the option already exists, exit
         if (get_option('mangapress_default_category')) {
             return;

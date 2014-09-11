@@ -101,7 +101,7 @@ class MangaPress_FlashMessages
     public function get_transient_name()
     {
         if ($this->transient_name == '') {
-            throw new Exception("Transient Name is not set");
+            throw new Exception("Transient name is not set");
         }
 
         return $this->transient_name;
@@ -113,7 +113,6 @@ class MangaPress_FlashMessages
      *
      * @param string $name Name of message. updated or error
      * @param string $message Message body
-     *
      * @return FlashMessages
      */
     public function queue_flash_message($name, $message)
@@ -127,7 +126,8 @@ class MangaPress_FlashMessages
             $class = $default_class;
         }
 
-        $messages[$class][] = $message;
+        $messages[$class]['message'] = $message;
+
         set_transient($this->get_transient_name(), $messages);
 
         return $this;
