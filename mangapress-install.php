@@ -107,6 +107,7 @@ class MangaPress_Install
         }
 
         $this->_bootstrap = MangaPress_Bootstrap::get_instance();
+        $this->_bootstrap->init();
         $this->after_plugin_activation();
 
         flush_rewrite_rules(false);
@@ -137,7 +138,7 @@ class MangaPress_Install
                 'slug'        => 'default-series',
             )
         );
-
+        error_log(print_r($term, true));
         if (!($term instanceof WP_Error)) {
             add_option('mangapress_default_category', $term['term_id'], '', 'no');
         }
