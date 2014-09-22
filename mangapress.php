@@ -9,8 +9,8 @@
  Plugin Name: Manga+Press Comic Manager
  Plugin URI: http://www.manga-press.com/
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
- Version: 2.9-alpha
- Author: Jessica Green
+ Version: 2.9.0-beta.1
+ Author: Jess Green
  Author URI: http://www.jes.gs
 */
 /*
@@ -36,7 +36,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '2.9-alpha');
+    define('MP_VERSION', '2.9.0-beta.1');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
@@ -165,7 +165,7 @@ class MangaPress_Bootstrap
         load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
         
         add_action('setup_theme', array($this, 'setup_theme'));
-        add_action('init', array($this, 'init'));
+        add_action('init', array($this, 'init'), 500);
     }
 
 
