@@ -47,7 +47,7 @@ class MangaPress_Posts
      */
     const POST_TYPE = 'mangapress_comic';
 
-    
+
     /**
      * Taxonomy name for Series
      * 
@@ -63,6 +63,7 @@ class MangaPress_Posts
      */
     const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
 
+
     /**
      * Class for initializing custom post-type
      *
@@ -72,18 +73,26 @@ class MangaPress_Posts
 
 
     /**
+     * Post-type Slug. Defaults to comic.
+     * @var string
+     */
+    protected $slug = 'comic';
+
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->_register_post_type();
+        $this->_rewrite_rules();
 
         // Setup Manga+Press Post Options box
         add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
         add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
         add_action('save_post_mangapress_comic', array($this, 'save_post'), 500, 2);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
-        
+
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
@@ -130,13 +139,95 @@ class MangaPress_Posts
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
                 'menu_icon' => null,
                 'rewrite'   => array(
-                    'slug' => 'comic',
+                    'slug' => $this->get_slug(),
                 ),
                 'taxonomies' => array(
                     $taxonomy->get_name(),
                 ),
             ),
         ));
+
+    }
+
+
+    /**
+     * Add new rewrite rules for Comic post-type
+     */
+    private function _rewrite_rules()
+    {
+        $post_type = self::POST_TYPE;
+        $slug      = $this->get_slug();
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&paged=$matches[2]&post_type=' .  $post_type
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/?$",
+            'index.php?year=$matches[1]&post_type=' .  $post_type
+        );
+    }
+
+
+    /**
+     * Get current user-specified front-slug for Comic archives
+     *
+     * @return string
+     */
+    public function get_slug()
+    {
+        return apply_filters('mangapress_comic_front_slug', $this->slug);
     }
 
     
@@ -311,7 +402,7 @@ class MangaPress_Posts
     /**
      * Retrieve image html
      * 
-     * @param integer $post_id
+     * @param int $image_ID
      * @return string
      */
     public function get_image_html($image_ID)

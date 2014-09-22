@@ -158,8 +158,6 @@ class MangaPress_Bootstrap
 
     /**
      * PHP5 constructor method
-     *
-     * @return void
      */
     protected function __construct()
     {
@@ -219,7 +217,7 @@ class MangaPress_Bootstrap
     /**
      * Get a MangaPress helper
      *
-     * @param string $helper_name Allowed values: admin, options, posts
+     * @param string $helper_name Allowed values: admin, options, posts, flashmessages
      * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\MangaPress_FlashMessages|\WP_Error
      */
     public function get_helper($helper_name)

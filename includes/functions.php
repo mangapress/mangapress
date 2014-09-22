@@ -124,6 +124,47 @@ function mangapress_comic_insert_navigation($content)
 
 
 /**
+ * Create a date-archive permalink for Comics (for monthly links)
+ *
+ * @param string $monthlink Existing link to be modified or replaced
+ * @param string $year
+ * @param string $month
+ * @return string|void
+ */
+function mangapress_month_link ($monthlink, $year = '', $month = '')
+{
+    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $slug = $posts->get_slug();
+
+    $month_permalink = home_url("/{$slug}/{$year}/{$month}");
+    return $month_permalink;
+}
+
+
+/**
+ * Create a date-archive permalink for Comics
+ *
+ * @param string $daylink Existing link to be modified or replaced
+ * @param string $year Year
+ * @param string $month Month
+ * @param string $day Day
+ *
+ * @return string
+ */
+function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
+{
+
+    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $slug = $posts->get_slug();
+
+    $relative= "/{$slug}/{$year}/{$month}/{$day}";
+    $day_permalink = home_url($relative);
+
+    return $day_permalink;
+}
+
+
+/**
  * mangapress_version()
  * echoes the current version of Manga+Press.
  * Replaces mpp_comic_version()

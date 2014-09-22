@@ -393,6 +393,7 @@ function mangapress_get_calendar($initial = true, $echo = true)
         $calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$day_name</th>";
     }
 
+    add_filter('month_link', 'mangapress_month_link', 10, 3);
     $calendar_output .= '
 	</tr>
 	</thead>
@@ -413,6 +414,8 @@ function mangapress_get_calendar($initial = true, $echo = true)
     } else {
         $calendar_output .= "\n\t\t".'<td colspan="3" id="next" class="pad">&nbsp;</td>';
     }
+
+    remove_filter('month_link', 'mangapress_month_link');
 
     $calendar_output .= '
 	</tr>
@@ -477,9 +480,11 @@ function mangapress_get_calendar($initial = true, $echo = true)
         else
             $calendar_output .= '<td>';
 
-        if ( in_array($day, $daywithpost) ) // any posts today?
+        if ( in_array($day, $daywithpost) ) { // any posts today?
+            add_filter('day_link', 'mangapress_day_link', 10, 4);
             $calendar_output .= '<a href="' . get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( $ak_titles_for_day[ $day ] ) . "\">$day</a>";
-        else
+            remove_filter('day_link', 'mangapress_day_link');
+        } else
             $calendar_output .= $day;
         $calendar_output .= '</td>';
 

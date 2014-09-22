@@ -123,6 +123,14 @@ class MangaPress_Install
      */
     public function after_plugin_activation()
     {
+        /**
+         * mangapress_after_plugin_activation
+         * Allow other plugins to add to Manga+Press' activation sequence.
+         *
+         * @return void
+         */
+        do_action('mangapress_after_plugin_activation');
+
 
         // if the option already exists, exit
         if (get_option('mangapress_default_category')) {
@@ -138,7 +146,7 @@ class MangaPress_Install
                 'slug'        => 'default-series',
             )
         );
-        error_log(print_r($term, true));
+
         if (!($term instanceof WP_Error)) {
             add_option('mangapress_default_category', $term['term_id'], '', 'no');
         }
