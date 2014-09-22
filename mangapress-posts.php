@@ -227,6 +227,13 @@ class MangaPress_Posts
      */
     public function get_slug()
     {
+        /**
+         * mangapress_comic_front_slug
+         * Allow plugins (or options) to modify post-type front slug
+         *
+         * @param string $slug Default post-type slug
+         * @return string
+         */
         return apply_filters('mangapress_comic_front_slug', $this->slug);
     }
 
