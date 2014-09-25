@@ -13,7 +13,7 @@ get_header(); ?>
         <div id="content" class="site-content" role="main">
         <?php 
             mangapress_start_latest_comic();
-            while (have_posts()) : the_post(); ?>
+            if (have_posts()): while (have_posts()) : the_post(); ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <?php twentyfourteen_post_thumbnail(); ?>
                     <?php the_title( '<header class="entry-header"><h1 class="entry-title">', '</h1></header><!-- .entry-header -->' ); ?>
@@ -21,22 +21,28 @@ get_header(); ?>
                         <?php mangapress_comic_navigation(); ?>
                         <?php the_content(); ?>
                         <?php
-			wp_link_pages( array(
-				'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfourteen' ) . '</span>',
-				'after'       => '</div>',
-				'link_before' => '<span>',
-				'link_after'  => '</span>',
-			) );
+                            wp_link_pages( array(
+                                'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfourteen' ) . '</span>',
+                                'after'       => '</div>',
+                                'link_before' => '<span>',
+                                'link_after'  => '</span>',
+                            ) );
 
-			edit_post_link( __( 'Edit', 'twentyfourteen' ), '<span class="edit-link">', '</span>' );
+                            edit_post_link( __( 'Edit', 'twentyfourteen' ), '<span class="edit-link">', '</span>' );
                         ?>
                     </div><!-- .entry-content -->
                 </article><!-- #post -->
 
-
-                <?php comments_template('', true); ?>
-
             <?php endwhile; // end of the loop. ?>
+            <?php else: ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <?php the_title( '<header class="entry-header"><h1 class="entry-title">', '</h1></header><!-- .entry-header -->' ); ?>
+                    <div class="entry-content">
+                        <p>No comic found.</p>
+                    </div><!-- .entry-content -->
+                </article><!-- #post -->
+
+            <?php endif;?>
         <?php mangapress_end_latest_comic();?>
     </div><!-- #content -->
     <?php get_sidebar( 'content' ); ?>

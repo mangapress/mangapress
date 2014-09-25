@@ -28,12 +28,12 @@ function mangapress_get_latest_comic()
     $post_name = $wpdb->get_var($sql);
 
     if (!$post_name) {
-        return false;
+        $post_name = 'no-comic-found';
     }
 
     $single_comic_query = new WP_Query(array(
         'name'      => $post_name,
-        'post_type' => MangaPress_Posts::POST_TYPE,
+        'post_type' => 'mangapress_comic',
     ));
 
     return $single_comic_query;
@@ -53,6 +53,13 @@ function mangapress_start_latest_comic()
     do_action('latest_comic_start');
     
     $wp_query = mangapress_get_latest_comic();
+
+    if ($wp_query->get('name') == 'no-comic-found'){
+        apply_filters(
+            'the_latest_comic_content_error',
+            '<p class="error">No comics was found.</p>'
+        );
+    }
 }
 
 
