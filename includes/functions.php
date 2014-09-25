@@ -39,11 +39,10 @@ function mpp_filter_latest_comic($content)
     } else {
 
         $single_comic_query = mpp_get_latest_comic();
-
-        if ($single_comic_query instanceof WP_Error){
+        if ($single_comic_query instanceof WP_Error || $single_comic_query->get('name') == 'no-comic-found'){
             return apply_filters(
                 'the_latest_comic_content_error',
-                '<p class="error">No Latest Comic was found.</p>'
+                '<p class="error">No comics was found.</p>'
             );
         }
 
