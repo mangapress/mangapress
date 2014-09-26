@@ -6,23 +6,22 @@
  * @author Jess Green <jgreen AT psy-dreamer.com>
  */
  ?>
-<h3>Comic Page Options Help</h3>
+<h3><?php _e('Comic Page Options Help', MP_DOMAIN) ?></h3>
 <p>
     <?php _e('This section controls display of comic posts', MP_DOMAIN); ?>
 </p>
 
 <dl>
-    <dt><strong>Generate Comic Page</strong></dt>
+    <dt><strong><?php _e('Generate Comic Page', MP_DOMAIN); ?></strong></dt>
     <dd>
-      Generate a custom image size based on the values below. Use this if you wish to display slightly smaller images
-      than the image you've uploaded.
+      <?php _e('Generate a custom image size based on the values below. Use this if you wish to display slightly smaller images than the image you have uploaded.', MP_DOMAIN); ?>
     </dd>
-    <dt><strong>Comic Page Width</strong></dt>
+    <dt><strong><?php _e('Comic Page Width', MP_DOMAIN); ?></strong></dt>
     <dd>
-      Set the width of your comic page image.
+      <?php _e('Set the width of your comic page image.', MP_DOMAIN); ?>
     </dd>
-    <dt><strong>Comic Page Height</strong></dt>
+    <dt><strong><?php _e('Comic Page Height', MP_DOMAIN); ?></strong></dt>
     <dd>
-      Set the height of you comic page image.
+      <?php _e('Set the height of you comic page image.', MP_DOMAIN); ?>
     </dd>
 </dl>

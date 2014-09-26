@@ -35,14 +35,11 @@ get_header();
                     </footer><!-- .entry-meta -->
                 </article><!-- #post -->
 
-
-                <?php comments_template('', true); ?>
-
             <?php endwhile; // end of the loop. ?>
             <?php mangapress_end_latest_comic();?>
         <?php
         else :
-            locate_template(array('parts/404.php'), true);
+            get_template_part('comics/error', 'comic');
         endif;
         ?>
     </div><!-- #content -->

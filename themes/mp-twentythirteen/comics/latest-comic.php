@@ -15,10 +15,7 @@ get_header();
         <?php mangapress_start_latest_comic(); ?>
         <?php
         if (have_posts()) :
-            while (have_posts()) : the_post();
-                ?>
-
-
+            while (have_posts()) : the_post(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <header class="entry-header">
                         <h1 class="entry-title"><?php the_title(); ?></h1>
@@ -55,14 +52,11 @@ get_header();
                     </footer><!-- .entry-meta -->
                 </article><!-- #post -->
 
-
-                <?php comments_template('', true); ?>
-
             <?php endwhile; // end of the loop. ?>
             <?php mangapress_end_latest_comic(); ?>
         <?php
         else :
-            locate_template(array('parts/404.php'), true);
+            get_template_part('comics/error', 'comic');
         endif;
         ?>
     </div><!-- #content -->

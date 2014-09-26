@@ -26,3 +26,9 @@ Tags: comics, comic theme, manga press, webcomics, online comics
     float: left;
     margin-right: 10px;
 }
+
+.comic-nav-hlist > li:last-of-type:after {
+    display: block;
+    clear: both;
+    float: none;
+}

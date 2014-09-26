@@ -22,7 +22,22 @@ Tags: comics, comic theme, manga press, webcomics, online comics
     list-style: none;
 }
 
+.comic-nav-hlist:after {
+    clear: both;
+    float: none;
+}
+
 .comic-nav-hlist > li {
     float: left;
     margin-right: 10px;
+}
+
+.comic-nav-hlist > li:last-of-type {
+    margin-right: 0;
+}
+
+.comic-nav-hlist > li:last-of-type:after {
+    display: block;
+    clear: both;
+    float: none;
 }
