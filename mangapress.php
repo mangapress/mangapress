@@ -98,6 +98,7 @@ class MangaPress_Bootstrap
      */
     protected static $_instance;
 
+
     /**
      * MangaPress Posts object
      *
