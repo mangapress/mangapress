@@ -29,7 +29,6 @@ final class MangaPress_Options
             'comicarchive_page'          => 0,
         ),
         'comic_page' => array(
-            'comic_post_count'    => 10,
             'generate_comic_page' => 0,
             'comic_page_width'    => 600,
             'comic_page_height'   => 1000,
@@ -264,15 +263,6 @@ final class MangaPress_Options
                 ),
             ),
             'comic_page' => array(
-                'comic_post_count'    =>  array(
-                    'id'    => 'number-posts',
-                    'type'  => 'text',
-                    'title' => __('Comic Posts to Display', MP_DOMAIN),
-                    'description' => __('Overrides values set in Reading Settings.', MP_DOMAIN),
-                    'valid' => '/[0-9]/',
-                    'default' => 10,
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
                 'generate_comic_page' => array(
                     'id'    => 'generate-page',
                     'type'  => 'checkbox',
@@ -433,7 +423,7 @@ final class MangaPress_Options
 
         if ($section == 'comic_page') {
             $new_options['comic_page'] = array(
-                'comic_post_count'    => $this->_sanitize_integer($options, 'comic_page', 'comic_post_count'),
+
                 'generate_comic_page' => $this->_sanitize_integer($options, 'comic_page','generate_comic_page'),
                 'comic_page_width'    => $this->_sanitize_integer($options, 'comic_page','comic_page_width'),
                 'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
