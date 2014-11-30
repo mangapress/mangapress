@@ -16,33 +16,33 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 
 == Upgrade Notice ==
 = 2.8.3 =
-   * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
 
 == Changelog ==
 = 2.8 =
-    * 2.8.3
-        * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+   * 2.8.3
+      * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
-    * 2.8.2
-        * Correcting Latest Comic template error when Latest Comic is used as front page.
+   * 2.8.2
+      * Correcting Latest Comic template error when Latest Comic is used as front page.
 
-    * 2.8.1.1
-        * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
+   * 2.8.1.1
+      * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
 
-    * 2.8.1
-        * Corrected E_STRICT notice on plugin activation
-        * Updated font icons
+   * 2.8.1
+     * Corrected E_STRICT notice on plugin activation
+     * Updated font icons
 
-    * 2.8
-        * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
-        * Corrected 404 issues for custom post-type after activation
-        * Updated admin interface to fit WordPress 3.8
-        * Adjusted template stack for single comics
-        * Added new Media Library popup (eliminating legacy ThickBox dependency)
-            * Added WordPress 3.5 Media Library window
-        * Code review and cleanup   
-        * Removed legacy options (Comic Banner)
+   * 2.8
+      * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
+      * Corrected 404 issues for custom post-type after activation
+      * Updated admin interface to fit WordPress 3.8
+      * Adjusted template stack for single comics
+      * Added new Media Library popup (eliminating legacy ThickBox dependency)
+         * Added WordPress 3.5 Media Library window
+      * Code review and cleanup   
+      * Removed legacy options (Comic Banner)
 
 = 2.7 =
    * 2.7.5
@@ -137,7 +137,7 @@ reference. See website for a fix.
 
 == Installation ==
 
-* Unpack the .zip file onto your hard drive.
+1. Unpack the .zip file onto your hard drive.
 
 2. Upload the `mangapress` folder to the `/wp-content/plugins/` directory.
 
@@ -159,21 +159,17 @@ Archive Page to your two newly created pages.
 2. screenshot-2.jpg
 3. screenshot-3.jpg
 4. screenshot-4.jpg
+
 == Credits ==
 
 (c) 2008-2014 Jessica C. Green
 
-Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com.
-Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a
-fix). Be as detailed as possible.
+Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 
 For updates, you can visit http://www.manga-press.com/
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
