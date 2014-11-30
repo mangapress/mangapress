@@ -4,7 +4,7 @@ Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 3.8
 Tested up to: 4.0
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,63 +15,34 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.8.2 =
-   * Correcting Latest Comic template error when Latest Comic is used as front page.
-
-= 2.8.1.1 =
-   * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
-
-= 2.8.1 =
-   * Corrected E_STRICT notice on plugin activation
-   * Updated font icons
-
-= 2.8 =
-   * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
-   * Corrected 404 issues for custom post-type after activation
-   * Updated admin interface to fit WordPress 3.8
-   * Adjusted template stack for single comics
-   * Added new Media Library popup (eliminating legacy ThickBox dependency)
-     * Added WordPress 3.5 Media Library window
-   * Code review and cleanup   
-   * Removed legacy options (Comic Banner)
-
-= 2.7.5 =
-   * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
-   * Fixed undefined index errors caused by checkboxes when settings page is updated
-   * Tested works with WordPress 3.8
-
-= 2.7.4 =
-   * Fixed SQL bugs relating to "Group By Category" option
-
-= 2.7.3 =
-   * Added "Group By Category" parent option
-
-= 2.7.2 =
-   * Added Spanish Language support.
-   * Fixed issues with comic navigation.
-   * Addressing query-usage on Latest Comic page.
-
-= 2.7 Beta 3 =
-   * Updates processing for templates.
-
-= 2.7 Beta 2 =
-   * Fixes a problem with the Manga+Press Options page. A path issue in the framework may prevent option fields from displaying properly.
+= 2.8.3 =
+   * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
 
 == Changelog ==
-= 2.8.1 =
-   * Corrected E_STRICT notice on plugin activation
-   * Updated font icons
-
 = 2.8 =
-   * Added bundled theme for TwentyEleven, TwentyTwelve, and TwentyThirteen
-   * Corrected 404 issues for custom post-type after activation
-   * Updated admin interface to fit WordPress 3.8
-   * Adjusted template stack for single comics
-   * Added new Media Library popup (eliminating legacy ThickBox dependency)
-     * Added WordPress 3.5 Media Library window
-   * Code review and cleanup   
-   * Removed legacy options (Comic Banner)
+    * 2.8.3
+        * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+
+    * 2.8.2
+        * Correcting Latest Comic template error when Latest Comic is used as front page.
+
+    * 2.8.1.1
+        * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
+
+    * 2.8.1
+        * Corrected E_STRICT notice on plugin activation
+        * Updated font icons
+
+    * 2.8
+        * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
+        * Corrected 404 issues for custom post-type after activation
+        * Updated admin interface to fit WordPress 3.8
+        * Adjusted template stack for single comics
+        * Added new Media Library popup (eliminating legacy ThickBox dependency)
+            * Added WordPress 3.5 Media Library window
+        * Code review and cleanup   
+        * Removed legacy options (Comic Banner)
 
 = 2.7 =
    * 2.7.5
