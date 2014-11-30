@@ -105,20 +105,19 @@ function mpp_get_latest_comic()
  * @global WP_Query $wp_query
  *
  * @since 2.7
- * @param string $template
+ * @param string $default_template Default template passed via template_include
  * @return string|void
  */
-function mpp_latest_comic_page($template)
+function mpp_latest_comic_page($default_template)
 {
     global $wp_query;
 
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
     $object     = $wp_query->get_queried_object();
     
     if (!isset($object->post_name) 
             || !($object->post_name == $mp_options['basic']['latestcomic_page'])) {
-        return $template;
+        return $default_template;
     }
 
     $latest_template = apply_filters(
@@ -129,7 +128,7 @@ function mpp_latest_comic_page($template)
 
     // if template can't be found, then look for query defaults...
     if (!$template) {
-        return get_page_template();
+        return $default_template;
     } else {
         return $template;
     }
@@ -141,11 +140,11 @@ function mpp_latest_comic_page($template)
  * Turns taxonomies associated with comics into comic archives.
  *
  * @global WP_Query $wp_query
- * @param string $template
+ * @param string $default_template Default template passed via template_include
  *
  * @return void|string
  */
-function mpp_series_template($template)
+function mpp_series_template($default_template)
 {
     global $wp_query;
 
@@ -153,12 +152,12 @@ function mpp_series_template($template)
     $object = $wp_query->get_queried_object();
 
     if (!isset($object->taxonomy) || !($object->taxonomy == 'mangapress_series')){
-        return $template;
+        return $default_template;
     }
     
     $template = locate_template(array('comics/archives.php'), true);
     if ($template == '') {
-        return get_archive_template();
+        return $default_template;
     }
     
     return $template;
@@ -171,10 +170,10 @@ function mpp_series_template($template)
  * @global object $post WordPress Post
  *
  * @since 2.7
- * @param string $template
+ * @param string $template Default template passed via template_include
  * @return string|void
  */
-function mpp_comic_archivepage($template)
+function mpp_comic_archivepage($default_template)
 {
     global $wp_query;
 
@@ -184,7 +183,7 @@ function mpp_comic_archivepage($template)
 
     if (!isset($object->post_name) 
             || !($object->post_name == $mp_options['basic']['comicarchive_page'])) {
-        return $template;
+        return $default_template;
     }
     
     $archive_templates = apply_filters(
@@ -195,7 +194,7 @@ function mpp_comic_archivepage($template)
     // if template can't be found, then look for query defaults...
     $template = locate_template($archive_templates, true);
     if ($template == '') {
-        return get_page_template();
+        return $default_template;
     }
     
     return $template;
