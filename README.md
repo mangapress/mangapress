@@ -11,9 +11,10 @@ Manga+Press is a webcomic management system for WordPress.
 Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Changelog
-### 2.9.0-beta.2
+### 2.9.0-beta.3
 *Development version. Use at your own risk*
-
+   * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
+### 2.9.0-beta.2
    * Updated navigation CSS
    * Removed "Order By" Option. Now defaults to date.
    * Removed "Use Theme Template" options. Now defaults to using theme templates.
@@ -25,6 +26,11 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 ---
 
 ### 2.8
+#### 2.8.3
+   * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+
+#### 2.8.2
+   * Correcting Latest Comic template error when Latest Comic is used as front page.
 
 #### 2.8.1.1
    * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
