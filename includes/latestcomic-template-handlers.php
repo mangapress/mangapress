@@ -38,10 +38,11 @@ function mangapress_latestcomic_template($template)
  * @param string $template Default template if requested template is not found
  * @return string
  */
-function mangapress_latestcomic_page_template($template)
+function mangapress_latestcomic_page_template($default_template)
 {
+
     if (!mangapress_is_queried_page('latestcomic_page')) {
-        return $template;
+        return $default_template;
     }
 
     $template = locate_template(array('comics/latest-comic.php'));
@@ -49,7 +50,7 @@ function mangapress_latestcomic_page_template($template)
     // if template can't be found, then look for query defaults...
     if (!$template) {
         add_filter('the_content', 'mangapress_add_comic_to_latestcomic_page');
-        return get_page_template();
+        return $default_template;
     } else {
         return $template;
     }

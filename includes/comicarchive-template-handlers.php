@@ -35,13 +35,13 @@ function mangapress_comicarchive_template($template)
 /**
  * Template handler for Comic Archive page
  *
- * @param string $template Default template if requested template is not found
+ * @param string $default_template Default template if requested template is not found
  * @return string
  */
-function mangapress_comicarchive_page_template($template)
+function mangapress_comicarchive_page_template($default_template)
 {
     if (!mangapress_is_queried_page('comicarchive_page')) {
-        return $template;
+        return $default_template;
     }
 
     $template = locate_template(array('comics/comic-archive.php'));
@@ -49,7 +49,7 @@ function mangapress_comicarchive_page_template($template)
     // if template can't be found, then look for query defaults...
     if (!$template) {
         add_filter('the_content', 'mangapress_create_comicarchive_page');
-        return get_page_template();
+        return $default_template;
     } else {
         return $template;
     }
@@ -79,11 +79,14 @@ function mangapress_create_comicarchive_page($content)
             '<p class="error">No comics were found.</p>'
         );
     }
-
+    
     ob_start();
     require mangapress_get_content_template('comicarchive_page');
     $content = ob_get_clean();
+    
     $wp_query = $old_query;
+
+    wp_reset_query();
 
     return apply_filters('the_comicarchive_content', $content);
     
