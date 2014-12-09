@@ -305,15 +305,21 @@ function mangapress_get_calendar($initial = true, $echo = true)
     global $wpdb, $m, $monthnum, $year, $wp_locale, $posts;
 
     $key = md5( $m . $monthnum . $year );
-    if ( $cache = wp_cache_get( 'get_calendar', 'calendar' ) ) {
+    if ( $cache = wp_cache_get( 'mangapress_get_calendar', 'calendar' ) ) {
         if ( is_array($cache) && isset( $cache[ $key ] ) ) {
             if ( $echo ) {
-                /** This filter is documented in wp-includes/general-template.php */
-                echo apply_filters( 'get_calendar', $cache[$key] );
+        		/**
+        		 * Filter the HTML calendar output.
+        		 *
+        		 * @since 2.9.0
+        		 *
+        		 * @param string $calendar_output HTML output of the calendar.
+        		 */
+                echo apply_filters( 'mangapress_get_calendar', $cache[$key] );
                 return;
             } else {
                 /** This filter is documented in wp-includes/general-template.php */
-                return apply_filters( 'get_calendar', $cache[$key] );
+                return apply_filters( 'mangapress_get_calendar', $cache[$key] );
             }
         }
     }
@@ -376,7 +382,7 @@ function mangapress_get_calendar($initial = true, $echo = true)
 
     /* translators: Calendar caption: 1: month name, 2: 4-digit year */
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output = '<table id="wp-calendar">
+    $calendar_output = '<table id="manga-press-calendar">
 	<caption>' . sprintf($calendar_caption, $wp_locale->get_month($thismonth), date('Y', $unixmonth)) . '</caption>
 	<thead>
 	<tr>';
@@ -511,7 +517,6 @@ function mangapress_get_calendar($initial = true, $echo = true)
          */
         echo apply_filters( 'mangapress_get_calendar', $calendar_output );
     } else {
-        /** This filter is documented in wp-includes/general-template.php */
         return apply_filters( 'mangapress_get_calendar', $calendar_output );
     }
 
