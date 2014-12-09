@@ -25,7 +25,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 * Added Calendar template tag for comics
 * Added filter for changing Comic post-type front slug (defaults to `comic`)
 * Fixed missing "No comics" message for Latest Comic page.
-
+* Updated and fixed loading of Spanish Language files
 
 == Changelog ==
 = 2.9 =
