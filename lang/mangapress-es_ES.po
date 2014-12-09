@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Manga+Press 2.9\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
 "POT-Creation-Date: 2014-12-08 20:31-0600\n"
-"PO-Revision-Date: 2014-12-08 21:02-0600\n"
+"PO-Revision-Date: 2014-12-08 21:26-0600\n"
 "Last-Translator: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language-Team: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language: es\n"
@@ -102,7 +102,7 @@ msgstr ""
 
 #: mangapress/includes/pages/help-basic.php:19 mangapress/mangapress-options.php:236
 msgid "Use Parent Category"
-msgstr "Use Parent Category"
+msgstr "Categor&iacute;a de uso de Padres"
 
 #: mangapress/includes/pages/help-basic.php:21
 msgid "This options overrides the option above and groups comics according to the parent category."
@@ -251,7 +251,7 @@ msgid "Manga+Press Options"
 msgstr "Opciones Manga+Press"
 
 #: mangapress/mangapress-install.php:76
-msgid "Sorry, you do not have suffient permissions to activate this plugin."
+msgid "Sorry, you do not have sufficient permissions to activate this plugin."
 msgstr "Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
 
 #: mangapress/mangapress-install.php:84
@@ -268,7 +268,7 @@ msgstr ""
 
 #: mangapress/mangapress-options.php:227
 msgid "Group Comics"
-msgstr "Comics Group"
+msgstr "Grupo Comics"
 
 #: mangapress/mangapress-options.php:229
 msgid ""
