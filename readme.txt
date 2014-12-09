@@ -16,7 +16,15 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 
 == Upgrade Notice ==
 = 2.9 =
-Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+* Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+* Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
+* Updated navigation CSS
+* Removed "Order By" Option. Now defaults to date.
+* Removed "Use Theme Template" options. Now defaults to using theme templates.
+* Added contextual help tabs
+* Added Calendar template tag for comics
+* Added filter for changing Comic post-type front slug (defaults to `comic`)
+* Fixed missing "No comics" message for Latest Comic page.
 
 
 == Changelog ==

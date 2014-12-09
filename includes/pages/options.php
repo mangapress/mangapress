@@ -7,7 +7,7 @@ if ( ! current_user_can('manage_options') ){
         __(
             'You do not have sufficient permissions '
             . 'to manage options for this blog.',
-            'mangapress'
+            MP_DOMAIN
         )
     );
 }

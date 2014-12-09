@@ -12,6 +12,9 @@
  Version: 2.9.0-beta.3
  Author: Jess Green
  Author URI: http://www.jes.gs
+ Text Domain: mangapress
+ Domain Path: /languages
+ 
 */
 /*
  * (c) 2014 Jessica C Green
@@ -48,10 +51,10 @@ if (!defined('MP_URLPATH'))
     define('MP_URLPATH', plugin_dir_url(__FILE__));
 
 if (!defined('MP_LANG'))
-    define('MP_LANG', $plugin_folder . '/lang');
+    define('MP_LANG', $plugin_folder . '/languages');
 
 if (!defined('MP_DOMAIN'))
-    define('MP_DOMAIN', $plugin_folder);
+    define('MP_DOMAIN', 'mangapress');
 
 require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
 require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
@@ -162,8 +165,7 @@ class MangaPress_Bootstrap
      */
     protected function __construct()
     {
-        
-        load_plugin_textdomain(MP_DOMAIN, false, MP_LANG);
+        load_plugin_textdomain(MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
         
         add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'), 500);
@@ -177,7 +179,10 @@ class MangaPress_Bootstrap
      */
     public function setup_theme()
     {
-        register_theme_directory('plugins/' . MP_FOLDER . '/themes');
+        /* how in the blue fuckity did this even work? 
+           original path was: 'plugins/' . MP_FOLDER . '/themes'
+        */
+        register_theme_directory(WP_PLUGIN_DIR . '/' . MP_FOLDER . '/themes');
     }
 
 
