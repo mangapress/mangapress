@@ -1,7 +1,7 @@
 <?php
 /**
  * mangapress
- * 
+ *
  * @package comicarchive-template-handlers
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
@@ -63,7 +63,7 @@ function mangapress_comicarchive_page_template($default_template)
 
 /**
  * Add comic archive output to Comic Archive page content
- * 
+ *
  * @access private
  * @param string $content Page content being filtered
  * @return string
@@ -84,23 +84,23 @@ function mangapress_create_comicarchive_page($content)
             '<p class="error">No comics were found.</p>'
         );
     }
-    
+
     ob_start();
     require mangapress_get_content_template('comicarchive_page');
     $content = ob_get_clean();
-    
+
     $wp_query = $old_query;
 
     wp_reset_query();
 
     return apply_filters('the_comicarchive_content', $content);
-    
+
 }
 
 
 /**
  * Filter for hooking into mangapress_comic-specific WP_Query object
- * 
+ *
  * @param WP_Query $query
  * @return \WP_Query
  */
