@@ -38,6 +38,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
       * Added Calendar template tag for comics
       * Added filter for changing Comic post-type front slug (defaults to `comic`)
       * Fixed missing "No comics" message for Latest Comic page.
+      * Added date permalink structure
 
 = 2.8 =
    * 2.8.3
@@ -60,7 +61,7 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
       * Adjusted template stack for single comics
       * Added new Media Library popup (eliminating legacy ThickBox dependency)
          * Added WordPress 3.5 Media Library window
-      * Code review and cleanup   
+      * Code review and cleanup
       * Removed legacy options (Comic Banner)
 
 = 2.7 =

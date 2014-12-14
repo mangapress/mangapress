@@ -9,12 +9,12 @@
  Plugin Name: Manga+Press Comic Manager
  Plugin URI: http://www.manga-press.com/
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
- Version: 2.9.0-beta.4
+ Version: 2.9.0-beta.5
  Author: Jess Green
  Author URI: http://www.jes.gs
  Text Domain: mangapress
  Domain Path: /languages
- 
+
 */
 /*
  * (c) 2014 Jessica C Green
@@ -39,7 +39,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '2.9.0-beta.4');
+    define('MP_VERSION', '2.9.0-beta.5');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
@@ -61,6 +61,7 @@ require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
 require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
+require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
 require_once MP_ABSPATH . 'includes/functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'mangapress-install.php';
@@ -93,7 +94,7 @@ class MangaPress_Bootstrap
      */
     protected $_options;
 
-   
+
     /**
      * Instance of MangaPress_Bootstrap
      *
@@ -109,7 +110,7 @@ class MangaPress_Bootstrap
      */
     protected $_posts_helper;
 
-   
+
     /**
      * Options helper object
      *
@@ -166,9 +167,10 @@ class MangaPress_Bootstrap
     protected function __construct()
     {
         load_plugin_textdomain(MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
-        
+
         add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'), 500);
+        add_action('widgets_init', array($this, 'widgets_init'));
     }
 
 
@@ -179,7 +181,7 @@ class MangaPress_Bootstrap
      */
     public function setup_theme()
     {
-        /* how in the blue fuckity did this even work? 
+        /* how in the blue fuckity did this even work?
            original path was: 'plugins/' . MP_FOLDER . '/themes'
         */
         register_theme_directory(WP_PLUGIN_DIR . '/' . MP_FOLDER . '/themes');
@@ -196,7 +198,7 @@ class MangaPress_Bootstrap
     {
 
         $this->set_options();
-        
+
         $this->_posts_helper   = new MangaPress_Posts();
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
@@ -215,10 +217,18 @@ class MangaPress_Bootstrap
 
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::get_instance()->do_upgrade();
-        }        
+        }
     }
 
-    
+
+    /**
+     * Register widgets
+     */
+    public function widgets_init()
+    {
+        register_widget('MangaPress_Widget_Calendar');
+    }
+
 
     /**
      * Get a MangaPress helper
@@ -265,7 +275,7 @@ class MangaPress_Bootstrap
 
     /**
      * Get one option from options array
-     *  
+     *
      * @param string $section Option section
      * @param string $option_name Option name
      * @return boolean|mixed
@@ -275,7 +285,7 @@ class MangaPress_Bootstrap
         if (!isset($this->_options[$section][$option_name])) {
             return false;
         }
-        
+
         return $this->_options[$section][$option_name];
     }
 
@@ -296,7 +306,7 @@ class MangaPress_Bootstrap
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
         }
 
-        
+
         /*
          * Comic Navigation
          */
