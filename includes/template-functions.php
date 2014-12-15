@@ -124,7 +124,7 @@ function mangapress_get_next_post_in_loop()
 
 /**
  * Get comic term ID.
- * 
+ *
  * @param WP_Post|int $post WordPress post object or post ID
  * @return false|int
  */
@@ -146,7 +146,7 @@ function mangapress_get_comic_term_ID($post = 0)
 
 /**
  * Get comic slug
- * 
+ *
  * @param WP_Post|int $post WordPress post object or post ID
  * @return false|string
  */
@@ -250,23 +250,23 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 
     // Here, we start processing the urls.
     // Let's do first page first.
-    $first_html = "<{$args->link_wrap}>" . ( ($first == $current_page)
+    $first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ($first == $current_page)
                 ? '<span class="comic-nav-span">' . __('First', MP_DOMAIN) . '</span>'
                 : '<a href="' . $first_url . '">' . __('First', MP_DOMAIN) . '</a>' )
              . "</{$args->link_wrap}>";
 
-    $last_html = "<{$args->link_wrap}>" .
+    $last_html = "<{$args->link_wrap} class=\"link-last\">" .
                 ( ($last == $current_page)
                     ? '<span class="comic-nav-span">' . __('Last', MP_DOMAIN) . '</span>'
                     : '<a href="' . $last_url . '">'. __('Last', MP_DOMAIN) . '</a>')
                 . "</{$args->link_wrap}>";
 
-    $next_html = "<{$args->link_wrap}>" . ( ($next_page == $current_page)
+    $next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ($next_page == $current_page)
                 ? '<span class="comic-nav-span">' . __('Next', MP_DOMAIN) . '</span>'
                 : '<a href="' . $next_url . '">'. __('Next', MP_DOMAIN) . '</a>' )
             . "</{$args->link_wrap}>";
 
-    $prev_html = "<{$args->link_wrap}>" . ( ($prev_page == $current_page)
+    $prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ($prev_page == $current_page)
                 ? '<span class="comic-nav-span">' . __('Prev', MP_DOMAIN) . '</span>'
                 : '<a href="' . $prev_url . '">'. __('Prev', MP_DOMAIN) . '</a>' )
             . "</{$args->link_wrap}>";
