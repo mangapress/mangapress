@@ -1,7 +1,7 @@
 <?php
 /**
  * mangapress
- * 
+ *
  * @package comicarchive-functions
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
@@ -10,7 +10,7 @@
 
 /**
  * Get all comics for archives page
- * 
+ *
  * @since 2.9
  * @return \WP_Query
  */
@@ -28,6 +28,7 @@ function mangapress_get_all_comics_for_archive()
         'post_type'       => 'mangapress_comic',
         'posts_per_page'  => -1,
     ));
+
     if (isset($wp_actions['_mangapress_pre_archives_get_posts'])) {
         unset($wp_actions['_mangapress_pre_archives_get_posts']);
     }
@@ -35,6 +36,6 @@ function mangapress_get_all_comics_for_archive()
     remove_filter('posts_orderby', 'mangapress_orderby');
     remove_filter('posts_fields', 'mangapress_select_fields');
     remove_filter('posts_join', 'mangapress_join');
-    
+
     return $archives;
 }

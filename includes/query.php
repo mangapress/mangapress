@@ -8,7 +8,7 @@
 
 /**
  * Modify queries for Comics
- * 
+ *
  * @global wpdb $wpdb WordPress DB oject
  * @param WP_Query $query
  */
@@ -25,7 +25,7 @@ function _mangapress_comics_pre_get_posts($query)
     if (!$is_taxonomy) {
         return;
     }
-        
+
     add_filter('posts_join', 'mangapress_join');
 
     if ($query->is_single()) {
@@ -34,7 +34,7 @@ function _mangapress_comics_pre_get_posts($query)
         add_filter('posts_distinct', 'mangapress_distinct_rows');
     }
 }
-add_filter('pre_get_posts', '_mangapress_comics_pre_get_posts');
+add_action('pre_get_posts', '_mangapress_comics_pre_get_posts');
 
 
 /**
@@ -49,7 +49,7 @@ function mangapress_distinct_rows()
 
 /**
  * Change orderby parameter for archive-specific loop
- * 
+ *
  * @access private
  * @global wpdb $wpdb WordPress DB object
  * @param string $order_by
@@ -58,16 +58,25 @@ function mangapress_distinct_rows()
 function mangapress_orderby($order_by)
 {
     global $wpdb;
-    
+
     $order_by = "{$wpdb->term_relationships}.term_taxonomy_id, {$order_by}";
-    
+
     return $order_by;
+}
+
+
+function mangapress_post_limits($limit, $query){
+
+    if (is_admin() || $query->is_main_query() || is_comic_archive_page())
+        return $limit;
+
+    return "LIMIT 1";
 }
 
 
 /**
  * Add fields to SELECT list for archive-specific loop
- * 
+ *
  * @access private
  * @global wpdb $wpdb
  * @param string $fields
@@ -86,7 +95,7 @@ function mangapress_select_fields($fields, WP_Query $query = null)
 
 /**
  * Add new INNER JOIN call for forcing taxonomy name and slug to end of post objects
- * 
+ *
  * @access private
  * @global wpdb $wpdb
  * @param string $join
@@ -94,7 +103,7 @@ function mangapress_select_fields($fields, WP_Query $query = null)
  */
 function mangapress_join($join)
 {
-    global $wpdb;   
+    global $wpdb;
 
     $join .= " INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
     $join .= " INNER JOIN {$wpdb->terms} ON ({$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->terms}.term_id)";

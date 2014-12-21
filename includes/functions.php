@@ -23,16 +23,16 @@ define('MP_CATEGORY_ALL', 3);
 /**
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.
- * 
+ *
  * @since 2.9
- * 
+ *
  * @global WP_Query $wp_query
  * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page
  * @return boolean
  */
 function mangapress_is_queried_page($option)
 {
-    global $wp_query; 
+    global $wp_query;
 
     $page = MangaPress_Bootstrap::get_instance()->get_option('basic', $option);
     $object = $wp_query->get_queried_object();
@@ -40,14 +40,14 @@ function mangapress_is_queried_page($option)
     if (!isset($object->post_name) || $object->post_name !== $page) {
         return false;
     }
-    
+
     return true;
 }
 
 
 /**
  * Return plugin-default template location for latest comic or archive
- * 
+ *
  * @since 2.9
  * @param string $page Which page to get default template for
  * @return string
@@ -57,21 +57,21 @@ function mangapress_get_content_template($page)
     $template = 'latest-comic.php';
     if ($page !== 'latestcomic_page') {
         $template = 'comic-archive.php';
-    } 
-    
+    }
+
     $template_file_found = locate_template(array("templates/content/{$template}"));
-    $file = $template_file_found 
+    $file = $template_file_found
             ? $template_file_found : MP_ABSPATH . "templates/content/{$template}";
-        
-    return $file;    
+
+    return $file;
 }
 
 
 /**
  * Add additional templates to the mangapress_comic template stack
- * 
+ *
  * @since 2.9
- * 
+ *
  * @global WP_Post $post WordPress post object
  * @param string $template Template filename
  * @return string
@@ -168,7 +168,7 @@ function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
  * mangapress_version()
  * echoes the current version of Manga+Press.
  * Replaces mpp_comic_version()
- * 
+ *
  * @since 2.9
  * @return void
  */
@@ -181,7 +181,7 @@ function mangapress_version()
 /**
  * Set the post-type for get_boundary_post()
  * Workaround for issue #27094 {@link https://core.trac.wordpress.org/ticket/27094}
- * 
+ *
  * @access private
  * @param WP_Query $query
  * @return void
@@ -190,6 +190,7 @@ function _mangapress_set_post_type_for_boundary($query)
 {
     $query->set('post_type', 'mangapress_comic');
 }
+
 
 
 /**
@@ -210,20 +211,82 @@ function _mangapress_set_post_type_for_boundary($query)
 function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
                                                                             $excluded_categories = '', $previous = true)
 {
-    global $post;
+    global $post, $wpdb;
+    if ( empty( $post ) )
+            return null;
+    $current_post_date = $post->post_date;
+    $join = '';
+    $posts_in_ex_cats_sql = '';
+    if ($in_same_cat || !empty($excluded_categories)) {
+        $join = " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id "
+              . "INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
 
-    $cat_array = null;
-    if ($in_same_cat && $group_by_parent) {
-        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+        if ( $in_same_cat && !$group_by_parent) {
+            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+            // if $cat_array returns empty
+            $terms_in = "";
+            if (!empty($cat_array)) {
+                $terms_in = "AND tt.term_id IN (" . implode(',', $cat_array) . ")";
+            } else {
+                $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_ALL);
+            }
+            $join .= " AND tt.taxonomy = '{$taxonomy}' {$terms_in}";
+        }
+
+        if ( $in_same_cat && $group_by_parent) {
+            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy);
+            // use the first category...
+            $ancestor_array = get_ancestors($cat_array[0], $taxonomy);
+            // if the ancestor array is empty, use the cat_array value
+            if (empty($ancestor_array)) {
+                $ancestor = $cat_array[0];
+            } else {
+                //
+                // there can be only one ancestor!
+                // because the default is from lowest to highest in the hierarchy
+                // we flip the array to grap the top-most parent.
+                $ancestor_array = array_reverse($ancestor_array);
+                $ancestor = absint($ancestor_array[0]);
+            }
+            $join .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id = {$ancestor}";
+        }
+        $posts_in_ex_cats_sql = "AND tt.taxonomy = '{$taxonomy}'";
+        if ( !empty($excluded_categories) ) {
+            $excluded_categories = array_map('intval', explode(' and ', $excluded_categories));
+            if ( !empty($cat_array) ) {
+                    $excluded_categories = array_diff($excluded_categories, $cat_array);
+                    $posts_in_ex_cats_sql = '';
+            }
+            if ( !empty($excluded_categories) ) {
+                    $posts_in_ex_cats_sql = " AND tt.taxonomy = '{$taxonomy}' "
+                                           . "AND tt.term_id NOT IN (" . implode($excluded_categories, ',') . ')';
+            }
+        }
     }
+    $adjacent = $previous ? 'previous' : 'next';
+    $op       = $previous ? '<' : '>';
+    $order    = $previous ? 'DESC' : 'ASC';
+    $join  = apply_filters( "mangapress_get_{$adjacent}_post_join", $join, $in_same_cat, $excluded_categories );
+    $where = apply_filters( "mangapress_get_{$adjacent}_post_where", $wpdb->prepare("WHERE p.post_date $op %s AND p.post_type = %s AND p.post_status = 'publish' $posts_in_ex_cats_sql", $current_post_date, $post->post_type), $in_same_cat, $excluded_categories );
+    $sort  = apply_filters( "mangapress_get_{$adjacent}_post_sort", "ORDER BY p.post_date $order LIMIT 1" );
+    $query = "SELECT p.* FROM $wpdb->posts AS p $join $where $sort";
+    $query_key = 'mangapress_adjacent_post_' . md5($query);
+    $result = wp_cache_get($query_key, 'mangapress_counts');
+    if ( false !== $result )
+            return $result;
 
-    return get_adjacent_post($in_same_cat, $cat_array, $previous, $taxonomy);
+    $result = $wpdb->get_row("SELECT p.* FROM $wpdb->posts AS p $join $where $sort");
+    if ( null === $result )
+            $result = '';
+
+    wp_cache_set($query_key, $result, 'counts');
+    return $result;
 }
 
 
 /**
  * Clone of WordPress function get_boundary_post(). Retrieves first and last
- * comic posts. 
+ * comic posts.
  *
  * @since 2.7
  *
@@ -238,16 +301,81 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
  * @return object
  */
 function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
-                                                                                $excluded_categories = '', $start = true)
+                                                                                $excluded_categories = array(), $start = true)
 {
     global $post;
 
-    $cat_array = null;
-    if ($in_same_cat && $group_by_parent) {
-        $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+    if ( empty($post) || is_attachment() )
+        return null;
+
+    $cat_array = array();
+    $excluded_categories = array();
+    if ($in_same_cat || !empty($excluded_categories)) {
+        if ($in_same_cat && !$group_by_parent) {
+            $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
+        }
+        if ( $in_same_cat && $group_by_parent) {
+            $cat_array_children = _mangapress_get_object_terms($post->ID, $taxonomy);
+            // use the first category...
+            $cat_array = get_ancestors($cat_array_children[0], $taxonomy);
+            // if the ancestor array is empty, use the cat_array value
+            if (empty($cat_array)) {
+                $cat_array = array($cat_array_children[0]);
+            } else {
+                //
+                // because the default is from lowest to highest in the hierarchy
+                // we flip the array to grap the top-most parent.
+                $cat_array_rev = array_reverse($cat_array);
+                $cat_array = array($cat_array_rev[0]);
+            }
+        }
+
+        if ( !empty($excluded_categories) ) {
+            $excluded_categories = array_map('intval', explode(',', $excluded_categories));
+            if ( !empty($cat_array) )
+                $excluded_categories = array_diff($excluded_categories, $cat_array);
+            $inverse_cats = array();
+            foreach ( $excluded_categories as $excluded_category)
+                $inverse_cats[] = $excluded_category * -1;
+            $excluded_categories = $inverse_cats;
+        }
     }
 
-    return get_boundary_post($in_same_cat, $cat_array, $start, $taxonomy);
+    $cat_array = array_merge($cat_array, $excluded_categories);
+    asort($cat_array);
+    if ($start) {
+        $cat_array = array_reverse($cat_array);
+    }
+
+    $categories = implode(',',  $cat_array);
+    if (!empty($categories)) {
+        $tax_query = array(
+            array(
+                'taxonomy' => $taxonomy,
+                'field'    => 'id',
+                'terms'    => $categories,
+                'operator' => 'IN',
+                'include_children' => false,
+            )
+        );
+    } else {
+        $tax_query = null;
+    }
+    $order = $start ? 'ASC' : 'DESC';
+    $post_query = array(
+        'post_type'              => 'mangapress_comic',
+        'numberposts'            => 1,
+        'tax_query'              => $tax_query,
+        'order'                  => $order,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+
+
+    $boundary = get_posts($post_query);
+
+    return $boundary;
+
 }
 
 
@@ -306,7 +434,7 @@ function mpp_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, 
 /**
  * mpp_get_boundary_comic()
  * Deprecated function. Do not use.
- * 
+ *
  * @since 2.7
  * @deprecated since 2.9. Use get_boundary_comic()
  * @return void
@@ -320,7 +448,7 @@ function mpp_get_boundary_comic($in_same_cat = false, $group_by_parent = false, 
 /**
  * mpp_comic_single_page()
  * Uses a template to create comic navigation.
- * 
+ *
  * @deprecated since 2.9
  * @return void
  */
@@ -333,7 +461,7 @@ function mpp_comic_single_page($template)
 /**
  * mpp_comic_insert_navigation()
  * Insert comic navigation
- * 
+ *
  * @global WP_Post $post
  * @deprecated since 2.8
  * @return void
@@ -341,7 +469,7 @@ function mpp_comic_single_page($template)
 function mpp_comic_insert_navigation($content)
 {
     global $post;
-    
+
     _deprecated_function(__FUNCTION__, '2.8', 'mangapress_comic_insert_navigation()');
     mangapress_comic_insert_navigation($content);
 }
