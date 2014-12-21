@@ -2,9 +2,9 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: 2.8.3
+Requires at least: 4.0
+Tested up to: 4.1
+Stable tag: 2.8.4
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,12 +15,16 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.8.3 =
-Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+= 2.8.4 =
+Fixing comic navigation between categories (parent categories and child categories). Users may experience unexpected issues when utilizing
+the Group By Category option to determine navigation between comics.
 
 
 == Changelog ==
 = 2.8 =
+   * 2.8.4
+      * Correcting errors in navigation between comics posts in categories when using the Group By Category option.
+
    * 2.8.3
       * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
@@ -41,7 +45,7 @@ Correcting blank issue when "Use Theme Template" is selected when used with thir
       * Adjusted template stack for single comics
       * Added new Media Library popup (eliminating legacy ThickBox dependency)
          * Added WordPress 3.5 Media Library window
-      * Code review and cleanup   
+      * Code review and cleanup
       * Removed legacy options (Comic Banner)
 
 = 2.7 =

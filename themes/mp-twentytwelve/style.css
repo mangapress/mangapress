@@ -33,8 +33,8 @@ ul.comic-nav  {
     white-space: nowrap;
 }
 
-ul.comic-nav li {
-    display: inline;
+ul.comic-nav > li {
+    display: inline-block;
     list-style-type: none;
 }
 
