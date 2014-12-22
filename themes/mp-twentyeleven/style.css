@@ -41,3 +41,33 @@ Tags: comics, comic theme, manga press, webcomics, online comics
     clear: both;
     float: none;
 }
+
+/* Calendar Widget */
+
+.mangapress_widget_calendar #manga-press-calendar {
+	color: #555;
+	width: 95%;
+	text-align: center;
+}
+.mangapress_widget_calendar #manga-press-calendar caption,
+.mangapress_widget_calendar #manga-press-calendar td,
+.mangapress_widget_calendar #manga-press-calendar th {
+	text-align: center;
+}
+.mangapress_widget_calendar #manga-press-calendar caption {
+	font-size: 11px;
+	font-weight: 500;
+	padding: 5px 0 3px 0;
+	text-transform: uppercase;
+}
+.mangapress_widget_calendar #manga-press-calendar th {
+	background: #f4f4f4;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	font-weight: bold;
+}
+.mangapress_widget_calendar #manga-press-calendar tfoot td {
+	background: #f4f4f4;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}

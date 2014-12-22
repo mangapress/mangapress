@@ -26,3 +26,22 @@ Tags: comics, comic theme, manga press, webcomics, online comics
     float: left;
     margin-right: 10px;
 }
+
+#manga-press-calendar {
+	margin: 0;
+	width: 100%;
+	font-size: 13px;
+	font-size: 0.928571429rem;
+	line-height: 1.846153846;
+	color: #686868;
+}
+#manga-press-calendar th,
+#manga-press-calendar td,
+#manga-press-calendar caption {
+	text-align: left;
+}
+#manga-press-calendar #next {
+	padding-right: 24px;
+	padding-right: 1.714285714rem;
+	text-align: right;
+}
