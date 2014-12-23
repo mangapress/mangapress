@@ -14,7 +14,6 @@
  Author URI: http://www.jes.gs
  Text Domain: mangapress
  Domain Path: /languages
-
 */
 /*
  * (c) 2014 Jessica C Green
@@ -196,7 +195,6 @@ class MangaPress_Bootstrap
      */
     public function init()
     {
-
         $this->set_options();
 
         $this->_posts_helper   = new MangaPress_Posts();
@@ -206,9 +204,11 @@ class MangaPress_Bootstrap
             'transient_name' => 'mangapress_messages'
         ));
 
+
         $this->_load_current_options();
 
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+
         add_filter('single_template', 'mangapress_single_comic_template');
         add_filter('template_include', 'mangapress_latestcomic_template');
         add_filter('template_include', 'mangapress_latestcomic_page_template');
