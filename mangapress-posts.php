@@ -479,9 +479,12 @@ class MangaPress_Posts
         }
 
         // if no terms have been assigned, assign the default
-        if (!filter_input(INPUT_POST, 'tax_input')) {
+        if (!isset($_POST['tax_input'][self::TAX_SERIES][0]) || ($_POST['tax_input'][self::TAX_SERIES][0] == 0 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
             $default_cat = get_option('mangapress_default_category');
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
+        } else {
+            // continue as normal
+            wp_set_post_terms($post, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
         }
 
         return $post_id;
