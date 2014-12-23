@@ -1,5 +1,5 @@
 @font-face {
-    font-family: MP_DOMAIN;
+    font-family: 'mangapress';
     src:url('../fonts/mangapress.eot');
     src:url('../fonts/mangapress.eot?#iefix') format('embedded-opentype'),
             url('../fonts/mangapress.woff') format('woff'),
@@ -13,7 +13,7 @@
 [class*=" icon-"],
 #menu-posts-mangapress_comic div.wp-menu-image,
 #menu-posts-mangapress_comic div.wp-menu-image:before {
-    font: 400 20px/1 MP_DOMAIN !important;
+    font: 400 20px/1 'mangapress' !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -27,6 +27,6 @@
 }
 
 #menu-posts-mangapress_comic div.wp-menu-image:before {
-    font: 400 20px/1 MP_DOMAIN !important;
+    font: 400 20px/1 'mangapress' !important;
     content: "\e600" !important;
 }
