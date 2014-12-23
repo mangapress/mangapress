@@ -161,6 +161,7 @@ class MangaPress_Install
     public function do_deactivate()
     {
         delete_option('rewrite_rules');
+        flush_rewrite_rules(false);
     }
 
     /**
