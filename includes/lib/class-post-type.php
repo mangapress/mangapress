@@ -9,7 +9,7 @@
  */
 /**
  * MangaPress_PostType
- * 
+ *
  * @package MangaPress_PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
@@ -87,19 +87,19 @@ class MangaPress_PostType extends MangaPress_ContentType
     {
         $args = array_merge($this->_args, $args);
         extract($args);
-        
+
         $labels
             = array(
                 'name'               => __($this->_label_plural, $this->_textdomain),
                 'singular_name'      => __($this->_label_single, $this->_textdomain),
-                'add_new'            => __('Add New ' . $this->_label_single, $this->_textdomain),
-                'add_new_item'       => __('Add New ' . $this->_label_single, $this->_textdomain),
-                'edit_item'          => __('Edit ' . $this->_label_single, $this->_textdomain),
-                'view_item'          => __('View ' . $this->_label_single, $this->_textdomain),
-                'search_items'       => __('Search ' . $this->_label_single, $this->_textdomain),
-                'not_found'          => __($this->_label_single . ' not found', $this->_textdomain),
-                'not_found_in_trash' => __($this->_label_single . ' not found in Trash', $this->_textdomain),
-                'parent_item_colon'  => __($this->_label_single . ': ', $this->_textdomain),
+                'add_new'            => __('Add New', $this->_textdomain),
+                'add_new_item'       => sprintf(__('Add New %s', $this->_textdomain), $this->_label_single),
+                'edit_item'          => sprintf(__('Edit %s', $this->_textdomain), $this->_label_single),
+                'view_item'          => sprintf(__('View %s', $this->_textdomain), $this->_label_single),
+                'search_items'       => sprintf(__('Search %s', $this->_textdomain), $this->_label_plural),
+                'not_found'          => sprintf(__('%s not found', $this->_textdomain), $this->_label_single),
+                'not_found_in_trash' => sprintf(__('%s not found in Trash', $this->_textdomain), $this->_label_single),
+                'parent_item_colon'  => sprintf(__('%s: ', $this->_textdomain), $this->_label_single),
             );
 
         $args =

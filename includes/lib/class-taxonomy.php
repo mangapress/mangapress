@@ -43,7 +43,6 @@ class MangaPress_Taxonomy extends MangaPress_ContentType
 
     /**
      * Init object
-     * @return void
      */
     public function init()
     {
@@ -67,18 +66,18 @@ class MangaPress_Taxonomy extends MangaPress_ContentType
                 'labels' => array(
                     'name'                       => $this->_label_plural,
                     'singular_name'              => $this->_label_single,
-                    'search_items'               => __('Search '                . $this->_label_plural, $this->_textdomain),
-                    'popular_items'              => __('Popular '               . $this->_label_plural, $this->_textdomain),
-                    'all_items'                  => __('All '                   . $this->_label_plural, $this->_textdomain),
-                    'parent_item'                => __('Parent '                . $this->_label_single, $this->_textdomain),
-                    'parent_item_colon'          => __('Parent '                . $this->_label_single .  ':: ', $this->_textdomain),
-                    'edit_item'                  => __('Edit '                  . $this->_label_single, $this->_textdomain),
-                    'update_item'                => __('Update '                . $this->_label_single, $this->_textdomain),
-                    'add_new_item'               => __('Add New '               . $this->_label_single, $this->_textdomain),
-                    'new_item_name'              => __('New '                   . $this->_label_single . ' name', $this->_textdomain),
-                    'separate_items_with_commas' => __('Separate '              . $this->_label_plural . ' with commas', $this->_textdomain),
-                    'add_or_remove_items'        => __('Add or remove '         . $this->_label_plural, $this->_textdomain),
-                    'choose_from_most_used'      => __('Choose from most used ' . $this->_label_plural, $this->_textdomain),
+                    'search_items'               => sprintf(__('Search %s', $this->_textdomain), $this->_label_plural),
+                    'popular_items'              => sprintf(__('Popular %s', $this->_textdomain), $this->_label_plural),
+                    'all_items'                  => sprintf(__('All %s', $this->_textdomain), $this->_label_plural),
+                    'parent_item'                => sprintf(__('Parent %s', $this->_textdomain), $this->_label_single),
+                    'parent_item_colon'          => sprintf(__('Parent %s:: ', $this->_textdomain), $this->_label_single),
+                    'edit_item'                  => sprintf(__('Edit %s', $this->_textdomain), $this->_label_single),
+                    'update_item'                => sprintf(__('Update %s', $this->_textdomain), $this->_label_single),
+                    'add_new_item'               => sprintf(__('Add New %s', $this->_textdomain), $this->_label_single),
+                    'new_item_name'              => sprintf(__('New %s name', $this->_textdomain), $this->_label_single),
+                    'separate_items_with_commas' => sprintf(__('Separate %s with commas', $this->_textdomain), $this->_label_plural),
+                    'add_or_remove_items'        => sprintf(__('Add or remove %s', $this->_textdomain), $this->_label_plural),
+                    'choose_from_most_used'      => sprintf(__('Choose from most used %s', $this->_textdomain), $this->_label_plural),
                 ),
                 'public'                => $public,
                 'can_export'            => $can_export,
