@@ -76,23 +76,76 @@ function mangapress_get_content_template($page)
 * @param string $template Template filename
 * @return string
 */
-function mangapress_single_comic_template($template)
+function mangapress_single_comic_template($default_template)
 {
     global $post;
-
-    $templates = array('comics/single-comic.php', 'single-comic.php',);
 
     if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
         return $template;
     }
 
-    $template = locate_template( $templates );
+    $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );
 
     if ($template == '') {
-        return MP_ABSPATH . 'templates/single-comic.php';
+        add_filter('post_thumbnail_html', 'mangapress_disable_post_thumbnail', 500, 2);
+        add_filter('the_content', 'mangapress_single_comic_content_filter');
+        return $default_template;
     } else {
         return $template;
     }
+}
+
+
+/**
+ * Filter contents of single comic post
+ *
+ * @since 2.9
+ *
+ * @param string $content Post content
+ * @return string
+ */
+function mangapress_single_comic_content_filter($content)
+{
+    global $post;
+
+    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE) {
+        return $content;
+    }
+
+    $thumbnail_size = isset($image_sizes['comic-page']) ? $image_sizes['comic-page'] : 'large';
+
+    remove_filter('the_content', 'mangapress_single_comic_content_filter');
+    remove_filter('post_thumbnail_html', 'mangapress_disable_post_thumbnail');
+
+    ob_start();
+    require MP_ABSPATH . 'templates/single-comic.php';
+    $generated_content = ob_get_contents();
+    ob_end_clean();
+
+    $content = $generated_content . $content;
+
+    return $content;
+}
+
+
+
+/**
+ * Remove post thumbnail from Comic Posts since post thumbnails are already
+ * assigned when the_content filter is run
+ *
+ * @since 2.9
+ *
+ * @param string $html Generated image html
+ * @param int $post_id Post ID
+ * @return string
+ */
+function mangapress_disable_post_thumbnail($html, $post_id)
+{
+    if (get_post_type($post_id) == MangaPress_Posts::POST_TYPE) {
+        return '';
+    }
+
+    return $html;
 }
 
 
