@@ -208,8 +208,7 @@ function _mangapress_set_post_type_for_boundary($query)
 * @global WP_Post $post
 * @return string
 */
-function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
-$excluded_categories = '', $previous = true)
+function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $previous = true)
 {
     global $post, $wpdb;
     if ( empty( $post ) )
@@ -296,8 +295,7 @@ $excluded_categories = '', $previous = true)
 *
 * @return object
 */
-function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category',
-$excluded_categories = array(), $start = true)
+function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = array(), $start = true)
 {
     global $post;
     if ( empty($post) || is_attachment() )
