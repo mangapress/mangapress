@@ -1,0 +1,584 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Manga+Press 2.9\n"
+"Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
+"POT-Creation-Date: 2014-12-22 21:56-0600\n"
+"PO-Revision-Date: 2014-12-22 22:05-0600\n"
+"Last-Translator: Jess Green <jgreen@psy-dreamer.com>\n"
+"Language-Team: Jess Green <jgreen@psy-dreamer.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e\n"
+"X-Poedit-SearchPath-0: C:\\Users\\Jessica\\Cygwin\\home\\Jessica\\mangapress\n"
+
+#: mangapress/includes/lib/class-mp-calendar-widget.php:25
+msgid "A calendar of your site&#8217;s archived Comic Posts."
+msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
+
+#: mangapress/includes/lib/class-mp-calendar-widget.php:28
+msgid "Manga+Press Calendar"
+msgstr "Calendario Manga+Press"
+
+#: mangapress/includes/lib/class-mp-calendar-widget.php:72
+msgid "Title:"
+msgstr "Título:"
+
+#: mangapress/includes/lib/class-post-type.php:95
+msgid "Add New"
+msgstr "Agregar nuevo"
+
+#: mangapress/includes/lib/class-post-type.php:96
+#: mangapress/includes/lib/class-taxonomy.php:76
+#, php-format
+msgid "Add New %s"
+msgstr "Agregar nuevo %s"
+
+#: mangapress/includes/lib/class-post-type.php:97
+#: mangapress/includes/lib/class-taxonomy.php:74
+#, php-format
+msgid "Edit %s"
+msgstr "Editar %s"
+
+#: mangapress/includes/lib/class-post-type.php:98
+#, php-format
+msgid "View %s"
+msgstr "Ver %s"
+
+#: mangapress/includes/lib/class-post-type.php:99
+#: mangapress/includes/lib/class-taxonomy.php:69
+#, php-format
+msgid "Search %s"
+msgstr "B&uacute;squeda en %s"
+
+#: mangapress/includes/lib/class-post-type.php:100
+#, php-format
+msgid "%s not found"
+msgstr "%s no se encuentra"
+
+#: mangapress/includes/lib/class-post-type.php:101
+#, php-format
+msgid "%s not found in Trash"
+msgstr "%s no encontrado en basura"
+
+#: mangapress/includes/lib/class-post-type.php:102
+#, php-format
+msgid "%s: "
+msgstr "%s:"
+
+#: mangapress/includes/lib/class-taxonomy.php:70
+#, php-format
+msgid "Popular %s"
+msgstr "%s populares"
+
+#: mangapress/includes/lib/class-taxonomy.php:71
+#, php-format
+msgid "All %s"
+msgstr "todos los %s de"
+
+#: mangapress/includes/lib/class-taxonomy.php:72
+#, php-format
+msgid "Parent %s"
+msgstr "%s de Padres"
+
+#: mangapress/includes/lib/class-taxonomy.php:73
+#, php-format
+msgid "Parent %s:: "
+msgstr "%s de Padres::"
+
+#: mangapress/includes/lib/class-taxonomy.php:75
+#, php-format
+msgid "Update %s"
+msgstr "Actualizaci&oacute;n %s"
+
+#: mangapress/includes/lib/class-taxonomy.php:77
+#, php-format
+msgid "New %s name"
+msgstr "Nuevo nombre %s"
+
+#: mangapress/includes/lib/class-taxonomy.php:78
+#, php-format
+msgid "Separate %s with commas"
+msgstr "%s  separado por comas"
+
+#: mangapress/includes/lib/class-taxonomy.php:79
+#, php-format
+msgid "Add or remove %s"
+msgstr "A&ntilde;adir o eliminar %s"
+
+#: mangapress/includes/lib/class-taxonomy.php:80
+#, php-format
+msgid "Choose from most used %s"
+msgstr "Elija entre la mayor&iacute;a de los %s usados"
+
+#: mangapress/includes/pages/help-basic.php:9
+#: mangapress/mangapress-admin.php:110
+msgid "Basic Options Help"
+msgstr "Anula los valores fijados en ajustes de la lectura."
+
+#: mangapress/includes/pages/help-basic.php:11
+msgid "This section handles the basic setup for your webcomic."
+msgstr "Esta secci&oacute;n se ocupa de la configuraci&oacute;n b&aacute;sica para su webcomic."
+
+#: mangapress/includes/pages/help-basic.php:15
+msgid "Group by Categories"
+msgstr "Grupo por Categor&iacute;as"
+
+#: mangapress/includes/pages/help-basic.php:17
+msgid ""
+"This option allows you to group your comics according to a category created under <strong>Series</"
+"strong>. When this option is used with the option below &mdash; <em>Group by Parent</em> &mdash; "
+"comics are grouped according to the parent category."
+msgstr ""
+"Esta opci&oacute;n le permite agrupar tus c&oacute;mics seg&uacute;n una categor&iacute;a creada en "
+"Serie. Cuando esta opci&oacute;n se utiliza con la opci&oacute;n de abajo &mdash; Grupo de Padres "
+"&mdash; c&oacute;mics se agrupan de acuerdo a la categor&iacute;a padre."
+
+#: mangapress/includes/pages/help-basic.php:19
+#: mangapress/mangapress-options.php:236
+msgid "Use Parent Category"
+msgstr "Categor&iacute;a de uso de Padres"
+
+#: mangapress/includes/pages/help-basic.php:21
+msgid "This options overrides the option above and groups comics according to the parent category."
+msgstr ""
+"Esta opci&oacute;n anula la opci&oacute;n anterior y grupos de c&oacute;mics de acuerdo a la "
+"categor&iacute;a padre."
+
+#: mangapress/includes/pages/help-basic.php:23
+#: mangapress/mangapress-options.php:245
+msgid "Latest Comic Page"
+msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
+
+#: mangapress/includes/pages/help-basic.php:25
+msgid ""
+"Select an available page from the drop-down to use as your Latest Comic page. This page displays the "
+"most recent comic posted."
+msgstr ""
+"Seleccione una p&aacute;gina disponible en el desplegable para utilizar como su p&aacute;gina "
+"&Uacute;ltimas Comic. Esta p&aacute;gina muestra el c&oacute;mic m&aacute;s reciente publicado."
+
+#: mangapress/includes/pages/help-basic.php:27
+#: mangapress/mangapress-options.php:256
+msgid "Comic Archive Page"
+msgstr "P&aacute;gina Archive c&oacute;mica"
+
+#: mangapress/includes/pages/help-basic.php:29
+msgid ""
+"Select an available page from the drop-down to use as your Comic Archive page. This page displays "
+"all comics in chronological order, starting with the most recent."
+msgstr ""
+"Seleccione una p&aacute;gina disponible en el desplegable para utilizar como p&aacute;gina Comic "
+"Archivo. Esta p&aacute;gina muestra todos los c&oacute;mics en orden cronol&oacute;gico, empezando "
+"por el m&aacute;s reciente."
+
+#: mangapress/includes/pages/help-comic-page.php:9
+#: mangapress/mangapress-admin.php:115
+msgid "Comic Page Options Help"
+msgstr "Comic P&aacute;gina Opciones de Ayuda"
+
+#: mangapress/includes/pages/help-comic-page.php:11
+msgid "This section controls display of comic posts"
+msgstr "Esta secci&oacute;n controla la visualizaci&oacute;n de mensajes de historietas"
+
+#: mangapress/includes/pages/help-comic-page.php:15
+#: mangapress/mangapress-options.php:269
+msgid "Generate Comic Page"
+msgstr "Generar una p&aacute;gina de c&oacute;mica"
+
+#: mangapress/includes/pages/help-comic-page.php:17
+msgid ""
+"Generate a custom image size based on the values below. Use this if you wish to display slightly "
+"smaller images than the image you have uploaded."
+msgstr ""
+"Generar un tama&ntilde;o de imagen personalizado basado en los valores de abajo. Utilice esta "
+"opci&oacute;n si desea visualizar las im&aacute;genes ligeramente m&aacute;s peque&ntilde;o que la "
+"imagen que has subido."
+
+#: mangapress/includes/pages/help-comic-page.php:19
+#: mangapress/mangapress-options.php:278
+msgid "Comic Page Width"
+msgstr "Ancho de p&aacute;gina c&oacute;mica"
+
+#: mangapress/includes/pages/help-comic-page.php:21
+msgid "Set the width of your comic page image."
+msgstr "Ajuste el ancho de la imagen de la p&aacute;gina de historietas."
+
+#: mangapress/includes/pages/help-comic-page.php:23
+#: mangapress/mangapress-options.php:286
+msgid "Comic Page Height"
+msgstr "Altura p&aacute;gina c&oacute;mica"
+
+#: mangapress/includes/pages/help-comic-page.php:25
+msgid "Set the height of you comic page image."
+msgstr "Ajuste la altura de la imagen de la p&aacute;gina que c&oacute;mico."
+
+#: mangapress/includes/pages/help-nav.php:9
+#: mangapress/mangapress-admin.php:120
+msgid "Navigation Options Help"
+msgstr "Opciones de navegaci&oacute;n Ayuda"
+
+#: mangapress/includes/pages/help-nav.php:11
+msgid "This section handles the appearance of the navigation links for your comic."
+msgstr ""
+"Esta secci&oacute;n se ocupa de la aparici&oacute;n de los enlaces de navegaci&oacute;n para tu "
+"c&oacute;mic."
+
+#: mangapress/includes/pages/help-nav.php:15
+#: mangapress/mangapress-options.php:295
+msgid "Insert Navigation"
+msgstr "Inserte navegaci&oacute;n"
+
+#: mangapress/includes/pages/help-nav.php:17
+msgid ""
+"When this option is enabled, comic navigation will automatically be inserted above the comic image. "
+"Not needed if you are using one of the child-theme that ships with Manga+Press."
+msgstr ""
+"Cuando se activa esta opci&oacute;n, la navegaci&oacute;n c&oacute;mico autom&aacute;ticamente se "
+"inserta por encima de la imagen c&oacute;mica. No es necesario si est&aacute; utilizando uno de los "
+"tema-hijo que se incluye con Manga+Press."
+
+#: mangapress/includes/pages/help-nav.php:19
+#: mangapress/mangapress-options.php:304
+msgid "Navigation CSS"
+msgstr "Navegaci&oacute;n CSS"
+
+#: mangapress/includes/pages/help-nav.php:21
+msgid ""
+"This option is turned off by default (Custom CSS). Set to Default CSS to use the included styles if "
+"your theme does not provide styles for the links."
+msgstr ""
+"Esta opci&oacute;n est&aacute; desactivada de forma predeterminada (Custom CSS). Establecer por "
+"defecto CSS a utilizar los estilos incluidos si su tema no proporciona estilos para los v&iacute;"
+"nculos."
+
+#: mangapress/includes/pages/nav-css.php:12
+msgid "Copy and paste this code into the <code>style.css</code> file of your theme."
+msgstr "Copia y pega este c&oacute;digo en el  <code>style.css</ code> de su tema."
+
+#: mangapress/includes/pages/options.php:8
+msgid "You do not have sufficient permissions to manage options for this blog."
+msgstr "Usted no tiene los permisos necesarios para la gesti&oacute;n de opciones para este blog."
+
+#: mangapress/includes/pages/remove-image-link.php:14
+msgid "Set Comic Image"
+msgstr "Ajuste de imagen Comic"
+
+#: mangapress/includes/pages/set-image-link.php:18
+msgid "Remove Comic image"
+msgstr "Eliminar imagen Comic"
+
+#: mangapress/includes/template-functions.php:254
+#: mangapress/includes/template-functions.php:255
+msgid "First"
+msgstr "Primero"
+
+#: mangapress/includes/template-functions.php:260
+#: mangapress/includes/template-functions.php:261
+msgid "Last"
+msgstr "&Uacute;ltimo"
+
+#: mangapress/includes/template-functions.php:265
+#: mangapress/includes/template-functions.php:266
+msgid "Next"
+msgstr "Pr&oacute;ximo"
+
+#: mangapress/includes/template-functions.php:270
+#: mangapress/includes/template-functions.php:271
+msgid "Prev"
+msgstr "Anterior"
+
+#. translators: Calendar caption: 1: month name, 2: 4-digit year
+#: mangapress/includes/template-functions.php:384
+#, php-format
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: mangapress/mangapress-admin.php:63
+#: mangapress/mangapress-admin.php:64
+msgid "Manga+Press Options"
+msgstr "Opciones Manga+Press"
+
+#: mangapress/mangapress-install.php:76
+msgid "Sorry, you do not have suffient permissions to activate this plugin."
+msgstr "Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
+
+#: mangapress/mangapress-install.php:84
+msgid "Sorry, you must be an Administrator in order to use Manga+Press"
+msgstr "Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
+
+#: mangapress/mangapress-install.php:145
+msgid ""
+"Default Series category created when plugin is activated. It is suggested that you rename this "
+"category."
+msgstr ""
+"Categor&iacute;a Serie defecto creado cuando se activa plugin. Se sugiere que cambie el nombre de "
+"esta categor&iacute;a."
+
+#: mangapress/mangapress-options.php:227
+msgid "Group Comics"
+msgstr "Grupo Comics"
+
+#: mangapress/mangapress-options.php:229
+msgid ""
+"Group comics by category. This option will ignore the parent category, and group according to the "
+"child-category."
+msgstr ""
+"Grupo de c&oacute;mics por categoría. Esta opci&oacute;n har&aacute; caso de la categor&iacute;a "
+"padre, y el grupo de acuerdo a la categor&iacute;a de ni&ntilde;os."
+
+#: mangapress/mangapress-options.php:238
+msgid ""
+"Group comics by top-most parent category. Use this option if you have sub-categories but want your "
+"navigation to function using the parent category."
+msgstr ""
+"Grupo de c&oacute;mics por categoría principal de m&aacute;s arriba. Utilice esta opci&oacute;n si "
+"tiene sub-categor&iacute;as, pero quiere que su navegaci&oacute;n funcione con la categor&iacute;a "
+"padre."
+
+#: mangapress/mangapress-options.php:247
+#: mangapress/mangapress-options.php:258
+msgid "Select a Page"
+msgstr "Seleccionar una p&aacute;gina"
+
+#: mangapress/mangapress-options.php:270
+msgid "Generate a comic page based on values below."
+msgstr "Genere una p&aacute;gina de c&oacute;mic basado en los valores de abajo."
+
+#: mangapress/mangapress-options.php:296
+msgid "Automatically insert comic navigation code into comic posts."
+msgstr ""
+"Insertar autom&aacute;ticamente c&oacute;digo de navegaci&oacute;n c&oacute; mic en puestos de "
+"historietas."
+
+#: mangapress/mangapress-options.php:305
+msgid "Turn this off. You know you want to!"
+msgstr "Desactive esta opci&oacute;n. Usted sabe que usted quiere!"
+
+#: mangapress/mangapress-options.php:308
+msgid "Custom CSS"
+msgstr "Custom CSS"
+
+#: mangapress/mangapress-options.php:309
+msgid "Default CSS"
+msgstr "Default CSS"
+
+#: mangapress/mangapress-options.php:334
+msgid "Basic Options"
+msgstr "Opciones b&aacute;sicas"
+
+#: mangapress/mangapress-options.php:335
+msgid ""
+"This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; pages, number of comics "
+"per page, and grouping comics together by category."
+msgstr ""
+"Esta secci&oacute;n establece las &uacute;ltimas p&aacute;ginas de historietas y c&oacute;mic "
+"Archivo, as&iacute; agrupar c&oacute;mics juntas por categor&iacute;a."
+
+#: mangapress/mangapress-options.php:338
+msgid "Comic Page Options"
+msgstr "Opciones de c&oacute;mica p&aacute;gina"
+
+#: mangapress/mangapress-options.php:339
+msgid ""
+"Handles image sizing options for comic pages. Thumbnail support may need to be enabled for some "
+"features to work properly. If page- or thumbnail sizes are changed, then a plugin such as Regenerate "
+"Thumbnails may be used to create the new thumbnails."
+msgstr ""
+"Maneja opciones de tama&ntilde;o de imagen para las p&aacute;ginas c&oacute;micas. Puede necesitar "
+"apoyo en miniatura para estar habilitado para algunas caracter&iacute;sticas funcionen "
+"correctamente. Si se cambian los tama&ntilde;os p&aacute;gina-o en miniatura, a continuaci&oacute;n, "
+"un plugin como Regenerar miniaturas se puede utilizar para crear las nuevas miniaturas."
+
+#: mangapress/mangapress-options.php:342
+msgid "Navigation Options"
+msgstr "Opciones de navegaci&oacute;n"
+
+#: mangapress/mangapress-options.php:343
+msgid ""
+"Options for comic navigation. Whether to have navigation automatically inserted on comic pages, or "
+"to enable/disable default comic navigation CSS."
+msgstr ""
+"Opciones para la navegaci&oacute;n c&oacute;mico. Ya sea para tener navegaci&oacute;n inserta "
+"autom&aacute;ticamente en las p&aacute;ginas de c&oacute;mic, o para activar / desactivar por "
+"defecto navegaci&oacute;n c&oacute;mico CSS."
+
+#: mangapress/mangapress-posts.php:116
+#: mangapress/mangapress-posts.php:117
+#: mangapress/mangapress-posts.php:386
+msgid "Series"
+msgstr "Series"
+
+#: mangapress/mangapress-posts.php:131
+msgid "Comics"
+msgstr "C&oacute;micos"
+
+#: mangapress/mangapress-posts.php:132
+msgid "Comic"
+msgstr "C&oacute;mico"
+
+#: mangapress/mangapress-posts.php:262
+msgid "Comic Image"
+msgstr "Imagen de C&oacute;mica"
+
+#: mangapress/mangapress-posts.php:319
+msgid "Upload or Choose Your Comic Image File"
+msgstr "Cargar o Elija su Comic de archivo de imagen"
+
+#: mangapress/mangapress-posts.php:320
+msgid "Insert Comic into Post"
+msgstr "Inserte Comic en Publica"
+
+#: mangapress/mangapress-posts.php:384
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+#: mangapress/mangapress-posts.php:385
+msgid "Comic Title"
+msgstr "Comic T&iacute;tulo"
+
+#: mangapress/mangapress-posts.php:387
+msgid "Description"
+msgstr "Descripci&oacute;n"
+
+#: mangapress/themes/mp-twentyeleven/comics/comic-archive.php:57
+#: mangapress/themes/mp-twentyeleven/comics/latest-comic.php:34
+#: mangapress/themes/mp-twentyfourteen/comics/comic-archive.php:28
+#: mangapress/themes/mp-twentyfourteen/comics/latest-comic.php:31
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:47
+#: mangapress/themes/mp-twentythirteen/comics/comic-archive.php:28
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:24
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:22
+#: mangapress/themes/mp-twentytwelve/comics/comic-archive.php:28
+#: mangapress/themes/mp-twentytwelve/comics/latest-comic.php:34
+msgid "Edit"
+msgstr "Editar"
+
+#: mangapress/themes/mp-twentyfourteen/comics/latest-comic.php:25
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:61
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:40
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:38
+#: mangapress/themes/mp-twentytwelve/comics/latest-comic.php:31
+msgid "Pages:"
+msgstr "P&aacute;ginas:"
+
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:24
+msgid ", "
+msgstr ", "
+
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:43
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:45
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:43
+msgid "Leave a comment"
+msgstr "Deja un comentario"
+
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:43
+msgid "1 Comment"
+msgstr "1 Comentario"
+
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:43
+msgid "% Comments"
+msgstr "% comentarios"
+
+#: mangapress/themes/mp-twentyfourteen/comics/single-comic.php:59
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Seguir leyendo <span class=\"meta-nav\">&rarr;</span>"
+
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:29
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:27
+#: mangapress/themes/mp-twentytwelve/comics/single-comic.php:22
+msgid "Post navigation"
+msgstr "Publica navegaci&oacute;n"
+
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:45
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:43
+msgid "One comment so far"
+msgstr "Un comentario hasta ahora"
+
+#: mangapress/themes/mp-twentythirteen/comics/latest-comic.php:45
+#: mangapress/themes/mp-twentythirteen/comics/single-comic.php:43
+#, fuzzy, php-format
+msgid "View all % comments"
+msgstr "Ver todos los comentarios %"
+
+#: mangapress/themes/mp-twentytwelve/comics/single-comic.php:23
+msgid "&larr;"
+msgstr "&larr;"
+
+#: mangapress/themes/mp-twentytwelve/comics/single-comic.php:24
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#~ msgid "Add New "
+#~ msgstr "Crear Nuevo"
+
+#~ msgid "Edit "
+#~ msgstr "Editar"
+
+#~ msgid "View "
+#~ msgstr "Ver"
+
+#~ msgid "Search "
+#~ msgstr "Buscar"
+
+#~ msgid " not found"
+#~ msgstr " no encontrado"
+
+#~ msgid " not found in Trash"
+#~ msgstr "no se encuentra en la basura"
+
+#~ msgid ": "
+#~ msgstr ": "
+
+#~ msgid "Popular "
+#~ msgstr "Popular "
+
+#~ msgid "All "
+#~ msgstr "Todo"
+
+#~ msgid "Parent "
+#~ msgstr "Causa"
+
+#~ msgid "Update "
+#~ msgstr "Versi&oacute;n actualizada"
+
+#~ msgid "New "
+#~ msgstr "Nuevo"
+
+#~ msgid "Separate "
+#~ msgstr "Separar"
+
+#~ msgid "Add or remove "
+#~ msgstr "Agregar o quitar"
+
+#~ msgid "Choose from most used "
+#~ msgstr "Elija entre m&aacute;s utilizado"
+
+#~ msgid "Sorry, you do not have sufficient permissions to activate this plugin."
+#~ msgstr "Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
+
+#~ msgid "Order By"
+#~ msgstr "Ordenar por"
+
+#~ msgid "Date"
+#~ msgstr "Fecha"
+
+#~ msgid "Post ID"
+#~ msgstr "Post ID"
+
+#~ msgid "Use Template"
+#~ msgstr "Utilizar una plantilla"
+
+#~ msgid "Use theme template for Latest Comic Page."
+#~ msgstr "Use la plantilla para lo &uacute;ltimo tema P&aacute;gina Comic."
+
+#~ msgid "Use theme template for Comic Archive Page."
+#~ msgstr "P&aacute;gina Archive c&oacute;mica"
+
+#~ msgid "Comic Posts to Display"
+#~ msgstr "Cantidad de env&iacute;os c&oacute;mica para mostrar"

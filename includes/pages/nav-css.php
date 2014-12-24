@@ -11,42 +11,22 @@
 
 <?php _e('Copy and paste this code into the <code>style.css</code> file of your theme.', MP_DOMAIN); ?>
 <code style="display: block; width: 550px;"><pre class="brush: css;">
-
 /* comic navigation */
-.comic-navigation {
-    text-align: center;
+.comic-nav-hlist-wrapper {
+    text-align: left;
     margin: 5px 0 10px 0;
-}
-
-.comic-nav-span {
-    padding: 3px 10px;
-    text-decoration: none;
-}
-
-ul.comic-nav  {
-    margin: 0;
     padding: 0;
-    white-space: nowrap;
+    clear: both;
+    float: none;
 }
 
-ul.comic-nav li {
-    display: inline;
-    list-style-type: none;
+.comic-nav-hlist {
+    list-style: none;
 }
 
-ul.comic-nav a {
-    text-decoration: none;
-    padding: 3px 10px;
+.comic-nav-hlist > li {
+    float: left;
+    margin-right: 10px;
 }
-
-ul.comic-nav a:link,
-ul.comic-nav a:visited {
-    color: #ccc;
-    text-decoration: none;
-}
-
-ul.comic-nav a:hover { text-decoration: none; }
-ul.comic-nav li:before{ content: ""; }
-
 </pre></code>
 <?php 

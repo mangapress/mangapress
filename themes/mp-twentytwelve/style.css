@@ -10,44 +10,38 @@ Tags: comics, comic theme, manga press, webcomics, online comics
 */
 
 /* comic navigation */
-#comic-navigation {
+.comic-nav-hlist-wrapper {
     text-align: left;
     margin: 5px 0 10px 0;
     padding: 0;
+    clear: both;
+    float: none;
 }
 
-#comic-navigation a {
-    font-size: 16px;
-    text-decoration: none;
-    padding: 3px 10px;
+.comic-nav-hlist {
+    list-style: none;
 }
 
-.comic-nav-span {
-    padding: 3px 10px;
-    text-decoration: none;
+.comic-nav-hlist > li {
+    float: left;
+    margin-right: 10px;
 }
 
-ul.comic-nav  {
+#manga-press-calendar {
     margin: 0;
-    padding: 0;
-    white-space: nowrap;
+    width: 100%;
+    font-size: 13px;
+    font-size: 0.928571429rem;
+    line-height: 1.846153846;
+    color: #686868;
 }
-
-ul.comic-nav > li {
-    display: inline-block;
-    list-style-type: none;
+#manga-press-calendar th,
+#manga-press-calendar td,
+#manga-press-calendar caption {
+    text-align: left;
 }
-
-ul.comic-nav a:link,
-ul.comic-nav a:visited {
-    color: #ccc;
-    text-decoration: none;
-}
-
-ul.comic-nav a:hover {
-    text-decoration: none;
-}
-
-ul.comic-nav li:before{
-    content: "";
+#manga-press-calendar #next {
+    padding-right: 24px;
+    padding-right: 1.714285714rem;
+    text-align: right;
 }

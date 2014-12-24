@@ -18,7 +18,7 @@ class MangaPress_Posts
 {
     /**
      * Get image html
-     * 
+     *
      * @var string
      */
     const ACTION_GET_IMAGE_HTML = 'mangapress-get-image-html';
@@ -26,7 +26,7 @@ class MangaPress_Posts
 
     /**
      * Remove image html and return Add Image string
-     * 
+     *
      * @var string
      */
     const ACTION_REMOVE_IMAGE  = 'mangapress-remove-image';
@@ -42,10 +42,26 @@ class MangaPress_Posts
 
     /**
      * Post-type name
-     * 
+     *
      * @var string
      */
     const POST_TYPE = 'mangapress_comic';
+
+
+    /**
+     * Taxonomy name for Series
+     *
+     * @var string
+     */
+    const TAX_SERIES = 'mangapress_series';
+
+
+    /**
+     * Default archive date format
+     *
+     * @var string
+     */
+    const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
 
 
     /**
@@ -57,18 +73,26 @@ class MangaPress_Posts
 
 
     /**
+     * Post-type Slug. Defaults to comic.
+     * @var string
+     */
+    protected $slug = 'comic';
+
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->_register_post_type();
+        $this->_rewrite_rules();
 
         // Setup Manga+Press Post Options box
         add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
         add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
         add_action('save_post_mangapress_comic', array($this, 'save_post'), 500, 2);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
-        
+
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
@@ -87,7 +111,7 @@ class MangaPress_Posts
     {
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
-            'name'       => 'mangapress_series',
+            'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
             'pluralname' => __('Series', MP_DOMAIN),
@@ -98,9 +122,9 @@ class MangaPress_Posts
                 'rewrite'      => array(
                     'slug' => 'series'
                 ),
-            ),            
+            ),
         ));
-        
+
         $this->_post_type = new MangaPress_PostType(array(
             'name'          => self::POST_TYPE,
             'textdomain'    => MP_DOMAIN,
@@ -115,16 +139,117 @@ class MangaPress_Posts
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
                 'menu_icon' => null,
                 'rewrite'   => array(
-                    'slug' => 'comic',
+                    'slug' => $this->get_slug(),
                 ),
                 'taxonomies' => array(
                     $taxonomy->get_name(),
                 ),
             ),
         ));
+
     }
 
-    
+
+    /**
+     * Add new rewrite rules for Comic post-type
+     */
+    private function _rewrite_rules()
+    {
+        $post_type = self::POST_TYPE;
+        $slug      = $this->get_slug();
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&paged=$matches[2]&post_type=' .  $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/?$",
+            'index.php?year=$matches[1]&post_type=' .  $post_type,
+            'top'
+        );
+    }
+
+
+    /**
+     * Get current user-specified front-slug for Comic archives
+     *
+     * @return string
+     */
+    public function get_slug()
+    {
+        /**
+         * mangapress_comic_front_slug
+         * Allow plugins (or options) to modify post-type front slug
+         *
+         * @param string $slug Default post-type slug
+         * @return string
+         */
+        return apply_filters('mangapress_comic_front_slug', $this->slug);
+    }
+
+
     /**
      * Meta box call-back function.
      *
@@ -152,7 +277,7 @@ class MangaPress_Posts
 
     /**
      * Comic meta box
-     * 
+     *
      * @return void
      */
     public function comic_meta_box_cb()
@@ -163,20 +288,20 @@ class MangaPress_Posts
 
     /**
      * Enqueue scripts for post-edit and post-add screens
-     * 
+     *
      * @global WP_Post $post
      * @return void
      */
     public function enqueue_scripts()
     {
         $current_screen = get_current_screen();
-        
+
         if (!isset($current_screen->post_type) || !isset($current_screen->base))
             return;
-        
+
         if (!($current_screen->post_type == self::POST_TYPE && $current_screen->base == 'post'))
             return;
-        
+
         // Include in admin_enqueue_scripts action hook
         wp_enqueue_media();
         wp_register_script(
@@ -189,7 +314,7 @@ class MangaPress_Posts
 
         wp_localize_script(
             'mangapress-media-popup',
-            'MANGAPRESS',
+            MP_DOMAIN,
             array(
                 'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
                 'button' => __('Insert Comic into Post', MP_DOMAIN),
@@ -198,8 +323,8 @@ class MangaPress_Posts
 
         wp_enqueue_script('mangapress-media-popup');
     }
-    
-    
+
+
     /**
      * Modify header columns for Comic Post-type
      *
@@ -244,7 +369,7 @@ class MangaPress_Posts
         }
     }
 
-    
+
     /**
      * Modify comic columns for Comics screen
      *
@@ -264,22 +389,22 @@ class MangaPress_Posts
 
         return $columns;
     }
-    
-    
+
+
     /**
      * Retrieve image HTML
-     * 
+     *
      * @return void
      */
     public function get_image_html_ajax()
     {
         // nonce verification
-        
+
         // get image
         $image_ID = filter_input(INPUT_POST, 'id') ? filter_input(INPUT_POST, 'id') : false;
-        $action   = filter_input(INPUT_POST, 'action') 
+        $action   = filter_input(INPUT_POST, 'action')
                     ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
-        
+
         header("Content-type: application/json");
         if ($action == self::ACTION_GET_IMAGE_HTML){
             if ($image_ID) {
@@ -288,15 +413,15 @@ class MangaPress_Posts
         } else {
             echo json_encode(array('html' => $this->get_remove_image_html(),));
         }
-                                
+
         die();
     }
 
-    
+
     /**
      * Retrieve image html
-     * 
-     * @param integer $post_id
+     *
+     * @param int $image_ID
      * @return string
      */
     public function get_image_html($image_ID)
@@ -304,60 +429,66 @@ class MangaPress_Posts
         $image_html = wp_get_attachment_image($image_ID, 'medium');
         if ($image_html == '')
             return '';
-        
+
         ob_start();
         require_once MP_ABSPATH . 'includes/pages/set-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
-        
+
         return $html;
     }
 
-    
+
     /**
      * Reset comic image html
-     * 
+     *
      * @return string
      */
     public function get_remove_image_html()
     {
-        
+
         ob_start();
         require_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
-        
+
         return $html;
     }
 
-    
+
     /**
      * Save post meta data. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
-     * 
+     *
      * @param int $post_id
      * @param WP_Post $post
-     * 
-     * @return void
+     *
+     * @return int
      */
     public function save_post($post_id, $post)
     {
-        if ($post->post_type !== self::POST_TYPE)
+        if ($post->post_type !== self::POST_TYPE || empty($_POST))
             return $post_id;
-        
-        if (empty($_POST))
-            return $post_id;
-        
+
         if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
 
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
-        if ($image_ID) { 
+        if ($image_ID) {
             set_post_thumbnail($post_id, $image_ID);
         }
-        
+
+        // if no terms have been assigned, assign the default
+        if (!isset($_POST['tax_input'][self::TAX_SERIES][0]) || ($_POST['tax_input'][self::TAX_SERIES][0] == 0 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
+            $default_cat = get_option('mangapress_default_category');
+            wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
+        } else {
+            // continue as normal
+            wp_set_post_terms($post, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
+        }
+
         return $post_id;
-        
+
     }
-    
+
 }

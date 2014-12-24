@@ -2,9 +2,9 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 4.0
+Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 2.8.4
+Stable tag: 2.9.0
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,16 +15,43 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.8.4 =
-Fixing comic navigation between categories (parent categories and child categories). Users may experience unexpected issues when utilizing
-the Group By Category option to determine navigation between comics.
-
+= 2.9 =
+* Updated navigation CSS
+* Removed "Order By" Option. Now defaults to date.
+* Removed "Use Theme Template" options. Now defaults to using theme templates.
+* Added contextual help tabs
+* Added Calendar template tag for comics
+* Added filter for changing Comic post-type front slug (defaults to `comic`)
+* Fixed missing "No comics" message for Latest Comic page.
+* Corrected issue with Comic Post terms getting updated on post-save.
+* Updated Spanish Language files.
+* Updated child-themes to handle styling for Comic Calendar widget
+* Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
+* Added Manga+Press-specific version of WordPress calendar widget
+* Updated Comic date permalink structure
+* Updated and fixed loading of Spanish Language files
+* Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
 
 == Changelog ==
-= 2.8 =
-   * 2.8.4
-      * Correcting errors in navigation between comics posts in categories when using the Group By Category option.
+= 2.9 =
+   * 2.9.0
+      * Updated navigation CSS
+      * Removed "Order By" Option. Now defaults to date.
+      * Removed "Use Theme Template" options. Now defaults to using theme templates.
+      * Added contextual help tabs
+      * Added Calendar template tag for comics
+      * Added filter for changing Comic post-type front slug (defaults to `comic`)
+      * Fixed missing "No comics" message for Latest Comic page.
+      * Corrected issue with Comic Post terms getting updated on post-save.
+      * Updated Spanish Language files.
+      * Updated child-themes to handle styling for Comic Calendar widget
+      * Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
+      * Added Manga+Press-specific version of WordPress calendar widget
+      * Updated Comic date permalink structure
+      * Updated and fixed loading of Spanish Language files
+      * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
 
+= 2.8 =
    * 2.8.3
       * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
@@ -86,58 +113,6 @@ the Group By Category option to determine navigation between comics.
      * Added custom taxonomies, and post thumbnail support.
      * Eliminated TimThumb.
 
-= 2.6 =
-
-   * 2.6.2
-     * Introduced Spanish language support.
-
-   * 2.6.1
-     * Corrected Static page issue. Also changed mpp_filter_latest_comicpage() so that Post title is included in output.
-
-   * 2.6
-     * Fixed bugs that were present in 2.5. Manga+Press options page now located under Settings, Post New Comic page has been
-moved to Posts and Uninstall Manga+Press is located under Plugins.
-
-   * 2.6b
-     * Changed handling of plugin options so that they are compatible with Wordpress 2.8 and higher. They are now stored in one
-entry in the options table instead of being spread out over multiple entries. Moved Manga+Press options page to Settings,
-Uninstall to Plugins, and Post New Comic to Posts. Removed /admin, /css, /js as they were no longer necessary for the plugin to
-function.
-
-= 2.5 =
-
-   * 2.1/2.5
-     * 2.1 renamed to 2.5. Eliminated the banner skin option and all functions attached. Feature can be duplicated with a little
-CSS positioning. Option for creating a banner from uploaded comic or uploading a seperate banner still remains, as well as the
-option to set banner width & height. Removed both the Manga+Press help and Template Tag pages. Will be hosted in a help wiki on
-the Manga+Press website. Made changes to the Post Comic page. Also reworded the "New Version" text. Created options to have the
-comic banner & navigation included at the top of The Loop on the home page, as well automatically filtering comic categories from
-the front page and automatically modifying The Loop for the latest comic page. Removed the make banner option.
-
-   * 2.0.1-beta
-     * Corrected a minor bug in update_options. Banner skin wouldn't be uploaded even if "use banner skin" option were checked and
-user had selected an image for upload. Also corrected a jQuery UI Tabs bug in the user admin area that is present when Manga+Press
-is used with Wordpress 2.8
-
-= 2.0 =
-
-   * 2.0-beta
-     * Major reworking of code in mangapress-classes.php and mangapress-functions.php
-     * Reworked code of add_comic() function so it is compatible with the Wordpress post db and Media Library
-     * removed create directory for series option
-     * added wp_sidebar_comic()
-
-= 1.0 =
-
-   * 1.0 RC2.5
-     * Found a major bug involving directory/file permissions. Has been corrected, but I'm keeping my eye on this one for future
-reference. See website for a fix.
-
-   * 1.0 RC2
-     * Modified add_comic(), add_footer_info()
-
-   * 1.0 RC1
-     * General maintenance, fixing up look-and-feel of admin side. Putting together companion theme.
 
 == Installation ==
 
@@ -155,6 +130,34 @@ Archive Page to your two newly created pages.
 
 
 == Frequently Asked Questions ==
+
+*I'm using the bundled theme for TwentyEleven, -Twelve, or -Thirteen but the Custom CSS and/or Insert Navigation options have no effect? Or they add a second navigation bar*
+
+This is because the navigation for the comics is built into the theme. Using a different theme or overriding the default theme's template will allow you to use the options. (however, see [issue #17](https://github.com/jesgs/mangapress/issues/17) for additional issues)
+
+*Does Manga+Press work on WordPress Multi-site?*
+
+Yes, it does. However, a few steps must be taken to make Manga+Press' child-themes available to your network. See the question below on the steps to take to enable the child-themes on Multisite.
+
+*The bundled themes aren't available in WordPress Multi-site. What's going on?*
+
+This is because the plugin hasn't been activated for the entire MS network. In order for the child-themes to be available, Manga+Press must be available to the entire network. This can be done by going to **Network Admin > Plugins** and clicking the _Network Activate_ link for Manga+Press. Once this is done, then both the parent- and child-themes need to made available to the network as well. This can be accomplished by going to **Network Admin > Themes**, selecting the themes in question, choosing **Bulk Actions > Network Enable**, and then clicking **Apply**.
+
+*Is Manga+Press responsive?*
+
+Not by itself. However, Manga+Press doesn't really output markup other than the comic navigation. Responsiveness depends on the theme that is being used. The themes bundled with Manga+Press — the TwentyEleven thru TwentyFourteen child-themes — all have some level of responsiveness that is dependent on their parent themes.
+
+*Is Manga+Press compatible with Advanced Custom Fields*
+
+Yes, it is! Manga+Press is simply a stripped down custom post-type with a custom Featured Image meta-box. Like any other post-type, you can add a new field group using ACF — however, you _will_ have to configure your theme to display these custom fields.
+
+*Is Manga+Press compatible with the WPML plugin?*
+
+I have never had the chance to test Manga+Press with the WPML plugin so I can't really guarantee compatibility. Since Manga+Press works like a standard WordPress post, and WPML _is_ compatible with custom post-types, this shouldn't be a problem.
+
+*Do you take feature requests?*
+
+I do take feature requests, but I also judge each request on the basis of how well the new feature fits into Manga+Press' current functionality and also how feasible the new feature is to implement into Manga+Press' core.
 
 
 == Screenshots ==

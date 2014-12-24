@@ -13,12 +13,15 @@
  */
 class MangaPress_Install
 {
+
+
     /**
      * Current MangaPress DB version
      *
      * @var string
      */
     protected static $_version;
+
 
     /**
      * What type is the object? Activation, deactivation or upgrade?
@@ -27,11 +30,20 @@ class MangaPress_Install
      */
     protected $_type;
 
+
+    /**
+     * Instance of Bootstrap class
+     * @var \MangaPress_Bootstrap
+     */
+    protected $_bootstrap;
+
+
     /**
      * Instance of MangaPress_Install
      * @var \MangaPress_Install
      */
     protected static $_instance;
+
 
     /**
      * Get instance of
@@ -47,6 +59,7 @@ class MangaPress_Install
         return self::$_instance;
     }
 
+
     /**
      * Static function for plugin activation.
      *
@@ -55,12 +68,12 @@ class MangaPress_Install
     public function do_activate()
     {
         global $wp_version;
-
+        
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         // Check for capability
         if ( !current_user_can('activate_plugins') ){
-            wp_die( __('Sorry, you do not have suffient permissions to activate this plugin.', 'mangapress') );
+            wp_die( __('Sorry, you do not have suffient permissions to activate this plugin.', MP_DOMAIN) );
         }
         
         // Get the capabilities for the administrator
@@ -68,7 +81,7 @@ class MangaPress_Install
 
         // Must have admin privileges in order to activate.
         if ( empty($role) ) {
-            wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress') );
+            wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN) );
         }
         
         if ( version_compare ($wp_version, '3.0', '<=')) {
@@ -93,12 +106,52 @@ class MangaPress_Install
 
         }
 
-        // this addresses issue #7 on GitHub. This action only runs
-        // on activation, and is removed with the next page load
-        // but it clears/resets the permalink cache so you can view your
-        // comic.
-        add_action('init', 'flush_rewrite_rules');
+        $this->_bootstrap = MangaPress_Bootstrap::get_instance();
+        $this->_bootstrap->init();
+        $this->after_plugin_activation();
+
+        flush_rewrite_rules(false);
     }
+
+
+    /**
+     * Run routines after plugin has been activated
+     *
+     * @todo check for existing terms in Series
+     *
+     * @return void
+     */
+    public function after_plugin_activation()
+    {
+        /**
+         * mangapress_after_plugin_activation
+         * Allow other plugins to add to Manga+Press' activation sequence.
+         *
+         * @return void
+         */
+        do_action('mangapress_after_plugin_activation');
+
+
+        // if the option already exists, exit
+        if (get_option('mangapress_default_category')) {
+            return;
+        }
+
+        // create a default series category
+        $term = wp_insert_term(
+            'Default Series',
+            MangaPress_Posts::TAX_SERIES,
+            array(
+                'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
+                'slug'        => 'default-series',
+            )
+        );
+
+        if (!($term instanceof WP_Error)) {
+            add_option('mangapress_default_category', $term['term_id'], '', 'no');
+        }
+    }
+
 
     /**
      * Static function for plugin deactivation.
@@ -107,7 +160,8 @@ class MangaPress_Install
      */
     public function do_deactivate()
     {
-        flush_rewrite_rules();
+        delete_option('rewrite_rules');
+        flush_rewrite_rules(false);
     }
 
     /**
@@ -121,6 +175,6 @@ class MangaPress_Install
 
         delete_option( 'mangapress_upgrade' );
 
-        flush_rewrite_rules();
+        flush_rewrite_rules(false);
     }
 }
