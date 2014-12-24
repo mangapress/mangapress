@@ -16,8 +16,6 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 
 == Upgrade Notice ==
 = 2.9 =
-* Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
-* Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
 * Updated navigation CSS
 * Removed "Order By" Option. Now defaults to date.
 * Removed "Use Theme Template" options. Now defaults to using theme templates.
@@ -25,12 +23,18 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
 * Added Calendar template tag for comics
 * Added filter for changing Comic post-type front slug (defaults to `comic`)
 * Fixed missing "No comics" message for Latest Comic page.
+* Corrected issue with Comic Post terms getting updated on post-save.
+* Updated Spanish Language files.
+* Updated child-themes to handle styling for Comic Calendar widget
+* Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
+* Added Manga+Press-specific version of WordPress calendar widget
+* Updated Comic date permalink structure
 * Updated and fixed loading of Spanish Language files
+* Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
 
 == Changelog ==
 = 2.9 =
    * 2.9.0
-      * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
       * Updated navigation CSS
       * Removed "Order By" Option. Now defaults to date.
       * Removed "Use Theme Template" options. Now defaults to using theme templates.
@@ -38,7 +42,14 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
       * Added Calendar template tag for comics
       * Added filter for changing Comic post-type front slug (defaults to `comic`)
       * Fixed missing "No comics" message for Latest Comic page.
-      * Added date permalink structure
+      * Corrected issue with Comic Post terms getting updated on post-save.
+      * Updated Spanish Language files.
+      * Updated child-themes to handle styling for Comic Calendar widget
+      * Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
+      * Added Manga+Press-specific version of WordPress calendar widget
+      * Updated Comic date permalink structure
+      * Updated and fixed loading of Spanish Language files
+      * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
 
 = 2.8 =
    * 2.8.3
@@ -102,58 +113,6 @@ keep track of your comic posts. Manga+Press also includes its own custom templat
      * Added custom taxonomies, and post thumbnail support.
      * Eliminated TimThumb.
 
-= 2.6 =
-
-   * 2.6.2
-     * Introduced Spanish language support.
-
-   * 2.6.1
-     * Corrected Static page issue. Also changed mpp_filter_latest_comicpage() so that Post title is included in output.
-
-   * 2.6
-     * Fixed bugs that were present in 2.5. Manga+Press options page now located under Settings, Post New Comic page has been
-moved to Posts and Uninstall Manga+Press is located under Plugins.
-
-   * 2.6b
-     * Changed handling of plugin options so that they are compatible with Wordpress 2.8 and higher. They are now stored in one
-entry in the options table instead of being spread out over multiple entries. Moved Manga+Press options page to Settings,
-Uninstall to Plugins, and Post New Comic to Posts. Removed /admin, /css, /js as they were no longer necessary for the plugin to
-function.
-
-= 2.5 =
-
-   * 2.1/2.5
-     * 2.1 renamed to 2.5. Eliminated the banner skin option and all functions attached. Feature can be duplicated with a little
-CSS positioning. Option for creating a banner from uploaded comic or uploading a seperate banner still remains, as well as the
-option to set banner width & height. Removed both the Manga+Press help and Template Tag pages. Will be hosted in a help wiki on
-the Manga+Press website. Made changes to the Post Comic page. Also reworded the "New Version" text. Created options to have the
-comic banner & navigation included at the top of The Loop on the home page, as well automatically filtering comic categories from
-the front page and automatically modifying The Loop for the latest comic page. Removed the make banner option.
-
-   * 2.0.1-beta
-     * Corrected a minor bug in update_options. Banner skin wouldn't be uploaded even if "use banner skin" option were checked and
-user had selected an image for upload. Also corrected a jQuery UI Tabs bug in the user admin area that is present when Manga+Press
-is used with Wordpress 2.8
-
-= 2.0 =
-
-   * 2.0-beta
-     * Major reworking of code in mangapress-classes.php and mangapress-functions.php
-     * Reworked code of add_comic() function so it is compatible with the Wordpress post db and Media Library
-     * removed create directory for series option
-     * added wp_sidebar_comic()
-
-= 1.0 =
-
-   * 1.0 RC2.5
-     * Found a major bug involving directory/file permissions. Has been corrected, but I'm keeping my eye on this one for future
-reference. See website for a fix.
-
-   * 1.0 RC2
-     * Modified add_comic(), add_footer_info()
-
-   * 1.0 RC1
-     * General maintenance, fixing up look-and-feel of admin side. Putting together companion theme.
 
 == Installation ==
 
