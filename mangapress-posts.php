@@ -484,7 +484,7 @@ class MangaPress_Posts
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
         } else {
             // continue as normal
-            wp_set_post_terms($post, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
+            wp_set_post_terms($post_id, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
         }
 
         return $post_id;
