@@ -12,6 +12,11 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Changelog
 ### 2.9
+#### 2.9.1
+   * Corrects an issue where Comic posts were not getting assigned to a default Series taxonomy on save.
+   * Corrects Comic post 404 error/Missing Comic post issue.
+   * Corrects appearance of comic navigation on Latest Comic page
+
 #### 2.9.0
    * Updated navigation CSS
    * Removed "Order By" Option. Now defaults to date.

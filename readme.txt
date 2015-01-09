@@ -14,27 +14,17 @@ Manga+Press is a webcomic management system for WordPress.
 Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.9 =
-* Updated navigation CSS
-* Removed "Order By" Option. Now defaults to date.
-* Removed "Use Theme Template" options. Now defaults to using theme templates.
-* Added contextual help tabs
-* Added Calendar template tag for comics
-* Added filter for changing Comic post-type front slug (defaults to `comic`)
-* Fixed missing "No comics" message for Latest Comic page.
-* Corrected issue with Comic Post terms getting updated on post-save.
-* Updated Spanish Language files.
-* Updated child-themes to handle styling for Comic Calendar widget
-* Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
-* Added Manga+Press-specific version of WordPress calendar widget
-* Updated Comic date permalink structure
-* Updated and fixed loading of Spanish Language files
-* Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
-* Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-   * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+= 2.9.1 =
+This release fixes an issue where Comics were not getting assigned a default Series taxonomy when saved/published. This would cause the comic page to 404 when viewed.
+
 
 == Changelog ==
 = 2.9 =
+   * 2.9.1
+      * Corrects an issue where Comic posts were not getting assigned to a default Series taxonomy on save.
+      * Corrects Comic post 404 error/Missing Comic post issue.
+      * Corrects appearance of comic navigation on Latest Comic page
+
    * 2.9.0
       * Updated navigation CSS
       * Removed "Order By" Option. Now defaults to date.

@@ -21,7 +21,7 @@ get_header(); ?>
                     <h1 class="entry-title"><?php the_title(); ?></h1>
                 </header><!-- .entry-header -->
 
-                <?php mangapress_comic_navigation(); ?>
+                <?php mangapress_comic_navigation( array( 'container_attr' => array('class' => 'latest-comic-nav comic-nav-hlist-wrapper') ) ); ?>
 
                 <div class="entry-content">
                     <p>

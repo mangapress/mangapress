@@ -1,6 +1,6 @@
 <?php
 /**
- * @package
+ * @package Manga_Press
  * @author Jess Green <jgreen AT psy-dreamer.com>
  * @version $Id$
  */
@@ -34,7 +34,7 @@ function _mangapress_comics_pre_get_posts($query)
         add_filter('posts_distinct', 'mangapress_distinct_rows');
     }
 }
-add_action('pre_get_posts', '_mangapress_comics_pre_get_posts');
+// add_action('pre_get_posts', '_mangapress_comics_pre_get_posts');
 
 
 /**
