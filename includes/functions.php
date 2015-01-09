@@ -278,13 +278,21 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
             if (empty($cat_array)){
                 $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
             }
+
             $terms_in .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id IN (" . implode(',', $cat_array) . ")";
         }
+
         if ( $in_same_cat && $group_by_parent) {
             $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy);
             if (empty($cat_array)) {
                 $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+
+                // if it's _still_ empty
+                if (empty($cat_array)) {
+                    $cat_array = array(0);
+                }
             }
+
             // use the first category...
             $ancestor_array = get_ancestors($cat_array[0], $taxonomy);
             // if the ancestor array is empty, use the cat_array value
@@ -298,9 +306,22 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
                 $ancestor_array = array_reverse($ancestor_array);
                 $ancestor = absint($ancestor_array[0]);
             }
-            $join .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id = {$ancestor}";
+
+            if ($cat_array[0] == 0) {
+                $join = '';
+            } else {
+                $join .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id = {$ancestor}";
+            }
+
         }
-        $posts_in_ex_cats_sql = "AND tt.taxonomy = '{$taxonomy}'";
+
+        if ($cat_array[0] == 0) {
+            $posts_in_ex_cats_sql = "";
+        } else {
+            $posts_in_ex_cats_sql = "AND tt.taxonomy = '{$taxonomy}'";
+        }
+
+
         if ( !empty($excluded_categories) ) {
             $excluded_categories = array_map('intval', explode(' and ', $excluded_categories));
             if ( !empty($cat_array) ) {
@@ -313,6 +334,7 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
             }
         }
     }
+
     $adjacent = $previous ? 'previous' : 'next';
     $op       = $previous ? '<' : '>';
     $order    = $previous ? 'DESC' : 'ASC';
@@ -351,8 +373,10 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
 function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = array(), $start = true)
 {
     global $post;
-    if ( empty($post) || is_attachment() )
-    return null;
+    if ( empty($post) || is_attachment() ) {
+        return null;
+    }
+
     $cat_array = array();
     $excluded_categories = array();
     if ($in_same_cat || !empty($excluded_categories)) {
@@ -362,10 +386,16 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
                 $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
             }
         }
+
         if ( $in_same_cat && $group_by_parent) {
             $cat_array_children = _mangapress_get_object_terms($post->ID, $taxonomy);
             if (empty($cat_array_children)) {
                 $cat_array_children = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+
+                // if it's _still_ empty
+                if (empty($cat_array_children)) {
+                    $cat_array_children = array(0);
+                }
             }
             // use the first category...
             $cat_array = get_ancestors($cat_array_children[0], $taxonomy);
@@ -380,6 +410,7 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
                 $cat_array = array($cat_array_rev[0]);
             }
         }
+
         if ( !empty($excluded_categories) ) {
             $excluded_categories = array_map('intval', explode(',', $excluded_categories));
             if ( !empty($cat_array) )
@@ -390,13 +421,15 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
             $excluded_categories = $inverse_cats;
         }
     }
+
     $cat_array = array_merge($cat_array, $excluded_categories);
     asort($cat_array);
     if ($start) {
         $cat_array = array_reverse($cat_array);
     }
+
     $categories = implode(',',  $cat_array);
-    if (!empty($categories)) {
+    if (!empty($categories) && $categories != '0') {
         $tax_query = array(
         array(
         'taxonomy' => $taxonomy,
