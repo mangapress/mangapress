@@ -12,6 +12,9 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Changelog
 ### 2.9
+#### 2.9.2
+   * Added support for Jetpack Publicize feature.
+
 #### 2.9.1
    * Corrects an issue where Comic posts were not getting assigned to a default Series taxonomy on save.
    * Corrects Comic post 404 error/Missing Comic post issue.
