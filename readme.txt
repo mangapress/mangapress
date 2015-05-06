@@ -2,9 +2,9 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 3.8
+Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 2.9.2
+Stable tag: 3.0
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -14,11 +14,15 @@ Manga+Press is a webcomic management system for WordPress.
 Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.9.2 =
-Adds support for Jetpack Publicize feature.
+= 3.0 =
+This update removes the child-themes from the Manga+Press plugin. If you are using these themes, please please please copy these themes to wp-content\themes before upgrading.
 
 
 == Changelog ==
+= 3.0 =
+   * 3.0
+      * Removed child themes from core
+
 = 2.9 =
    * 2.9.2
       * Added support for Jetpack Publicize feature.
