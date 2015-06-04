@@ -81,7 +81,7 @@ function mangapress_single_comic_template($default_template)
     global $post;
 
     if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
-        return $template;
+        return $default_template;
     }
 
     $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );

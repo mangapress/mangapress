@@ -35,14 +35,11 @@ final class MangaPress_Options
         ),
         'nav' => array(
             'nav_css'    => 'custom_css',
-            'insert_nav' => false,
         ),
     );
     
     /**
      * PHP5 Constructor function
-     * 
-     * @return void
      */
     public function __construct()
     {
@@ -290,15 +287,6 @@ final class MangaPress_Options
                 ),
             ),
             'nav' => array(
-                'insert_nav' => array(
-                    'id'      => 'insert',
-                    'title'   => __('Insert Navigation', MP_DOMAIN),
-                    'description' => __('Automatically insert comic navigation code into comic posts.', MP_DOMAIN),
-                    'type'    => 'checkbox',
-                    'valid'   => 'boolean',
-                    'default' => 1,
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
                 'nav_css'    => array(
                     'id'     => 'navigation-css',
                     'title'  => __('Navigation CSS', MP_DOMAIN),

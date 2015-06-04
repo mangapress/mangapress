@@ -291,14 +291,6 @@ class MangaPress_Bootstrap
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
         }
 
-
-        /*
-         * Comic Navigation
-         */
-        if ($mp_options['nav']['insert_nav']) {
-            add_action('the_content', 'mangapress_comic_insert_navigation');
-        }
-
         /*
          * Comic Page size
          */

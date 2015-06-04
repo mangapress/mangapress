@@ -14,6 +14,7 @@ _Use at your own risk_
 ### 3.0.0-alpha
 * Removed child-themes from plugin-core
 * Added new hooks for Manga+Press Gallery Edition
+* Eliminated "Insert Navigation" functionality. Not needed with plugin-included templates.
 
 ## Changelog
 ### 2.9
