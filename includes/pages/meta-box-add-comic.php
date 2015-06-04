@@ -7,7 +7,12 @@
  * @version $Id$
  * @license GPL
  */
-$image_ID = get_post_thumbnail_id();
+$image_ID = get_post_thumbnail_id(); ?>
+<?php
+/**
+ * Allow plugins to add content to top of Manga+Press meta box
+ */
+do_action('mangapress_comic_metabox_top');
 ?>
 <div id="js-image-frame" class="hide-if-no-js">
     <?php 
@@ -18,5 +23,11 @@ $image_ID = get_post_thumbnail_id();
     } 
     ?>
 </div>
+<?php
+/**
+ * Allow plugins to add content to bottom of Manga+Press meta box
+ */
+do_action('mangapress_comic_metabox');
+?>
 <?php wp_nonce_field(self::NONCE_INSERT_COMIC, '_insert_comic'); ?>
 <input type="hidden" id="js-mangapress-comic-image" name="_mangapress_comic_image" value="<?php echo esc_attr($image_ID); ?>" />
