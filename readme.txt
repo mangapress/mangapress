@@ -15,13 +15,15 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 == Upgrade Notice ==
 = 3.0 =
-This update removes the child-themes from the Manga+Press plugin. If you are using these themes, please please please copy these themes to wp-content\themes before upgrading.
+This update removes the child-themes from the Manga+Press plugin. If you are using these themes, **please please please** copy these themes to wp-content\themes before upgrading. If they should be deleted, you can download them from my Github page [follow link]
 
 
 == Changelog ==
 = 3.0 =
    * 3.0
       * Removed child themes from core
+      * Added validation message for when user saves a comic without adding an image
+      * Comic bookmarking feature for modern browser users.
 
 = 2.9 =
    * 2.9.2

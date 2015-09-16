@@ -16,6 +16,7 @@ _Use at your own risk_
 * Added new hooks for Manga+Press Gallery Edition
 * Eliminated "Insert Navigation" functionality. Not needed with plugin-included templates.
 * Added validation messages for saving comics
+* Added comic bookmarking feature
 
 ## Changelog
 ### 2.9
