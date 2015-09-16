@@ -112,7 +112,7 @@ class MangaPress_FlashMessages
      * Queue flash messages
      *
      * @param string $name Name of message. updated or error
-     * @param string $message Message body
+     * @param mixed $message Message body
      * @return FlashMessages
      */
     public function queue_flash_message($name, $message)
@@ -126,7 +126,7 @@ class MangaPress_FlashMessages
             $class = $default_class;
         }
 
-        $messages[$class]['message'] = $message;
+        $messages[$class]['message'] = maybe_serialize($message);
 
         set_transient($this->get_transient_name(), $messages);
 
@@ -161,8 +161,16 @@ class MangaPress_FlashMessages
      */
     private function display_flash_message_html($messages, $class)
     {
-        foreach ($messages as $message) {
-            $message_html = "<div id=\"message\" class=\"{$class}\"><p>{$message}</p></div>";
+        foreach ($messages as $message_raw) {
+            $message = maybe_unserialize($message_raw);
+            $message_html = '';
+            if (is_array($message)) {
+                if ($message['id'] == filter_input(INPUT_GET, 'post')) {
+                    $message_html = "<div id=\"message\" class=\"{$class}\"><p>{$message['message']}</p></div>";
+                }
+            } else {
+                $message_html = "<div id=\"message\" class=\"{$class}\"><p>{$message}</p></div>";
+            }
 
             echo apply_filters('flashmessage_html', $message_html, $message, $class);
         }

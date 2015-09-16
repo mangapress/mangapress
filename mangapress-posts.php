@@ -347,7 +347,7 @@ class MangaPress_Posts
                 $edit_link = get_edit_post_link($post->ID, 'display');
                 echo "<a href=\"{$edit_link}\">{$thumbnail_html}</a>";
             } else {
-                echo "No image";
+                echo "<p class='error' style='border-left: 5px solid #dd3d36; padding-left: 5px; '>No image</p>";
             }
         } elseif ("title" == $column) {
             echo $post->post_title;
@@ -498,6 +498,8 @@ class MangaPress_Posts
      */
     public function save_post($post_id, $post)
     {
+        $flash_messages = MangaPress_Bootstrap::get_instance()->get_helper('flashmessage');
+
         if ($post->post_type !== self::POST_TYPE || empty($_POST))
             return $post_id;
 
@@ -507,6 +509,11 @@ class MangaPress_Posts
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {
             set_post_thumbnail($post_id, $image_ID);
+        } else {
+            $flash_messages->queue_flash_message('error', array(
+                'id' => $post_id,
+                'message' => 'No comic has been set.',
+            ));
         }
 
         // if no terms have been assigned, assign the default

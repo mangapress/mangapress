@@ -15,6 +15,7 @@ _Use at your own risk_
 * Removed child-themes from plugin-core
 * Added new hooks for Manga+Press Gallery Edition
 * Eliminated "Insert Navigation" functionality. Not needed with plugin-included templates.
+* Added validation messages for saving comics
 
 ## Changelog
 ### 2.9
