@@ -10,6 +10,28 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
+
+/**
+ * Bookmark button template tag
+ * @param array $attrs Attributes
+ */
+function mangapress_bookmark_button($attrs)
+{
+    echo "<a href=\"#\" id=\"bookmark-comic\">Bookmark!</a>";
+}
+
+/**
+ * Shortcode function for bookmark template tag
+ * @param array $atts
+ */
+function mangapress_bookmark_button_shortcode($atts)
+{
+    // process $atts
+    mangapress_bookmark_button($atts);
+}
+add_shortcode('bookmark_comic', 'mangapress_bookmark_button_shortcode');
+
+
 /**
  * is_comic()
  *
