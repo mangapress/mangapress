@@ -10,6 +10,9 @@
 ?>
 <?php mangapress_comic_navigation(); ?>
 
+<div class="bookmark">
+    <?php mangapress_bookmark_button(array()); ?>
+</div>
 <div class="mangapress-media-img">
     <?php echo wp_get_attachment_image( get_post_thumbnail_id(), $thumbnail_size, false );?>
 </div>
