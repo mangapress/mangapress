@@ -291,6 +291,8 @@ class MangaPress_Bootstrap
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
         }
 
+        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_other_scripts'));
+
         /*
          * Comic Page size
          */
@@ -329,7 +331,30 @@ class MangaPress_Bootstrap
             'screen'
         );
 
+        wp_register_script(
+            'mangapress-bookmark',
+//            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
+            MP_URLPATH . 'assets/js/bookmark.js',
+            array('jquery'),
+            MP_VERSION,
+            true
+        );
+
         wp_enqueue_style('mangapress-nav');
+    }
+
+    public function wp_enqueue_other_scripts()
+    {
+        wp_register_script(
+            'mangapress-bookmark',
+            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
+//            MP_URLPATH . 'assets/js/bookmark.js',
+            array('jquery'),
+            MP_VERSION,
+            true
+        );
+
+        wp_enqueue_script('mangapress-bookmark');
     }
 
 
