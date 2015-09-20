@@ -5,12 +5,13 @@
     }
 
     $(function() {
-        BookMark.init();
+        Bookmark.init();
         // KISS
         $('#bookmark-comic').on('click', function (e) {
             e.preventDefault();
 
             // store date, page title, and URL
+            Bookmark.bookmark();
         });
 
         $('#show-comic-bookmark-history').on('click', function (e) {
@@ -19,7 +20,7 @@
 
     });
 
-    var BookMark = {
+    var Bookmark = {
         storage : null,
 
         init: function() {
@@ -27,7 +28,18 @@
         },
 
         bookmark : function() {
+            var href = window.location.href,
+                pageTitle = window.document.title,
+                data = {};
 
+            data = {
+                url : href,
+                title : pageTitle,
+                date : Date.now()
+            }
+
+            this.storage.setItem('bookmark', JSON.stringify(data));
+            console.log(JSON.parse(this.storage.getItem('bookmark')));
         },
 
         history : function() {

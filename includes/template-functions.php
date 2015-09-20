@@ -198,6 +198,7 @@ function mangapress_get_comic_term_title($post = 0)
  */
 function mangapress_comic_navigation($args = array(), $echo = true)
 {
+
     global $post;
 
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
