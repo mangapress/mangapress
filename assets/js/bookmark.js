@@ -31,12 +31,12 @@
             var href = window.location.href,
                 pageTitle = window.document.title,
                 data = {};
-
+            console.log(this);
             data = {
                 url : href,
                 title : pageTitle,
                 date : Date.now()
-            }
+            };
 
             this.storage.setItem('bookmark', JSON.stringify(data));
             console.log(JSON.parse(this.storage.getItem('bookmark')));
