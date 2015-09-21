@@ -321,13 +321,29 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 /**
  * CPT-neutral Clone of WordPress' get_calendar
  *
- * @param bool $initial
- * @param bool $echo
+ * @param int $month Month number (1 through 12)
+ * @param int $yr Calendar year
+ * @param bool $nav Output navigation
+ * @param book $skip_empty_months Skip over months that don't contain posts
+ * @param bool $initial Optional, default is true. Use initial calendar names.
+ * @param bool $echo    Optional, default is true. Set to false for return.
  * @return mixed|void
  */
-function mangapress_get_calendar($initial = true, $echo = true)
+function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true)
 {
-    global $wpdb, $m, $monthnum, $year, $wp_locale, $posts;
+    global $wpdb, $m, $wp_locale, $posts;
+
+    if (!$month) {
+        global $monthnum;
+    } else {
+        $monthnum = $month;
+    }
+
+    if (!$yr) {
+        global $year;
+    } else {
+        $year = $yr;
+    }
 
     $key = md5( $m . $monthnum . $year );
     if ( $cache = wp_cache_get( 'mangapress_get_calendar', 'calendar' ) ) {
@@ -391,19 +407,23 @@ function mangapress_get_calendar($initial = true, $echo = true)
     $unixmonth = mktime(0, 0 , 0, $thismonth, 1, $thisyear);
     $last_day = date('t', $unixmonth);
 
-    // Get the next and previous month and year with at least one post
-    $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-		FROM $wpdb->posts
-		WHERE post_date < '$thisyear-$thismonth-01'
-		AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
-			ORDER BY post_date DESC
-			LIMIT 1");
-    $next = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-		FROM $wpdb->posts
-		WHERE post_date > '$thisyear-$thismonth-{$last_day} 23:59:59'
-		AND post_type = 'post' AND post_status = 'publish'
-			ORDER BY post_date ASC
-			LIMIT 1");
+    $previous = '';
+    $next = '';
+    if ($nav) {
+        // Get the next and previous month and year with at least one post
+        $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
+            FROM $wpdb->posts
+            WHERE post_date < '$thisyear-$thismonth-01'
+            AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
+                ORDER BY post_date DESC
+                LIMIT 1");
+        $next = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
+            FROM $wpdb->posts
+            WHERE post_date > '$thisyear-$thismonth-{$last_day} 23:59:59'
+            AND post_type = 'post' AND post_status = 'publish'
+                ORDER BY post_date ASC
+                LIMIT 1");
+    }
 
     /* translators: Calendar caption: 1: month name, 2: 4-digit year */
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
@@ -427,30 +447,37 @@ function mangapress_get_calendar($initial = true, $echo = true)
     add_filter('month_link', 'mangapress_month_link', 10, 3);
     $calendar_output .= '
 	</tr>
-	</thead>
+	</thead>';
 
-	<tfoot>
-	<tr>';
+    if ($nav) {
+        $calendar_output .= "
+        <tfoot>
+        <tr>";
 
-    if ( $previous ) {
-        $calendar_output .= "\n\t\t".'<td colspan="3" id="prev"><a href="' . get_month_link($previous->year, $previous->month) . '">&laquo; ' . $wp_locale->get_month_abbrev($wp_locale->get_month($previous->month)) . '</a></td>';
+        if ($previous) {
+            $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . get_month_link($previous->year, $previous->month) . '">&laquo; ' . $wp_locale->get_month_abbrev($wp_locale->get_month($previous->month)) . '</a></td>';
+        } else {
+            $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
+        }
+
+        $calendar_output .= "\n\t\t" . '<td class="pad">&nbsp;</td>';
+
+        if ($next) {
+            $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . get_month_link($next->year, $next->month) . '">' . $wp_locale->get_month_abbrev($wp_locale->get_month($next->month)) . ' &raquo;</a></td>';
+        } else {
+            $calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
+        }
+
+        $calendar_output .= "
+        	</tr>
+	    </tfoot>";
     } else {
-        $calendar_output .= "\n\t\t".'<td colspan="3" id="prev" class="pad">&nbsp;</td>';
-    }
-
-    $calendar_output .= "\n\t\t".'<td class="pad">&nbsp;</td>';
-
-    if ( $next ) {
-        $calendar_output .= "\n\t\t".'<td colspan="3" id="next"><a href="' . get_month_link($next->year, $next->month) . '">' . $wp_locale->get_month_abbrev($wp_locale->get_month($next->month)) . ' &raquo;</a></td>';
-    } else {
-        $calendar_output .= "\n\t\t".'<td colspan="3" id="next" class="pad">&nbsp;</td>';
+        $calendar_output .= "<tfoot><tr><td colspan=\"7\">&nbsp;</td></tr></tfoot>";
     }
 
     remove_filter('month_link', 'mangapress_month_link');
 
     $calendar_output .= '
-	</tr>
-	</tfoot>
 
 	<tbody>
 	<tr>';
@@ -460,12 +487,18 @@ function mangapress_get_calendar($initial = true, $echo = true)
 		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
 		AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
 		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", ARRAY_N);
+
+
     if ( $dayswithposts ) {
         foreach ( (array) $dayswithposts as $daywith ) {
             $daywithpost[] = $daywith[0];
         }
     } else {
         $daywithpost = array();
+    }
+
+    if (empty($daywithpost) && $skip_empty_months) {
+        return;
     }
 
     if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'camino') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'safari') !== false)
@@ -480,6 +513,7 @@ function mangapress_get_calendar($initial = true, $echo = true)
         ."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
         ."AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'"
     );
+
     if ( $ak_post_titles ) {
         foreach ( (array) $ak_post_titles as $ak_post_title ) {
 
