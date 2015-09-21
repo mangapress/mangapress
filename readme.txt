@@ -21,9 +21,12 @@ This update removes the child-themes from the Manga+Press plugin. If you are usi
 == Changelog ==
 = 3.0 =
    * 3.0
-      * Removed child themes from core
-      * Added validation message for when user saves a comic without adding an image
-      * Comic bookmarking feature for modern browser users.
+      * Removed child-themes from plugin-core
+      * Added new hooks for Manga+Press Gallery Edition
+      * Eliminated "Insert Navigation" functionality. Not needed with plugin-included templates.
+      * Added validation messages for saving comics
+      * Added comic bookmarking feature
+      * Added comic archive calendar template
 
 = 2.9 =
    * 2.9.2
