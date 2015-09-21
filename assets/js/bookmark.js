@@ -21,13 +21,33 @@
 
     var BookMark = {
         storage : null,
-
+        BOOKMARK_HISTORY : 'mangapress-bookmark-history',
+        BOOKMARK : 'mangapress-bookmark',
         init: function() {
             this.storage = localStorage;
         },
 
         bookmark : function() {
+            var href = window.location.href,
+                pageTitle = window.document.title,
+                data = {},
+                d = new Date();
 
+            var existingBookmarkData = this.storage.getItem(this.BOOKMARK);
+
+            if (existingBookmarkData) {
+                var bookmarkHistory = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
+                bookmarkHistory.push(existingBookmarkData);
+                this.storage.setItem(this.BOOKMARK_HISTORY, JSON.stringify(bookmarkHistory));
+            }
+
+            data = {
+                url : href,
+                title : pageTitle,
+                date : Date.now()
+            };
+
+            this.storage.setItem(this.BOOKMARK, JSON.stringify(data));
         },
 
         history : function() {
