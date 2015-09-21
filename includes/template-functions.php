@@ -299,11 +299,12 @@ function mangapress_comic_navigation($args = array(), $echo = true)
  * @param int $month Month number (1 through 12)
  * @param int $yr Calendar year
  * @param bool $nav Output navigation
+ * @param book $skip_empty_months Skip over months that don't contain posts
  * @param bool $initial Optional, default is true. Use initial calendar names.
  * @param bool $echo    Optional, default is true. Set to false for return.
  * @return mixed|void
  */
-function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $initial = true, $echo = true)
+function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true)
 {
     global $wpdb, $m, $wp_locale, $posts;
 
@@ -398,6 +399,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $initial = tr
                 ORDER BY post_date ASC
                 LIMIT 1");
     }
+
     /* translators: Calendar caption: 1: month name, 2: 4-digit year */
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
     $calendar_output = '<table id="manga-press-calendar">
@@ -460,12 +462,18 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $initial = tr
 		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
 		AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
 		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", ARRAY_N);
+
+
     if ( $dayswithposts ) {
         foreach ( (array) $dayswithposts as $daywith ) {
             $daywithpost[] = $daywith[0];
         }
     } else {
         $daywithpost = array();
+    }
+
+    if (empty($daywithpost) && $skip_empty_months) {
+        return;
     }
 
     if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'camino') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'safari') !== false)
@@ -480,6 +488,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $initial = tr
         ."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
         ."AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'"
     );
+
     if ( $ak_post_titles ) {
         foreach ( (array) $ak_post_titles as $ak_post_title ) {
 

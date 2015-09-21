@@ -54,14 +54,25 @@ function mangapress_is_queried_page($option)
 */
 function mangapress_get_content_template($page)
 {
-    $template = 'latest-comic.php';
-    if ($page !== 'latestcomic_page') {
-        $template = 'comic-archive.php';
+
+    switch ($page) {
+        case 'comicarchive_page' :
+            $template = 'comic-archive.php';
+        break;
+
+        case 'comicarchive_page_calendar' :
+            $template = 'calendar-comic-archive.php';
+        break;
+
+        default :
+            $template = 'latest-comic.php';
     }
 
+
     $template_file_found = locate_template(array("templates/content/{$template}"));
+
     $file = $template_file_found
-    ? $template_file_found : MP_ABSPATH . "templates/content/{$template}";
+        ? $template_file_found : MP_ABSPATH . "templates/content/{$template}";
 
     return $file;
 }
