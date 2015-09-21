@@ -13,11 +13,12 @@
 
 /**
  * Bookmark button template tag
+ * @todo Add l10/i18n functionality
  * @param array $attrs Attributes
  */
 function mangapress_bookmark_button($attrs)
 {
-    echo "<a href=\"#\" id=\"bookmark-comic\">Bookmark!</a>";
+    echo "<a href=\"#\" id=\"bookmark-comic\" data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
 }
 
 /**
