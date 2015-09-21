@@ -24,6 +24,7 @@
         storage : null,
         BOOKMARK_HISTORY : 'mangapress-bookmark-history',
         BOOKMARK : 'mangapress-bookmark',
+        $bookmark : null,
         init: function() {
             this.storage = localStorage;
             this.checkItem();
@@ -31,26 +32,37 @@
 
         checkItem : function() {
             var bookmark = JSON.parse(this.storage.getItem(this.BOOKMARK)),
-                pageHref = window.location.href,
-                $bookmark = $('#bookmark-comic');
+                pageHref = window.location.href;
+
+            this.$bookmark = $('#bookmark-comic');
+
+            if (bookmark == null) {
+                return;
+            }
 
             if (bookmark.url == pageHref) {
-                $bookmark.text($bookmark.data('bookmarkedLabel'));
+                this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
             }
         },
 
         bookmark : function() {
             var href = window.location.href,
                 pageTitle = window.document.title,
-                data = {},
-                d = new Date();
+                data = {};
 
             var existingBookmarkData = this.storage.getItem(this.BOOKMARK);
 
             if (existingBookmarkData) {
                 var bookmarkHistory = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
+                if (!bookmarkHistory) {
+                    bookmarkHistory = [];
+                }
+
                 bookmarkHistory.push(existingBookmarkData);
                 this.storage.setItem(this.BOOKMARK_HISTORY, JSON.stringify(bookmarkHistory));
+
+                // change label state
+                this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
             }
 
             data = {

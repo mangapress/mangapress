@@ -498,13 +498,13 @@ class MangaPress_Posts
      */
     public function save_post($post_id, $post)
     {
-        $flash_messages = MangaPress_Bootstrap::get_instance()->get_helper('flashmessage');
-
         if ($post->post_type !== self::POST_TYPE || empty($_POST))
             return $post_id;
 
         if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
+
+        $flash_messages = MangaPress_Bootstrap::get_instance()->get_helper('flashmessage');
 
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {
@@ -526,7 +526,6 @@ class MangaPress_Posts
         }
 
         return $post_id;
-
     }
 
 }

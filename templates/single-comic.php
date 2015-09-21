@@ -9,7 +9,7 @@
  */
 ?>
 <?php mangapress_comic_navigation(); ?>
-
+<?php var_dump(mangapress_get_comic_term_ID()); ?>
 <div class="bookmark">
     <?php mangapress_bookmark_button(array()); ?>
 </div>
