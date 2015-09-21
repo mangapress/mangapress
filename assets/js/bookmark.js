@@ -26,6 +26,17 @@
         BOOKMARK : 'mangapress-bookmark',
         init: function() {
             this.storage = localStorage;
+            this.checkItem();
+        },
+
+        checkItem : function() {
+            var bookmark = JSON.parse(this.storage.getItem(this.BOOKMARK)),
+                pageHref = window.location.href,
+                $bookmark = $('#bookmark-comic');
+
+            if (bookmark.url == pageHref) {
+                $bookmark.text($bookmark.data('bookmarkedLabel'));
+            }
         },
 
         bookmark : function() {
