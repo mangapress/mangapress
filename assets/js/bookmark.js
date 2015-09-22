@@ -46,7 +46,6 @@
 
             this.$bookmark = $('#bookmark-comic');
             this.$bookmarkNav = $('#comic-bookmark-navigation');
-            this.$bookmarkHistory = $('#bookmark-comic-history');
 
             if (bookmark !== null && bookmark.url == pageHref) {
                 this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
@@ -62,6 +61,9 @@
 
             if (existingBookmarkData) {
                 var bookmarkHistory = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
+                if (!bookmarkHistory) {
+                    bookmarkHistory = [];
+                }
 
                 bookmarkHistory.push(existingBookmarkData);
                 this.storage.setItem(this.BOOKMARK_HISTORY, JSON.stringify(bookmarkHistory));
