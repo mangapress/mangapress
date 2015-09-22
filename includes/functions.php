@@ -9,6 +9,7 @@
 * @author Jessica Green <jgreen@psy-dreamer.com>
 */
 
+require_once MP_ABSPATH . 'includes/query.php';
 require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
 require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
 require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
