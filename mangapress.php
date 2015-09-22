@@ -11,12 +11,12 @@
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
  Version: 3.0.0-alpha
  Author: Jess Green
- Author URI: http://www.jesgreen.com
+ Author URI: http://www.github.com/jesgs
  Text Domain: mangapress
  Domain Path: /languages
 */
 /*
- * (c) 2014 Jessica C Green
+ * (c) 2015 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
