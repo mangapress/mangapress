@@ -1,20 +1,27 @@
 (function ($) {
-    if (typeof(localStorage) != 'object') {
-        console.log('Browser does not support LocalStorage');
-        return;
-    }
 
     $(function() {
+        var $bookmark = $('#bookmark-comic'),
+            $bookmarkComicHistory = $('#bookmark-comic-history');
+
+        if (typeof(localStorage) != 'object') {
+            console.log('Browser does not support LocalStorage');
+            $bookmark.hide();
+            $bookmarkComicHistory.hide();
+            return;
+        }
+
         Bookmark.init();
+
         // KISS
-        $('#bookmark-comic').on('click', function (e) {
+        $bookmark.on('click', function (e) {
             e.preventDefault();
 
             // store date, page title, and URL
             Bookmark.bookmark();
         });
 
-        $('#bookmark-comic-history').on('click', function (e) {
+        $bookmarkComicHistory.on('click', function (e) {
             // show a list of recently bookmarked comics, starting with most recent
             e.preventDefault();
             Bookmark.history();
@@ -30,6 +37,7 @@
         $bookmarkNav : null,
         $bookmarkHistory : null,
         init: function() {
+
             this.storage = localStorage;
             this.checkItem();
 
