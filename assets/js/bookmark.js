@@ -1,5 +1,7 @@
 (function ($) {
-
+    /**
+     * @todo Add l10n/i18n support
+     */
     $(function() {
         var $bookmark = $('#bookmark-comic'),
             $bookmarkComicHistory = $('#bookmark-comic-history');
@@ -93,13 +95,7 @@
             var self = this,
                 revBookmarkHistory = JSON.parse(self.storage.getItem(self.BOOKMARK_HISTORY));
 
-            if (revBookmarkHistory.length == 0) {
-                // No bookmarks available
-                return;
-            }
-
-            var bookmarkHistory = revBookmarkHistory.reverse(),
-                $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p>[<a href="#" id="bookmark-history-close">close</a>]</p></div>')
+            var $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p>[<a href="#" id="bookmark-history-close">close</a>]</p></div>')
                     .css({
                         'width': '300px',
                         'z-index' : 9999,
@@ -111,34 +107,39 @@
                         'margin-left' : '-150px'
                     });
 
-                $historyModal.find('#bookmark-history-content').html(function(){
-                    var htmlString = "<table>";
+            $historyModal.find('#bookmark-history-content').html(function(){
+                if (revBookmarkHistory.length == 0) {
+                    return '<p>No bookmark history available.</p>';
+                }
 
-                    htmlString = "<thead><tr><td>Title</td><td>Date</td></tr></thead>";
+                var htmlString = "<table>",
+                    bookmarkHistory = revBookmarkHistory.reverse();
 
-                    for (var i = 0; i < bookmarkHistory.length; i++) {
-                        var columns = [],
-                            bookmark = JSON.parse(bookmarkHistory[i]),
-                            d = new Date(bookmark.date),
-                            date = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear(),
-                            link = "<a href=\"" + bookmark.url + "\">" + bookmark.title + "</a>";
+                htmlString = "<thead><tr><td>Title</td><td>Date</td></tr></thead>";
 
-                        columns.push(link, date);
+                for (var i = 0; i < bookmarkHistory.length; i++) {
+                    var columns = [],
+                        bookmark = JSON.parse(bookmarkHistory[i]),
+                        d = new Date(bookmark.date),
+                        date = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear(),
+                        link = "<a href=\"" + bookmark.url + "\">" + bookmark.title + "</a>";
 
-                        htmlString += "<tr><td>" + columns.join('</td><td>') + "</td></tr>"
-                    }
+                    columns.push(link, date);
 
-                    return htmlString + "</table>";
-                });
+                    htmlString += "<tr><td>" + columns.join('</td><td>') + "</td></tr>"
+                }
 
-                // append
-                self.$bookmarkNav.append($historyModal)
+                return htmlString + "</table>";
+            });
 
-                // add event for closing modal
-                $('#bookmark-history-close').on('click', function(e){
-                    e.preventDefault();
-                    $historyModal.remove();
-                });
+            // append
+            self.$bookmarkNav.append($historyModal)
+
+            // add event for closing modal
+            $('#bookmark-history-close').on('click', function(e){
+                e.preventDefault();
+                $historyModal.remove();
+            });
         }
     };
 }(jQuery));
