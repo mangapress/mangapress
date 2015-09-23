@@ -20,6 +20,7 @@ _Use at your own risk_
 * Added validation messages for saving comics
 * Added comic bookmarking feature
 * Added comic archive calendar template
+* Added comic archive gallery template
 
 ## Changelog
 ### 2.9
