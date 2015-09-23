@@ -38,10 +38,13 @@ function mangapress_comicarchive_template($template)
     }
 
     if (strpos($wp->matched_rule, 'past-comics') !== false) {
-        $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
-        $archive_template = mangapress_get_comicarchive_template($comicarchive_page_style);
-
-        return locate_template(array("comics/{$archive_template}", 'comics/past-comics.php'));
+        return locate_template(array(
+            'comics/comic-archive-gallery.php',
+            'comics/comic-archive-calendar.php',
+            'comics/comic-archive-list.php',
+            'comics/comic-archive.php',
+            'comics/past-comics.php'
+        ));
     }
 
     return $template;
@@ -66,9 +69,13 @@ function mangapress_comicarchive_page_template($default_template)
     }
 
     $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
-    $archive_template = mangapress_get_comicarchive_template($comicarchive_page_style);
 
-    $template = locate_template(array("comics/$archive_template"));
+    $template = locate_template(array(
+        'comics/comic-archive-gallery.php',
+        'comics/comic-archive-calendar.php',
+        'comics/comic-archive-list.php',
+        'comics/comic-archive.php',
+    ));
 
     // if template can't be found, then look for query defaults...
     if (!$template) {
