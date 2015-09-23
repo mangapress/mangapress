@@ -86,22 +86,22 @@
                 revBookmarkHistory = JSON.parse(self.storage.getItem(self.BOOKMARK_HISTORY));
 
             if (revBookmarkHistory.length == 0) {
-                console.log('No bookmarks available');
+                // No bookmarks available
                 return;
             }
 
             var bookmarkHistory = revBookmarkHistory.reverse(),
-                $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p>[<a href="#" id="bookmark-history-close">close</a>]</p></div>').css({
-                    'width': '300px',
-                    'z-index' : 9999,
-                    'border' : '1px solid black',
-                    'background-color' : '#fff',
-                    'position' : 'absolute',
-                    'padding' : '5px',
-                    // 'top' : '25%',
-                    'left' : '50%',
-                    'margin-left' : '-150px'
-                });
+                $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p>[<a href="#" id="bookmark-history-close">close</a>]</p></div>')
+                    .css({
+                        'width': '300px',
+                        'z-index' : 9999,
+                        'border' : '1px solid black',
+                        'background-color' : '#fff',
+                        'position' : 'absolute',
+                        'padding' : '5px',
+                        'left' : '50%',
+                        'margin-left' : '-150px'
+                    });
 
                 $historyModal.find('#bookmark-history-content').html(function(){
                     var htmlString = "<table>";
@@ -127,14 +127,10 @@
                 self.$bookmarkNav.append($historyModal)
 
                 // add event for closing modal
-                $('#bookmark-history-close').one('click', function(e){
+                $('#bookmark-history-close').on('click', function(e){
                     e.preventDefault();
                     $historyModal.remove();
                 });
-        },
-
-        goto : function() {
-
         }
     };
 }(jQuery));
