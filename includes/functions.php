@@ -56,12 +56,16 @@ function mangapress_get_content_template($page)
 {
 
     switch ($page) {
-        case 'comicarchive_page' :
-            $template = 'comic-archive.php';
+        case 'list' :
+            $template = 'comic-archive-list.php';
         break;
 
-        case 'comicarchive_page_calendar' :
-            $template = 'calendar-comic-archive.php';
+        case 'calendar' :
+            $template = 'comic-archive-calendar.php';
+        break;
+
+        case 'gallery' :
+            $template = 'comic-archive-gallery.php';
         break;
 
         default :
