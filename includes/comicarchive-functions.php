@@ -55,6 +55,10 @@ function mangapress_archive_gallery_style()
         float: left;
     }
 
+    .archive-item .wp-post-image {
+        display: inline;
+    }
+
     .mangapress-archive-gallery > li:after {
          visibility: hidden;
          display: block;
