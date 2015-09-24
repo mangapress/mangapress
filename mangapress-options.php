@@ -264,11 +264,12 @@ final class MangaPress_Options
                     'id'    => 'archive-page-style',
                     'type'  => 'select',
                     'title' => __('Comic Archive Page Style', MP_DOMAIN),
-                    'description' => __('Style used for comic archive page. List or Calendar. Default: List', MP_DOMAIN),
+                    'description' => __('Style used for comic archive page. List, Calendar, or Gallery. Default: List', MP_DOMAIN),
                     'value' => array(
                         'no_val' => __('Select a Style', MP_DOMAIN),
                         'list'   => __('List', MP_DOMAIN),
                         'calendar' => __('Calendar', MP_DOMAIN),
+                        'gallery' => __('Gallery', MP_DOMAIN),
                     ),
                     'valid'   => 'array',
                     'default' => 'list',
@@ -306,7 +307,7 @@ final class MangaPress_Options
                 'nav_css'    => array(
                     'id'     => 'navigation-css',
                     'title'  => __('Navigation CSS', MP_DOMAIN),
-                    'description' => __('Turn this off. You know you want to!', MP_DOMAIN),
+                    'description' => __('Include the default CSS for the navigation. Set to Custom CSS (which uses styles defined by the theme).', MP_DOMAIN),
                     'type'   => 'select',
                     'value'  => array(
                         'custom_css' => __('Custom CSS', MP_DOMAIN),
