@@ -122,7 +122,6 @@ function mangapress_create_comicarchive_page($content)
     wp_reset_query();
 
     return apply_filters('the_comicarchive_content', $content);
-
 }
 
 
