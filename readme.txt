@@ -27,6 +27,7 @@ This update removes the child-themes from the Manga+Press plugin. If you are usi
       * Added validation messages for saving comics
       * Added comic bookmarking feature
       * Added comic archive calendar template
+      * Added comic archive gallery template
 
 = 2.9 =
    * 2.9.2
