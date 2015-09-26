@@ -346,10 +346,16 @@ class MangaPress_Bootstrap
         wp_register_script(
             'mangapress-bookmark',
             plugins_url( '/assets/js/bookmark.js', __FILE__ ),
-//            MP_URLPATH . 'assets/js/bookmark.js',
             array('jquery'),
             MP_VERSION,
             true
+        );
+
+        $bookmark_styles = apply_filters('mangapress_bookmark_styles', array());
+        wp_localize_script(
+            'mangapress-bookmark',
+            strtoupper(MP_DOMAIN),
+            $bookmark_styles
         );
 
         wp_enqueue_script('mangapress-bookmark');

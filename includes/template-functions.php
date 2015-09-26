@@ -17,10 +17,49 @@
  * @todo Add l10/i18n functionality
  * @todo Define $attrs parameters
  * @param array $attrs Attributes
+ * @return string
  */
 function mangapress_bookmark_button($attrs)
 {
-    echo "<a href=\"#\" id=\"bookmark-comic\" data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
+    global $post;
+
+    $a = wp_parse_args($attrs,
+        array(
+            'show_history' => false,
+            'echo'         => true,
+        )
+    );
+
+    extract($a); // gross...
+
+    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
+
+    $links = array();
+    $data_attribs_array = array(
+        'id' => $post->ID,
+        'href'  => get_permalink($post->ID),
+        'title' => get_post_field('post_title', $post->ID, 'attribute'),
+    );
+
+    $data_attribs_string = '';
+    foreach ($data_attribs_array as $attrib => $value) {
+        $data_attribs_string .= 'data-' . $attrib . '="' . $value . '" ';
+    }
+
+
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" {$data_attribs_string} data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
+    if ($show_history) {
+        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">Bookmark History</a>";
+    }
+
+    $html = '<ul><li>' . implode('</li><li>', $links) . '</li></ul>';
+
+    $html = vsprintf($nav, array($html));
+    if ($echo) {
+        echo $html;
+    } else {
+        return $html;
+    }
 }
 
 /**

@@ -315,7 +315,7 @@ class MangaPress_Posts
 
         wp_localize_script(
             'mangapress-media-popup',
-            MP_DOMAIN,
+            strtoupper(MP_DOMAIN),
             array(
                 'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
                 'button' => __('Insert Comic into Post', MP_DOMAIN),

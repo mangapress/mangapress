@@ -20,6 +20,25 @@ define('MP_CATEGORY_PARENTS', 1);
 define('MP_CATEGORY_CHILDREN', 2);
 define('MP_CATEGORY_ALL', 3);
 
+function mangapress_bookmark_styles($styles)
+{
+    $styles = array(
+        'bookmarkStyles' => array(
+            'width' => '300px',
+            'z-index' => 9999,
+            'border' => '1px solid black',
+            'background-color' => '#fff',
+            'position' => 'absolute',
+            'padding' => '5px',
+            'left' => '50%',
+            'margin-left' => '-150px'
+        ),
+    );
+
+    return $styles;
+}
+add_filter('mangapress_bookmark_styles', 'mangapress_bookmark_styles');
+
 /**
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.

@@ -1,3 +1,5 @@
+var MANGAPRESS = MANGAPRESS || {};
+
 (function ($) {
     /**
      * @todo Add l10n/i18n support
@@ -43,21 +45,19 @@
             this.storage = localStorage;
             this.checkItem();
 
-            var bookmarkHistory = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
-            if (!bookmarkHistory) {
-                bookmarkHistory = [];
-                this.storage.setItem(this.BOOKMARK_HISTORY, JSON.stringify(bookmarkHistory));
+            if (!this.hasHistory()) {
+                this.setHistory([]); // set a blank array if no history exists.
             }
         },
 
         checkItem : function() {
-            var bookmark = JSON.parse(this.storage.getItem(this.BOOKMARK)),
-                pageHref = window.location.href;
+            var bookmark = this.getBookmark();
 
             this.$bookmark = $('#bookmark-comic');
             this.$bookmarkNav = $('#comic-bookmark-navigation');
+            var id = this.$bookmark.data('id');
 
-            if (bookmark !== null && bookmark.url == pageHref) {
+            if (this.bookmarkExists(id)) {
                 this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
             }
         },
@@ -65,47 +65,29 @@
         bookmark : function() {
             var href = (this.$bookmark.data('href') !== undefined) ? this.$bookmark.data('href') : window.location.href,
                 pageTitle = (this.$bookmark.data('title') !== undefined) ? this.$bookmark.data('title') : window.document.title,
-                data = {};
+                data = {
+                    id : this.$bookmark.data('id'),
+                    url : href,
+                    title : pageTitle,
+                    date : Date.now()
+                };
 
-            var existingBookmarkData = this.storage.getItem(this.BOOKMARK);
-
-            if (existingBookmarkData) {
-                var bookmarkHistory = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
-                if (!bookmarkHistory) {
-                    bookmarkHistory = [];
-                }
-
-                bookmarkHistory.push(existingBookmarkData);
-                this.storage.setItem(this.BOOKMARK_HISTORY, JSON.stringify(bookmarkHistory));
-
-                // change label state
-                this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
+            // add the bookmark to history
+            console.log(this.bookmarkExists(data.id));
+            if (this.bookmarkExists(data.id) == 0) {
+                this.addToHistory( data );
             }
 
-            data = {
-                url : href,
-                title : pageTitle,
-                date : Date.now()
-            };
-
-            this.storage.setItem(this.BOOKMARK, JSON.stringify(data));
+            // change label state
+            this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
+            this.setBookmark(data);
         },
 
         history : function() {
             var self = this,
-                revBookmarkHistory = JSON.parse(self.storage.getItem(self.BOOKMARK_HISTORY));
-
-            var $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p>[<a href="#" id="bookmark-history-close">close</a>]</p></div>')
-                    .css({
-                        'width': '300px',
-                        'z-index' : 9999,
-                        'border' : '1px solid black',
-                        'background-color' : '#fff',
-                        'position' : 'absolute',
-                        'padding' : '5px',
-                        'left' : '50%',
-                        'margin-left' : '-150px'
-                    });
+                revBookmarkHistory = self.getHistory(),
+                $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p style="text-align: center;">[<a href="#" id="bookmark-history-close">close</a>]</p></div>')
+                    .css(MANGAPRESS.bookmarkStyles);
 
             $historyModal.find('#bookmark-history-content').html(function(){
                 if (revBookmarkHistory.length == 0) {
@@ -115,11 +97,11 @@
                 var htmlString = "<table>",
                     bookmarkHistory = revBookmarkHistory.reverse();
 
-                htmlString = "<thead><tr><td>Title</td><td>Date</td></tr></thead>";
+                htmlString += "<thead><tr><td>Title</td><td>Date</td></tr></thead>";
 
                 for (var i = 0; i < bookmarkHistory.length; i++) {
                     var columns = [],
-                        bookmark = JSON.parse(bookmarkHistory[i]),
+                        bookmark = bookmarkHistory[i],
                         d = new Date(bookmark.date),
                         date = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear(),
                         link = "<a href=\"" + bookmark.url + "\">" + bookmark.title + "</a>";
@@ -140,6 +122,56 @@
                 e.preventDefault();
                 $historyModal.remove();
             });
+        },
+
+        getBookmark : function() {
+            return JSON.parse(this.storage.getItem(this.BOOKMARK));
+        },
+
+        setBookmark : function(bookmark) {
+            this.storage.setItem(
+                this.BOOKMARK,
+                JSON.stringify(bookmark)
+            );
+        },
+
+        getHistory : function() {
+            var history = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
+            if (history == null) {
+                return []; // return empty array
+            }
+
+            return history;
+        },
+
+        setHistory : function(history) {
+            this.storage.setItem(
+                this.BOOKMARK_HISTORY,
+                JSON.stringify(history)
+            );
+        },
+
+        addToHistory : function(bookmark) {
+            var history = this.getHistory();
+
+            history.push( bookmark );
+            this.setHistory(history);
+        },
+
+        hasHistory : function() {
+            return this.getHistory().length;
+        },
+
+        hasBookmark : function() {
+            return this.getBookmark();
+        },
+
+        bookmarkExists : function(id) {
+            var history = this.getHistory();
+
+            return $.grep(history, function(e){
+                return e.id == id;
+            }).length;
         }
     };
 }(jQuery));
