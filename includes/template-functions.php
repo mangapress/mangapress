@@ -40,6 +40,7 @@ function mangapress_bookmark_button($attrs)
 
     $links = array();
     $data_attribs_array = array(
+        'id' => $post->ID,
         'href'  => get_permalink($post->ID),
         'title' => get_post_field('post_title', $post->ID, 'attribute'),
     );
