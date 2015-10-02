@@ -73,7 +73,6 @@ var MANGAPRESS = MANGAPRESS || {};
                 };
 
             // add the bookmark to history
-            console.log(this.bookmarkExists(data.id));
             if (this.bookmarkExists(data.id) == 0) {
                 this.addToHistory( data );
             }
