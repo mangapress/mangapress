@@ -13,21 +13,69 @@
 
 /**
  * Bookmark button template tag
- * @param array $attrs Attributes
+ *
+ * @todo Add l10/i18n functionality
+ * @todo Define $attrs parameters
+ * @param array $attrs {
+ *      Optional. Array of arguments.
+ *
+ *      @type boolean $show_history Show bookmark history link and drop-down. Defaults to false
+ *      @type boolean $echo Show output instead of returning it. Defaults to true
+ * }
  */
 function mangapress_bookmark_button($attrs)
 {
-    echo "<a href=\"#\" id=\"bookmark-comic\">Bookmark!</a>";
+    global $post;
+
+    $a = wp_parse_args($attrs,
+        array(
+            'show_history' => false,
+            'echo'         => true,
+        )
+    );
+
+    extract($a); // gross...
+
+    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
+
+    $links = array();
+    $data_attribs_array = array(
+        'id' => $post->ID,
+        'href'  => get_permalink($post->ID),
+        'title' => get_post_field('post_title', $post->ID, 'attribute'),
+    );
+
+    $data_attribs_string = '';
+    foreach ($data_attribs_array as $attrib => $value) {
+        $data_attribs_string .= 'data-' . $attrib . '="' . $value . '" ';
+    }
+
+
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" {$data_attribs_string} data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
+    if ($show_history) {
+        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">Bookmark History</a>";
+    }
+
+    $html = '<ul><li>' . implode('</li><li>', $links) . '</li></ul>';
+
+    $html = vsprintf($nav, array($html));
+    if ($echo) {
+        echo $html;
+    } else {
+        return $html;
+    }
 }
+
 
 /**
  * Shortcode function for bookmark template tag
- * @param array $atts
+ * @param array $atts @see mangapress_bookmark_button
  */
 function mangapress_bookmark_button_shortcode($atts)
 {
     // process $atts
-    mangapress_bookmark_button($atts);
+    // let the template tag handle the output
+    mangapress_bookmark_button($a);
 }
 add_shortcode('bookmark_comic', 'mangapress_bookmark_button_shortcode');
 
