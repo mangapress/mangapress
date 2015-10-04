@@ -12,6 +12,9 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Changelog
 ### 2.9
+#### 2.9.3
+   * Spanish language updates to embedded themes.
+
 #### 2.9.2
    * Added support for Jetpack Publicize feature.
 
