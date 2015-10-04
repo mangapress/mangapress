@@ -19,7 +19,7 @@ get_header(); ?>
                 <ul>
                 <?php $series_tax = get_terms('mangapress_series');
                 if (empty($series_tax)): ?>
-                    <li>No Comics</li>
+                    <li><?php _e('No Comics', 'mp-twentyeleven'); ?></li>
                 <?php else :
                     $count = 0;
                     foreach ($series_tax as $series) :
