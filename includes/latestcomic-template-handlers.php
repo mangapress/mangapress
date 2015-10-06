@@ -84,7 +84,7 @@ function mangapress_add_comic_to_latestcomic_page($content)
     if (!$wp_query || ($wp_query->get('name') == 'no-comic-found')) {
         return apply_filters(
             'the_latest_comic_content_error',
-            '<p class="error">No recent comics were found.</p>'
+            '<p class="error">' . __('No recent comics were found.', MP_DOMAIN) . '</p>'
         );
     }
 

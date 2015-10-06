@@ -61,7 +61,7 @@ function mangapress_start_latest_comic()
     if ($wp_query->get('name') == 'no-comic-found'){
         apply_filters(
             'the_latest_comic_content_error',
-            '<p class="error">No comics was found.</p>'
+            '<p class="error">' . __('No comics was found.', MP_DOMAIN) . '</p>'
         );
     }
 }

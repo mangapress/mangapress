@@ -107,7 +107,7 @@ function mangapress_create_comicarchive_page($content)
     if (!$wp_query){
         return apply_filters(
             'the_comicarchive_content_error',
-            '<p class="error">No comics were found.</p>'
+            '<p class="error">' . __('No comics were found.', MP_DOMAIN) . '</p>'
         );
     }
 
