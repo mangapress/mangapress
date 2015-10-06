@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 3.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2015-10-04 14:04-0500\n"
-"PO-Revision-Date: 2015-10-04 14:08-0500\n"
+"POT-Creation-Date: 2015-10-06 15:36-0500\n"
+"PO-Revision-Date: 2015-10-06 15:37-0500\n"
 "Last-Translator: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language-Team: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language: es\n"
@@ -17,6 +17,18 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .git\n"
+
+#: includes/comicarchive-template-handlers.php:110
+msgid "No comics were found."
+msgstr "No se encontr&oacute; c&oacute;mico."
+
+#: includes/latestcomic-functions.php:64
+msgid "No comics was found."
+msgstr "No se encontr&oacute; c&oacute;mico."
+
+#: includes/latestcomic-template-handlers.php:87
+msgid "No recent comics were found."
+msgstr "No comics recientes fueron encontrados."
 
 #: includes/lib/class-mp-calendar-widget.php:25
 msgid "A calendar of your site&#8217;s archived Comic Posts."
@@ -300,24 +312,23 @@ msgstr "Ajuste de imagen Comic"
 msgid "Remove Comic image"
 msgstr "Eliminar imagen Comic"
 
-#: includes/template-functions.php:325 includes/template-functions.php:326
+#: includes/template-functions.php:328 includes/template-functions.php:329
 msgid "First"
 msgstr "Primero"
 
-#: includes/template-functions.php:331 includes/template-functions.php:332
+#: includes/template-functions.php:334 includes/template-functions.php:335
 msgid "Last"
 msgstr "&Uacute;ltimo"
 
-#: includes/template-functions.php:336 includes/template-functions.php:337
+#: includes/template-functions.php:339 includes/template-functions.php:340
 msgid "Next"
 msgstr "Pr&oacute;ximo"
 
-#: includes/template-functions.php:341 includes/template-functions.php:342
+#: includes/template-functions.php:344 includes/template-functions.php:345
 msgid "Prev"
 msgstr "Anterior"
 
-#. translators: Calendar caption: 1: month name, 2: 4-digit year
-#: includes/template-functions.php:475
+#: includes/template-functions.php:478
 #, php-format
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
@@ -495,6 +506,25 @@ msgstr "Comic T&iacute;tulo"
 msgid "Description"
 msgstr "Descripci&oacute;n"
 
+#: mangapress.php:357
+#, fuzzy
+msgid "close"
+msgstr "cerrar"
+
+#: mangapress.php:358
+#, fuzzy
+msgid "No bookmark history available."
+msgstr "El historial de navagaci&oacute;n no est&aacute; disponible"
+
+#: mangapress.php:359
+#, fuzzy
+msgid "Title"
+msgstr "T&iacute;tulo:"
+
+#: mangapress.php:360
+msgid "Date"
+msgstr "Fecha"
+
 #~ msgid "Automatically insert comic navigation code into comic posts."
 #~ msgstr ""
 #~ "Insertar autom&aacute;ticamente c&oacute;digo de navegaci&oacute;n "
@@ -593,9 +623,6 @@ msgstr "Descripci&oacute;n"
 
 #~ msgid "Order By"
 #~ msgstr "Ordenar por"
-
-#~ msgid "Date"
-#~ msgstr "Fecha"
 
 #~ msgid "Post ID"
 #~ msgstr "Post ID"
