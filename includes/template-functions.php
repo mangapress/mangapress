@@ -47,9 +47,12 @@ function mangapress_bookmark_button($attrs)
     }
 
 
-    $links[] ="<a href=\"#\" id=\"bookmark-comic\" {$data_attribs_string} data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" {$data_attribs_string} data-label=\""
+        . esc_attr__('Bookmark', MP_DOMAIN) . "\" data-bookmarked-label=\""
+        . esc_attr__('Bookmarked', MP_DOMAIN) . "\">"
+        . esc_html__('Bookmark', MP_DOMAIN) . "</a>";
     if ($show_history) {
-        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">Bookmark History</a>";
+        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">" . esc_html__('Bookmark History', MP_DOMAIN) . "</a>";
     }
 
     $html = '<ul><li>' . implode('</li><li>', $links) . '</li></ul>';

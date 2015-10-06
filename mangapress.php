@@ -352,10 +352,17 @@ class MangaPress_Bootstrap
         );
 
         $bookmark_styles = apply_filters('mangapress_bookmark_styles', array());
+        $bookmark_localization = array(
+            'bookmarkCloseLabel' => __('close', MP_DOMAIN),
+            'bookmarkNoHistory' => __('No bookmark history available.', MP_DOMAIN),
+            'bookmarkTitle' => __('Title', MP_DOMAIN),
+            'bookmarkDate' => __('Date', MP_DOMAIN),
+        );
+
         wp_localize_script(
             'mangapress-bookmark',
             strtoupper(MP_DOMAIN),
-            $bookmark_styles
+            array_merge($bookmark_styles, $bookmark_localization)
         );
 
         wp_enqueue_script('mangapress-bookmark');
