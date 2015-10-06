@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 3.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2015-10-06 15:36-0500\n"
-"PO-Revision-Date: 2015-10-06 15:37-0500\n"
+"POT-Creation-Date: 2015-10-06 15:39-0500\n"
+"PO-Revision-Date: 2015-10-06 15:41-0500\n"
 "Last-Translator: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language-Team: Jess Green <jgreen@psy-dreamer.com>\n"
 "Language: es\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_attr__;esc_html__\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .git\n"
 
@@ -311,6 +311,19 @@ msgstr "Ajuste de imagen Comic"
 #: includes/pages/set-image-link.php:18
 msgid "Remove Comic image"
 msgstr "Eliminar imagen Comic"
+
+#: includes/template-functions.php:55 includes/template-functions.php:57
+msgid "Bookmark"
+msgstr "Marcador"
+
+#: includes/template-functions.php:56
+msgid "Bookmarked"
+msgstr "Marcado"
+
+#: includes/template-functions.php:59
+#, fuzzy
+msgid "Bookmark History"
+msgstr "El historial de navagaci&oacute;n no est&aacute; disponible"
 
 #: includes/template-functions.php:328 includes/template-functions.php:329
 msgid "First"
