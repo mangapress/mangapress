@@ -14,7 +14,6 @@
 /**
  * Bookmark button template tag
  *
- * @todo Add l10/i18n functionality
  * @todo Define $attrs parameters
  * @param array $attrs {
  *      Optional. Array of arguments.
