@@ -16,7 +16,7 @@
  Domain Path: /languages
 */
 /*
- * (c) 2015 Jessica C Green
+ * (c) 2016 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '3.0.0-alpha');
+    define('MP_VERSION', '3.0.0-beta');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
