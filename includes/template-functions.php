@@ -21,6 +21,7 @@
  *      @type boolean $show_history Show bookmark history link and drop-down. Defaults to false
  *      @type boolean $echo Show output instead of returning it. Defaults to true
  * }
+ * @return string
  */
 function mangapress_bookmark_button($attrs)
 {
@@ -77,7 +78,7 @@ function mangapress_bookmark_button_shortcode($atts)
 {
     // process $atts
     // let the template tag handle the output
-    mangapress_bookmark_button($a);
+    mangapress_bookmark_button($atts);
 }
 add_shortcode('bookmark_comic', 'mangapress_bookmark_button_shortcode');
 
@@ -248,8 +249,12 @@ function mangapress_get_comic_term_title($post = 0)
  */
 function mangapress_comic_navigation($args = array(), $echo = true)
 {
-
     global $post;
+
+    if (get_post_type($post) !== 'mangapress_comic') {
+        _doing_it_wrong('mangapress_comic_navigation', 'Navigation must be used inside a Loop intended for mangapress_comic.', MP_VERSION);
+        return '';
+    }
 
     $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
