@@ -22,10 +22,13 @@ function mangapress_get_all_comics_for_archive()
     // TODO Sort parameters for taxonomies
     // TODO Move add/remove filter calls to separate functions
     do_action('_mangapress_pre_archives_get_posts');
+    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
     $archives = new WP_Query(array(
         'post_type'       => 'mangapress_comic',
         'posts_per_page'  => -1,
+        'order'         => $mp_options['basic']['archive_order'],
+        'orderby'         => $mp_options['basic']['archive_orderby']
     ));
 
     if (isset($wp_actions['_mangapress_pre_archives_get_posts'])) {
