@@ -23,10 +23,12 @@ final class MangaPress_Options
      */
     protected static $_default_options =  array(
         'basic' => array(
-            'group_comics'               => 0,
-            'group_by_parent'            => 0,
-            'latestcomic_page'           => 0,
-            'comicarchive_page'          => 0,
+            'archive_order'     => 'DESC',
+            'archive_orderby'   => 'date',
+            'group_comics'      => 0,
+            'group_by_parent'   => 0,
+            'latestcomic_page'  => 0,
+            'comicarchive_page' => 0,
         ),
         'comic_page' => array(
             'generate_comic_page' => 0,
@@ -116,9 +118,11 @@ final class MangaPress_Options
     public function settings_field_cb($option)
     {
         $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-        
+
         $class = ucwords($option['type']);
-        $value = $mp_options[$option['section']][$option['name']];
+        $value = isset($mp_options[$option['section']][$option['name']])
+            ? $mp_options[$option['section']][$option['name']]
+            : self::$_default_options[$option['section']][$option['name']];
 
         if ($class !== ""){
             $attributes  = array(
@@ -221,6 +225,37 @@ final class MangaPress_Options
          */
         $options = array(
             'basic' => array(
+                'archive_order'    => array(
+                    'id'     => 'order',
+                    'title'  => __('Archive Page Comic Order', MP_DOMAIN),
+                    'description' => __('Designates the ascending or descending order of the orderby parameter', MP_DOMAIN),
+                    'type'   => 'select',
+                    'value'  => array(
+                        'ASC'  => __('ASC', MP_DOMAIN),
+                        'DESC' => __('DESC', MP_DOMAIN),
+                    ),
+                    'valid'   => 'array',
+                    'default' => 'DESC',
+                    'callback' => array($this, 'settings_field_cb'),
+                ),
+                'archive_orderby'    => array(
+                    'id'     => 'orderby',
+                    'title'  => __('Archive Page Comic Order By', MP_DOMAIN),
+                    'description' => __('Sort retrieved posts according to selected parameter.', MP_DOMAIN),
+                    'type'   => 'select',
+                    'value'  => array(
+                        'ID'       => __('Order by Post ID', MP_DOMAIN),
+                        'author'   => __('Order by author', MP_DOMAIN),
+                        'title'    => __('Order by title', MP_DOMAIN),
+                        'name'     => __('Order by post name (post slug)', MP_DOMAIN),
+                        'date'     => __('Order by date.', MP_DOMAIN),
+                        'modified' => __('Order by last modified date.', MP_DOMAIN),
+                        'rand'     => __('Random order', MP_DOMAIN),
+                    ),
+                    'valid'   => 'array',
+                    'default' => 'date',
+                    'callback' => array($this, 'settings_field_cb'),
+                ),
                 'group_comics'      => array(
                     'id'    => 'group-comics',
                     'type'  => 'checkbox',
@@ -392,9 +427,17 @@ final class MangaPress_Options
         }
 
         if ($section == 'basic') {
+            $archive_order_values = array_keys($available_options['basic']['archive_order']['value']);
+            $archive_orderby_values = array_keys($available_options['basic']['archive_orderby']['value']);
             //
             // Converting the values to their correct data-types should be enough for now...
             $new_options['basic'] = array(
+                'archive_order'   => in_array($options['basic']['archive_order'], $archive_order_values)
+                                        ? $options['basic']['archive_order']
+                                        : $available_options['basic']['archive_order']['default'],
+                'archive_orderby'   => in_array($options['basic']['archive_orderby'], $archive_orderby_values)
+                                        ? $options['basic']['archive_orderby']
+                                        : $available_options['basic']['archive_orderby']['default'],
                 'group_comics'    => $this->_sanitize_integer($options, 'basic', 'group_comics'),
                 'group_by_parent' => $this->_sanitize_integer($options, 'basic', 'group_by_parent'),
             );
@@ -423,7 +466,6 @@ final class MangaPress_Options
 
         if ($section == 'comic_page') {
             $new_options['comic_page'] = array(
-
                 'generate_comic_page' => $this->_sanitize_integer($options, 'comic_page','generate_comic_page'),
                 'comic_page_width'    => $this->_sanitize_integer($options, 'comic_page','comic_page_width'),
                 'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
