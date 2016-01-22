@@ -299,7 +299,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
  * @param int $month Month number (1 through 12)
  * @param int $yr Calendar year
  * @param bool $nav Output navigation
- * @param book $skip_empty_months Skip over months that don't contain posts
+ * @param bool $skip_empty_months Skip over months that don't contain posts
  * @param bool $initial Optional, default is true. Use initial calendar names.
  * @param bool $echo    Optional, default is true. Set to false for return.
  * @return mixed|void
@@ -332,7 +332,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         		 * @param string $calendar_output HTML output of the calendar.
         		 */
                 echo apply_filters( 'mangapress_get_calendar', $cache[$key] );
-                return;
+                return '';
             } else {
                 /** This filter is documented in wp-includes/general-template.php */
                 return apply_filters( 'mangapress_get_calendar', $cache[$key] );
@@ -349,7 +349,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         if ( !$gotsome ) {
             $cache[ $key ] = '';
             wp_cache_set( 'mangapress_get_calendar', $cache, 'mangapress_calendar' );
-            return;
+            return '';
         }
     }
 
