@@ -23,35 +23,6 @@ function mangapress_get_comicarchive_template($style)
 
 
 /**
- * Template handler for Comic Archive end-point
- *
- * @global WP $wp
- * @param string $template
- * @return string
- */
-function mangapress_comicarchive_template($template)
-{
-    global $wp;
-
-    if (!$wp->did_permalink) {
-        return $template;
-    }
-
-    if (strpos($wp->matched_rule, 'past-comics') !== false) {
-        return locate_template(array(
-            'comics/comic-archive-gallery.php',
-            'comics/comic-archive-calendar.php',
-            'comics/comic-archive-list.php',
-            'comics/comic-archive.php',
-            'comics/past-comics.php'
-        ));
-    }
-
-    return $template;
-}
-
-
-/**
  * Template handler for Comic Archive page
  *
  * @param string $default_template Default template if requested template is not found
