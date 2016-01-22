@@ -23,12 +23,13 @@ final class MangaPress_Options
      */
     protected static $_default_options =  array(
         'basic' => array(
-            'archive_order'     => 'DESC',
-            'archive_orderby'   => 'date',
-            'group_comics'      => 0,
-            'group_by_parent'   => 0,
-            'latestcomic_page'  => 0,
-            'comicarchive_page' => 0,
+            'archive_order'           => 'DESC',
+            'archive_orderby'         => 'date',
+            'group_comics'            => 0,
+            'group_by_parent'         => 0,
+            'latestcomic_page'        => 0,
+            'comicarchive_page'       => 0,
+            'comicarchive_page_style' => 'list',
         ),
         'comic_page' => array(
             'generate_comic_page' => 0,
@@ -463,19 +464,18 @@ final class MangaPress_Options
                 $new_options['basic']['latestcomic_page'] = 0;
             }
 
-            $new_options['basic']['latestcomic_page_template'] 
-                    = $this->_sanitize_integer($options, 'basic', 'latestcomic_page_template');
-
             if ($options['basic']['comicarchive_page'] !== 'no_val') {
                 $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
             } else {
                 $new_options['basic']['comicarchive_page'] = 0;
             }
-            
-            // damned checkboxes...fffuuuu
-            $new_options['basic']['comicarchive_page_template'] 
-                    = $this->_sanitize_integer($options, 'basic', 'comicarchive_page_template');
-            
+
+            if ($options['basic']['comicarchive_page_style'] !== 'no_val') {
+                 $new_options['basic']['comicarchive_page_style'] = $options['basic']['comicarchive_page_style'];
+            } else {
+                 $new_options['basic']['comicarchive_page_style'] = 'list';
+            }
+
             flush_rewrite_rules(false);
         }
 
@@ -493,16 +493,16 @@ final class MangaPress_Options
     
     /**
      * Sanitize integers
-     * 
+     *
      * @param array $option_array
      * @param string $section
      * @param string $name
-     * 
+     *
      * @return mixed
      */
     private function _sanitize_integer($option_array, $section, $name)
     {
-        return isset($option_array[$section][$name]) 
-                ? intval($option_array[$section][$name]) : 0;                
+        return isset($option_array[$section][$name])
+                ? intval($option_array[$section][$name]) : 0;
     }
 }
