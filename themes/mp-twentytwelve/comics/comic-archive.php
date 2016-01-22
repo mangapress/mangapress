@@ -25,7 +25,7 @@ get_header();?>
                 </ul>
             </div>
             <footer class="entry-meta">
-                <?php edit_post_link(__('Edit', 'twentyeleven'), '<span class="edit-link">', '</span>'); ?>
+                <?php edit_post_link(__('Edit', 'twentytwelve'), '<span class="edit-link">', '</span>'); ?>
             </footer><!-- .entry-meta -->
         </article>
     </div><!-- #content -->
