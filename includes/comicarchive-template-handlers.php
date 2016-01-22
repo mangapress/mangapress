@@ -70,12 +70,16 @@ function mangapress_comicarchive_page_template($default_template)
 
     $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
 
-    $template = locate_template(array(
-        'comics/comic-archive-gallery.php',
-        'comics/comic-archive-calendar.php',
-        'comics/comic-archive-list.php',
-        'comics/comic-archive.php',
-    ));
+    if (in_array($comicarchive_page_style, array('list', 'gallery', 'calendar'))) {
+        $template = locate_template(array(
+            "comics/comic-archive-{$comicarchive_page_style}.php",
+            'comics/comic-archive.php',
+        ));
+    } else {
+        $template = locate_template(array(
+            'comics/comic-archive.php',
+        ));
+    }
 
     // if template can't be found, then look for query defaults...
     if (!$template) {
