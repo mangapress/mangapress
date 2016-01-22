@@ -98,18 +98,3 @@ function mangapress_create_comicarchive_page($content)
 
     return apply_filters('the_comicarchive_content', $content);
 }
-
-
-/**
- * Filter for hooking into mangapress_comic-specific WP_Query object
- *
- * @param WP_Query $query
- * @return \WP_Query
- */
-function mangapress_pre_get_posts(WP_Query $query)
-{
-    if (!did_action('_mangapress_pre_archives_get_posts')) {
-        return $query;
-    }
-}
-add_filter('pre_get_posts', 'mangapress_pre_get_posts');
