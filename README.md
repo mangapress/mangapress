@@ -11,6 +11,7 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Developement Version: 3.0
 _Use at your own risk_
+
 ### 3.0.0
 * Added sorting options for Comic Archive Page
 * Added comic archive calendar template
@@ -19,9 +20,9 @@ _Use at your own risk_
 ## Changelog
 ### 3.0
 #### 3.0.0
-    * Added sorting options for Comic Archive Page
-    * Added comic archive calendar template
-    * Added comic archive gallery template
+   * Added sorting options for Comic Archive Page
+   * Added comic archive calendar template
+   * Added comic archive gallery template
 
 ### 2.9
 #### 2.9.3
