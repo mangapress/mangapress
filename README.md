@@ -16,6 +16,7 @@ _Use at your own risk_
 * Added sorting options for Comic Archive Page
 * Added comic archive calendar template
 * Added comic archive gallery template
+* Removed insert navigation option
 
 ## Changelog
 ### 3.0
@@ -23,6 +24,7 @@ _Use at your own risk_
    * Added sorting options for Comic Archive Page
    * Added comic archive calendar template
    * Added comic archive gallery template
+   * Removed insert navigation option
 
 ### 2.9
 #### 2.9.3
