@@ -162,33 +162,6 @@ function mangapress_disable_post_thumbnail($html, $post_id)
 
 
 /**
- * mangapress_comic_insert_navigation()
- * Inserts navigation on single comic pages when Insert Navigation is enabled.
- *
- * @since 2.8
- *
- * @global object $post WordPress post object.
- * @param string $content Post content
- * @return string
- */
-function mangapress_comic_insert_navigation($content)
-{
-    global $post;
-
-    if (!(get_post_type($post) == 'mangapress_comic' && is_single())) {
-        return $content;
-    } else {
-        $navigation = mangapress_comic_navigation(null, null, false);
-
-        $content = $navigation . $content;
-
-        return apply_filters('the_comic_content', $content);
-    }
-
-}
-
-
-/**
  * Create a date-archive permalink for Comics (for monthly links)
  *
  * @param string $monthlink Existing link to be modified or replaced
@@ -502,63 +475,4 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
 
     return $wpdb->get_col($query);
 
-}
-
-
-/**
- * mpp_get_adjacent_comic()
- * Deprecated function. Do not use.
- *
- * @since 2.7
- * @deprecated since 2.9. Use get_adjacent_post();
- *
- * @return void
- */
-function mpp_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $previous = true)
-{
-    _deprecated_function(__FUNCTION__, '2.9', 'mangapress_get_adjacent_comic()');
-}
-
-
-/**
- * mpp_get_boundary_comic()
- * Deprecated function. Do not use.
- *
- * @since 2.7
- * @deprecated since 2.9. Use get_boundary_comic()
- * @return void
- */
-function mpp_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $start = true)
-{
-    _deprecated_function(__FUNCTION__, '2.9', 'mangapress_get_boundary_comic()');
-}
-
-
-/**
- * mpp_comic_single_page()
- * Uses a template to create comic navigation.
- *
- * @deprecated since 2.9
- * @return void
- */
-function mpp_comic_single_page($template)
-{
-    _deprecated_function(__FUNCTION__, '2.9');
-}
-
-
-/**
- * mpp_comic_insert_navigation()
- * Insert comic navigation
- *
- * @global WP_Post $post
- * @deprecated since 2.8
- * @return void
- */
-function mpp_comic_insert_navigation($content)
-{
-    global $post;
-
-    _deprecated_function(__FUNCTION__, '2.8', 'mangapress_comic_insert_navigation()');
-    mangapress_comic_insert_navigation($content);
 }
