@@ -14,9 +14,9 @@ get_header(); ?>
             <header class="entry-header">
                 <h1 class="entry-title"><?php the_title(); ?></h1>
             </header><!-- .entry-header -->
-
+            
             <div class="entry-content">
-                <?php mangapress_get_archive_template('calendar'); ?>
+                <?php mangapress_get_archive_template('gallery'); ?>
             </div>
             <footer class="entry-meta">
                 <?php edit_post_link(__('Edit', 'twentyeleven'), '<span class="edit-link">', '</span>'); ?>

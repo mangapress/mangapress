@@ -476,3 +476,25 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
     return $wpdb->get_col($query);
 
 }
+
+
+/**
+ * Retrieve an archive template based on type. This function modifies the global $wp_query object.
+ *
+ * @param string $type Template type. Values are 'calendar' or 'gallery'
+ * @return string|void
+ */
+function mangapress_get_archive_template($type)
+{
+    global $wp_query;
+
+    if (!in_array($type, array('calendar', 'gallery'))) {
+        return '';
+    }
+
+    $wp_query = mangapress_get_all_comics_for_archive();
+
+    require MP_ABSPATH . "/templates/content/comic-archive-{$type}.php";
+
+    wp_reset_query();
+}
