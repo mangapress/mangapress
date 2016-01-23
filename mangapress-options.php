@@ -38,7 +38,6 @@ final class MangaPress_Options
         ),
         'nav' => array(
             'nav_css'    => 'custom_css',
-            'insert_nav' => false,
         ),
     );
 
@@ -341,15 +340,6 @@ final class MangaPress_Options
                 ),
             ),
             'nav' => array(
-                'insert_nav' => array(
-                    'id'      => 'insert',
-                    'title'   => __('Insert Navigation', MP_DOMAIN),
-                    'description' => __('Automatically insert comic navigation code into comic posts.', MP_DOMAIN),
-                    'type'    => 'checkbox',
-                    'valid'   => 'boolean',
-                    'default' => 1,
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
                 'nav_css'    => array(
                     'id'     => 'navigation-css',
                     'title'  => __('Navigation CSS', MP_DOMAIN),
@@ -427,9 +417,6 @@ final class MangaPress_Options
         $new_options       = $mp_options;
 
         if ($section == 'nav'){
-
-            $new_options['nav']['insert_nav'] = intval($options['nav']['insert_nav']);
-
             //
             // if the value of the option doesn't match the correct values in the array, then
             // the value of the option is set to its default.
