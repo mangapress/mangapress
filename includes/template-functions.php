@@ -572,3 +572,26 @@ add_action( 'delete_post', 'mangapress_delete_get_calendar_cache' );
 add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
 add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' );
 
+
+
+
+/**
+ * Retrieve an archive template based on type. This function modifies the global $wp_query object.
+ *
+ * @param string $type Template type. Values are 'calendar' or 'gallery'
+ * @return string|void
+ */
+function mangapress_get_archive_template($type)
+{
+    global $wp_query;
+
+    if (!in_array($type, array('calendar', 'gallery'))) {
+        return '';
+    }
+
+    $wp_query = mangapress_get_all_comics_for_archive();
+
+    require MP_ABSPATH . "/templates/content/comic-archive-{$type}.php";
+
+    wp_reset_query();
+}
