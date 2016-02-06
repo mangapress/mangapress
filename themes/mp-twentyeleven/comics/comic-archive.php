@@ -31,17 +31,20 @@ get_header(); ?>
                         </h3>
                         <ul>
                             <?php
-                            $all_comics = new WP_Query(array(
-                                'posts_per_page' => -1,
-                                'tax_query'      => array(
-                                    'relation' => 'AND',
-                                    array(
-                                        'taxonomy'   => 'mangapress_series',
-                                        'field'      => 'slug',
-                                        'terms'      => $series->slug,
-                                    ),
-                                )
-                            ));
+                            $params = array(
+                                    'post_type' => 'mangapress_comic',
+                                    'posts_per_page' => -1,
+                                    'tax_query'      => array(
+                                        'relation' => 'AND',
+                                        array(
+                                            'taxonomy'   => 'mangapress_series',
+                                            'field'      => 'slug',
+                                            'terms'      => $series->slug,
+                                        ),
+                                    )
+                                );
+
+                            $all_comics = mangapress_get_all_comics_for_archive($params);
                             if ($all_comics->have_posts()) : $comic_count = 0; ?>
                             <?php while($all_comics->have_posts()) : $all_comics->the_post();
                                     $comic_count++;

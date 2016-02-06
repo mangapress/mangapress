@@ -16,13 +16,7 @@ get_header();?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
-                <?php the_content(); ?>
-                <ul>
-                    <?php $archives = mangapress_get_all_comics_for_archive(); ?>
-                    <?php if ($archives->have_posts()) : while ($archives->have_posts()) : $archives->the_post(); ?>
-                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-                    <?php endwhile; endif; ?>
-                </ul>
+                <?php mangapress_get_archive_template('calendar'); ?>
             </div>
             <footer class="entry-meta">
                 <?php edit_post_link(__('Edit', 'twentytwelve'), '<span class="edit-link">', '</span>'); ?>
