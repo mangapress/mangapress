@@ -65,6 +65,10 @@ function mangapress_archive_gallery_style()
          clear: both;
          height: 0;
     }
+    
+    .mangapress-archive-gallery .archive-item img {
+        display: inline-block;
+    }
 
     .comic-title-caption,
     .comic-post-date {
