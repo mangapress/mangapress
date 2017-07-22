@@ -16,7 +16,7 @@
  Domain Path: /languages
 */
 /*
- * (c) 2016 Jessica C Green
+ * (c) 2017 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
