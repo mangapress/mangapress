@@ -8,29 +8,6 @@
  * @license GPL
  */
 
-/**
- * Template handler for Latest Comic end-point
- *
- * @global WP $wp
- * @param string $template
- * @return string
- */
-function mangapress_latestcomic_template($template)
-{
-    global $wp;
-
-    if (!$wp->did_permalink) {
-        return $template;
-    }
-
-    if (strpos($wp->matched_rule, 'latest-comic') !== false) {
-        $template = locate_template(array('comics/latest-comic.php'));
-        return $template;
-    }
-
-    return $template;
-}
-
 
 /**
  * Template handler for Latest Comic page

@@ -1,7 +1,7 @@
 <?php
 /**
  * Basic Options Contextual Help file
- * 
+ *
  * @package help-basic
  * @author Jess Green <jgreen AT psy-dreamer.com>
  */
@@ -27,5 +27,10 @@
     <dt><strong><?php _e('Comic Archive Page', MP_DOMAIN) ?></strong></dt>
     <dd>
         <?php _e('Select an available page from the drop-down to use as your Comic Archive page. This page displays all comics in chronological order, starting with the most recent.', MP_DOMAIN); ?>
+    </dd>
+    <dt><strong><?php echo _e('Comic Archive Page Style', MP_DOMAIN); ?></strong></dt>
+    <dd>
+        <?php _e('Select an archive page style from the drop-down. This option can be overridden by adding a comic-archive-*.php template to your theme inside the <code>comics</code> sub-directory.', MP_DOMAIN); ?>
+        <?php _e('Available templates are: comic-archive-list.php, comic-archive-calendar.php, and comic-archive-gallery.php', MP_DOMAIN); ?>
     </dd>
 </dl>

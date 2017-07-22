@@ -8,27 +8,17 @@
  * @license GPL
  */
 
-/**
- * Template handler for Comic Archive end-point
- *
- * @global WP $wp
- * @param string $template
- * @return string
- */
-function mangapress_comicarchive_template($template)
+function mangapress_get_comicarchive_template($style)
 {
-    global $wp;
+    $fields = MangaPress_Bootstrap::get_instance()->get_helper('options')->options_fields();
+    $options = $fields['basic']['comicarchive_page_style'];
+    unset($options['value']['no_val']); // remove this, we don't need it
 
-    if (!$wp->did_permalink) {
-        return $template;
+    if (!in_array($style, array_keys($options['value']))) {
+        return 'comic-archive-list.php'; // return the default if the value doesn't match
     }
 
-    if (strpos($wp->matched_rule, 'past-comics') !== false) {
-        $template = locate_template(array('comics/comic-archive.php', 'comics/past-comics.php'));
-        return $template;
-    }
-
-    return $template;
+    return "comic-archive-{$style}.php";
 }
 
 
@@ -49,7 +39,18 @@ function mangapress_comicarchive_page_template($default_template)
         return $default_template;
     }
 
-    $template = locate_template(array('comics/comic-archive.php'));
+    $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
+
+    if (in_array($comicarchive_page_style, array('list', 'gallery', 'calendar'))) {
+        $template = locate_template(array(
+            "comics/comic-archive-{$comicarchive_page_style}.php",
+            'comics/comic-archive.php',
+        ));
+    } else {
+        $template = locate_template(array(
+            'comics/comic-archive.php',
+        ));
+    }
 
     // if template can't be found, then look for query defaults...
     if (!$template) {
@@ -85,8 +86,10 @@ function mangapress_create_comicarchive_page($content)
         );
     }
 
+    $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
+
     ob_start();
-    require mangapress_get_content_template('comicarchive_page');
+    require mangapress_get_content_template($comicarchive_page_style);
     $content = ob_get_clean();
 
     $wp_query = $old_query;
@@ -94,20 +97,4 @@ function mangapress_create_comicarchive_page($content)
     wp_reset_query();
 
     return apply_filters('the_comicarchive_content', $content);
-
 }
-
-
-/**
- * Filter for hooking into mangapress_comic-specific WP_Query object
- *
- * @param WP_Query $query
- * @return \WP_Query
- */
-function mangapress_pre_get_posts(WP_Query $query)
-{
-    if (!did_action('_mangapress_pre_archives_get_posts')) {
-        return $query;
-    }
-}
-add_filter('pre_get_posts', 'mangapress_pre_get_posts');

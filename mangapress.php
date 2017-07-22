@@ -9,14 +9,14 @@
  Plugin Name: Manga+Press Comic Manager
  Plugin URI: http://www.manga-press.com/
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
- Version: 2.9.3
+ Version: 3.0.0
  Author: Jess Green
- Author URI: http://www.jesgreen.com
+ Author URI: http://www.jessgreen.io
  Text Domain: mangapress
  Domain Path: /languages
 */
 /*
- * (c) 2014 Jessica C Green
+ * (c) 2017 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '2.9.3');
+    define('MP_VERSION', '3.0.0');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
@@ -167,23 +167,8 @@ class MangaPress_Bootstrap
     {
         load_plugin_textdomain(MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
 
-        add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'), 500);
         add_action('widgets_init', array($this, 'widgets_init'));
-    }
-
-
-    /**
-     * Because register_theme_directory() can't run on init.
-     *
-     * @return void
-     */
-    public function setup_theme()
-    {
-        /* how in the blue fuckity did this even work?
-           original path was: 'plugins/' . MP_FOLDER . '/themes'
-        */
-        register_theme_directory(WP_PLUGIN_DIR . '/' . MP_FOLDER . '/themes');
     }
 
 
@@ -210,9 +195,7 @@ class MangaPress_Bootstrap
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 
         add_filter('single_template', 'mangapress_single_comic_template');
-        add_filter('template_include', 'mangapress_latestcomic_template');
         add_filter('template_include', 'mangapress_latestcomic_page_template');
-        add_filter('template_include', 'mangapress_comicarchive_template');
         add_filter('template_include', 'mangapress_comicarchive_page_template');
 
         if (get_option('mangapress_upgrade') == 'yes') {
@@ -304,14 +287,6 @@ class MangaPress_Bootstrap
          */
         if ($mp_options['nav']['nav_css'] == 'default_css') {
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
-        }
-
-
-        /*
-         * Comic Navigation
-         */
-        if (isset($mp_options['nav']['insert_nav']) && $mp_options['nav']['insert_nav']) {
-            add_action('the_content', 'mangapress_comic_insert_navigation');
         }
 
         /*

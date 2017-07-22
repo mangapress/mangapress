@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Manga+Press 2.9\n"
-"POT-Creation-Date: 2015-10-04 10:25-0500\n"
-"PO-Revision-Date: 2015-10-04 10:25-0500\n"
-"Last-Translator: Jess Green <jgreen@psy-dreamer.com>\n"
+"Project-Id-Version: Manga+Press 3.0\n"
+"POT-Creation-Date: 2017-07-22 09:51-0500\n"
+"PO-Revision-Date: 2017-07-22 09:51-0500\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e\n"
@@ -133,7 +133,7 @@ msgid ""
 "to the parent category."
 msgstr ""
 
-#: includes/pages/help-basic.php:19 mangapress-options.php:236
+#: includes/pages/help-basic.php:19 mangapress-options.php:271
 msgid "Use Parent Category"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgid ""
 "parent category."
 msgstr ""
 
-#: includes/pages/help-basic.php:23 mangapress-options.php:245
+#: includes/pages/help-basic.php:23 mangapress-options.php:280
 msgid "Latest Comic Page"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid ""
 "page. This page displays the most recent comic posted."
 msgstr ""
 
-#: includes/pages/help-basic.php:27 mangapress-options.php:256
+#: includes/pages/help-basic.php:27 mangapress-options.php:291
 msgid "Comic Archive Page"
 msgstr ""
 
@@ -164,6 +164,23 @@ msgid ""
 "the most recent."
 msgstr ""
 
+#: includes/pages/help-basic.php:31 mangapress-options.php:302
+msgid "Comic Archive Page Style"
+msgstr ""
+
+#: includes/pages/help-basic.php:33
+msgid ""
+"Select an archive page style from the drop-down. This option can be "
+"overridden by adding a comic-archive-*.php template to your theme inside the "
+"<code>comics</code> sub-directory."
+msgstr ""
+
+#: includes/pages/help-basic.php:34
+msgid ""
+"Available templates are: comic-archive-list.php, comic-archive-calendar.php, "
+"and comic-archive-gallery.php"
+msgstr ""
+
 #: includes/pages/help-comic-page.php:9 mangapress-admin.php:115
 msgid "Comic Page Options Help"
 msgstr ""
@@ -172,7 +189,7 @@ msgstr ""
 msgid "This section controls display of comic posts"
 msgstr ""
 
-#: includes/pages/help-comic-page.php:15 mangapress-options.php:269
+#: includes/pages/help-comic-page.php:15 mangapress-options.php:319
 msgid "Generate Comic Page"
 msgstr ""
 
@@ -182,7 +199,7 @@ msgid ""
 "to display slightly smaller images than the image you have uploaded."
 msgstr ""
 
-#: includes/pages/help-comic-page.php:19 mangapress-options.php:278
+#: includes/pages/help-comic-page.php:19 mangapress-options.php:328
 msgid "Comic Page Width"
 msgstr ""
 
@@ -190,7 +207,7 @@ msgstr ""
 msgid "Set the width of your comic page image."
 msgstr ""
 
-#: includes/pages/help-comic-page.php:23 mangapress-options.php:286
+#: includes/pages/help-comic-page.php:23 mangapress-options.php:336
 msgid "Comic Page Height"
 msgstr ""
 
@@ -207,7 +224,7 @@ msgid ""
 "This section handles the appearance of the navigation links for your comic."
 msgstr ""
 
-#: includes/pages/help-nav.php:15 mangapress-options.php:295
+#: includes/pages/help-nav.php:15
 msgid "Insert Navigation"
 msgstr ""
 
@@ -218,7 +235,7 @@ msgid ""
 "that ships with Manga+Press."
 msgstr ""
 
-#: includes/pages/help-nav.php:19 mangapress-options.php:304
+#: includes/pages/help-nav.php:19 mangapress-options.php:345
 msgid "Navigation CSS"
 msgstr ""
 
@@ -261,8 +278,7 @@ msgstr ""
 msgid "Prev"
 msgstr ""
 
-#. translators: Calendar caption: 1: month name, 2: 4-digit year
-#: includes/template-functions.php:384
+#: includes/template-functions.php:404
 #, php-format
 msgid "%1$s %2$s"
 msgstr ""
@@ -285,61 +301,132 @@ msgid ""
 "that you rename this category."
 msgstr ""
 
-#: mangapress-options.php:227
+#: mangapress-options.php:230
+msgid "Archive Page Comic Order"
+msgstr ""
+
+#: mangapress-options.php:231
+msgid "Designates the ascending or descending order of the orderby parameter"
+msgstr ""
+
+#: mangapress-options.php:234
+msgid "ASC"
+msgstr ""
+
+#: mangapress-options.php:235
+msgid "DESC"
+msgstr ""
+
+#: mangapress-options.php:243
+msgid "Archive Page Comic Order By"
+msgstr ""
+
+#: mangapress-options.php:244
+msgid "Sort retrieved posts according to selected parameter."
+msgstr ""
+
+#: mangapress-options.php:247
+msgid "Order by Post ID"
+msgstr ""
+
+#: mangapress-options.php:248
+msgid "Order by author"
+msgstr ""
+
+#: mangapress-options.php:249
+msgid "Order by title"
+msgstr ""
+
+#: mangapress-options.php:250
+msgid "Order by post name (post slug)"
+msgstr ""
+
+#: mangapress-options.php:251
+msgid "Order by date."
+msgstr ""
+
+#: mangapress-options.php:252
+msgid "Order by last modified date."
+msgstr ""
+
+#: mangapress-options.php:253
+msgid "Random order"
+msgstr ""
+
+#: mangapress-options.php:262
 msgid "Group Comics"
 msgstr ""
 
-#: mangapress-options.php:229
+#: mangapress-options.php:264
 msgid ""
 "Group comics by category. This option will ignore the parent category, and "
 "group according to the child-category."
 msgstr ""
 
-#: mangapress-options.php:238
+#: mangapress-options.php:273
 msgid ""
 "Group comics by top-most parent category. Use this option if you have sub-"
 "categories but want your navigation to function using the parent category."
 msgstr ""
 
-#: mangapress-options.php:247 mangapress-options.php:258
+#: mangapress-options.php:282 mangapress-options.php:293
 msgid "Select a Page"
 msgstr ""
 
-#: mangapress-options.php:270
-msgid "Generate a comic page based on values below."
-msgstr ""
-
-#: mangapress-options.php:296
-msgid "Automatically insert comic navigation code into comic posts."
+#: mangapress-options.php:303
+msgid ""
+"Style used for comic archive page. List, Calendar, or Gallery. Default: List"
 msgstr ""
 
 #: mangapress-options.php:305
-msgid "Turn this off. You know you want to!"
+msgid "Select a Style"
+msgstr ""
+
+#: mangapress-options.php:306
+msgid "List"
+msgstr ""
+
+#: mangapress-options.php:307
+msgid "Calendar"
 msgstr ""
 
 #: mangapress-options.php:308
+msgid "Gallery"
+msgstr ""
+
+#: mangapress-options.php:320
+msgid "Generate a comic page based on values below."
+msgstr ""
+
+#: mangapress-options.php:346
+msgid ""
+"Include the default CSS for the navigation. Set to Custom CSS (which uses "
+"styles defined by the theme)."
+msgstr ""
+
+#: mangapress-options.php:349
 msgid "Custom CSS"
 msgstr ""
 
-#: mangapress-options.php:309
+#: mangapress-options.php:350
 msgid "Default CSS"
 msgstr ""
 
-#: mangapress-options.php:334
+#: mangapress-options.php:375
 msgid "Basic Options"
 msgstr ""
 
-#: mangapress-options.php:335
+#: mangapress-options.php:376
 msgid ""
 "This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; "
 "pages, number of comics per page, and grouping comics together by category."
 msgstr ""
 
-#: mangapress-options.php:338
+#: mangapress-options.php:379
 msgid "Comic Page Options"
 msgstr ""
 
-#: mangapress-options.php:339
+#: mangapress-options.php:380
 msgid ""
 "Handles image sizing options for comic pages. Thumbnail support may need to "
 "be enabled for some features to work properly. If page- or thumbnail sizes "
@@ -347,11 +434,11 @@ msgid ""
 "create the new thumbnails."
 msgstr ""
 
-#: mangapress-options.php:342
+#: mangapress-options.php:383
 msgid "Navigation Options"
 msgstr ""
 
-#: mangapress-options.php:343
+#: mangapress-options.php:384
 msgid ""
 "Options for comic navigation. Whether to have navigation automatically "
 "inserted on comic pages, or to enable/disable default comic navigation CSS."
@@ -391,83 +478,4 @@ msgstr ""
 
 #: mangapress-posts.php:388
 msgid "Description"
-msgstr ""
-
-#: themes/mp-twentyeleven/comics/comic-archive.php:22
-msgid "No Comics"
-msgstr ""
-
-#: themes/mp-twentyeleven/comics/comic-archive.php:57
-#: themes/mp-twentyeleven/comics/latest-comic.php:34
-#: themes/mp-twentyfourteen/comics/comic-archive.php:28
-#: themes/mp-twentyfourteen/comics/latest-comic.php:31
-#: themes/mp-twentyfourteen/comics/single-comic.php:47
-#: themes/mp-twentythirteen/comics/comic-archive.php:28
-#: themes/mp-twentythirteen/comics/latest-comic.php:24
-#: themes/mp-twentythirteen/comics/single-comic.php:22
-#: themes/mp-twentytwelve/comics/comic-archive.php:28
-#: themes/mp-twentytwelve/comics/latest-comic.php:34
-msgid "Edit"
-msgstr ""
-
-#: themes/mp-twentyeleven/comics/error-comic.php:17
-#: themes/mp-twentyfourteen/comics/error-comic.php:14
-#: themes/mp-twentythirteen/comics/error-comic.php:17
-#: themes/mp-twentytwelve/comics/error-comic.php:17
-msgid "No comic found."
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/latest-comic.php:25
-#: themes/mp-twentyfourteen/comics/single-comic.php:61
-#: themes/mp-twentythirteen/comics/latest-comic.php:40
-#: themes/mp-twentythirteen/comics/single-comic.php:38
-#: themes/mp-twentytwelve/comics/latest-comic.php:31
-msgid "Pages:"
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/single-comic.php:24
-msgid ", "
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/single-comic.php:43
-#: themes/mp-twentythirteen/comics/latest-comic.php:45
-#: themes/mp-twentythirteen/comics/single-comic.php:43
-msgid "Leave a comment"
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/single-comic.php:43
-msgid "1 Comment"
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/single-comic.php:43
-msgid "% Comments"
-msgstr ""
-
-#: themes/mp-twentyfourteen/comics/single-comic.php:59
-msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
-msgstr ""
-
-#: themes/mp-twentythirteen/comics/latest-comic.php:29
-#: themes/mp-twentythirteen/comics/single-comic.php:27
-#: themes/mp-twentytwelve/comics/single-comic.php:22
-msgid "Post navigation"
-msgstr ""
-
-#: themes/mp-twentythirteen/comics/latest-comic.php:45
-#: themes/mp-twentythirteen/comics/single-comic.php:43
-msgid "One comment so far"
-msgstr ""
-
-#: themes/mp-twentythirteen/comics/latest-comic.php:45
-#: themes/mp-twentythirteen/comics/single-comic.php:43
-#, php-format
-msgid "View all % comments"
-msgstr ""
-
-#: themes/mp-twentytwelve/comics/single-comic.php:23
-msgid "&larr;"
-msgstr ""
-
-#: themes/mp-twentytwelve/comics/single-comic.php:24
-msgid "&rarr;"
 msgstr ""

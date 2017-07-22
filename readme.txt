@@ -4,21 +4,34 @@ Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 2.9.3
+Stable tag: 3.0.0
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
 
 == Description ==
 
-Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
+Manga+Press is a webcomic management system for WordPress. Manga+Press uses WordPress posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 == Upgrade Notice ==
-= 2.9.3 =
-Spanish language updates to embedded themes.
 
+WARNING: Child themes have been pulled from the plugin. These themes are now available for download here: https://manga-press.com/download/themes/. If you are using these themes, please move them to the `wp-content/themes` directory before upgrading.
+
+= 3.0.0 =
+  * Removed child themes
+  * Added sorting options for Comic Archive Page
+  * Added comic archive calendar template
+  * Added comic archive gallery template
+  * Removed insert navigation option
 
 == Changelog ==
+= 3.0 =
+   * 3.0
+      * Removed child themes
+      * Added sorting options for Comic Archive Page
+      * Added comic archive calendar template
+      * Added comic archive gallery template
+
 = 2.9 =
    * 2.9.3
       * Spanish language updates to embedded themes.
@@ -166,7 +179,7 @@ I do take feature requests, but I also judge each request on the basis of how we
 
 == Credits ==
 
-(c) 2008-2014 Jessica C. Green
+(c) 2008-2017 Jessica C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 
