@@ -181,7 +181,7 @@ I do take feature requests, but I also judge each request on the basis of how we
 
 (c) 2008-2017 Jessica C. Green
 
-Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/ or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
+Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/support/. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 
 For updates, you can visit http://www.manga-press.com/
 
