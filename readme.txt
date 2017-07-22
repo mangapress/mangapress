@@ -2,8 +2,8 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 3.8
-Tested up to: 4.4
+Requires at least: 4.0
+Tested up to: 4.8
 Stable tag: 3.0.0
 License: GPLv2
 
