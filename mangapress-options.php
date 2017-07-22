@@ -23,13 +23,13 @@ final class MangaPress_Options
      */
     protected static $_default_options =  array(
         'basic' => array(
-            'archive_order'     => 'DESC',
-            'archive_orderby'   => 'date',
+            'latestcomic_page'  => 0,
             'group_comics'      => 0,
             'group_by_parent'   => 0,
-            'latestcomic_page'  => 0,
             'comicarchive_page' => 0,
             'comicarchive_page_style'    => 'list',
+            'archive_order'     => 'DESC',
+            'archive_orderby'   => 'date',
         ),
         'comic_page' => array(
             'generate_comic_page' => 0,
@@ -225,6 +225,61 @@ final class MangaPress_Options
          */
         $options = array(
             'basic' => array(
+                'latestcomic_page'  => array(
+                    'id'    => 'latest-comic-page',
+                    'type'  => 'select',
+                    'title' => __('Latest Comic Page', MP_DOMAIN),
+                    'value' => array(
+                        'no_val' => __('Select a Page', MP_DOMAIN),
+                    ),
+                    'valid' => 'array',
+                    'default'  => 0,
+                    'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
+                ),
+                'group_comics'      => array(
+                    'id'    => 'group-comics',
+                    'type'  => 'checkbox',
+                    'title' => __('Group Comics', MP_DOMAIN),
+                    'valid' => 'boolean',
+                    'description' => __('Group comics by category. This option will ignore the parent category, and group according to the child-category.', MP_DOMAIN),
+                    'default' => 1,
+                    'callback' => array($this, 'settings_field_cb'),
+                ),
+                'group_by_parent'      => array(
+                    'id'    => 'group-by-parent',
+                    'type'  => 'checkbox',
+                    'title' => __('Use Parent Category', MP_DOMAIN),
+                    'valid' => 'boolean',
+                    'description' => __('Group comics by top-most parent category. Use this option if you have sub-categories but want your navigation to function using the parent category.', MP_DOMAIN),
+                    'default'     => 1,
+                    'callback'    => array($this, 'settings_field_cb'),
+                ),
+                'comicarchive_page' => array(
+                    'id'    => 'archive-page',
+                    'type'  => 'select',
+                    'title' => __('Comic Archive Page', MP_DOMAIN),
+                    'value' => array(
+                        'no_val' => __('Select a Page', MP_DOMAIN),
+                    ),
+                    'valid' => 'array',
+                    'default' => 0,
+                    'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
+                ),
+                'comicarchive_page_style' => array(
+                    'id'    => 'archive-page-style',
+                    'type'  => 'select',
+                    'title' => __('Comic Archive Page Style', MP_DOMAIN),
+                    'description' => __('Style used for comic archive page. List, Calendar, or Gallery. Default: List', MP_DOMAIN),
+                    'value' => array(
+                        'no_val' => __('Select a Style', MP_DOMAIN),
+                        'list'   => __('List', MP_DOMAIN),
+                        'calendar' => __('Calendar', MP_DOMAIN),
+                        'gallery' => __('Gallery', MP_DOMAIN),
+                    ),
+                    'valid'   => 'array',
+                    'default' => 'list',
+                    'callback'    => array($this, 'settings_field_cb'),
+                ),
                 'archive_order'    => array(
                     'id'     => 'order',
                     'title'  => __('Archive Page Comic Order', MP_DOMAIN),
@@ -255,61 +310,6 @@ final class MangaPress_Options
                     'valid'   => 'array',
                     'default' => 'date',
                     'callback' => array($this, 'settings_field_cb'),
-                ),
-                'group_comics'      => array(
-                    'id'    => 'group-comics',
-                    'type'  => 'checkbox',
-                    'title' => __('Group Comics', MP_DOMAIN),
-                    'valid' => 'boolean',
-                    'description' => __('Group comics by category. This option will ignore the parent category, and group according to the child-category.', MP_DOMAIN),
-                    'default' => 1,
-                    'callback' => array($this, 'settings_field_cb'),
-                ),
-                'group_by_parent'      => array(
-                    'id'    => 'group-by-parent',
-                    'type'  => 'checkbox',
-                    'title' => __('Use Parent Category', MP_DOMAIN),
-                    'valid' => 'boolean',
-                    'description' => __('Group comics by top-most parent category. Use this option if you have sub-categories but want your navigation to function using the parent category.', MP_DOMAIN),
-                    'default'     => 1,
-                    'callback'    => array($this, 'settings_field_cb'),
-                ),
-                'latestcomic_page'  => array(
-                    'id'    => 'latest-comic-page',
-                    'type'  => 'select',
-                    'title' => __('Latest Comic Page', MP_DOMAIN),
-                    'value' => array(
-                        'no_val' => __('Select a Page', MP_DOMAIN),
-                    ),
-                    'valid' => 'array',
-                    'default'  => 0,
-                    'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
-                ),
-                'comicarchive_page' => array(
-                    'id'    => 'archive-page',
-                    'type'  => 'select',
-                    'title' => __('Comic Archive Page', MP_DOMAIN),
-                    'value' => array(
-                        'no_val' => __('Select a Page', MP_DOMAIN),
-                    ),
-                    'valid' => 'array',
-                    'default' => 0,
-                    'callback' => array($this, 'ft_basic_page_dropdowns_cb'),
-                ),
-                'comicarchive_page_style' => array(
-                    'id'    => 'archive-page-style',
-                    'type'  => 'select',
-                    'title' => __('Comic Archive Page Style', MP_DOMAIN),
-                    'description' => __('Style used for comic archive page. List, Calendar, or Gallery. Default: List', MP_DOMAIN),
-                    'value' => array(
-                        'no_val' => __('Select a Style', MP_DOMAIN),
-                        'list'   => __('List', MP_DOMAIN),
-                        'calendar' => __('Calendar', MP_DOMAIN),
-                        'gallery' => __('Gallery', MP_DOMAIN),
-                    ),
-                    'valid'   => 'array',
-                    'default' => 'list',
-                    'callback'    => array($this, 'settings_field_cb'),
                 ),
             ),
             'comic_page' => array(

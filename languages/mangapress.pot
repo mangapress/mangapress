@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 3.0\n"
-"POT-Creation-Date: 2017-07-22 09:51-0500\n"
-"PO-Revision-Date: 2017-07-22 09:51-0500\n"
+"POT-Creation-Date: 2017-07-22 11:43-0500\n"
+"PO-Revision-Date: 2017-07-22 11:43-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -133,7 +133,7 @@ msgid ""
 "to the parent category."
 msgstr ""
 
-#: includes/pages/help-basic.php:19 mangapress-options.php:271
+#: includes/pages/help-basic.php:19 mangapress-options.php:251
 msgid "Use Parent Category"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgid ""
 "parent category."
 msgstr ""
 
-#: includes/pages/help-basic.php:23 mangapress-options.php:280
+#: includes/pages/help-basic.php:23 mangapress-options.php:231
 msgid "Latest Comic Page"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid ""
 "page. This page displays the most recent comic posted."
 msgstr ""
 
-#: includes/pages/help-basic.php:27 mangapress-options.php:291
+#: includes/pages/help-basic.php:27 mangapress-options.php:260
 msgid "Comic Archive Page"
 msgstr ""
 
@@ -164,7 +164,7 @@ msgid ""
 "the most recent."
 msgstr ""
 
-#: includes/pages/help-basic.php:31 mangapress-options.php:302
+#: includes/pages/help-basic.php:31 mangapress-options.php:271
 msgid "Comic Archive Page Style"
 msgstr ""
 
@@ -301,97 +301,97 @@ msgid ""
 "that you rename this category."
 msgstr ""
 
-#: mangapress-options.php:230
-msgid "Archive Page Comic Order"
+#: mangapress-options.php:233 mangapress-options.php:262
+msgid "Select a Page"
 msgstr ""
 
-#: mangapress-options.php:231
-msgid "Designates the ascending or descending order of the orderby parameter"
-msgstr ""
-
-#: mangapress-options.php:234
-msgid "ASC"
-msgstr ""
-
-#: mangapress-options.php:235
-msgid "DESC"
-msgstr ""
-
-#: mangapress-options.php:243
-msgid "Archive Page Comic Order By"
-msgstr ""
-
-#: mangapress-options.php:244
-msgid "Sort retrieved posts according to selected parameter."
-msgstr ""
-
-#: mangapress-options.php:247
-msgid "Order by Post ID"
-msgstr ""
-
-#: mangapress-options.php:248
-msgid "Order by author"
-msgstr ""
-
-#: mangapress-options.php:249
-msgid "Order by title"
-msgstr ""
-
-#: mangapress-options.php:250
-msgid "Order by post name (post slug)"
-msgstr ""
-
-#: mangapress-options.php:251
-msgid "Order by date."
-msgstr ""
-
-#: mangapress-options.php:252
-msgid "Order by last modified date."
-msgstr ""
-
-#: mangapress-options.php:253
-msgid "Random order"
-msgstr ""
-
-#: mangapress-options.php:262
+#: mangapress-options.php:242
 msgid "Group Comics"
 msgstr ""
 
-#: mangapress-options.php:264
+#: mangapress-options.php:244
 msgid ""
 "Group comics by category. This option will ignore the parent category, and "
 "group according to the child-category."
 msgstr ""
 
-#: mangapress-options.php:273
+#: mangapress-options.php:253
 msgid ""
 "Group comics by top-most parent category. Use this option if you have sub-"
 "categories but want your navigation to function using the parent category."
 msgstr ""
 
-#: mangapress-options.php:282 mangapress-options.php:293
-msgid "Select a Page"
-msgstr ""
-
-#: mangapress-options.php:303
+#: mangapress-options.php:272
 msgid ""
 "Style used for comic archive page. List, Calendar, or Gallery. Default: List"
 msgstr ""
 
-#: mangapress-options.php:305
+#: mangapress-options.php:274
 msgid "Select a Style"
 msgstr ""
 
-#: mangapress-options.php:306
+#: mangapress-options.php:275
 msgid "List"
 msgstr ""
 
-#: mangapress-options.php:307
+#: mangapress-options.php:276
 msgid "Calendar"
 msgstr ""
 
-#: mangapress-options.php:308
+#: mangapress-options.php:277
 msgid "Gallery"
+msgstr ""
+
+#: mangapress-options.php:285
+msgid "Archive Page Comic Order"
+msgstr ""
+
+#: mangapress-options.php:286
+msgid "Designates the ascending or descending order of the orderby parameter"
+msgstr ""
+
+#: mangapress-options.php:289
+msgid "ASC"
+msgstr ""
+
+#: mangapress-options.php:290
+msgid "DESC"
+msgstr ""
+
+#: mangapress-options.php:298
+msgid "Archive Page Comic Order By"
+msgstr ""
+
+#: mangapress-options.php:299
+msgid "Sort retrieved posts according to selected parameter."
+msgstr ""
+
+#: mangapress-options.php:302
+msgid "Order by Post ID"
+msgstr ""
+
+#: mangapress-options.php:303
+msgid "Order by author"
+msgstr ""
+
+#: mangapress-options.php:304
+msgid "Order by title"
+msgstr ""
+
+#: mangapress-options.php:305
+msgid "Order by post name (post slug)"
+msgstr ""
+
+#: mangapress-options.php:306
+msgid "Order by date."
+msgstr ""
+
+#: mangapress-options.php:307
+msgid "Order by last modified date."
+msgstr ""
+
+#: mangapress-options.php:308
+msgid "Random order"
 msgstr ""
 
 #: mangapress-options.php:320
