@@ -167,23 +167,8 @@ class MangaPress_Bootstrap
     {
         load_plugin_textdomain(MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
 
-        add_action('setup_theme', array($this, 'setup_theme'));
         add_action('init', array($this, 'init'), 500);
         add_action('widgets_init', array($this, 'widgets_init'));
-    }
-
-
-    /**
-     * Because register_theme_directory() can't run on init.
-     *
-     * @return void
-     */
-    public function setup_theme()
-    {
-        /* how in the blue fuckity did this even work?
-           original path was: 'plugins/' . MP_FOLDER . '/themes'
-        */
-        register_theme_directory(WP_PLUGIN_DIR . '/' . MP_FOLDER . '/themes');
     }
 
 
