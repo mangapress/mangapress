@@ -172,7 +172,7 @@ I do take feature requests, but I also judge each request on the basis of how we
 
 == Screenshots ==
 
-1. screenshot-1.jpg
+1. screenshot-1.png
 2. screenshot-2.jpg
 3. screenshot-3.jpg
 4. screenshot-4.jpg
