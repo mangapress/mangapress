@@ -34,7 +34,7 @@ function mangapress_bookmark_button($attrs)
 
     extract($a); // gross...
 
-    $nav = '<nav id=\"comic-bookmark-navigation\">%1$s</nav>';
+    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
 
     $links = array();
     $links[] ="<a href=\"#\" id=\"bookmark-comic\" data-label=\"Bookmark\" data-bookmarked-label=\"Bookmarked\">Bookmark</a>";
