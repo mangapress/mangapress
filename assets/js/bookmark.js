@@ -8,7 +8,7 @@ var MANGAPRESS = MANGAPRESS || {};
         var $bookmark = $('#bookmark-comic'),
             $bookmarkComicHistory = $('#bookmark-comic-history');
 
-        if (typeof(localStorage) != 'object') {
+        if (typeof(localStorage) !== 'object') {
             console.log('Browser does not support LocalStorage');
             $bookmark.hide();
             $bookmarkComicHistory.hide();
@@ -73,13 +73,15 @@ var MANGAPRESS = MANGAPRESS || {};
                 };
 
             // add the bookmark to history
-            if (this.bookmarkExists(data.id) == 0) {
+            if (this.bookmarkExists(data.id) === 0) {
                 this.addToHistory( data );
-            }
 
-            // change label state
-            this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
-            this.setBookmark(data);
+                // change label state
+                this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
+                this.setBookmark(data);
+            } else {
+
+            }
         },
 
         history : function() {
@@ -89,7 +91,7 @@ var MANGAPRESS = MANGAPRESS || {};
                     .css(MANGAPRESS.bookmarkStyles);
 
             $historyModal.find('#bookmark-history-content').html(function(){
-                if (revBookmarkHistory.length == 0) {
+                if (revBookmarkHistory.length === 0) {
                     return '<p>' + MANGAPRESS.bookmarkNoHistory + '</p>';
                 }
 
@@ -102,7 +104,7 @@ var MANGAPRESS = MANGAPRESS || {};
                     var columns = [],
                         bookmark = bookmarkHistory[i],
                         d = new Date(bookmark.date),
-                        date = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear(),
+                        date = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear(),
                         link = "<a href=\"" + bookmark.url + "\">" + bookmark.title + "</a>";
 
                     columns.push(link, date);
@@ -114,7 +116,7 @@ var MANGAPRESS = MANGAPRESS || {};
             });
 
             // append
-            self.$bookmarkNav.append($historyModal)
+            self.$bookmarkNav.append($historyModal);
 
             // add event for closing modal
             $('#bookmark-history-close').on('click', function(e){
@@ -136,7 +138,7 @@ var MANGAPRESS = MANGAPRESS || {};
 
         getHistory : function() {
             var history = JSON.parse(this.storage.getItem(this.BOOKMARK_HISTORY));
-            if (history == null) {
+            if (history === null) {
                 return []; // return empty array
             }
 
@@ -169,7 +171,7 @@ var MANGAPRESS = MANGAPRESS || {};
             var history = this.getHistory();
 
             return $.grep(history, function(e){
-                return e.id == id;
+                return e.id === id;
             }).length;
         }
     };
