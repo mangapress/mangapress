@@ -121,7 +121,7 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 (c) 2008-2014 Jess C. Green
 
-Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info. Be as detailed as possible.
+Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/support/. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 
 For updates and development progress, visit http://www.manga-press.com/
 
