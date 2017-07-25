@@ -86,15 +86,23 @@ var MANGAPRESS = MANGAPRESS || {};
         history : function() {
             var self = this,
                 revBookmarkHistory = self.getHistory(),
-                $historyModal = $('<div id="bookmark-history-modal"><div id="bookmark-history-content"></div><p style="text-align: center;">[<a href="#" id="bookmark-history-close">'  + MANGAPRESS.bookmarkCloseLabel + '</a>]</p></div>')
-                    .css(MANGAPRESS.bookmarkStyles);
+                isOpen = $('body').find('#bookmark-history-modal').length,
+                $historyModal = $('<div id="bookmark-history-modal" class="bookmark-history-modal"><div id="bookmark-history-content" class="bookmark-history-content"></div><p style="text-align: center;">[<a href="#" id="bookmark-history-close" class="bookmark-history-close">'  + MANGAPRESS.bookmarkCloseLabel + '</a>]</p></div>');
+
+            if (isOpen) {
+                return;
+            }
+
+            if (!this.$bookmark.data('noStyling')) {
+                $historyModal.css(MANGAPRESS.bookmarkStyles);
+            }
 
             $historyModal.find('#bookmark-history-content').html(function(){
                 if (revBookmarkHistory.length === 0) {
-                    return '<p>' + MANGAPRESS.bookmarkNoHistory + '</p>';
+                    return '<p class="bookmark-no-history">' + MANGAPRESS.bookmarkNoHistory + '</p>';
                 }
 
-                var htmlString = "<table>",
+                var htmlString = '<table class="bookmark-table">',
                     bookmarkHistory = revBookmarkHistory.reverse();
 
                 htmlString += "<thead><tr><th>" + MANGAPRESS.bookmarkTitle + "</th><th>" + MANGAPRESS.bookmarkDate + "</th></tr></thead>";

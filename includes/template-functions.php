@@ -14,7 +14,6 @@
 /**
  * Bookmark button template tag
  *
- * @todo Add l10/i18n functionality
  * @param array $attrs {
  *      Optional. Array of arguments.
  *
@@ -32,6 +31,7 @@ function mangapress_bookmark_button($attrs)
     $a = wp_parse_args($attrs,
         array(
             'show_history' => false,
+            'no_styling'   => false,
             'echo'         => true,
         )
     );
@@ -44,7 +44,7 @@ function mangapress_bookmark_button($attrs)
     $url = wp_get_shortlink();
 
     $links = array();
-    $links[] ="<a href=\"#\" id=\"bookmark-comic\" data-id=\"{$id}\" data-url=\"{$url}\" data-title=\"{$title}\" data-label=\"" . __('Bookmark', MP_DOMAIN) . "\" data-bookmarked-label=\"" . __('Bookmarked', MP_DOMAIN) . "\">" . __('Bookmark', MP_DOMAIN) . "</a>";
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" data-no-styling=\"{$no_styling}\" data-id=\"{$id}\" data-url=\"{$url}\" data-title=\"{$title}\" data-label=\"" . __('Bookmark', MP_DOMAIN) . "\" data-bookmarked-label=\"" . __('Bookmarked', MP_DOMAIN) . "\">" . __('Bookmark', MP_DOMAIN) . "</a>";
     if ($show_history) {
         $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">" . __('Bookmark History', MP_DOMAIN) . "</a>";
     }
