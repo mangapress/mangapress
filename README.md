@@ -14,9 +14,9 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 _Use at your own risk_
 
 ### 4.0.0
-  * [ ] Comic bookmarking
+  * [X] Comic bookmarking  
+  * [ ] Lightbox
   * [ ] Social media integration
-  * [ ] Lightbox (documentation)
   * [ ] Gallery feature
   * [ ] Series UI changes
 
@@ -67,6 +67,7 @@ _Use at your own risk_
    * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
    * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
       * Incidentally corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+
 ---
 
 ### 2.8
