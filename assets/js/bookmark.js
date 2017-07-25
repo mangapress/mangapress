@@ -1,9 +1,6 @@
 var MANGAPRESS = MANGAPRESS || {};
 
 (function ($) {
-    /**
-     * @todo Add l10n/i18n support
-     */
     $(function() {
         var $bookmark = $('#bookmark-comic'),
             $bookmarkComicHistory = $('#bookmark-comic-history');
