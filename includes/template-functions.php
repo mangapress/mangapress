@@ -10,6 +10,69 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
+
+/**
+ * Bookmark button template tag
+ *
+ * @param array $attrs {
+ *      Optional. Array of arguments.
+ *
+ *      @type boolean $show_history Show bookmark history link and drop-down. Defaults to false
+ *      @type boolean $echo Show output instead of returning it. Defaults to true
+ * }
+ */
+function mangapress_bookmark_button($attrs)
+{
+    /**
+     * @global WP_Post $post
+     */
+    global $post;
+
+    $a = wp_parse_args($attrs,
+        array(
+            'show_history' => false,
+            'no_styling'   => false,
+            'echo'         => true,
+        )
+    );
+
+    extract($a); // gross...
+
+    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
+    $title = get_post_field('post_title', $post);
+    $id = get_post_field('ID', $post);
+    $url = wp_get_shortlink();
+
+    $links = array();
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" data-no-styling=\"{$no_styling}\" data-id=\"{$id}\" data-url=\"{$url}\" data-title=\"{$title}\" data-label=\"" . __('Bookmark', MP_DOMAIN) . "\" data-bookmarked-label=\"" . __('Bookmarked', MP_DOMAIN) . "\">" . __('Bookmark', MP_DOMAIN) . "</a>";
+    if ($show_history) {
+        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">" . __('Bookmark History', MP_DOMAIN) . "</a>";
+    }
+
+    $html = '<li>' . implode('</li><li>', $links) . '</li>';
+
+    $html = vsprintf($nav, array($html));
+    if ($echo) {
+        echo $html;
+    } else {
+        return $html;
+    }
+}
+
+
+/**
+ * Shortcode function for bookmark template tag
+ * @param array $atts @see mangapress_bookmark_button
+ */
+function mangapress_bookmark_button_shortcode($atts)
+{
+    // process $atts
+    // let the template tag handle the output
+    mangapress_bookmark_button($a);
+}
+add_shortcode('bookmark_comic', 'mangapress_bookmark_button_shortcode');
+
+
 /**
  * is_comic()
  *

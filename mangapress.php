@@ -289,6 +289,8 @@ class MangaPress_Bootstrap
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
         }
 
+        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_other_scripts'));
+
         /*
          * Comic Page size
          */
@@ -327,7 +329,43 @@ class MangaPress_Bootstrap
             'screen'
         );
 
+        wp_register_script(
+            'mangapress-bookmark',
+//            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
+            MP_URLPATH . 'assets/js/bookmark.js',
+            array('jquery'),
+            MP_VERSION,
+            true
+        );
+
         wp_enqueue_style('mangapress-nav');
+    }
+
+    public function wp_enqueue_other_scripts()
+    {
+        wp_register_script(
+            'mangapress-bookmark',
+            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
+            array('jquery'),
+            MP_VERSION,
+            true
+        );
+
+        $bookmark_styles = apply_filters('mangapress_bookmark_styles', array());
+        $bookmark_localization = array(
+            'bookmarkCloseLabel' => __('close', MP_DOMAIN),
+            'bookmarkNoHistory' => __('No bookmark history available.', MP_DOMAIN),
+            'bookmarkTitle' => __('Title', MP_DOMAIN),
+            'bookmarkDate' => __('Date', MP_DOMAIN),
+        );
+
+        wp_localize_script(
+            'mangapress-bookmark',
+            strtoupper(MP_DOMAIN),
+            array_merge($bookmark_styles, $bookmark_localization)
+        );
+
+        wp_enqueue_script('mangapress-bookmark');
     }
 
 

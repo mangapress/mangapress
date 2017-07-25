@@ -315,7 +315,7 @@ class MangaPress_Posts
 
         wp_localize_script(
             'mangapress-media-popup',
-            MP_DOMAIN,
+            strtoupper(MP_DOMAIN),
             array(
                 'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
                 'button' => __('Insert Comic into Post', MP_DOMAIN),
@@ -474,6 +474,8 @@ class MangaPress_Posts
         if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
 
+        $flash_messages = MangaPress_Bootstrap::get_instance()->get_helper('flashmessage');
+
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {
             set_post_thumbnail($post_id, $image_ID);
@@ -489,7 +491,6 @@ class MangaPress_Posts
         }
 
         return $post_id;
-
     }
 
 }
