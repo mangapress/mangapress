@@ -80,7 +80,9 @@ var MANGAPRESS = MANGAPRESS || {};
                 this.$bookmark.text( this.$bookmark.data('bookmarkedLabel') );
                 this.setBookmark(data);
             } else {
-
+                // if it exists, remove from history
+                this.removeFromHistory(data);
+                this.$bookmark.text( this.$bookmark.data('label') );
             }
         },
 
@@ -98,7 +100,7 @@ var MANGAPRESS = MANGAPRESS || {};
                 var htmlString = "<table>",
                     bookmarkHistory = revBookmarkHistory.reverse();
 
-                htmlString += "<thead><tr><td>" + MANGAPRESS.bookmarkTitle + "</td><td>" + MANGAPRESS.bookmarkDate + "</td></tr></thead>";
+                htmlString += "<thead><tr><th>" + MANGAPRESS.bookmarkTitle + "</th><th>" + MANGAPRESS.bookmarkDate + "</th></tr></thead>";
 
                 for (var i = 0; i < bookmarkHistory.length; i++) {
                     var columns = [],
@@ -159,6 +161,23 @@ var MANGAPRESS = MANGAPRESS || {};
             this.setHistory(history);
         },
 
+        removeFromHistory : function(bookmark) {
+            var history = this.getHistory(),
+                newHistory = [],
+                i = this.getIndexOfBookmark(bookmark.id);
+
+            delete history[i];
+
+            // OFFS JS
+            for (var i in history) {
+                if (typeof history[i] !== 'undefined') {
+                    newHistory.push(history[i])
+                }
+            }
+
+            this.setHistory(newHistory);
+        },
+
         hasHistory : function() {
             return this.getHistory().length;
         },
@@ -173,6 +192,16 @@ var MANGAPRESS = MANGAPRESS || {};
             return $.grep(history, function(e){
                 return e.id === id;
             }).length;
+        },
+
+        getIndexOfBookmark : function(id) {
+            var history = this.getHistory();
+            for (var i in history) {
+                if (history[i].id === id) {
+                    return i;
+                }
+            }
         }
+
     };
 }(jQuery));

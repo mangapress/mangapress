@@ -24,7 +24,7 @@ function mangapress_bookmark_styles($styles)
 {
     $styles = array(
         'bookmarkStyles' => array(
-            'width' => '300px',
+            'width' => '400px',
             'z-index' => 9999,
             'border' => '1px solid black',
             'background-color' => '#fff',
