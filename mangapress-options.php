@@ -32,6 +32,7 @@ final class MangaPress_Options
             'archive_orderby'   => 'date',
         ),
         'comic_page' => array(
+            'enable_comic_lightbox' => 0,
             'generate_comic_page' => 0,
             'comic_page_width'    => 600,
             'comic_page_height'   => 1000,
@@ -43,7 +44,7 @@ final class MangaPress_Options
 
     /**
      * PHP5 Constructor function
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -313,6 +314,16 @@ final class MangaPress_Options
                 ),
             ),
             'comic_page' => array(
+                'enable_comic_lightbox' => array(
+                    'id'    => 'enable-comic-lightbox',
+                    'type'  => 'checkbox',
+                    'title'       => __('Enable Lightbox', MP_DOMAIN),
+                    'description' => __('Allow comic to be displayed in a full-screen lightbox.', MP_DOMAIN),
+                    'valid'       => 'boolean',
+                    'default'     => 1,
+                    'callback' => array($this, 'settings_field_cb'),
+                ),
+
                 'generate_comic_page' => array(
                     'id'    => 'generate-page',
                     'type'  => 'checkbox',
@@ -377,7 +388,7 @@ final class MangaPress_Options
             ),
             'comic_page' => array(
                 'title'       => __('Comic Page Options', MP_DOMAIN),
-                'description' => __('Handles image sizing options for comic pages. Thumbnail support may need to be enabled for some features to work properly. If page- or thumbnail sizes are changed, then a plugin such as Regenerate Thumbnails may be used to create the new thumbnails.', MP_DOMAIN),
+                'description' => __('Controls appearance of comic page. If page- or thumbnail sizes are changed, then a plugin such as Regenerate Thumbnails may be used to create the new thumbnails.', MP_DOMAIN),
             ),
             'nav'        => array(
                 'title'       => __('Navigation Options', MP_DOMAIN),
@@ -468,6 +479,7 @@ final class MangaPress_Options
 
         if ($section == 'comic_page') {
             $new_options['comic_page'] = array(
+                'enable_comic_lightbox' => $this->_sanitize_integer($options, 'comic_page', 'enable_comic_lightbox'),
                 'generate_comic_page' => $this->_sanitize_integer($options, 'comic_page','generate_comic_page'),
                 'comic_page_width'    => $this->_sanitize_integer($options, 'comic_page','comic_page_width'),
                 'comic_page_height'   => $this->_sanitize_integer($options, 'comic_page','comic_page_height'),
