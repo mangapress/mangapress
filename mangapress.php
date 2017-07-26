@@ -91,7 +91,7 @@ class MangaPress_Bootstrap
      *
      * @var array
      */
-    protected $_options;
+    protected $options;
 
 
     /**
@@ -99,7 +99,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_Bootstrap
      */
-    protected static $_instance;
+    protected static $instance;
 
 
     /**
@@ -107,15 +107,7 @@ class MangaPress_Bootstrap
      *
      * @var \MangaPress_Posts
      */
-    protected $_posts_helper;
-
-
-    /**
-     * Options helper object
-     *
-     * @var \MangaPress_Options
-     */
-    protected $_options_helper;
+    protected $posts_helper;
 
 
     /**
@@ -123,7 +115,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_Admin
      */
-    protected $_admin_helper;
+    protected $admin_helper;
 
 
     /**
@@ -131,7 +123,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_FlashMessages
      */
-    protected $_flashmessage_helper;
+    protected $flashmessages_helper;
 
 
     /**
@@ -141,7 +133,7 @@ class MangaPress_Bootstrap
      */
     public static function load_plugin()
     {
-        self::$_instance  = new self();
+        self::$instance  = new self();
     }
 
 
@@ -152,11 +144,11 @@ class MangaPress_Bootstrap
      */
     public static function get_instance()
     {
-        if (null == self::$_instance) {
-            self::$_instance = new self();
+        if (null == self::$instance) {
+            self::$instance = new self();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
 
@@ -181,16 +173,15 @@ class MangaPress_Bootstrap
     public function init()
     {
         $this->set_options();
-
-        $this->_posts_helper   = new MangaPress_Posts();
-        $this->_admin_helper   = new MangaPress_Admin();
-        $this->_options_helper = new MangaPress_Options();
+        MangaPress_Options::init();
+        $this->posts_helper   = new MangaPress_Posts();
+        $this->admin_helper   = new MangaPress_Admin();
         $this->flashmessages_helper = new MangaPress_FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));
 
 
-        $this->_load_current_options();
+        $this->load_current_options();
 
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 
@@ -221,7 +212,7 @@ class MangaPress_Bootstrap
      */
     public function get_helper($helper_name)
     {
-        $helper = "_{$helper_name}_helper";
+        $helper = "{$helper_name}_helper";
         if (property_exists($this, $helper)) {
             return $this->$helper;
         }
@@ -241,7 +232,7 @@ class MangaPress_Bootstrap
      */
     public function set_options()
     {
-        $this->_options = maybe_unserialize(get_option('mangapress_options'));
+        $this->options = maybe_unserialize(get_option('mangapress_options'));
     }
 
 
@@ -252,7 +243,7 @@ class MangaPress_Bootstrap
      */
     public function get_options()
     {
-        return $this->_options;
+        return $this->options;
     }
 
 
@@ -265,11 +256,11 @@ class MangaPress_Bootstrap
      */
     public function get_option($section, $option_name)
     {
-        if (!isset($this->_options[$section][$option_name])) {
+        if (!isset($this->options[$section][$option_name])) {
             return false;
         }
 
-        return $this->_options[$section][$option_name];
+        return $this->options[$section][$option_name];
     }
 
 
@@ -278,7 +269,7 @@ class MangaPress_Bootstrap
      *
      * @return void
      */
-    private function _load_current_options()
+    private function load_current_options()
     {
         $mp_options = $this->get_options();
 

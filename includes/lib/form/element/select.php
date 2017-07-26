@@ -29,6 +29,7 @@ class MangaPress_Select extends MangaPress_Element
      */
     public function __toString()
     {
+        var_dump($this); return '';
         $options = $this->get_default();
         $attr_arr = array();
         foreach ($this->_attr as $name => $value) {
