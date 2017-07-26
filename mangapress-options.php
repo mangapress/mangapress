@@ -21,26 +21,7 @@ final class MangaPress_Options
      *
      * @var array
      */
-    protected static $_default_options =  array(
-        'basic' => array(
-            'latestcomic_page'  => 0,
-            'group_comics'      => 0,
-            'group_by_parent'   => 0,
-            'comicarchive_page' => 0,
-            'comicarchive_page_style'    => 'list',
-            'archive_order'     => 'DESC',
-            'archive_orderby'   => 'date',
-        ),
-        'comic_page' => array(
-            'enable_comic_lightbox' => 0,
-            'generate_comic_page' => 0,
-            'comic_page_width'    => 600,
-            'comic_page_height'   => 1000,
-        ),
-        'nav' => array(
-            'nav_css'    => 'custom_css',
-        ),
-    );
+    protected $_default_options = null;
 
     /**
      * PHP5 Constructor function
@@ -48,6 +29,7 @@ final class MangaPress_Options
     public function __construct()
     {
         add_action('admin_init', array($this, 'admin_init'));
+        $this->get_default_options();
     }
 
     /**
@@ -201,9 +183,25 @@ final class MangaPress_Options
      *
      * @return array
      */
-    public static function get_default_options()
+    public function get_default_options()
     {
-        return self::$_default_options;
+        if ($this->_default_options === null) {
+            $options = $this->options_fields();
+            $default_option_values = [];
+            foreach ($options as $section => $option) {
+                if (!isset($default_option_values[$section])) {
+                    $default_option_values[$section] = [];
+                }
+
+                foreach ($option['fields'] as $name => $field) {
+                    if (!isset($field['default'])) continue;
+
+                    $default_option_values[$section][$name] = $field['default'];
+                }
+            }
+        }
+
+        return $this->_default_options;
     }
 
    /**
@@ -243,7 +241,7 @@ final class MangaPress_Options
                        'title' => __('Group Comics', MP_DOMAIN),
                        'valid' => 'boolean',
                        'description' => __('Group comics by category. This option will ignore the parent category, and group according to the child-category.', MP_DOMAIN),
-                       'default' => 1,
+                       'default' => 0,
                        'callback' => array($this, 'settings_field_cb'),
                    ),
                    'group_by_parent'      => array(
@@ -252,7 +250,7 @@ final class MangaPress_Options
                        'title' => __('Use Parent Category', MP_DOMAIN),
                        'valid' => 'boolean',
                        'description' => __('Group comics by top-most parent category. Use this option if you have sub-categories but want your navigation to function using the parent category.', MP_DOMAIN),
-                       'default'     => 1,
+                       'default'     => 0,
                        'callback'    => array($this, 'settings_field_cb'),
                    ),
                    'comicarchive_page' => array(
@@ -327,7 +325,7 @@ final class MangaPress_Options
                        'title'       => __('Enable Lightbox', MP_DOMAIN),
                        'description' => __('Allow comic to be displayed in a full-screen lightbox.', MP_DOMAIN),
                        'valid'       => 'boolean',
-                       'default'     => 1,
+                       'default'     => 0,
                        'callback' => array($this, 'settings_field_cb'),
                    ),
                    'generate_comic_page' => array(
@@ -336,7 +334,7 @@ final class MangaPress_Options
                        'title'       => __('Generate Comic Page', MP_DOMAIN),
                        'description' => __('Generate a comic page based on values below.', MP_DOMAIN),
                        'valid'       => 'boolean',
-                       'default'     => 1,
+                       'default'     => 0,
                        'callback' => array($this, 'settings_field_cb'),
                    ),
                    'comic_page_width'    => array(
