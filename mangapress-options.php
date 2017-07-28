@@ -270,14 +270,14 @@ final class MangaPress_Options
                        'type'  => 'select',
                        'title' => __('Comic Archive Page Style', MP_DOMAIN),
                        'description' => __('Style used for comic archive page. List, Calendar, or Gallery. Default: List', MP_DOMAIN),
-                       'value' => array(
+                       'value' => 'list',
+                       'valid'   => 'array',
+                       'default' => array(
                            'no_val' => __('Select a Style', MP_DOMAIN),
                            'list'   => __('List', MP_DOMAIN),
                            'calendar' => __('Calendar', MP_DOMAIN),
                            'gallery' => __('Gallery', MP_DOMAIN),
                        ),
-                       'valid'   => 'array',
-                       'default' => 'list',
                        'callback'    => array(__CLASS__, 'settings_field_cb'),
                        'sanitize_callback' => array('in_array', ['list', 'gallery', 'calendar'])
                    ),
@@ -286,12 +286,12 @@ final class MangaPress_Options
                        'title'  => __('Archive Page Comic Order', MP_DOMAIN),
                        'description' => __('Designates the ascending or descending order of the orderby parameter', MP_DOMAIN),
                        'type'   => 'select',
-                       'value'  => array(
+                       'value'  => 'DESC',
+                       'valid'   => 'array',
+                       'default' => array(
                            'ASC'  => __('ASC', MP_DOMAIN),
                            'DESC' => __('DESC', MP_DOMAIN),
                        ),
-                       'valid'   => 'array',
-                       'default' => 'DESC',
                        'callback' => array(__CLASS__, 'settings_field_cb'),
                    ),
                    'archive_orderby'    => array(
@@ -299,7 +299,9 @@ final class MangaPress_Options
                        'title'  => __('Archive Page Comic Order By', MP_DOMAIN),
                        'description' => __('Sort retrieved posts according to selected parameter.', MP_DOMAIN),
                        'type'   => 'select',
-                       'value'  => array(
+                       'value'  => 'date',
+                       'valid'   => 'array',
+                       'default' => array(
                            'ID'       => __('Order by Post ID', MP_DOMAIN),
                            'author'   => __('Order by author', MP_DOMAIN),
                            'title'    => __('Order by title', MP_DOMAIN),
@@ -308,8 +310,6 @@ final class MangaPress_Options
                            'modified' => __('Order by last modified date.', MP_DOMAIN),
                            'rand'     => __('Random order', MP_DOMAIN),
                        ),
-                       'valid'   => 'array',
-                       'default' => 'date',
                        'callback' => array(__CLASS__, 'settings_field_cb'),
                    ),
                )
