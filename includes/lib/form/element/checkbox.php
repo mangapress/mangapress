@@ -71,7 +71,6 @@ class MangaPress_Checkbox extends MangaPress_Element
 
         $attr = implode(" ", $attr_arr);
 
-        var_dump($this->get_checked(), $this->get_value());
         $checked = checked($this->get_checked(), $this->get_value(), false);
 
         $name = $this->get_name();
