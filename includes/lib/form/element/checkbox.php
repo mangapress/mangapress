@@ -16,6 +16,35 @@
 class MangaPress_Checkbox extends MangaPress_Element
 {
     /**
+     * Checked value — saved to DB
+     * @var boolean
+     */
+    protected $_checked;
+
+
+    /**
+     * Get checked value
+     * @return mixed
+     */
+    public function get_checked()
+    {
+        return $this->_checked;
+    }
+
+
+    /**
+     * Set checked value
+     * @param mixed $checked
+     * @return \MangaPress_Checkbox
+     */
+    public function set_checked($checked)
+    {
+        $this->_checked = $checked;
+        return $this;
+    }
+
+
+    /**
      * Display form element
      *
      * @return string
@@ -37,18 +66,17 @@ class MangaPress_Checkbox extends MangaPress_Element
         $default = $this->get_default();
         $attr_arr = array();
         foreach ($this->_attr as $name => $value) {
-            if ($name != 'value') {
-                $attr_arr[] = "{$name}=\"{$value}\"";
-            } else {
-                $attr_arr[] = "{$name}=\"" . $default . "\"";
-            }
+            $attr_arr[] = "{$name}=\"{$value}\"";
         }
 
         $attr = implode(" ", $attr_arr);
 
-        $checked = checked($default, $this->get_value(), false);
+        var_dump($this->get_checked(), $this->get_value());
+        $checked = checked($this->get_checked(), $this->get_value(), false);
 
-        $htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+        $name = $this->get_name();
+        $hidden = "<input type=\"hidden\" name=\"{$name}\" value=\"{$default}\" />";
+        $htmlArray['content'] = "{$hidden}{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
 
         $this->_html = implode(' ', $htmlArray);
 

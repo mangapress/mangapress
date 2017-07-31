@@ -6,6 +6,7 @@
  * @package MangaPress
  */
 require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/number.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/select.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
@@ -196,6 +197,19 @@ class MangaPress_Element
     public function get_value()
     {
         return $this->_attr['value'];
+    }
+
+    /**
+     * Set value
+     *
+     * @param mixed $value
+     * @return \MangaPress_Element
+     */
+    public function set_value($value)
+    {
+        $this->_attr['value'] = $value;
+
+        return $this;
     }
 
     /**
