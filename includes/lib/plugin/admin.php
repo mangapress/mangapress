@@ -7,12 +7,13 @@
  * @version $Id$
  * @license GPL
  */
+namespace MangaPress\Plugin;
 /**
  * mangapress-admin
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-final class MangaPress_Admin
+class Admin
 {
     /**
      * Page slug constant
@@ -23,7 +24,6 @@ final class MangaPress_Admin
 
     /**
      * Constructor method
-     * @return void
      */
     public function __construct()
     {
@@ -164,7 +164,7 @@ final class MangaPress_Admin
         $current = filter_input(INPUT_GET, 'tab')
                         ? filter_input(INPUT_GET, 'tab') : 'basic';
 
-        $tabs = MangaPress_Options::options_sections();
+        $tabs = Options::options_sections();
 
         $links = array();
         foreach($tabs as $tab => $tab_data) {
@@ -192,7 +192,7 @@ final class MangaPress_Admin
      */
     public function get_current_tab()
     {
-        $tabs    = MangaPress_Options::get_options_sections();
+        $tabs    = Options::get_options_sections();
 
         $current_tab = filter_input(INPUT_GET, 'tab');
         if (in_array($current_tab, $tabs)) {

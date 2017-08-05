@@ -7,13 +7,14 @@
  * @version $Id$
  * @license GPL
  */
+namespace MangaPress\Plugin;
 
 /**
  * mangapress-options
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-final class MangaPress_Options
+class Options
 {
     const OPTIONS_GROUP_NAME = 'mangapress_options';
 
@@ -71,7 +72,7 @@ final class MangaPress_Options
      */
     public static function output_settings_fields()
     {
-        $admin = MangaPress_Bootstrap::get_instance()->get_helper('admin');
+        $admin = Bootstrap::get_instance()->get_helper('admin');
 
         $field_sections = self::options_fields();
         $current_tab = $admin->get_current_tab();
@@ -104,7 +105,7 @@ final class MangaPress_Options
      */
     public static function settings_field_cb($option)
     {
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = Bootstrap::get_instance()->get_options();
         $default_options = self::get_default_options();
 
         $class = ucwords($option['type']);
@@ -180,7 +181,7 @@ final class MangaPress_Options
 
     /**
      * Returns default options
-     * Used by MangaPress_Install to handle defaults on activation
+     * Used by Install to handle defaults on activation
      *
      * @return array
      */
@@ -402,7 +403,7 @@ final class MangaPress_Options
         if (!$options)
             return $options;
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = Bootstrap::get_instance()->get_options();
         $section = key($options);
         $available_options = self::options_fields();
         $new_options = $mp_options;

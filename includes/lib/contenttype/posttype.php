@@ -7,7 +7,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
-namespace MangaPress;
+namespace MangaPress\ContentType;
+use MangaPress\ContentType;
 /**
  * MangaPress_PostType
  *

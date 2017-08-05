@@ -6,7 +6,7 @@
  * @author Jess Green <jgreen @ psy-dreamer.com>
  * @version $Id$
  */
-namespace MangaPress;
+namespace MangaPress\Plugin;
 /**
  * Flash Messages helper class
  *
