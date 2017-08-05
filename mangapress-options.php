@@ -441,7 +441,6 @@ final class MangaPress_Options
      */
     private static function sanitize_field($option, $config)
     {
-        var_dump($config);die();
         $type = $config['type'];
         switch ($type) {
             case 'checkbox':
@@ -461,7 +460,7 @@ final class MangaPress_Options
             case 'textarea':
                 return filter_var($option, FILTER_SANITIZE_STRING);
                 break;
-            default;
+            default:
                 return apply_filters("mangapress_sanitize_{$type}", $option);
         }
     }
