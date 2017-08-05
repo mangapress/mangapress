@@ -7,12 +7,6 @@
  */
 namespace MangaPress\Form;
 
-require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/number.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/select.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
 /**
  * MangaPress_Element
  * Abstract class used to define basic functionality for extending classes

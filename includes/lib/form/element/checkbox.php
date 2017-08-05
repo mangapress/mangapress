@@ -5,7 +5,7 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
-namespace MangaPress\Form;
+namespace MangaPress\Form\Element;
 
 use MangaPress\Form\Element;
 

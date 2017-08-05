@@ -5,9 +5,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
-namespace MangaPress\Form;
-use MangaPress\Form\Element;
-use MangaPress\Form\Text;
+namespace MangaPress\Form\Element;
+use MangaPress\Form\Element\Text;
 
 require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
 /**
