@@ -15,6 +15,8 @@ require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
  */
 class MangaPress_Number extends MangaPress_Text
 {
+    protected $type = 'number';
+
 
     /**
      * Echo form element
@@ -24,10 +26,10 @@ class MangaPress_Number extends MangaPress_Text
     public function __toString()
     {
         $label = '';
-        if (!empty($this->_label)) {
+        if (!empty($this->label)) {
             $id = $this->get_attributes('id');
             $class = " class=\"label-$id\"";
-            $label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
+            $label = "<label for=\"$id\"$class>$this->label</label>\r\n";
         }
 
         $desc = $this->get_description();
@@ -38,10 +40,10 @@ class MangaPress_Number extends MangaPress_Text
 
         $attr = $this->build_attr_string();
 
-        $htmlArray['content'] = "{$label}<input type=\"text\" $attr />\r\n{$description}";
+        $htmlArray['content'] = "{$label}<input type=\"number\" $attr />\r\n{$description}";
 
-        $this->_html = implode(' ', $htmlArray);
+        $this->html = implode(' ', $htmlArray);
 
-        return $this->_html;
+        return $this->html;
     }
 }

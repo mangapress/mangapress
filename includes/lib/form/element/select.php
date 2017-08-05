@@ -20,7 +20,7 @@ class MangaPress_Select extends MangaPress_Element
      *
      * @var array
      */
-    protected $_options = array();
+    protected $options = array();
 
     /**
      * Echo form element
@@ -31,7 +31,7 @@ class MangaPress_Select extends MangaPress_Element
     {
         $options = $this->get_default();
         $attr_arr = array();
-        foreach ($this->_attr as $name => $value) {
+        foreach ($this->attr as $name => $value) {
             if ($name != 'value')
                 $attr_arr[] = "{$name}=\"{$value}\"";
         }
@@ -52,9 +52,9 @@ class MangaPress_Select extends MangaPress_Element
             $options_str .= "<option value=\"$option_val\" $selected>{$option_text}</option>";
         }
 
-        $this->_html = "<select $attr>\n$options_str</select> {$description}";
+        $this->html = "<select $attr>\n$options_str</select> {$description}";
 
-        return $this->_html;
+        return $this->html;
     }
 
     /**
@@ -66,7 +66,7 @@ class MangaPress_Select extends MangaPress_Element
     public function set_default($values)
     {
         foreach ($values as $key => $value) {
-            $this->_options[$key] = $value;
+            $this->options[$key] = $value;
         }
 
         return $this;
@@ -79,6 +79,6 @@ class MangaPress_Select extends MangaPress_Element
      */
     public function get_default()
     {
-        return $this->_options;
+        return $this->options;
     }
 }

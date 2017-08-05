@@ -23,7 +23,7 @@ class MangaPress_Textarea extends MangaPress_Element
      */
     public function __toString()
     {
-        return $this->_html;
+        return $this->html;
     }
 
 }
