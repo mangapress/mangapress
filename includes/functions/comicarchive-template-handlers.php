@@ -10,7 +10,7 @@
 
 function mangapress_get_comicarchive_template($style)
 {
-    $fields = MangaPress_Bootstrap::get_instance()->get_helper('options')->options_fields();
+    $fields = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('options')->options_fields();
     $options = $fields['basic']['comicarchive_page_style'];
     unset($options['value']['no_val']); // remove this, we don't need it
 
@@ -39,7 +39,7 @@ function mangapress_comicarchive_page_template($default_template)
         return $default_template;
     }
 
-    $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
+    $comicarchive_page_style = MangaPress\Plugin\Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
 
     if (in_array($comicarchive_page_style, array('list', 'gallery', 'calendar'))) {
         $template = locate_template(array(
@@ -86,7 +86,7 @@ function mangapress_create_comicarchive_page($content)
         );
     }
 
-    $comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
+    $comicarchive_page_style = MangaPress\Plugin\Bootstrap::get_instance()->get_option('basic', 'comicarchive_page_style');
 
     ob_start();
     require mangapress_get_content_template($comicarchive_page_style);

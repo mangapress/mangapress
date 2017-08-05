@@ -151,7 +151,7 @@ class Bootstrap
      * MangaPress options are updated.
      *
      * @uses init()
-     * @see MangaPress_Bootstrap::init()
+     * @see MangaPress\Plugin\Bootstrap::init()
      *
      * @return void
      */

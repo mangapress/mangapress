@@ -21,11 +21,11 @@ function mangapress_get_latest_comic()
     global $wpdb;
 
     $sql = "SELECT post_name FROM {$wpdb->posts} "
-         . "WHERE post_type=\"" . MangaPress_Posts::POST_TYPE . "\" "
-         . "AND post_status=\"publish\" "
+         . "WHERE post_type = %s "
+         . "AND post_status = 'publish' "
          . "ORDER BY post_date DESC LIMIT 1";
 
-    $post_name = $wpdb->get_var($sql);
+    $post_name = $wpdb->get_var($wpdb->prepare($sql, MangaPress\Plugin\Posts::POST_TYPE));
 
     if (!$post_name) {
         $post_name = 'no-comic-found';
