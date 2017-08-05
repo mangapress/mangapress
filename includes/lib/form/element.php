@@ -5,6 +5,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form;
+
 require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/number.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
@@ -19,7 +21,7 @@ require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
  * @package MangaPress_Element
  * @version $Id$
  */
-class MangaPress_Element
+class Element
 {
     /**
      * Elements HTML attributes array

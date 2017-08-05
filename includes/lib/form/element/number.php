@@ -5,6 +5,10 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form;
+use MangaPress\Form\Element;
+use MangaPress\Form\Text;
+
 require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
 /**
  * MangaPress_Number
@@ -13,7 +17,7 @@ require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
  * @package MangaPress_Text
  * @version $Id$
  */
-class MangaPress_Number extends MangaPress_Text
+class Number extends Text
 {
     protected $type = 'number';
 

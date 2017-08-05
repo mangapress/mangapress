@@ -55,7 +55,7 @@ if (!defined('MP_LANG'))
 if (!defined('MP_DOMAIN'))
     define('MP_DOMAIN', 'mangapress');
 
-require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
+require_once MP_ABSPATH . 'includes/lib/form/element.php';
 require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
 require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-post-type.php';

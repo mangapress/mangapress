@@ -119,7 +119,7 @@ final class MangaPress_Options
                 'value' => $value,
             );
 
-            $element = "MangaPress_{$class}";
+            $element = "MangaPress\Form\\{$class}";
             $params = array(
                 'attributes' => $attributes,
                 'description' => isset($option['description']) ? $option['description'] : '',

@@ -5,6 +5,9 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form;
+
+use MangaPress\Form\Element;
 
 /**
  * MangaPress_Select
@@ -13,7 +16,7 @@
  * @package MangaPress_Select
  * @version $Id$
  */
-class MangaPress_Select extends MangaPress_Element
+class Select extends Element
 {
     /**
      * Options

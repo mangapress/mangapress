@@ -5,6 +5,9 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form;
+
+use MangaPress\Form\Element;
 
 /**
  * MangaPress_Checkbox
@@ -13,7 +16,7 @@
  * @package MangaPress_Checkbox
  * @version $Id$
  */
-class MangaPress_Checkbox extends MangaPress_Element
+class Checkbox extends Element
 {
     /**
      * Checked value — saved to DB

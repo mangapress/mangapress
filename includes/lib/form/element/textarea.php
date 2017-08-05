@@ -5,6 +5,9 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form;
+
+use MangaPress\Form\Element;
 
 /**
  * MangaPress_Textarea
@@ -13,7 +16,7 @@
  * @package MangaPress_Textarea
  * @version $Id$
  */
-class MangaPress_Textarea extends MangaPress_Element
+class Textarea extends Element
 {
 
     /**
