@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
 namespace MangaPress\Form\Element;
@@ -12,7 +12,7 @@ use MangaPress\Form\Element;
 /**
  * MangaPress_Checkbox
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Checkbox
  * @version $Id$
  */

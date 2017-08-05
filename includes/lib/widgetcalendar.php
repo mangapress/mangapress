@@ -4,7 +4,7 @@
  *
  * @package Manga_Press
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 namespace MangaPress;
  /**

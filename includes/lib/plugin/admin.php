@@ -1,18 +1,14 @@
 <?php
 /**
- * MangaPress
+ * Admin page controller
  *
- * @package mangapress-admin
+ * @package MangaPress\Plugin\Admin
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
  */
 namespace MangaPress\Plugin;
-/**
- * mangapress-admin
- *
- * @author Jess Green <jgreen at psy-dreamer.com>
- */
+
 class Admin
 {
     /**

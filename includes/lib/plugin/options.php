@@ -2,18 +2,13 @@
 /**
  * MangaPress
  *
- * @package mangapress-options
+ * @package MangaPress\Plugin\Options
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
  */
 namespace MangaPress\Plugin;
 
-/**
- * mangapress-options
- *
- * @author Jess Green <jgreen at psy-dreamer.com>
- */
 class Options
 {
     const OPTIONS_GROUP_NAME = 'mangapress_options';

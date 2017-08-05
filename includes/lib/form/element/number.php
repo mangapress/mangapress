@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
 namespace MangaPress\Form\Element;
@@ -12,7 +12,7 @@ require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
 /**
  * MangaPress_Number
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Text
  * @version $Id$
  */

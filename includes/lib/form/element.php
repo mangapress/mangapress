@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
 namespace MangaPress\Form;
@@ -11,7 +11,7 @@ namespace MangaPress\Form;
  * MangaPress_Element
  * Abstract class used to define basic functionality for extending classes
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Element
  * @version $Id$
  */

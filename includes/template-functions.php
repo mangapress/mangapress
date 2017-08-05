@@ -7,7 +7,7 @@
  * @package Manga_Press
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 
 
@@ -20,6 +20,7 @@
  *      @type boolean $show_history Show bookmark history link and drop-down. Defaults to false
  *      @type boolean $echo Show output instead of returning it. Defaults to true
  * }
+ * @return void|string
  */
 function mangapress_bookmark_button($attrs)
 {

@@ -3,10 +3,10 @@
  * Manga+Press plugin Functions
  * This is where the actual work gets done...
  *
- * @package Manga_Press
- * @subpackage Core_Functions
+ * @package MangaPress
+ * @subpackage CoreFunctions
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 
 require_once MP_ABSPATH . 'includes/query.php';

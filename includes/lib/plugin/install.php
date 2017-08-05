@@ -2,16 +2,12 @@
 /**
  * MangaPress Installation Class
  *
- * @package MangaPress
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress\Plugin\Install
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  */
 namespace MangaPress\Plugin;
-/**
- * @subpackage Install
- * @author Jess Green <jgreen@psy-dreamer.com>
- * @version $Id$
- */
+
 class Install
 {
 

@@ -2,9 +2,8 @@
 /**
  * Plugin bootstrap class.
  *
- * @package MangaPress
- * @subpackage MangaPress_Bootstrap
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress\Plugin\Bootstrap
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 namespace MangaPress\Plugin;
 
