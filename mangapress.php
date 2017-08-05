@@ -87,8 +87,8 @@ if (!defined('MP_DOMAIN')) {
 }
 
 require_once ABSPATH . '/wp-admin/includes/plugin.php';
-require_once MP_ABSPATH . 'includes/functions.php';
-require_once MP_ABSPATH . 'includes/template-functions.php';
+require_once MP_ABSPATH . 'includes/functions/functions.php';
+require_once MP_ABSPATH . 'includes/functions/template-functions.php';
 
 $plugin_data = get_plugin_data(__FILE__);
 

@@ -9,11 +9,11 @@
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
 
-require_once MP_ABSPATH . 'includes/query.php';
-require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
-require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
-require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/query.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-functions.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-functions.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-template-handlers.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);
