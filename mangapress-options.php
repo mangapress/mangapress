@@ -136,6 +136,10 @@ final class MangaPress_Options
         }
     }
 
+    /**
+     * Get array of pages from database
+     * @return array
+     */
     private static function get_page_values()
     {
         $pages = get_pages();
