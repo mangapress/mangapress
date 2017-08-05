@@ -198,7 +198,11 @@ class Options
                 foreach ($option['fields'] as $name => $field) {
                     if (!isset($field['default'])) continue;
 
-                    $default_option_values[$section][$name] = $field['default'];
+                    if ($field['type'] !== 'select') {
+                        $default_option_values[$section][$name] = $field['default'];
+                    } else {
+                        $default_option_values[$section][$name] = $field['value'];
+                    }
                 }
             }
 

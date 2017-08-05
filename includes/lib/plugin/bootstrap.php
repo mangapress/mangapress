@@ -23,7 +23,7 @@ class Bootstrap
     /**
      * Instance of MangaPress_Bootstrap
      *
-     * @var MangaPress_Bootstrap
+     * @var Bootstrap
      */
     protected static $instance;
 
@@ -248,7 +248,6 @@ class Bootstrap
 
         wp_register_script(
             'mangapress-bookmark',
-//            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
             MP_URLPATH . 'assets/js/bookmark.js',
             array('jquery'),
             MP_VERSION,
@@ -262,7 +261,7 @@ class Bootstrap
     {
         wp_register_script(
             'mangapress-bookmark',
-            plugins_url( '/assets/js/bookmark.js', __FILE__ ),
+            MP_URLPATH . 'assets/js/bookmark.js',
             array('jquery'),
             MP_VERSION,
             true
@@ -295,7 +294,7 @@ class Bootstrap
     {
         wp_enqueue_style(
             'mangapress-icons',
-            plugins_url('assets/css/font.css', __FILE__),
+            MP_URLPATH . 'assets/css/font.css',
             null,
             MP_VERSION,
             'screen'
