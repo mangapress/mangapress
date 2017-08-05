@@ -10,6 +10,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+namespace MangaPress;
+
 /**
  * MangaPress_ContentType
  * This abstract class contains basic properties and methods
@@ -18,7 +20,7 @@
  * @package MangaPress_ContentType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-abstract class MangaPress_ContentType
+abstract class ContentType
 {
 
     /**

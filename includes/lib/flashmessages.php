@@ -6,7 +6,7 @@
  * @author Jess Green <jgreen @ psy-dreamer.com>
  * @version $Id$
  */
-
+namespace MangaPress;
 /**
  * Flash Messages helper class
  *
@@ -14,7 +14,7 @@
  * @author Jess Green <jgreen @ psy-dreamer.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-class MangaPress_FlashMessages
+class FlashMessages
 {
 
 

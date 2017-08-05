@@ -6,13 +6,14 @@
  * @version $Id$
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
+namespace MangaPress;
  /**
-  * Manga+Press-specific clone of WP_Widget_Calendar
+  * Manga+Press-specific clone of Widget_Calendar
   *
-  * @package MangaPress_Widget_Calendar
+  * @package WidgetCalendar
   * @version $Id$
   */
-class MangaPress_Widget_Calendar extends WP_Widget
+class WidgetCalendar extends \WP_Widget
 {
 
     /**

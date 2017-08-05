@@ -88,11 +88,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
-require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
-require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
-require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
-require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
 require_once MP_ABSPATH . 'includes/functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'mangapress-install.php';
@@ -153,7 +148,7 @@ class MangaPress_Bootstrap
     /**
      * Flash Message helper
      *
-     * @var MangaPress_FlashMessages
+     * @var MangaPress\FlashMessages
      */
     protected $flashmessages_helper;
 
@@ -208,7 +203,7 @@ class MangaPress_Bootstrap
         MangaPress_Options::init();
         $this->posts_helper   = new MangaPress_Posts();
         $this->admin_helper   = new MangaPress_Admin();
-        $this->flashmessages_helper = new MangaPress_FlashMessages(array(
+        $this->flashmessages_helper = new MangaPress\FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));
 
@@ -232,7 +227,7 @@ class MangaPress_Bootstrap
      */
     public function widgets_init()
     {
-        register_widget('MangaPress_Widget_Calendar');
+        register_widget('MangaPress\WidgetCalendar');
     }
 
 

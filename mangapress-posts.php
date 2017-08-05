@@ -110,7 +110,7 @@ class MangaPress_Posts
     private function _register_post_type()
     {
         // register taxonomy
-        $taxonomy = new MangaPress_Taxonomy(array(
+        $taxonomy = new MangaPress\Taxonomy(array(
             'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
@@ -125,7 +125,7 @@ class MangaPress_Posts
             ),
         ));
 
-        $this->_post_type = new MangaPress_PostType(array(
+        $this->_post_type = new MangaPress\PostType(array(
             'name'          => self::POST_TYPE,
             'textdomain'    => MP_DOMAIN,
             'pluralname'    => __('Comics', MP_DOMAIN),
