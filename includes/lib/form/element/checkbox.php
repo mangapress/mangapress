@@ -38,7 +38,7 @@ class Checkbox extends Element
     /**
      * Set checked value
      * @param mixed $checked
-     * @return \MangaPress_Checkbox
+     * @return \MangaPress\Form\Element\Checkbox
      */
     public function set_checked($checked)
     {

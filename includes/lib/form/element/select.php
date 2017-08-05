@@ -64,7 +64,7 @@ class Select extends Element
      * Set default values
      *
      * @param array $values
-     * @return \MangaPress_Select
+     * @return \MangaPress\Form\Element\Select
      */
     public function set_default($values)
     {

@@ -82,7 +82,7 @@ class Element
      * Set options
      *
      * @param array $options
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_options($options)
     {
@@ -100,12 +100,12 @@ class Element
      * Add attributes to element
      *
      * @param array $attributes
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function add_attributes(array $attributes = array())
     {
         foreach ($attributes as $attr => $value) {
-            $this->set_attributes($attr, $value);
+            $this->set_attribute($attr, $value);
         }
 
         return $this;
@@ -130,22 +130,36 @@ class Element
      * Set attributes
      *
      * @param array $attr
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_attributes($attr)
     {
-        foreach ($attr as $key => $value)
+        foreach ($attr as $key => $value){
             $this->attr[$key] = $value;
+        }
 
         return $this;
+    }
 
+    /**
+     * Set attributes
+     *
+     * @param string $attr
+     * @param string $value
+     * @return \MangaPress\Form\Element
+     */
+    public function set_attribute($attr, $value)
+    {
+        $this->attr[$attr] = $value;
+
+        return $this;
     }
 
     /**
      * Set label
      *
      * @param string $text
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_label($text = '') {
 
@@ -158,7 +172,7 @@ class Element
      * Set default value
      *
      * @param mixed $default
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_default($default)
     {
@@ -191,7 +205,7 @@ class Element
      * Set value
      *
      * @param mixed $value
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_value($value)
     {
@@ -214,7 +228,7 @@ class Element
      * Set description
      *
      * @param string $description
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_description($description)
     {
