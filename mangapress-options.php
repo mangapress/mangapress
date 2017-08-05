@@ -439,15 +439,11 @@ final class MangaPress_Options
                 }
             } else {
                 // process according to field-type
-                $new_options[$section][$option_name] = apply_filters(
-                    'sanitize_option_' . $section . "[" . $option_name . "]",
+                $new_options[$section][$option_name] =
                     self::sanitize_field(
                         $option,
                         $available_options[$section]['fields'][$option_name]
-                    ),
-                    $option,
-                    $mp_options[$section][$option_name]
-                );
+                    );
             }
         }
 
@@ -480,8 +476,12 @@ final class MangaPress_Options
                     return $config['value'];
                 }
                 break;
+            case 'text':
+            case 'textarea':
+                return filter_var($option, FILTER_SANITIZE_STRING);
+                break;
             default;
-                return $option;
+                return apply_filters("mangapress_sanitize_{$type}", $option);
         }
     }
 }
