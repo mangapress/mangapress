@@ -136,30 +136,6 @@ final class MangaPress_Options
         }
     }
 
-    /**
-     * Call-back for outputting settings fields (select drop-downs)
-     * with custom values.
-     *
-     * @param array $option Current option array
-     *
-     * @return void
-     */
-    public static function ft_basic_page_dropdowns_cb($option)
-    {
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-        $value = $mp_options[$option['section']][$option['name']];
-        $options = array_merge(array(), $option['value']);
-        echo new MangaPress_Select(array(
-            'attributes' => array(
-                'name' => "mangapress_options[{$option['section']}][{$option['name']}]",
-                'id' => $option['id'],
-                'value' => $value,
-            ),
-            'description' => isset($option['description']) ? $option['description'] : '',
-            'default' => $options
-        ));
-    }
-
     private static function get_page_values()
     {
         $pages = get_pages();
@@ -461,6 +437,7 @@ final class MangaPress_Options
      */
     private static function sanitize_field($option, $config)
     {
+        var_dump($config);die();
         $type = $config['type'];
         switch ($type) {
             case 'checkbox':
