@@ -168,10 +168,6 @@ class Install
      */
     public function do_upgrade()
     {
-        update_option('mangapress_ver', MP_VERSION);
-
-        delete_option( 'mangapress_upgrade' );
-
-        flush_rewrite_rules(false);
+        require_once MP_ABSPATH . 'upgrade.php';
     }
 }
