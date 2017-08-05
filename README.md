@@ -20,6 +20,9 @@ _Use at your own risk_
   * [ ] Gallery feature
   * [ ] Series UI changes
 
+  - Refactored Options
+  - Refactored Form Elements API 
+
 ## Changelog
 ### 4.0
 #### 4.0.0
