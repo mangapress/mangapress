@@ -2,18 +2,21 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form\Element;
+
+use MangaPress\Form\Element;
 
 /**
  * MangaPress_Textarea
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Textarea
  * @version $Id$
  */
-class MangaPress_Textarea extends MangaPress_Element
+class Textarea extends Element
 {
 
     /**
@@ -23,7 +26,7 @@ class MangaPress_Textarea extends MangaPress_Element
      */
     public function __toString()
     {
-        return $this->_html;
+        return $this->html;
     }
 
 }

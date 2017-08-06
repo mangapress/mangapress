@@ -3,17 +3,17 @@
  * Manga+Press plugin Functions
  * This is where the actual work gets done...
  *
- * @package Manga_Press
- * @subpackage Core_Functions
+ * @package MangaPress
+ * @subpackage CoreFunctions
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 
-require_once MP_ABSPATH . 'includes/query.php';
-require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
-require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
-require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/query.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-functions.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-functions.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-template-handlers.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);
@@ -53,7 +53,7 @@ function mangapress_is_queried_page($option)
 {
     global $wp_query;
 
-    $page = MangaPress_Bootstrap::get_instance()->get_option('basic', $option);
+    $page = MangaPress\Plugin\Bootstrap::get_instance()->get_option('basic', $option);
     $object = $wp_query->get_queried_object();
 
     if (!isset($object->post_name) || $object->post_name !== $page) {
@@ -111,7 +111,7 @@ function mangapress_single_comic_template($default_template)
 {
     global $post;
 
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
+    if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE && !is_single()) {
         return $template;
     }
 
@@ -139,7 +139,7 @@ function mangapress_single_comic_content_filter($content)
 {
     global $post;
 
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE) {
         return $content;
     }
 
@@ -172,7 +172,7 @@ function mangapress_single_comic_content_filter($content)
  */
 function mangapress_disable_post_thumbnail($html, $post_id)
 {
-    if (get_post_type($post_id) == MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post_id) == MangaPress\Plugin\Posts::POST_TYPE) {
         return '';
     }
 
@@ -190,7 +190,7 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
-    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
     $month_permalink = home_url("/{$slug}/{$year}/{$month}");
@@ -211,7 +211,7 @@ function mangapress_month_link ($monthlink, $year = '', $month = '')
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
 
-    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
     $relative= "/{$slug}/{$year}/{$month}/{$day}";

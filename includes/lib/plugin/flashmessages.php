@@ -6,7 +6,7 @@
  * @author Jess Green <jgreen @ psy-dreamer.com>
  * @version $Id$
  */
-
+namespace MangaPress\Plugin;
 /**
  * Flash Messages helper class
  *
@@ -14,7 +14,7 @@
  * @author Jess Green <jgreen @ psy-dreamer.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
-class MangaPress_FlashMessages
+class FlashMessages
 {
 
 
@@ -101,7 +101,7 @@ class MangaPress_FlashMessages
     public function get_transient_name()
     {
         if ($this->transient_name == '') {
-            throw new Exception("Transient name is not set");
+            throw new \Exception("Transient name is not set");
         }
 
         return $this->transient_name;

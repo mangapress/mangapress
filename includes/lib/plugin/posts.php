@@ -1,20 +1,17 @@
 <?php
 /**
- * @package Manga_Press
- * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
- */
-
-/**
  * MangaPress Posts class
  * Handles functionality for the Comic post-type
  *
- * @package MangaPress
- * @subpackage MangaPress_Posts
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @package MangaPress\Plugin\Posts
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
+namespace MangaPress\Plugin;
 
-class MangaPress_Posts
+use MangaPress\ContentType\Taxonomy;
+use MangaPress\ContentType\PostType;
+
+class Posts
 {
     /**
      * Get image html
@@ -67,9 +64,9 @@ class MangaPress_Posts
     /**
      * Class for initializing custom post-type
      *
-     * @var MangaPress_PostType
+     * @var \MangaPress\ContentType\PostType
      */
-    private $_post_type = null;
+    private $post_type = null;
 
 
     /**
@@ -84,8 +81,8 @@ class MangaPress_Posts
      */
     public function __construct()
     {
-        $this->_register_post_type();
-        $this->_rewrite_rules();
+        $this->register_post_type();
+        $this->rewrite_rules();
 
         // Setup Manga+Press Post Options box
         add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
@@ -107,10 +104,10 @@ class MangaPress_Posts
      *
      * @return void
      */
-    private function _register_post_type()
+    private function register_post_type()
     {
         // register taxonomy
-        $taxonomy = new MangaPress_Taxonomy(array(
+        $taxonomy = new Taxonomy(array(
             'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
@@ -125,7 +122,7 @@ class MangaPress_Posts
             ),
         ));
 
-        $this->_post_type = new MangaPress_PostType(array(
+        $this->post_type = new PostType(array(
             'name'          => self::POST_TYPE,
             'textdomain'    => MP_DOMAIN,
             'pluralname'    => __('Comics', MP_DOMAIN),
@@ -154,7 +151,7 @@ class MangaPress_Posts
     /**
      * Add new rewrite rules for Comic post-type
      */
-    private function _rewrite_rules()
+    private function rewrite_rules()
     {
         $post_type = self::POST_TYPE;
         $slug      = $this->get_slug();
@@ -262,7 +259,7 @@ class MangaPress_Posts
             'comic-image',
             __('Comic Image', MP_DOMAIN),
             array($this, 'comic_meta_box_cb'),
-            $this->_post_type->get_name(),
+            $this->post_type->get_name(),
             'normal',
             'high'
         );
@@ -290,7 +287,7 @@ class MangaPress_Posts
     /**
      * Enqueue scripts for post-edit and post-add screens
      *
-     * @global WP_Post $post
+     * @global \WP_Post $post
      * @return void
      */
     public function enqueue_scripts()
@@ -329,7 +326,7 @@ class MangaPress_Posts
     /**
      * Modify header columns for Comic Post-type
      *
-     * @global WP_Post $post
+     * @global \\WP_Post $post
      * @param array $column
      * @return void
      */
@@ -462,7 +459,7 @@ class MangaPress_Posts
      * meta key. This is the same meta key used for the post featured image.
      *
      * @param int $post_id
-     * @param WP_Post $post
+     * @param \\WP_Post $post
      *
      * @return int
      */
@@ -474,7 +471,7 @@ class MangaPress_Posts
         if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
             return $post_id;
 
-        $flash_messages = MangaPress_Bootstrap::get_instance()->get_helper('flashmessage');
+        $flash_messages = Bootstrap::get_instance()->get_helper('flashmessage');
 
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {
