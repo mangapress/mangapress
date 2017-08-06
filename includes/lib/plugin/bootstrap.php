@@ -151,7 +151,7 @@ class Bootstrap
      * MangaPress options are updated.
      *
      * @uses init()
-     * @see MangaPress\Plugin\Bootstrap::init()
+     * @see \MangaPress\Plugin\Bootstrap::init()
      *
      * @return void
      */
@@ -196,25 +196,16 @@ class Bootstrap
      */
     private function load_current_options()
     {
-        $mp_options = $this->get_options();
+        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
 
-        /*
-         * Disable/Enable Default Navigation CSS
-         */
-        if ($mp_options['nav']['nav_css'] == 'default_css') {
-            add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
-        }
-
-        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_other_scripts'));
-
-        /*
-         * Comic Page size
-         */
-        if ($mp_options['comic_page']['generate_comic_page']){
+        $generate_comic_page = $this->get_option('comic_page', 'generate_comic_page');
+        if ($generate_comic_page){
+            $page_width = $this->get_option('comic_page', 'comic_page_width');
+            $page_height = $this->get_option('comic_page', 'comic_page_height');
             add_image_size(
                 'comic-page',
-                $mp_options['comic_page']['comic_page_width'],
-                $mp_options['comic_page']['comic_page_height'],
+                $page_width,
+                $page_height,
                 false
             );
         }
@@ -223,7 +214,6 @@ class Bootstrap
          * Comic Thumbnail size for Comics Listing screen
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
-
     }
 
 
@@ -234,9 +224,6 @@ class Bootstrap
      */
     public function wp_enqueue_scripts()
     {
-        /*
-         * Navigation style
-         */
         wp_register_style(
             'mangapress-nav',
             MP_URLPATH . 'assets/css/nav.css',
@@ -244,20 +231,23 @@ class Bootstrap
             MP_VERSION,
             'screen'
         );
-
         wp_register_script(
-            'mangapress-bookmark',
-            MP_URLPATH . 'assets/js/bookmark.js',
+            'mangapress-lightbox',
+            MP_URLPATH . 'assets/js/lightbox.js',
             array('jquery'),
-            MP_VERSION,
-            true
+            MP_VERSION
         );
 
-        wp_enqueue_style('mangapress-nav');
-    }
+        $nav_css = $this->get_option('nav', 'nav_css');
+        $light_box = $this->get_option('comic_page', 'enable_comic_lightbox');
+        if ($nav_css == 'default_css') {
+            wp_enqueue_style('mangapress-nav');
+        }
 
-    public function wp_enqueue_other_scripts()
-    {
+        if ($light_box) {
+            wp_enqueue_script('mangapress-lightbox');
+        }
+
         wp_register_script(
             'mangapress-bookmark',
             MP_URLPATH . 'assets/js/bookmark.js',
@@ -282,7 +272,6 @@ class Bootstrap
 
         wp_enqueue_script('mangapress-bookmark');
     }
-
 
     /**
      * Enqueue admin-related styles
