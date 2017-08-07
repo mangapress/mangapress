@@ -219,8 +219,6 @@ class Bootstrap
 
     /**
      * Enqueue default navigation stylesheet
-     *
-     * @return void
      */
     public function wp_enqueue_scripts()
     {
