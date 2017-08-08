@@ -104,7 +104,7 @@ function mangapress_get_content_template($page)
  * @since 2.9
  *
  * @global WP_Post $post WordPress post object
- * @param string $template Template filename
+ * @param string $default_template Template filename
  * @return string
  */
 function mangapress_single_comic_template($default_template)
@@ -112,7 +112,7 @@ function mangapress_single_comic_template($default_template)
     global $post;
 
     if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE && !is_single()) {
-        return $template;
+        return $default_template;
     }
 
     $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );
@@ -186,15 +186,14 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  * @param string $monthlink Existing link to be modified or replaced
  * @param string $year
  * @param string $month
- * @return string|void
+ * @return string
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
     $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
-    $month_permalink = home_url("/{$slug}/{$year}/{$month}");
-    return $month_permalink;
+    return home_url("/{$slug}/{$year}/{$month}");
 }
 
 

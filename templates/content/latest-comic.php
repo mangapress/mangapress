@@ -8,6 +8,6 @@
 
 <?php mangapress_comic_navigation(); ?>
 
-<div class="mangapres-entry-content">
+<div class="mangapress-entry-content">
     <?php the_content(); ?>
 </div>
