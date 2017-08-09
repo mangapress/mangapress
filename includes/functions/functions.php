@@ -494,3 +494,15 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
     return $wpdb->get_col($query);
 
 }
+
+
+/**
+ * Add the markup for the lightbox to comic pages
+ */
+function mangapress_add_lightbox_markup()
+{
+    global $post;
+    if (is_comic($post) || is_latest_comic_page()) {
+        require_once MP_ABSPATH . 'templates/comic-lightbox.php';
+    }
+}

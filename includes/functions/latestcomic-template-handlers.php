@@ -65,17 +65,24 @@ function mangapress_add_comic_to_latestcomic_page($content)
         );
     }
 
+    $use_lightbox = \MangaPress\Plugin\Bootstrap::get_instance()->get_option('comic_page', 'enable_comic_lightbox');
     $thumbnail_size = isset($image_sizes['comic-page'])
                         ? $image_sizes['comic-page'] : 'large';
 
     $post = $wp_query->posts[0];
-
     setup_postdata($post);
+
+    $lightbox_image = false;
+    $lightbox_image_width = false;
+    $lightbox_image_height = false;
+    if ($use_lightbox) {
+        list($lightbox_image, $lightbox_image_width, $lightbox_image_height)
+            = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'large', false);
+    }
 
     ob_start();
     require mangapress_get_content_template('latestcomic_page');
     $content = ob_get_clean();
-
 
     $wp_query = $old_query;
     wp_reset_postdata();

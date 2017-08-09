@@ -109,8 +109,8 @@ if (!function_exists('is_comic')) {
  * @global WP_Query $wp_query
  * @return bool
  */
-if (!function_exists('is_comic_page')) {
-    function is_comic_page()
+if (!function_exists('is_latest_comic_page')) {
+    function is_latest_comic_page()
     {
         global $wp_query;
 
@@ -119,7 +119,6 @@ if (!function_exists('is_comic_page')) {
         $query      = $wp_query->get_queried_object();
 
         return ($wp_query->is_page && ($query->post_name == $mp_options['basic']['latestcomic_page']));
-
     }
 }
 
