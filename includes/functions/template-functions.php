@@ -352,9 +352,30 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     } else {
         return $comic_nav;
     }
-
 }
 
+/**
+ * Get a random comic. By necessity, ignores Group By and Group By Parent settings
+ * @return false|\WP_Post
+ */
+function mangapress_get_random_comic()
+{
+    global $post;
+
+    $post_array = get_transient('mangapress_random_comics');
+    if (!$post_array) {
+        $post_array = get_posts([
+            'posts_per_page' => -1,
+            'post__not_in' => [$post->ID],
+            'post_type' => MangaPress\Plugin\Posts::POST_TYPE,
+            'post_status' => 'publish',
+        ]);
+
+        set_transient('mangapress_random_comics', $post_array, time() + 43200);
+    }
+    $total = count($post_array);
+    return $post_array[rand(0, $total - 1)];
+}
 
 /**
  * CPT-neutral Clone of WordPress' get_calendar
