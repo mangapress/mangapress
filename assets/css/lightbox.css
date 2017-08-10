@@ -1,0 +1,29 @@
+.mangapress-lightbox-overlay {
+    transition:  opacity 1s, transform 1s;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    z-index: 10;
+}
+
+.show {
+    transition: opacity 1s, transform 1s;
+    opacity: 1;
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.mangapress-lightbox-content {
+    position: absolute;
+    display: block;
+    left: 50%;
+    margin-left: -25%;
+    top: 50%;
+    transform: translateY(-50%);
+}

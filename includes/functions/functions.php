@@ -104,7 +104,7 @@ function mangapress_get_content_template($page)
  * @since 2.9
  *
  * @global WP_Post $post WordPress post object
- * @param string $template Template filename
+ * @param string $default_template Template filename
  * @return string
  */
 function mangapress_single_comic_template($default_template)
@@ -112,7 +112,7 @@ function mangapress_single_comic_template($default_template)
     global $post;
 
     if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE && !is_single()) {
-        return $template;
+        return $default_template;
     }
 
     $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );
@@ -186,15 +186,14 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  * @param string $monthlink Existing link to be modified or replaced
  * @param string $year
  * @param string $month
- * @return string|void
+ * @return string
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
     $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
-    $month_permalink = home_url("/{$slug}/{$year}/{$month}");
-    return $month_permalink;
+    return home_url("/{$slug}/{$year}/{$month}");
 }
 
 
@@ -494,4 +493,37 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
 
     return $wpdb->get_col($query);
 
+}
+
+
+/**
+ * Add the markup for the lightbox to comic pages
+ */
+function mangapress_add_lightbox_markup()
+{
+    global $post;
+    if (is_comic($post) || is_latest_comic_page()) {
+        require_once MP_ABSPATH . 'templates/comic-lightbox.php';
+    }
+}
+
+
+/**
+ * Add anchor for lightbox to comic image
+ * @param string $html
+ */
+function mangapress_add_lightbox_anchor($html)
+{
+    global $post;
+
+    list($lightbox_image, $lightbox_image_width, $lightbox_image_height)
+        = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'large', false);
+
+    $link = esc_url($lightbox_image);
+    $width = intval($lightbox_image_width);
+    $height = intval($lightbox_image_height);
+
+    $a = '<a href="#" id="mangapress-lightbox-trigger" data-src="%1$s" data-img-width="%2$d" data-img-height="%3$d">%4$s</a>';
+
+    echo vsprintf($a, [$link, $width, $height, $html]);
 }

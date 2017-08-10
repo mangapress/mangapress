@@ -3,11 +3,11 @@
 </h2>
 
 <div class="mangapress-media-img">
-    <?php the_post_thumbnail(get_the_ID(), $thumbnail_size);?>
+    <?php echo apply_filters('mangapress_comic_image', get_the_post_thumbnail(get_the_ID(), $thumbnail_size));?>
 </div>
 
 <?php mangapress_comic_navigation(); ?>
 
-<div class="mangapres-entry-content">
+<div class="mangapress-entry-content">
     <?php the_content(); ?>
 </div>

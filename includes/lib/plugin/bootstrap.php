@@ -151,7 +151,7 @@ class Bootstrap
      * MangaPress options are updated.
      *
      * @uses init()
-     * @see MangaPress\Plugin\Bootstrap::init()
+     * @see \MangaPress\Plugin\Bootstrap::init()
      *
      * @return void
      */
@@ -196,25 +196,21 @@ class Bootstrap
      */
     private function load_current_options()
     {
-        $mp_options = $this->get_options();
-
-        /*
-         * Disable/Enable Default Navigation CSS
-         */
-        if ($mp_options['nav']['nav_css'] == 'default_css') {
-            add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
+        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
+        $use_lightbox = $this->get_option('comic_page', 'enable_comic_lightbox');
+        if ($use_lightbox) {
+            add_action('wp_footer', 'mangapress_add_lightbox_markup');
+            add_filter('mangapress_comic_image', 'mangapress_add_lightbox_anchor');
         }
 
-        add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_other_scripts'));
-
-        /*
-         * Comic Page size
-         */
-        if ($mp_options['comic_page']['generate_comic_page']){
+        $generate_comic_page = $this->get_option('comic_page', 'generate_comic_page');
+        if ($generate_comic_page){
+            $page_width = $this->get_option('comic_page', 'comic_page_width');
+            $page_height = $this->get_option('comic_page', 'comic_page_height');
             add_image_size(
                 'comic-page',
-                $mp_options['comic_page']['comic_page_width'],
-                $mp_options['comic_page']['comic_page_height'],
+                $page_width,
+                $page_height,
                 false
             );
         }
@@ -223,20 +219,14 @@ class Bootstrap
          * Comic Thumbnail size for Comics Listing screen
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
-
     }
 
 
     /**
      * Enqueue default navigation stylesheet
-     *
-     * @return void
      */
     public function wp_enqueue_scripts()
     {
-        /*
-         * Navigation style
-         */
         wp_register_style(
             'mangapress-nav',
             MP_URLPATH . 'assets/css/nav.css',
@@ -245,19 +235,32 @@ class Bootstrap
             'screen'
         );
 
-        wp_register_script(
-            'mangapress-bookmark',
-            MP_URLPATH . 'assets/js/bookmark.js',
-            array('jquery'),
+        wp_register_style(
+            'mangapress-lightbox',
+            MP_URLPATH . 'assets/css/lightbox.css',
+            null,
             MP_VERSION,
-            true
+            'screen'
         );
 
-        wp_enqueue_style('mangapress-nav');
-    }
+        wp_register_script(
+            'mangapress-lightbox',
+            MP_URLPATH . 'assets/js/lightbox.js',
+            array('jquery'),
+            MP_VERSION
+        );
 
-    public function wp_enqueue_other_scripts()
-    {
+        $nav_css = $this->get_option('nav', 'nav_css');
+        $light_box = $this->get_option('comic_page', 'enable_comic_lightbox');
+        if ($nav_css == 'default_css') {
+            wp_enqueue_style('mangapress-nav');
+        }
+
+        if ($light_box) {
+            wp_enqueue_script('mangapress-lightbox');
+            wp_enqueue_style('mangapress-lightbox');
+        }
+
         wp_register_script(
             'mangapress-bookmark',
             MP_URLPATH . 'assets/js/bookmark.js',
@@ -282,7 +285,6 @@ class Bootstrap
 
         wp_enqueue_script('mangapress-bookmark');
     }
-
 
     /**
      * Enqueue admin-related styles
