@@ -41,7 +41,6 @@ var MANGAPRESS = MANGAPRESS || {};
         this.open = function(event) {
             event.preventDefault();
             this.toggle('show');
-            this.getSrc();
         }.bind(this);
 
 
