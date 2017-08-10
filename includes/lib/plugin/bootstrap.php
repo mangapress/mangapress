@@ -200,6 +200,7 @@ class Bootstrap
         $use_lightbox = $this->get_option('comic_page', 'enable_comic_lightbox');
         if ($use_lightbox) {
             add_action('wp_footer', 'mangapress_add_lightbox_markup');
+            add_filter('mangapress_comic_image', 'mangapress_add_lightbox_anchor');
         }
 
         $generate_comic_page = $this->get_option('comic_page', 'generate_comic_page');
