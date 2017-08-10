@@ -336,6 +336,18 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 
     $items['first'] = apply_filters('mangapress_comic_navigation_first', $first_html, $args);
     $items['prev']  = apply_filters('mangapress_comic_navigation_prev', $prev_html, $args);
+    if ($mp_options['nav']['enable_random_link']) {
+        $random = mangapress_get_random_comic();
+        $random_url = get_permalink($random->ID);
+        $random_html = "<{$args->link_wrap} class=\"link-last\">" .
+            ( ($random->ID == $current_page)
+                ? '<span class="comic-nav-span">' . __('Random', MP_DOMAIN) . '</span>'
+                : '<a href="' . $random_url . '">'. __('Random', MP_DOMAIN) . '</a>')
+            . "</{$args->link_wrap}>";
+
+        $items['random'] = $random_html;
+    }
+
     $items['next']  = apply_filters('mangapress_comic_navigation_next', $next_html, $args);
     $items['last']  = apply_filters('mangapress_comic_navigation_last', $last_html, $args);
 
@@ -352,9 +364,30 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     } else {
         return $comic_nav;
     }
-
 }
 
+/**
+ * Get a random comic. By necessity, ignores Group By and Group By Parent settings
+ * @return false|\WP_Post
+ */
+function mangapress_get_random_comic()
+{
+    global $post;
+
+    $post_array = get_transient('mangapress_random_comics');
+    if (!$post_array) {
+        $post_array = get_posts([
+            'posts_per_page' => -1,
+            'post__not_in' => [$post->ID],
+            'post_type' => MangaPress\Plugin\Posts::POST_TYPE,
+            'post_status' => 'publish',
+        ]);
+
+        set_transient('mangapress_random_comics', $post_array, time() + 43200);
+    }
+    $total = count($post_array);
+    return $post_array[rand(0, $total - 1)];
+}
 
 /**
  * CPT-neutral Clone of WordPress' get_calendar

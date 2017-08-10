@@ -342,6 +342,14 @@ class Options
                     'description' => __('Options for comic navigation. Whether to have navigation automatically inserted on comic pages, or to enable/disable default comic navigation CSS.', MP_DOMAIN),
                 ),
                 'fields' => array(
+                    'enable_random_link' => array(
+                        'id' => 'enable-random-link',
+                        'title' => __('Add Random Link', MP_DOMAIN),
+                        'description' => __('Adds a "Random" link to comic navigation', MP_DOMAIN),
+                        'type' => 'checkbox',
+                        'default' => false,
+                        'value' => true,
+                    ),
                     'nav_css' => array(
                         'id' => 'navigation-css',
                         'title' => __('Navigation CSS', MP_DOMAIN),
