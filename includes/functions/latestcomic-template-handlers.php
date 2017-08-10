@@ -65,7 +65,6 @@ function mangapress_add_comic_to_latestcomic_page($content)
         );
     }
 
-    $use_lightbox = \MangaPress\Plugin\Bootstrap::get_instance()->get_option('comic_page', 'enable_comic_lightbox');
     $thumbnail_size = isset($image_sizes['comic-page'])
                         ? $image_sizes['comic-page'] : 'large';
 
