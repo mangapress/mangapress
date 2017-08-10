@@ -16,9 +16,8 @@ _Use at your own risk_
 ### 4.0.0
   * [X] Comic bookmarking
   * [X] Lightbox
-  * [ ] Social media integration
-  * [ ] Gallery feature
-  * [ ] Series UI changes
+  * [X] Random comic link
+  * [ ] Social media integration 
 
   - Refactored Options
   - Refactored Form Elements API 
@@ -26,7 +25,7 @@ _Use at your own risk_
 ## Changelog
 ### 4.0
 #### 4.0.0
-   * [see above]
+   * __see above__
 
 ---
 
