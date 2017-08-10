@@ -69,13 +69,11 @@ function mangapress_add_comic_to_latestcomic_page($content)
                         ? $image_sizes['comic-page'] : 'large';
 
     $post = $wp_query->posts[0];
-
     setup_postdata($post);
 
     ob_start();
     require mangapress_get_content_template('latestcomic_page');
     $content = ob_get_clean();
-
 
     $wp_query = $old_query;
     wp_reset_postdata();

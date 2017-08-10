@@ -2,19 +2,51 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Form\Element;
+
+use MangaPress\Form\Element;
 
 /**
  * MangaPress_Checkbox
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Checkbox
  * @version $Id$
  */
-class MangaPress_Checkbox extends MangaPress_Element
+class Checkbox extends Element
 {
+    /**
+     * Checked value — saved to DB
+     * @var boolean
+     */
+    protected $checked;
+
+
+    /**
+     * Get checked value
+     * @return mixed
+     */
+    public function get_checked()
+    {
+        return $this->checked;
+    }
+
+
+    /**
+     * Set checked value
+     * @param mixed $checked
+     * @return \MangaPress\Form\Element\Checkbox
+     */
+    public function set_checked($checked)
+    {
+        $this->checked = $checked;
+        return $this;
+    }
+
+
     /**
      * Display form element
      *
@@ -23,10 +55,10 @@ class MangaPress_Checkbox extends MangaPress_Element
     public function __toString()
     {
         $label = '';
-        if (!empty($this->_label)) {
+        if (!empty($this->label)) {
             $id = $this->get_attributes('id');
             $class = " class=\"label-$id\"";
-            $label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
+            $label = "<label for=\"$id\"$class>$this->label</label>\r\n";
         }
 
         $desc = $this->get_description();
@@ -36,23 +68,21 @@ class MangaPress_Checkbox extends MangaPress_Element
 
         $default = $this->get_default();
         $attr_arr = array();
-        foreach ($this->_attr as $name => $value) {
-            if ($name != 'value') {
-                $attr_arr[] = "{$name}=\"{$value}\"";
-            } else {
-                $attr_arr[] = "{$name}=\"" . $default . "\"";
-            }
+        foreach ($this->attr as $name => $value) {
+            $attr_arr[] = "{$name}=\"{$value}\"";
         }
 
         $attr = implode(" ", $attr_arr);
 
-        $checked = checked($default, $this->get_value(), false);
+        $checked = checked($this->get_checked(), $this->get_value(), false);
 
-        $htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+        $name = $this->get_name();
+        $hidden = "<input type=\"hidden\" name=\"{$name}\" value=\"{$default}\" />";
+        $htmlArray['content'] = "{$hidden}{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
 
-        $this->_html = implode(' ', $htmlArray);
+        $this->html = implode(' ', $htmlArray);
 
-        return $this->_html;
+        return $this->html;
 
     }
 }

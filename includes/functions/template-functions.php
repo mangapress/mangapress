@@ -7,8 +7,72 @@
  * @package Manga_Press
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
+
+
+/**
+ * Bookmark button template tag
+ *
+ * @param array $attrs {
+ *      Optional. Array of arguments.
+ *
+ *      @type boolean $show_history Show bookmark history link and drop-down. Defaults to false
+ *      @type boolean $echo Show output instead of returning it. Defaults to true
+ * }
+ * @return void|string
+ */
+function mangapress_bookmark_button($attrs)
+{
+    /**
+     * @global WP_Post $post
+     */
+    global $post;
+
+    $a = wp_parse_args($attrs,
+        array(
+            'show_history' => false,
+            'no_styling'   => false,
+            'echo'         => true,
+        )
+    );
+
+    extract($a); // gross...
+
+    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
+    $title = get_post_field('post_title', $post);
+    $id = get_post_field('ID', $post);
+    $url = wp_get_shortlink();
+
+    $links = array();
+    $links[] ="<a href=\"#\" id=\"bookmark-comic\" data-no-styling=\"{$no_styling}\" data-id=\"{$id}\" data-url=\"{$url}\" data-title=\"{$title}\" data-label=\"" . __('Bookmark', MP_DOMAIN) . "\" data-bookmarked-label=\"" . __('Bookmarked', MP_DOMAIN) . "\">" . __('Bookmark', MP_DOMAIN) . "</a>";
+    if ($show_history) {
+        $links[] = "<a href=\"#\" id=\"bookmark-comic-history\">" . __('Bookmark History', MP_DOMAIN) . "</a>";
+    }
+
+    $html = '<li>' . implode('</li><li>', $links) . '</li>';
+
+    $html = vsprintf($nav, array($html));
+    if ($echo) {
+        echo $html;
+    } else {
+        return $html;
+    }
+}
+
+
+/**
+ * Shortcode function for bookmark template tag
+ * @param array $atts @see mangapress_bookmark_button
+ */
+function mangapress_bookmark_button_shortcode($atts)
+{
+    // process $atts
+    // let the template tag handle the output
+    mangapress_bookmark_button($a);
+}
+add_shortcode('bookmark_comic', 'mangapress_bookmark_button_shortcode');
+
 
 /**
  * is_comic()
@@ -45,17 +109,16 @@ if (!function_exists('is_comic')) {
  * @global WP_Query $wp_query
  * @return bool
  */
-if (!function_exists('is_comic_page')) {
-    function is_comic_page()
+if (!function_exists('is_latest_comic_page')) {
+    function is_latest_comic_page()
     {
         global $wp_query;
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = MangaPress\Plugin\Bootstrap::get_instance()->get_options();
 
         $query      = $wp_query->get_queried_object();
 
         return ($wp_query->is_page && ($query->post_name == $mp_options['basic']['latestcomic_page']));
-
     }
 }
 
@@ -72,7 +135,7 @@ if (!function_exists('is_comic_archive_page')) {
     {
         global $wp_query;
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = MangaPress\Plugin\Bootstrap::get_instance()->get_options();
 
         $query      = $wp_query->get_queried_object();
 
@@ -178,7 +241,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 {
     global $post;
 
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+    $mp_options = MangaPress\Plugin\Bootstrap::get_instance()->get_options();
 
     $defaults = array(
         'container'      => 'nav',
@@ -345,7 +408,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     // Quick check. If we have no posts at all, abort!
     if ( !$posts ) {
-        $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
+        $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Plugin\Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
         if ( !$gotsome ) {
             $cache[ $key ] = '';
             wp_cache_set( 'mangapress_get_calendar', $cache, 'mangapress_calendar' );
@@ -389,7 +452,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
             FROM $wpdb->posts
             WHERE post_date < '$thisyear-$thismonth-01'
-            AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
+            AND post_type = '" . MangaPress\Plugin\Posts::POST_TYPE . "' AND post_status = 'publish'
                 ORDER BY post_date DESC
                 LIMIT 1");
         $next = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
@@ -460,7 +523,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     // Get days with posts
     $dayswithposts = $wpdb->get_results("SELECT DISTINCT DAYOFMONTH(post_date)
 		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
-		AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
+		AND post_type = '" . MangaPress\Plugin\Posts::POST_TYPE . "' AND post_status = 'publish'
 		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", ARRAY_N);
 
 
@@ -486,7 +549,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         ."FROM $wpdb->posts "
         ."WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
         ."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-        ."AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'"
+        ."AND post_type = '" . MangaPress\Plugin\Posts::POST_TYPE . "' AND post_status = 'publish'"
     );
 
     if ( $ak_post_titles ) {

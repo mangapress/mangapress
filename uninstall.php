@@ -1,13 +1,10 @@
 <?php
 /**
- * @package Manga_Press
+ * @package MangaPress
  * @subpackage Uninstall
  * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
-    die('You are not allowed to call this page directly.');
-
 if( !defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
     exit();
 

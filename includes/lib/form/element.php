@@ -2,84 +2,73 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress
  */
-require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/select.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
+namespace MangaPress\Form;
+
 /**
  * MangaPress_Element
  * Abstract class used to define basic functionality for extending classes
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @package MangaPress_Element
  * @version $Id$
  */
-class MangaPress_Element
+class Element
 {
     /**
      * Elements HTML attributes array
      *
      * @var array
      */
-    protected $_attr;
+    protected $attr;
 
     /**
      * Element label text
      *
      * @var string
      */
-    protected $_label;
+    protected $label;
 
     /**
      * Name attribute
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * Default value
      * @var mixed
      */
-    protected $_default_value;
+    protected $default_value;
 
     /**
      * Value (if different from default)
      *
      * @var mixed
      */
-    protected $_value;
-
-    /**
-     * The element data-type. Determines validation
-     *
-     * @var string
-     */
-    protected $_data_type;
+    protected $value;
 
     /**
      * Object html
      *
      * @var string
      */
-    protected $_html;
+    protected $html;
 
     /**
      * Description field
      *
      * @var string
      */
-    protected $_description;
+    protected $description;
 
     /**
      * PHP5 constructor method.
      *
      * @param array $options
-     * @return void
      */
     public function __construct($options = null)
     {
@@ -93,7 +82,7 @@ class MangaPress_Element
      * Set options
      *
      * @param array $options
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_options($options)
     {
@@ -111,12 +100,12 @@ class MangaPress_Element
      * Add attributes to element
      *
      * @param array $attributes
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function add_attributes(array $attributes = array())
     {
         foreach ($attributes as $attr => $value) {
-            $this->set_attributes($attr, $value);
+            $this->set_attribute($attr, $value);
         }
 
         return $this;
@@ -130,37 +119,51 @@ class MangaPress_Element
      */
     public function get_attributes($key)
     {
-        if (!isset($this->_attr[$key])) {
+        if (!isset($this->attr[$key])) {
             return null;
         }
 
-        return $this->_attr[$key];
+        return $this->attr[$key];
     }
 
     /**
      * Set attributes
      *
      * @param array $attr
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_attributes($attr)
     {
-        foreach ($attr as $key => $value)
-            $this->_attr[$key] = $value;
+        foreach ($attr as $key => $value){
+            $this->attr[$key] = $value;
+        }
 
         return $this;
+    }
 
+    /**
+     * Set attributes
+     *
+     * @param string $attr
+     * @param string $value
+     * @return \MangaPress\Form\Element
+     */
+    public function set_attribute($attr, $value)
+    {
+        $this->attr[$attr] = $value;
+
+        return $this;
     }
 
     /**
      * Set label
      *
      * @param string $text
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_label($text = '') {
 
-        $this->_label = $text;
+        $this->label = $text;
 
         return $this;
     }
@@ -169,11 +172,11 @@ class MangaPress_Element
      * Set default value
      *
      * @param mixed $default
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_default($default)
     {
-        $this->_default_value = $default;
+        $this->default_value = $default;
 
         return $this;
     }
@@ -185,7 +188,7 @@ class MangaPress_Element
      */
     public function get_default()
     {
-        return $this->_default_value;
+        return $this->default_value;
     }
 
     /**
@@ -195,18 +198,18 @@ class MangaPress_Element
      */
     public function get_value()
     {
-        return $this->_attr['value'];
+        return $this->attr['value'];
     }
 
     /**
-     * Set the data type
+     * Set value
      *
-     * @param string $data_type
-     * @return \MangaPress_Element
+     * @param mixed $value
+     * @return \MangaPress\Form\Element
      */
-    public function set_data_type($data_type)
+    public function set_value($value)
     {
-        $this->_data_type = $data_type;
+        $this->attr['value'] = $value;
 
         return $this;
     }
@@ -225,11 +228,11 @@ class MangaPress_Element
      * Set description
      *
      * @param string $description
-     * @return \MangaPress_Element
+     * @return \MangaPress\Form\Element
      */
     public function set_description($description)
     {
-        $this->_description = $description;
+        $this->description = $description;
 
         return $this;
     }
@@ -241,7 +244,7 @@ class MangaPress_Element
      */
     public function get_description()
     {
-        return $this->_description;
+        return $this->description;
     }
 
     /**
@@ -252,7 +255,7 @@ class MangaPress_Element
     public function build_attr_string()
     {
         $attr_arr = array();
-        foreach ($this->_attr as $name => $value)
+        foreach ($this->attr as $name => $value)
             $attr_arr[] = "{$name}=\"{$value}\"";
 
         $attr = implode(" ", $attr_arr);

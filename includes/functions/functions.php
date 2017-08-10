@@ -3,22 +3,41 @@
  * Manga+Press plugin Functions
  * This is where the actual work gets done...
  *
- * @package Manga_Press
- * @subpackage Core_Functions
+ * @package MangaPress
+ * @subpackage CoreFunctions
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 
-require_once MP_ABSPATH . 'includes/query.php';
-require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
-require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
-require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/query.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-functions.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-functions.php';
+require_once MP_ABSPATH . 'includes/functions/latestcomic-template-handlers.php';
+require_once MP_ABSPATH . 'includes/functions/comicarchive-template-handlers.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);
 define('MP_CATEGORY_CHILDREN', 2);
 define('MP_CATEGORY_ALL', 3);
+
+function mangapress_bookmark_styles($styles)
+{
+    $styles = array(
+        'bookmarkStyles' => array(
+            'width' => '400px',
+            'z-index' => 9999,
+            'border' => '1px solid black',
+            'background-color' => '#fff',
+            'position' => 'absolute',
+            'padding' => '5px',
+            'left' => '50%',
+            'margin-left' => '-150px'
+        ),
+    );
+
+    return $styles;
+}
+add_filter('mangapress_bookmark_styles', 'mangapress_bookmark_styles');
 
 /**
  * Checks queried object against settings to see if query is for either
@@ -34,7 +53,7 @@ function mangapress_is_queried_page($option)
 {
     global $wp_query;
 
-    $page = MangaPress_Bootstrap::get_instance()->get_option('basic', $option);
+    $page = MangaPress\Plugin\Bootstrap::get_instance()->get_option('basic', $option);
     $object = $wp_query->get_queried_object();
 
     if (!isset($object->post_name) || $object->post_name !== $page) {
@@ -85,15 +104,15 @@ function mangapress_get_content_template($page)
  * @since 2.9
  *
  * @global WP_Post $post WordPress post object
- * @param string $template Template filename
+ * @param string $default_template Template filename
  * @return string
  */
 function mangapress_single_comic_template($default_template)
 {
     global $post;
 
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
-        return $template;
+    if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE && !is_single()) {
+        return $default_template;
     }
 
     $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );
@@ -120,7 +139,7 @@ function mangapress_single_comic_content_filter($content)
 {
     global $post;
 
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post) !== MangaPress\Plugin\Posts::POST_TYPE) {
         return $content;
     }
 
@@ -153,7 +172,7 @@ function mangapress_single_comic_content_filter($content)
  */
 function mangapress_disable_post_thumbnail($html, $post_id)
 {
-    if (get_post_type($post_id) == MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post_id) == MangaPress\Plugin\Posts::POST_TYPE) {
         return '';
     }
 
@@ -167,15 +186,14 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  * @param string $monthlink Existing link to be modified or replaced
  * @param string $year
  * @param string $month
- * @return string|void
+ * @return string
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
-    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
-    $month_permalink = home_url("/{$slug}/{$year}/{$month}");
-    return $month_permalink;
+    return home_url("/{$slug}/{$year}/{$month}");
 }
 
 
@@ -192,7 +210,7 @@ function mangapress_month_link ($monthlink, $year = '', $month = '')
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
 
-    $posts = MangaPress_Bootstrap::get_instance()->get_helper('posts');
+    $posts = MangaPress\Plugin\Bootstrap::get_instance()->get_helper('posts');
     $slug = $posts->get_slug();
 
     $relative= "/{$slug}/{$year}/{$month}/{$day}";
@@ -475,4 +493,37 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
 
     return $wpdb->get_col($query);
 
+}
+
+
+/**
+ * Add the markup for the lightbox to comic pages
+ */
+function mangapress_add_lightbox_markup()
+{
+    global $post;
+    if (is_comic($post) || is_latest_comic_page()) {
+        require_once MP_ABSPATH . 'templates/comic-lightbox.php';
+    }
+}
+
+
+/**
+ * Add anchor for lightbox to comic image
+ * @param string $html
+ */
+function mangapress_add_lightbox_anchor($html)
+{
+    global $post;
+
+    list($lightbox_image, $lightbox_image_width, $lightbox_image_height)
+        = wp_get_attachment_image_src(get_post_thumbnail_id($post), 'large', false);
+
+    $link = esc_url($lightbox_image);
+    $width = intval($lightbox_image_width);
+    $height = intval($lightbox_image_height);
+
+    $a = '<a href="#" id="mangapress-lightbox-trigger" data-src="%1$s" data-img-width="%2$d" data-img-height="%3$d">%4$s</a>';
+
+    echo vsprintf($a, [$link, $width, $height, $html]);
 }

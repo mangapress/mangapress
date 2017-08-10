@@ -6,18 +6,20 @@
  * @package MangaPress
  */
 namespace MangaPress\Form\Element;
+use MangaPress\Form\Element\Text;
 
-use MangaPress\Form\Element;
-
+require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
 /**
- * MangaPress_Radio
+ * MangaPress_Number
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
- * @package MangaPress_Radio
+ * @package MangaPress_Text
  * @version $Id$
  */
-class Radio extends Element
+class Number extends Text
 {
+    protected $type = 'number';
+
 
     /**
      * Echo form element
@@ -34,24 +36,14 @@ class Radio extends Element
         }
 
         $desc = $this->get_description();
+        $description = "";
         if ($desc) {
             $description = "<span class=\"description\">{$desc}</span>";
         }
 
-        $default = $this->get_default();
-        $attr_arr = array();
-        foreach ($this->attr as $name => $value) {
-            if ($name != 'value')
-                $attr_arr[] = "{$name}=\"{$value}\"";
-            else
-                $attr_arr[] = "{$name}=\"" . $default . "\"";
-        }
+        $attr = $this->build_attr_string();
 
-        $attr = implode(" ", $attr_arr);
-
-        $checked = checked($default, $this->get_value(), false);
-
-        $htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+        $htmlArray['content'] = "{$label}<input type=\"number\" $attr />\r\n{$description}";
 
         $this->html = implode(' ', $htmlArray);
 

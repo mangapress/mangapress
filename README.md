@@ -1,15 +1,35 @@
 # Manga+Press Comic Manager
 * Contributors: Jess Green
-* Donate link: http://www.manga-press.com/
+* Website: https://www.manga-press.com/
+* Donate link: https://cash.me/$mangapress
 * License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
 
 ## Description
 
-Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
+Manga+Press is a webcomic management system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
+
+## Developement Version: 4.0
+_Use at your own risk_
+
+### 4.0.0
+  * [X] Comic bookmarking
+  * [X] Lightbox
+  * [ ] Social media integration
+  * [ ] Gallery feature
+  * [ ] Series UI changes
+
+  - Refactored Options
+  - Refactored Form Elements API 
 
 ## Changelog
+### 4.0
+#### 4.0.0
+   * [see above]
+
+---
+
 ### 3.0
 #### 3.0.0
    * Removed child themes
@@ -17,6 +37,8 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
    * Added comic archive calendar template
    * Added comic archive gallery template
    * Removed insert navigation option
+
+---
 
 ### 2.9
 #### 2.9.3
@@ -47,7 +69,9 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
    * Updated and fixed loading of Spanish Language files
    * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
    * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-      * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+      * Incidentally corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+
+---
 
 ### 2.8
 #### 2.8.3
@@ -72,6 +96,8 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
    * Added new Media Library popup (eliminating legacy ThickBox dependency)
    * Code review and cleanup
    * Removed legacy options (Comic Banner)
+
+---
 
 ### 2.7
 #### 2.7.5
@@ -104,6 +130,7 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 #### 2.7 Beta 2
    * Fixes a problem with the Manga+Press Options page. A path issue in the framework may prevent option fields from displaying properly.
 
+---
 
 ## Installation
 
@@ -117,9 +144,11 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 6. Click on the Manga+Press Options tab under Settings and go to Basic Manga+Press Options, and set Latest Comic Page, and Comic Archive Page to your two newly created pages.
 
+---
+
 ## Credits
 
-(c) 2008-2014 Jess C. Green
+© Jess C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/support/. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 

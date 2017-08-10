@@ -4,7 +4,7 @@ Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 3.0.0
+Stable tag: 4.0.0
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,16 +15,12 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 == Upgrade Notice ==
 
-WARNING: Child themes have been pulled from the plugin. These themes are now available for download here: https://manga-press.com/download/themes/. If you are using these themes, please move them to the `wp-content/themes` directory before upgrading.
-
-= 3.0.0 =
-  * Removed child themes
-  * Added sorting options for Comic Archive Page
-  * Added comic archive calendar template
-  * Added comic archive gallery template
-  * Removed insert navigation option
+= 4.0.0 =
 
 == Changelog ==
+= 4.0 =
+   * 4.0
+
 = 3.0 =
    * 3.0
       * Removed child themes
@@ -59,7 +55,7 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
       * Updated and fixed loading of Spanish Language files
       * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
       * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-         * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+         * Incidentally corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
 
 = 2.8 =
    * 2.8.3

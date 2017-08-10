@@ -2,16 +2,13 @@
 /**
  * MangaPress Installation Class
  *
- * @package MangaPress
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @package MangaPress\Plugin\Install
+ * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  */
-/**
- * @subpackage MangaPress_Install
- * @author Jess Green <jgreen@psy-dreamer.com>
- * @version $Id$
- */
-class MangaPress_Install
+namespace MangaPress\Plugin;
+
+class Install
 {
 
 
@@ -20,7 +17,7 @@ class MangaPress_Install
      *
      * @var string
      */
-    protected static $_version;
+    protected static $version;
 
 
     /**
@@ -28,35 +25,35 @@ class MangaPress_Install
      *
      * @var string
      */
-    protected $_type;
+    protected $type;
 
 
     /**
      * Instance of Bootstrap class
-     * @var \MangaPress_Bootstrap
+     * @var Bootstrap
      */
-    protected $_bootstrap;
+    protected $bootstrap;
 
 
     /**
-     * Instance of MangaPress_Install
-     * @var \MangaPress_Install
+     * Instance of Install
+     * @var Install
      */
-    protected static $_instance;
+    protected static $instance;
 
 
     /**
      * Get instance of
      *
-     * @return MangaPress_Install
+     * @return Install
      */
     public static function get_instance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new self();
+        if (self::$instance == null) {
+            self::$instance = new self();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
 
@@ -91,23 +88,23 @@ class MangaPress_Install
             );
         }
 
-        self::$_version = strval( get_option('mangapress_ver') );
+        self::$version = strval( get_option('mangapress_ver') );
 
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
-        if (version_compare(self::$_version, MP_VERSION, '<') && !(self::$_version == '')) {
+        if (version_compare(self::$version, MP_VERSION, '<') && !(self::$version == '')) {
 
             add_option( 'mangapress_upgrade', 'yes', '', 'no');
 
-        } elseif (self::$_version == '') {
+        } elseif (self::$version == '') {
 
             add_option( 'mangapress_ver', MP_VERSION, '', 'no');
-            add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
+            add_option( 'mangapress_options', serialize( Options::get_default_options() ), '', 'no' );
 
         }
 
-        $this->_bootstrap = MangaPress_Bootstrap::get_instance();
-        $this->_bootstrap->init();
+        $this->bootstrap = Bootstrap::get_instance();
+        $this->bootstrap->init();
         $this->after_plugin_activation();
 
         flush_rewrite_rules(false);
@@ -140,14 +137,14 @@ class MangaPress_Install
         // create a default series category
         $term = wp_insert_term(
             'Default Series',
-            MangaPress_Posts::TAX_SERIES,
+            Posts::TAX_SERIES,
             array(
                 'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
                 'slug'        => 'default-series',
             )
         );
 
-        if (!($term instanceof WP_Error)) {
+        if (!($term instanceof \WP_Error)) {
             add_option('mangapress_default_category', $term['term_id'], '', 'no');
         }
     }
@@ -171,10 +168,6 @@ class MangaPress_Install
      */
     public function do_upgrade()
     {
-        update_option('mangapress_ver', MP_VERSION);
-
-        delete_option( 'mangapress_upgrade' );
-
-        flush_rewrite_rules(false);
+        require_once MP_ABSPATH . 'upgrade.php';
     }
 }
