@@ -1,5 +1,6 @@
 /* comic navigation */
-.comic-nav-hlist-wrapper {
+.comic-nav-hlist-wrapper,
+.comic-bookmark-nav-hlist-wrapper {
     text-align: left;
     margin: 5px 0 10px 0;
     padding: 0;
@@ -7,34 +8,21 @@
     float: none;
 }
 
-.comic-nav-hlist-wrapper .comic-nav-hlist {
+.comic-nav-hlist,
+.comic-bookmark-nav-hlist {
     list-style: none;
 }
 
-.comic-nav-hlist-wrapper .comic-nav-hlist:after {
+.comic-nav-hlist:after,
+.comic-bookmark-nav-hlist:after {
     content: "";
     display: block;
     float: none;
     clear: both;
 }
 
-.comic-nav-hlist-wrapper .comic-nav-hlist > li {
+.comic-nav-hlist > li,
+.comic-bookmark-nav-hlist > li {
     float: left;
     margin-right: 10px;
-}
-
-/* calendar styles */
-.mangapress_widget_calendar caption {
-    padding: 5px;
-    text-align: center;
-}
-.mangapress_widget_calendar table {
-    width: 100%;
-}
-
-.mangapress_widget_calendar td,
-.mangapress_widget_calendar th {
-    width: 14.28%;
-    padding: 5px;
-    text-align: left;
 }

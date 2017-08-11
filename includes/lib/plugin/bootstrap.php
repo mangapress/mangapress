@@ -236,6 +236,14 @@ class Bootstrap
         );
 
         wp_register_style(
+            'mangapress-calendar',
+            MP_URLPATH . 'assets/css/calendar.css',
+            null,
+            MP_VERSION,
+            'screen'
+        );
+
+        wp_register_style(
             'mangapress-lightbox',
             MP_URLPATH . 'assets/css/lightbox.css',
             null,
@@ -249,6 +257,8 @@ class Bootstrap
             array('jquery'),
             MP_VERSION
         );
+
+        wp_enqueue_style('mangapress-calendar');
 
         $nav_css = $this->get_option('nav', 'nav_css');
         $light_box = $this->get_option('comic_page', 'enable_comic_lightbox');
