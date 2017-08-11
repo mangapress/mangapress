@@ -39,7 +39,7 @@ function mangapress_bookmark_button($attrs)
 
     extract($a); // gross...
 
-    $nav = '<nav id="comic-bookmark-navigation">%1$s</nav>';
+    $nav = '<nav id="comic-bookmark-navigation" class="comic-bookmark-nav-hlist-wrapper"><ul class="comic-bookmark-nav-hlist">%1$s</ul></nav>';
     $title = get_post_field('post_title', $post);
     $id = get_post_field('ID', $post);
     $url = wp_get_shortlink();

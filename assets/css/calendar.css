@@ -1,0 +1,16 @@
+
+/* calendar styles */
+.mangapress_widget_calendar caption {
+    padding: 5px;
+    text-align: center;
+}
+.mangapress_widget_calendar table {
+    width: 100%;
+}
+
+.mangapress_widget_calendar td,
+.mangapress_widget_calendar th {
+    width: 14.28%;
+    padding: 5px;
+    text-align: left;
+}
