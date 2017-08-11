@@ -334,6 +334,22 @@ class Options
                         'title' => __('Comic Page Height', MP_DOMAIN),
                         'default' => 1000,
                     ),
+                    'enable_opengraph_tags' => array(
+                        'id' => 'opengraph-tag',
+                        'type' => 'checkbox',
+                        'title' => __('Enable Open Graph (OG) Tags', MP_DOMAIN),
+                        'description' => __('Enable Open Graph (og:*) tags on comic pages.', MP_DOMAIN),
+                        'default' => false,
+                        'value' => true,
+                    ),
+                    'enable_twitter_cards' => array(
+                        'id' => 'twitter-cards',
+                        'type' => 'checkbox',
+                        'title' => __('Enable Twitter Cards', MP_DOMAIN),
+                        'description' => __('Enable Twitter Cards on comic pages.', MP_DOMAIN),
+                        'default' => false,
+                        'value' => true,
+                    ),
                 )
             ),
             'nav' => array(

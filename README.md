@@ -17,7 +17,7 @@ _Use at your own risk_
   * [X] Comic bookmarking
   * [X] Lightbox
   * [X] Random comic link
-  * [ ] Social media integration 
+  * [X] Social media integration 
 
   - Refactored Options
   - Refactored Form Elements API 
