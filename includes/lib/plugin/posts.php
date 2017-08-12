@@ -130,6 +130,7 @@ class Posts
             'arguments'     => array(
                 'supports'      => array(
                     'title',
+                    'excerpt',
                     'comments',
                     'thumbnails',
                     'publicize',

@@ -215,6 +215,16 @@ class Bootstrap
             );
         }
 
+        $enable_opengraph_tags = $this->get_option('comic_page', 'enable_opengraph_tags');
+        if ($enable_opengraph_tags) {
+            add_action('wp_head', 'mangapress_add_opengraph_tags', 5);
+        }
+
+        $enable_twitter_cards = $this->get_option('comic_page', 'enable_twitter_cards');
+        if ($enable_twitter_cards) {
+            add_action('wp_head', 'mangapress_add_twittercards', 5);
+        }
+
         /*
          * Comic Thumbnail size for Comics Listing screen
          */

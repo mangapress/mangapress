@@ -76,7 +76,9 @@ class Options
         foreach ($fields as $field_name => $field) {
             $field = wp_parse_args($field, [
                 'callback' => array(__CLASS__, 'settings_field_cb'),
+                'class' => '',
                 'value' => '',
+                'default' => '',
             ]);
 
             add_settings_field(
@@ -113,6 +115,7 @@ class Options
                 'name' => "mangapress_options[{$option['section']}][{$option['name']}]",
                 'id' => $option['id'],
                 'value' => $value,
+                'class' => $option['class']
             );
 
             $element = "MangaPress\Form\Element\\{$class}";
@@ -327,12 +330,14 @@ class Options
                         'type' => 'number',
                         'title' => __('Comic Page Width', MP_DOMAIN),
                         'default' => 600,
+                        'class' => 'small-text',
                     ),
                     'comic_page_height' => array(
                         'id' => 'page-height',
                         'type' => 'number',
                         'title' => __('Comic Page Height', MP_DOMAIN),
                         'default' => 1000,
+                        'class' => 'small-text',
                     ),
                     'enable_opengraph_tags' => array(
                         'id' => 'opengraph-tag',
@@ -349,6 +354,13 @@ class Options
                         'description' => __('Enable Twitter Cards on comic pages.', MP_DOMAIN),
                         'default' => false,
                         'value' => true,
+                    ),
+                    'twitter_site_handle' => array(
+                        'id' => 'twitter-username',
+                        'type' => 'text',
+                        'title' => 'Twitter Username',
+                        'description' => __('If Twitter Cards are enabled, please enter the Twitter username to associate with Twitter Cards.', MP_DOMAIN),
+                        'class' => 'regular-text'
                     ),
                 )
             ),
@@ -399,7 +411,7 @@ class Options
         foreach ($fields as $section => $data) {
             $sections[$section] = $data['section'];
         }
-        return apply_filters('mangapress_options_sections', $sections);
+        return $sections;
     }
 
 

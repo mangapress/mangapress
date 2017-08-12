@@ -527,3 +527,31 @@ function mangapress_add_lightbox_anchor($html)
 
     echo vsprintf($a, [$link, $width, $height, $html]);
 }
+
+
+/**
+ * Load Open Graph tags template
+ */
+function mangapress_add_opengraph_tags()
+{
+    $theme_template = locate_template(['comic/opengraph-tags.php'], false, false);
+    if (!$theme_template) {
+        require_once MP_ABSPATH . 'templates/opengraph-tags.php';
+    } else {
+        require_once $theme_template;
+    }
+}
+
+
+/**
+ * Load Twitter Cards tags template
+ */
+function mangapress_add_twittercards()
+{
+    $theme_template = locate_template(['comic/twittercards.php'], false, false);
+    if (!$theme_template) {
+        require_once MP_ABSPATH . 'templates/twittercards.php';
+    } else {
+        require_once $theme_template;
+    }
+}
