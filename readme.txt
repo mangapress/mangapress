@@ -16,10 +16,17 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 == Upgrade Notice ==
 
 = 4.0.0 =
+    Manga+Press adds bookmarking, lightbox, random comic link, and social media integration in the form of Open Graph tags and Twitter Cards.
 
 == Changelog ==
 = 4.0 =
    * 4.0
+      * Comic bookmarking
+      * Lightbox
+      * Random comic link
+      * Social media integration
+      * Refactored Options
+      * Refactored Form Elements API
 
 = 3.0 =
    * 3.0
