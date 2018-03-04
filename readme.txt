@@ -2,8 +2,8 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 4.0
-Tested up to: 4.8
+Requires at least: 4.8
+Tested up to: 4.9.4
 Stable tag: 4.0.0
 License: GPLv2
 
@@ -148,14 +148,6 @@ Archive Page to your two newly created pages.
 
 This is because the navigation for the comics is built into the theme. Using a different theme or overriding the default theme's template will allow you to use the options. (however, see [issue #17](https://github.com/jesgs/mangapress/issues/17) for additional issues)
 
-*Does Manga+Press work on WordPress Multi-site?*
-
-Yes, it does. However, a few steps must be taken to make Manga+Press' child-themes available to your network. See the question below on the steps to take to enable the child-themes on Multisite.
-
-*The bundled themes aren't available in WordPress Multi-site. What's going on?*
-
-This is because the plugin hasn't been activated for the entire MS network. In order for the child-themes to be available, Manga+Press must be available to the entire network. This can be done by going to **Network Admin > Plugins** and clicking the _Network Activate_ link for Manga+Press. Once this is done, then both the parent- and child-themes need to made available to the network as well. This can be accomplished by going to **Network Admin > Themes**, selecting the themes in question, choosing **Bulk Actions > Network Enable**, and then clicking **Apply**.
-
 *Is Manga+Press responsive?*
 
 Not by itself. However, Manga+Press doesn't really output markup other than the comic navigation. Responsiveness depends on the theme that is being used. The themes bundled with Manga+Press — the TwentyEleven thru TwentyFourteen child-themes — all have some level of responsiveness that is dependent on their parent themes.
@@ -182,7 +174,7 @@ I do take feature requests, but I also judge each request on the basis of how we
 
 == Credits ==
 
-(c) 2008-2017 Jessica C. Green
+(c) 2008-2018 Jessica C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/support/. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 

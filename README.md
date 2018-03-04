@@ -19,9 +19,9 @@ _Use at your own risk_
    * Comic bookmarking
    * Lightbox
    * Random comic link
-   * Social media integration 
+   * Social media integration
    * Refactored Options
-   * Refactored Form Elements API 
+   * Refactored Form Elements API
 
 ---
 
