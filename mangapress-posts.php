@@ -78,6 +78,19 @@ class MangaPress_Posts
      */
     protected $slug = 'comic';
 
+    /**
+     * Comic Archives slug
+     * @var string
+     */
+    protected $archive_slug = 'comic-archives';
+
+
+    /**
+     * Latest Comic slug
+     * @var string
+     */
+    protected $latest_comic_slug = 'latest-comic';
+
 
     /**
      * Constructor
@@ -140,8 +153,9 @@ class MangaPress_Posts
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
                 'menu_icon' => null,
                 'rewrite'   => array(
-                    'slug' => $this->get_slug(),
+                    'slug' => $this->get_front_slug(),
                 ),
+                'has_archive' => $this->get_comic_archives_slug(),
                 'taxonomies' => array(
                     $taxonomy->get_name(),
                 ),
@@ -157,88 +171,17 @@ class MangaPress_Posts
     private function _rewrite_rules()
     {
         $post_type = self::POST_TYPE;
-        $slug      = $this->get_slug();
 
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/([0-9]{1,2})/?$",
-            'index.php?year=$matches[1]&monthnum=$matches[2]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$",
-            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/page/?([0-9]{1,})/?$",
-            'index.php?year=$matches[1]&paged=$matches[2]&post_type=' .  $post_type,
-            'top'
-        );
-
-        add_rewrite_rule(
-            "{$slug}/([0-9]{4})/?$",
-            'index.php?year=$matches[1]&post_type=' .  $post_type,
-            'top'
-        );
+        add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
     }
 
 
     /**
-     * Get current user-specified front-slug for Comic archives
+     * Get current user-specified front-slug for Comics
      *
      * @return string
      */
-    public function get_slug()
+    public function get_front_slug()
     {
         /**
          * mangapress_comic_front_slug
@@ -248,6 +191,28 @@ class MangaPress_Posts
          * @return string
          */
         return apply_filters('mangapress_comic_front_slug', $this->slug);
+    }
+
+
+    /**
+     * Get current user-specified front-slug for Comic archives
+     *
+     * @return string
+     */
+    public function get_comic_archives_slug()
+    {
+        return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
+    }
+
+
+    /**
+     * Get current user-specified front-slug for Latest Comic
+     *
+     * @return string
+     */
+    public function get_latest_comic_slug()
+    {
+        return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
     }
 
 

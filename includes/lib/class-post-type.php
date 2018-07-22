@@ -62,6 +62,9 @@ class MangaPress_PostType extends MangaPress_ContentType
         'rewrite'              => true,
         'can_export'           => true,
         'show_in_nav_menus'    => true,
+        'show_in_rest'          => false,
+        'rest_base'             => false,
+        'rest_controller_class' => false,
     );
 
     /**
@@ -81,7 +84,7 @@ class MangaPress_PostType extends MangaPress_ContentType
      * Set object arguments
      *
      * @param array $args Array of arguments. Optional
-     * @return JesGS_PostType
+     * @return \MangaPress_PostType
      */
     public function set_arguments($args = array())
     {
@@ -123,6 +126,9 @@ class MangaPress_PostType extends MangaPress_ContentType
                 'rewrite'              => $rewrite,
                 'can_export'           => $can_export,
                 'show_in_nav_menus'    => $show_in_nav_menus,
+                'show_in_rest'          => $show_in_rest,
+                'rest_base'             => $rest_base,
+                'rest_controller_class' => $rest_controller_class,
             );
 
         $this->_args = $args;

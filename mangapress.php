@@ -62,6 +62,7 @@ require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
 require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
 require_once MP_ABSPATH . 'includes/functions.php';
+require_once MP_ABSPATH . 'includes/theme-functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'mangapress-install.php';
 require_once MP_ABSPATH . 'mangapress-admin.php';
@@ -194,9 +195,7 @@ class MangaPress_Bootstrap
 
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
 
-        add_filter('single_template', 'mangapress_single_comic_template');
-        add_filter('template_include', 'mangapress_latestcomic_page_template');
-        add_filter('template_include', 'mangapress_comicarchive_page_template');
+        add_filter('template_include', 'mangapress_template_loader');
 
         if (get_option('mangapress_upgrade') == 'yes') {
             MangaPress_Install::get_instance()->do_upgrade();
