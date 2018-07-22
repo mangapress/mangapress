@@ -12,7 +12,7 @@
 /**
  * Template handler for Latest Comic page
  *
- * @param string $template Default template if requested template is not found
+ * @param string $default_template Default template if requested template is not found
  * @return string
  */
 function mangapress_latestcomic_page_template($default_template)

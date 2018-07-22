@@ -13,6 +13,7 @@
 /**
  * Retrieves the most recent comic
  *
+ * @deprecated Since 3.5. Alternatives forthcoming
  * @since 2.7.2
  * @return \WP_Query
  */
@@ -30,6 +31,7 @@ function mangapress_get_latest_comic()
     if (!$post_name) {
         $post_name = 'no-comic-found';
     }
+
     add_filter('post_limits', 'mangapress_post_limits', 10, 2);
     add_filter('posts_distinct', 'mangapress_distinct_rows');
     $single_comic_query = new WP_Query(array(
@@ -46,6 +48,7 @@ function mangapress_get_latest_comic()
 
 /**
  * Start a Latest Comic loop
+ * @deprecated 3.5
  * @since 2.9
  * @global WP_Query $wp_query
  * @return void
@@ -69,6 +72,7 @@ function mangapress_start_latest_comic()
 
 /**
  * End Latest Comic loop
+ * @deprecated 3.5
  * @since 2.9
  * @global WP_Query $wp_query
  * @return void
