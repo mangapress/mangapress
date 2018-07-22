@@ -170,8 +170,6 @@ class MangaPress_Posts
      */
     private function _rewrite_rules()
     {
-        $post_type = self::POST_TYPE;
-
         add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
     }
 
