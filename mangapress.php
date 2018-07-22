@@ -185,7 +185,7 @@ class MangaPress_Bootstrap
         $this->_posts_helper   = new MangaPress_Posts();
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
-        $this->flashmessages_helper = new MangaPress_FlashMessages(array(
+        $this->_flashmessage_helper = new MangaPress_FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));
 
