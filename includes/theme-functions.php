@@ -401,7 +401,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     /* translators: Calendar caption: 1: month name, 2: 4-digit year */
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output = '<table id="manga-press-calendar">
+    $calendar_output = '<table class="mangapress-calendar">
 	<caption>' . sprintf($calendar_caption, $wp_locale->get_month($thismonth), date('Y', $unixmonth)) . '</caption>
 	<thead>
 	<tr>';
