@@ -86,7 +86,6 @@ function mangapress_get_template_hierarchy($template)
     if (is_post_type_archive(MangaPress_Posts::POST_TYPE) || is_comic_archive_page()) {
         $templates[] = 'comic/archive-comic.php';
         $templates[] = 'archive-comic.php';
-        $templates[] = 'archive.php';
     }
 
     if (is_latest_comic_page()) {
@@ -99,8 +98,28 @@ function mangapress_get_template_hierarchy($template)
 }
 
 
+function mangapress_get_template_part($slug, $name = '')
+{
+    do_action( "mangapress_get_template_part_{$slug}", $slug, $name );
+
+    $templates = array();
+    $name = (string) $name;
+    if ( '' !== $name )
+        $templates[] = "{$slug}-{$name}.php";
+
+    $templates[] = "{$slug}.php";
+
+    $template = locate_template($templates);
+
+    if ( $template ) {
+        require $template;
+    } else {
+        require MP_ABSPATH . "templates/{$slug}-{$name}.php";
+    }
+}
+
 /**
- * Modify loop and set up for Manga+Press — used only on Latest Comic
+ * Modify loop and set up for Manga+Press — used only on Latest Comic and Comic Archives
  * @param \WP_Query $query
  */
 function mangapress_pre_get_posts(\WP_Query $query)
@@ -108,6 +127,16 @@ function mangapress_pre_get_posts(\WP_Query $query)
     if (is_latest_comic_page()) {
         $query->set('post_type', MangaPress_Posts::POST_TYPE);
         $query->set('posts_per_page', 1);
+    }
+
+    if (is_comic_archive_page()) {
+        $mp_options = MangaPress_Bootstrap::get_options();
+        $order = $mp_options['basic']['archive_order'];
+        $orderby = $mp_options['basic']['archive_orderby'];
+
+        $query->set('order', $order);
+        $query->set('orderby', $orderby);
+        $query->set('posts_per_page', -1);
     }
 }
 add_action('pre_get_posts', 'mangapress_pre_get_posts');

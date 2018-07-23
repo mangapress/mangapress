@@ -10,7 +10,6 @@
  */
 require_once MP_ABSPATH . 'includes/theme-compat/theme-compat.php';
 require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);
@@ -94,7 +93,7 @@ function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
 
     $posts = MangaPress_Bootstrap::get_helper('posts');
-    $slug = $posts->get_slug();
+    $slug = $posts->get_front_slug();
 
     $relative= "/{$slug}/{$year}/{$month}/{$day}";
     $day_permalink = home_url($relative);
