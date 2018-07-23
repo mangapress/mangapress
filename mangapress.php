@@ -44,7 +44,7 @@ if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
 
 if (!defined('MP_ABSPATH'))
-    define('MP_ABSPATH', plugin_dir_path(__FILE__));
+    define('MP_ABSPATH', dirname(__FILE__) . '/');
 
 if (!defined('MP_URLPATH'))
     define('MP_URLPATH', plugin_dir_url(__FILE__));
