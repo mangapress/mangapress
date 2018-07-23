@@ -12,7 +12,7 @@
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-final class MangaPress_Admin
+class MangaPress_Admin
 {
     /**
      * Page slug constant
@@ -164,7 +164,7 @@ final class MangaPress_Admin
         $current = filter_input(INPUT_GET, 'tab')
                         ? filter_input(INPUT_GET, 'tab') : 'basic';
 
-        $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
+        $options = MangaPress_Bootstrap::get_helper('options');
         $tabs = $options->options_sections();
 
         $links = array();
@@ -193,7 +193,7 @@ final class MangaPress_Admin
      */
     public function get_current_tab()
     {
-        $options = MangaPress_Bootstrap::get_instance()->get_helper('options');
+        $options = MangaPress_Bootstrap::get_helper('options');
         $tabs    = $options->get_options_sections();
 
         $current_tab = filter_input(INPUT_GET, 'tab');

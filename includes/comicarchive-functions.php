@@ -16,7 +16,7 @@
  */
 function mangapress_get_all_comics_for_archive($params = array())
 {
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+    $mp_options = MangaPress_Bootstrap::get_options();
     $order_params = array(
         'order' => $mp_options['basic']['archive_order'],
         'orderby' => $mp_options['basic']['archive_orderby'],

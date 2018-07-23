@@ -177,7 +177,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 {
     global $post;
 
-    $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+    $mp_options = MangaPress_Bootstrap::get_options();
 
     $defaults = array(
         'container'      => 'nav',

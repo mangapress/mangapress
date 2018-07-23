@@ -43,7 +43,7 @@ final class MangaPress_Options
 
     /**
      * PHP5 Constructor function
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -90,7 +90,7 @@ final class MangaPress_Options
      */
     public function output_settings_fields()
     {
-        $admin = MangaPress_Bootstrap::get_instance()->get_helper('admin');
+        $admin = MangaPress_Bootstrap::get_helper('admin');
 
         $field_sections = $this->options_fields();
         $current_tab    = $admin->get_current_tab();
@@ -117,7 +117,7 @@ final class MangaPress_Options
      */
     public function settings_field_cb($option)
     {
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = MangaPress_Bootstrap::get_options();
 
         $class = ucwords($option['type']);
         $value = isset($mp_options[$option['section']][$option['name']])
@@ -151,7 +151,7 @@ final class MangaPress_Options
     public function ft_basic_page_dropdowns_cb($option)
     {
 
-        $mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options = MangaPress_Bootstrap::get_options();
 
         $value = $mp_options[$option['section']][$option['name']];
 
@@ -411,7 +411,7 @@ final class MangaPress_Options
         if (!$options)
             return $options;
 
-        $mp_options        = MangaPress_Bootstrap::get_instance()->get_options();
+        $mp_options        = MangaPress_Bootstrap::get_options();
         $section           = key($options);
         $available_options = $this->options_fields();
         $new_options       = $mp_options;
