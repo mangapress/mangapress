@@ -4,6 +4,8 @@
  */
 
 get_header('comic');
+
+do_action('mangapress_before_content');
 ?>
 <header class="mangapress-latest-comic-header">
     <h1 class="manga-press-latest-comic-header__title">
@@ -20,11 +22,11 @@ get_header('comic');
     <?php while(have_posts()) : the_post(); ?>
         <article <?php post_class() ?>>
             <header class="mangapress_comic_title">
-                <?php the_title(); ?>
+               <h2><?php the_title(); ?></h2>
             </header>
             <?php the_post_thumbnail(); ?>
-            <?php mangapress_comic_navigation(); ?>
         </article>
+        <?php mangapress_comic_navigation(); ?>
     <?php endwhile; ?>
 
     <?php do_action('mangapress_after_latest_comic_loop'); ?>
@@ -33,6 +35,8 @@ get_header('comic');
 
 
 <?php do_action('mangapress_after_latest_comic'); ?>
+
+<?php do_action('mangapress_after_content'); ?>
 
 <?php do_action('mangapress_sidebar'); ?>
 

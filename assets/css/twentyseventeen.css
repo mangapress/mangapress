@@ -1,0 +1,42 @@
+.comic-nav-hlist-wrapper {
+    display: block;
+}
+
+.comic-nav-hlist {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.comic-nav--nolink {
+    color: #cccccc;
+}
+
+.link-first a:before {
+    content: "<<";
+    margin-right: 5px;
+}
+
+.link-prev a:before {
+    content: "<";
+    margin-right: 5px;
+}
+
+.link-next a:after {
+    content: ">";
+    margin-left: 5px;
+}
+
+.link-last a:after {
+    content: ">>";
+    margin-left: 5px;
+}
+
+.mangapress_comic_title {
+    text-align: center;
+}
+
+.mangapress_comic img {
+    margin: 0 auto;
+    display: block;
+}
