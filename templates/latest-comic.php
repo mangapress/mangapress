@@ -1,6 +1,11 @@
 <?php
 /**
  * Manga+Press Latest Comic Template
+ * @todo Add DocBlocks to custom actions and filters
+ * @package Manga_Press
+ * @subpackage Manga_Press_Templates\Latest_Comic
+ * @version $Id$
+ * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
 get_header('comic');

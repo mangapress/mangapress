@@ -1,7 +1,7 @@
 <?php
 /**
  * MangaPress
- *
+ * @todo Add DocBlocks to custom actions and filters
  * @package Manga_Press
  * @subpackage Manga_Press_Templates\Single_Comic
  * @version $Id$
