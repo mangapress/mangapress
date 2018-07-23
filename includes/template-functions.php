@@ -97,7 +97,11 @@ function mangapress_get_template_hierarchy($template)
     return $templates;
 }
 
-
+/**
+ * Get a template part from the theme. If it doesn't exist, use one provided by the plugin
+ * @param string $slug
+ * @param string $name
+ */
 function mangapress_get_template_part($slug, $name = '')
 {
     do_action( "mangapress_get_template_part_{$slug}", $slug, $name );

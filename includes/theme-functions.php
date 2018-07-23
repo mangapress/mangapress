@@ -10,18 +10,18 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
-/**
- * is_comic()
- *
- * Used to detect if post contains a comic.
- * @since 0.1
- *
- * @global object $wpdb
- * @global array $mp_options
- * @global object $post
- * @return bool Returns true if post contains a comic, false if not.
- */
 if (!function_exists('is_comic')) {
+    /**
+     * is_comic()
+     *
+     * Used to detect if post contains a comic.
+     * @since 0.1
+     *
+     * @global object $wpdb
+     * @global array $mp_options
+     * @global object $post
+     * @return bool Returns true if post contains a comic, false if not.
+     */
     function is_comic($post = null)
     {
         if (is_integer($post)) {
@@ -37,28 +37,26 @@ if (!function_exists('is_comic')) {
         return ($post_type == 'mangapress_comic');
     }
 }
-/**
- * @since 1.0 RC1
- *
- * @global WP_Query $wp_query
- * @return bool
- */
 if (!function_exists('is_comic_page')) {
+    /**
+     * @since 1.0 RC1
+     *
+     * @global WP_Query $wp_query
+     * @return bool
+     */
     function is_comic_page()
     {
         _deprecated_function(__FUNCTION__ . ' is deprecated', MP_VERSION, 'is_latest_comic_page');
         return is_latest_comic_page();
     }
 }
-
-
-/**
- * @since 3.5
- *
- * @global WP_Query $wp_query
- * @return bool
- */
 if (!function_exists('is_latest_comic_page')) {
+    /**
+     * @since 3.5
+     *
+     * @global WP_Query $wp_query
+     * @return bool
+     */
     function is_latest_comic_page()
     {
         global $wp_query;
@@ -66,16 +64,14 @@ if (!function_exists('is_latest_comic_page')) {
         return isset($wp_query->query['latest-comic']);
     }
 }
-
-
-/**
- * Are we on an archive page for the comic post-type
- * @since 1.0 RC1
- *
- * @global WP_Query $wp_query
- * @return bool
- */
 if (!function_exists('is_comic_archive_page')) {
+    /**
+     * Are we on an archive page for the comic post-type
+     * @since 1.0 RC1
+     *
+     * @global WP_Query $wp_query
+     * @return bool
+     */
     function is_comic_archive_page()
     {
         global $wp_query;

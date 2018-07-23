@@ -1,10 +1,10 @@
 <?php
 /**
  * WordPress_PostType_Framework
- * 
+ *
  * So wish WordPress would drop PHP 5.2 support.
  * Namespaces would be very handy
- * 
+ *
  * @package WordPress_PostType_Framework
  * @subpackage MangaPress_FrameWork_Helper
  * @author Jess Green <jgreen@psy-dreamer.com>
@@ -41,15 +41,15 @@ abstract class MangaPress_ContentType
      * @var string
      */
     protected $_label_plural;
-    
+
     /**
      * Text domain string for i8n
      * Must be set before arguments!
-     * 
+     *
      * @var string
      */
     protected $_textdomain = '';
-    
+
     /**
      * Object arguments
      *
@@ -88,10 +88,10 @@ abstract class MangaPress_ContentType
 
         return $this;
     }
-    
+
     /**
      * Get object name
-     * 
+     *
      * @return string
      */
     public function get_name()
@@ -143,14 +143,21 @@ abstract class MangaPress_ContentType
 
         return $this;
     }
-    
+
+
+    /**
+     * Set the text domain from the plugin
+     * @param string $textdomain
+     *
+     * @return $this
+     */
     public function set_textdomain($textdomain)
     {
         $this->_textdomain = $textdomain;
-        
+
         return $this;
     }
-    
+
     /**
      * Set object arguments
      *

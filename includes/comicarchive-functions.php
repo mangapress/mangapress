@@ -18,6 +18,11 @@ function mangapress_get_all_comics_for_archive($params = array())
     _deprecated_function(__FUNCTION__, MP_VERSION);
 }
 
+/**
+ * Get the archive style template partial
+ * @uses mangapress_archive_style_template action
+ * @param string $style Archive style-type
+ */
 function mangapress_get_archive_style_template($style)
 {
     if (in_array($style, ['list', 'gallery', 'calendar'])) {
@@ -28,7 +33,14 @@ function mangapress_get_archive_style_template($style)
 }
 add_action('mangapress_archive_style_template', 'mangapress_get_archive_style_template');
 
-
+/**
+ * Open the article tag inside the loop. Used primarily on the archive-comic.php template
+ * @uses mangapress_opening_article_tag filter
+ * @param string $tag HTML tag. Defaults to article
+ * @param array $params Array of parameters @todo document accepted parameters
+ *
+ * @return string
+ */
 function mangapress_opening_article_tag($tag, $params)
 {
     $attr_string = '';
@@ -55,6 +67,14 @@ function mangapress_opening_article_tag($tag, $params)
 }
 add_filter('mangapress_opening_article_tag', 'mangapress_opening_article_tag', 10, 2);
 
+/**
+ * Close the article tag inside the loop. Used primarily on the archive-comic.php template
+ * @uses mangapress_closing_article_tag filter
+ * @param string $tag HTML tag. Defaults to article
+ * @param array $params Array of parameters @todo document accepted parameters
+ *
+ * @return string
+ */
 function mangapress_closing_article_tag($tag, $params)
 {
     if (isset($params['style'])) {
@@ -69,6 +89,10 @@ function mangapress_closing_article_tag($tag, $params)
 }
 add_filter('mangapress_closing_article_tag', 'mangapress_closing_article_tag', 10, 2);
 
+/**
+ * Create a wrapper for the archive list. Used for the archive-comic.php template
+ * @param string $style Archive style-type
+ */
 function mangapress_archive_style_opening_tag($style)
 {
     $classes = [
@@ -85,7 +109,11 @@ function mangapress_archive_style_opening_tag($style)
 }
 add_action('mangapress_archive_style_opening_tag', 'mangapress_archive_style_opening_tag');
 
-
+/**
+ * Close the for the archive list. Used for the archive-comic.php template
+ * @uses mangapress_archive_style_opening_tag action
+ * @param string $style Archive style-type
+ */
 function mangapress_archive_style_closing_tag($style)
 {
     if (in_array($style, ['list', 'gallery'])) {
