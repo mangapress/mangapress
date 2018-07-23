@@ -72,7 +72,7 @@ function mangapress_disable_post_thumbnail($html, $post_id)
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
     $posts = MangaPress_Bootstrap::get_helper('posts');
-    $slug = $posts->get_slug();
+    $slug = $posts->get_front_slug();
 
     $month_permalink = home_url("/{$slug}/{$year}/{$month}");
     return $month_permalink;
