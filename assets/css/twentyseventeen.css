@@ -1,11 +1,10 @@
 .comic-nav-hlist-wrapper {
     display: block;
+    margin-top: 20px;
 }
 
 .comic-nav-hlist {
     list-style: none;
-    display: flex;
-    justify-content: space-evenly;
 }
 
 .comic-nav--nolink {
@@ -39,4 +38,27 @@
 .mangapress_comic img {
     margin: 0 auto;
     display: block;
+}
+
+.single-mangapress_comic .single-featured-image-header {
+    display: none;
+}
+
+.comic-link-item {
+    display: block;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+@media screen and (min-width: 767px) {
+    .comic-nav-hlist {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .comic-link-item {
+        display: inline;
+        padding: 0;
+        text-align: left;
+    }
 }

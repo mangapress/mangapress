@@ -251,23 +251,23 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     // Let's do first page first.
     $first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ($first == $current_page)
                 ? '<span class="comic-nav--nolink">' . __('First', MP_DOMAIN) . '</span>'
-                : '<a href="' . $first_url . '">' . __('First', MP_DOMAIN) . '</a>' )
+                : '<a class="comic-link-item" href="' . $first_url . '">' . __('First', MP_DOMAIN) . '</a>' )
              . "</{$args->link_wrap}>";
 
     $last_html = "<{$args->link_wrap} class=\"link-last\">" .
                 ( ($last == $current_page)
                     ? '<span class="comic-nav--nolink">' . __('Last', MP_DOMAIN) . '</span>'
-                    : '<a href="' . $last_url . '">'. __('Last', MP_DOMAIN) . '</a>')
+                    : '<a class="comic-link-item" href="' . $last_url . '">'. __('Last', MP_DOMAIN) . '</a>')
                 . "</{$args->link_wrap}>";
 
     $next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ($next_page == $current_page)
                 ? '<span class="comic-nav--nolink">' . __('Next', MP_DOMAIN) . '</span>'
-                : '<a href="' . $next_url . '">'. __('Next', MP_DOMAIN) . '</a>' )
+                : '<a class="comic-link-item" href="' . $next_url . '">'. __('Next', MP_DOMAIN) . '</a>' )
             . "</{$args->link_wrap}>";
 
     $prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ($prev_page == $current_page)
                 ? '<span class="comic-nav--nolink">' . __('Prev', MP_DOMAIN) . '</span>'
-                : '<a href="' . $prev_url . '">'. __('Prev', MP_DOMAIN) . '</a>' )
+                : '<a class="comic-link-item" href="' . $prev_url . '">'. __('Prev', MP_DOMAIN) . '</a>' )
             . "</{$args->link_wrap}>";
 
     $items['first'] = apply_filters('mangapress_comic_navigation_first', $first_html, $args);

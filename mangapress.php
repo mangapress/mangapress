@@ -188,7 +188,7 @@ class MangaPress_Bootstrap
      */
     public static function get_helper($helper_name)
     {
-        $helper = "_{$helper_name}_helper";
+        $helper = "{$helper_name}_helper";
         if (property_exists(__CLASS__, $helper)) {
             return self::${$helper};
         }

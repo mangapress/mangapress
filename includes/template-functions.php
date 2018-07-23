@@ -81,7 +81,6 @@ function mangapress_get_template_hierarchy($template)
         $templates[] = "single-comic-{$object->post_name}.php";
         $templates[] = "comic/single-comic.php";
         $templates[] = "single-comic.php";
-        $templates[] = "single.php";
     }
 
     if (is_post_type_archive(MangaPress_Posts::POST_TYPE) || is_comic_archive_page()) {
