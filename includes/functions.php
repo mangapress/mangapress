@@ -9,10 +9,7 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
-require_once MP_ABSPATH . 'includes/query.php';
-require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
 require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
 require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
 
 
@@ -43,102 +40,6 @@ function mangapress_is_queried_page($option)
 
     return true;
 }
-
-
-/**
- * Return plugin-default template location for latest comic or archive
- *
- * @since 2.9
- * @param string $page Which page to get default template for
- * @return string
- */
-function mangapress_get_content_template($page)
-{
-    switch ($page) {
-        case 'list' :
-            $template = 'comic-archive-list.php';
-            break;
-
-        case 'calendar' :
-            $template = 'comic-archive-calendar.php';
-            break;
-
-        case 'gallery' :
-            $template = 'comic-archive-gallery.php';
-            break;
-
-        default :
-            $template = 'latest-comic.php';
-    }
-
-    $template_file_found = locate_template(array("templates/content/{$template}"));
-    $file = $template_file_found
-        ? $template_file_found : MP_ABSPATH . "templates/content/{$template}";
-
-    return $file;
-}
-
-
-/**
- * Add additional templates to the mangapress_comic template stack
- *
- * @since 2.9
- *
- * @global WP_Post $post WordPress post object
- * @param string $template Template filename
- * @return string
- */
-function mangapress_single_comic_template($default_template)
-{
-    global $post;
-
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE && !is_single()) {
-        return $template;
-    }
-
-    $template = locate_template( array('comics/single-comic.php', 'single-comic.php',) );
-
-    if ($template == '') {
-        add_filter('post_thumbnail_html', 'mangapress_disable_post_thumbnail', 500, 2);
-        add_filter('the_content', 'mangapress_single_comic_content_filter');
-        return $default_template;
-    } else {
-        return $template;
-    }
-}
-
-
-/**
- * Filter contents of single comic post
- *
- * @since 2.9
- *
- * @param string $content Post content
- * @return string
- */
-function mangapress_single_comic_content_filter($content)
-{
-    global $post;
-
-    if (get_post_type($post) !== MangaPress_Posts::POST_TYPE) {
-        return $content;
-    }
-
-    $thumbnail_size = isset($image_sizes['comic-page']) ? $image_sizes['comic-page'] : 'large';
-
-    remove_filter('the_content', 'mangapress_single_comic_content_filter');
-    remove_filter('post_thumbnail_html', 'mangapress_disable_post_thumbnail');
-
-    ob_start();
-    require MP_ABSPATH . 'templates/single-comic.php';
-    $generated_content = ob_get_contents();
-    ob_end_clean();
-
-    $content = $generated_content . $content;
-
-    return $content;
-}
-
 
 
 /**
