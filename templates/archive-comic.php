@@ -18,7 +18,7 @@ do_action('mangapress_before_content'); ?>
     </h1>
 </header>
 
-<?php if (have_posts()) : ?>
+<?php if (have_posts() && $archive_style !== 'calendar') : // @todo change $archive_style !== 'calendar' to a conditional tag ?>
 
     <?php do_action('mangapress_before_latest_comic_loop'); ?>
 
@@ -37,7 +37,8 @@ do_action('mangapress_before_content'); ?>
     <?php do_action('mangapress_archive_style_closing_tag', $archive_style); ?>
 
     <?php do_action('mangapress_after_latest_comic_loop'); ?>
-
+<?php else: ?>
+    <?php mangapress_get_archive_style_template('calendar'); ?>
 <?php endif; ?>
 
 <?php do_action('mangapress_after_latest_comic'); ?>
