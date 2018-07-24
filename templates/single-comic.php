@@ -1,7 +1,7 @@
 <?php
 /**
  * MangaPress
- * @todo Add DocBlocks to custom actions and filters
+ *
  * @package Manga_Press
  * @subpackage Manga_Press_Templates\Single_Comic
  * @version $Id$
@@ -9,12 +9,24 @@
  */
 
 get_header('comic');
-
+/**
+ * mangapress_before_content
+ *
+ * Run scripts or insert content before the main content area
+ * @since 3.5.0
+ */
 do_action('mangapress_before_content'); ?>
 
 <?php if (have_posts()) : ?>
 
-    <?php do_action('mangapress_before_latest_comic_loop'); ?>
+    <?php
+    /**
+     * mangapress_before_comic_loop
+     *
+     * Run scripts or insert content before the main loop
+     * @since 3.5.0
+     */
+    do_action('mangapress_before_comic_loop'); ?>
 
     <?php while(have_posts()) : the_post(); ?>
         <article <?php post_class() ?>>
@@ -26,14 +38,33 @@ do_action('mangapress_before_content'); ?>
         <?php mangapress_comic_navigation(); ?>
     <?php endwhile; ?>
 
-    <?php do_action('mangapress_after_latest_comic_loop'); ?>
+    <?php
+    /**
+     * mangapress_after_comic_loop
+     *
+     * Run scripts or insert content after the main loop
+     * @since 3.5.0
+     */
+    do_action('mangapress_after_comic_loop'); ?>
 
 <?php endif; ?>
 
-<?php do_action('mangapress_after_latest_comic'); ?>
+<?php
+/**
+ * mangapress_after_content
+ *
+ * Run scripts or insert content after the main content area
+ * @since 3.5.0
+ */
+do_action('mangapress_after_content'); ?>
 
-<?php do_action('mangapress_after_content'); ?>
-
-<?php do_action('mangapress_sidebar'); ?>
+<?php
+/**
+ * mangapress_sidebar
+ *
+ * Possibly insert a sidebar
+ * @since 3.5.0
+ */
+do_action('mangapress_sidebar'); ?>
 
 <?php get_footer('comic');
