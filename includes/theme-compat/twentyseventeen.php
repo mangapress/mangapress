@@ -23,6 +23,7 @@ class MangaPress_TwentySeventeen
         echo '<main id="main" class="site-main" role="main">';
     }
 
+
     /**
      * TwentySeventeen content area closing tags
      */
@@ -34,6 +35,10 @@ class MangaPress_TwentySeventeen
         echo '</div>';
     }
 
+
+    /**
+     * Enqueue Manga+Press-specific stylesheet
+     */
     public function enqueue_styles()
     {
         wp_register_style(
