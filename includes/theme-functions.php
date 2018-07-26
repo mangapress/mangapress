@@ -19,7 +19,7 @@ if (!function_exists('is_comic')) {
      *
      * @global object $wpdb
      * @global array $mp_options
-     * @global object $post
+     * @param \WP_Post $post Post object
      * @return bool Returns true if post contains a comic, false if not.
      */
     function is_comic($post = null)
@@ -82,6 +82,53 @@ if (!function_exists('is_comic_archive_page')) {
 
 
 /**
+ * Check if the current archive style is set to Calendar
+ *
+ * @return bool
+ */
+function comic_archive_is_calendar()
+{
+    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    return $archive_style === 'calendar';
+}
+
+
+/**
+ * Check if the current archive style is set to Gallery
+ *
+ * @return bool
+ */
+function comic_archive_is_gallery()
+{
+    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    return $archive_style === 'gallery';
+}
+
+
+/**
+ * Check if the current archive style is set to List
+ *
+ * @return bool
+ */
+function comic_archive_is_list()
+{
+    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    return $archive_style === 'list';
+}
+
+
+/**
+ * Get current comic archive style
+ *
+ * @return string
+ */
+function mangapress_get_comic_archive_style()
+{
+    return MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+}
+
+
+/**
  * Retrieve the previous post in The Loop. We have our reasons
  *
  * @global WP_Query $wp_query
@@ -114,45 +161,6 @@ function mangapress_get_next_post_in_loop()
     }
 
     return $wp_query->posts[$wp_query->current_post + 1];
-}
-
-
-/**
- * Get comic term ID.
- *
- * @param WP_Post|int $post WordPress post object or post ID
- * @return false|int
- */
-function mangapress_get_comic_term_ID($post = 0)
-{
-    if ($post === false) {
-        return false;
-    }
-
-    $post = get_post($post);
-    if (!isset($post->term_ID)) {
-        return false;
-    }
-
-    return $post->term_ID;
-}
-
-
-
-/**
- * Get comic slug
- *
- * @param WP_Post|int $post WordPress post object or post ID
- * @return false|string
- */
-function mangapress_get_comic_term_title($post = 0)
-{
-    $post = get_post($post);
-    if (!isset($post->term_name)) {
-        return false;
-    }
-
-    return $post->term_name;
 }
 
 
@@ -297,7 +305,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
  * @param bool $skip_empty_months Skip over months that don't contain posts
  * @param bool $initial Optional, default is true. Use initial calendar names.
  * @param bool $echo    Optional, default is true. Set to false for return.
- * @return mixed|void
+ * @return void|string
  */
 function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true)
 {
@@ -566,27 +574,3 @@ add_action( 'save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache'
 add_action( 'delete_post', 'mangapress_delete_get_calendar_cache' );
 add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
 add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' );
-
-
-
-
-/**
- * Retrieve an archive template based on type. This function modifies the global $wp_query object.
- *
- * @param string $type Template type. Values are 'calendar' or 'gallery'
- * @return string|void
- */
-function mangapress_get_archive_template($type)
-{
-    global $wp_query;
-
-    if (!in_array($type, array('calendar', 'gallery'))) {
-        return '';
-    }
-
-    $wp_query = mangapress_get_all_comics_for_archive();
-
-    require MP_ABSPATH . "/templates/content/comic-archive-{$type}.php";
-
-    wp_reset_query();
-}

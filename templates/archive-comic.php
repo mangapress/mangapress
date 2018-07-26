@@ -7,7 +7,6 @@
  * @version $Id$
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-$archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
 
 get_header('comic');
 
@@ -19,7 +18,7 @@ do_action('mangapress_before_content'); ?>
     </h1>
 </header>
 
-<?php if (have_posts() && $archive_style !== 'calendar') : // @todo change $archive_style !== 'calendar' to a conditional tag ?>
+<?php if (have_posts() && (comic_archive_is_gallery() || comic_archive_is_list())) :  ?>
 
     <?php
     /**
@@ -39,7 +38,7 @@ do_action('mangapress_before_content'); ?>
      *
      * @param string $archive_style
      */
-    do_action('mangapress_archive_style_opening_tag', $archive_style); ?>
+    do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style()); ?>
 
     <?php while(have_posts()) : the_post(); ?>
 
@@ -56,7 +55,7 @@ do_action('mangapress_before_content'); ?>
          *      @type string $style
          * }
          */
-        echo apply_filters('mangapress_opening_article_tag', 'article', ['style' => $archive_style]) ?>
+        echo apply_filters('mangapress_opening_article_tag', 'article', ['style' => mangapress_get_comic_archive_style()]) ?>
 
         <?php
         /**
@@ -67,7 +66,7 @@ do_action('mangapress_before_content'); ?>
          *
          * @param string $archive_style
          */
-        do_action('mangapress_archive_style_template', $archive_style); ?>
+        do_action('mangapress_archive_style_template', mangapress_get_comic_archive_style()); ?>
 
         <?php
         /**
@@ -82,7 +81,7 @@ do_action('mangapress_before_content'); ?>
          *      @type string $style
          * }
          */
-        echo apply_filters('mangapress_closing_article_tag', 'article', ['style' => $archive_style]); ?>
+        echo apply_filters('mangapress_closing_article_tag', 'article', ['style' => mangapress_get_comic_archive_style()]); ?>
 
     <?php endwhile; ?>
 
@@ -95,7 +94,7 @@ do_action('mangapress_before_content'); ?>
      *
      * @param string $archive_style
      */
-    do_action('mangapress_archive_style_closing_tag', $archive_style); ?>
+    do_action('mangapress_archive_style_closing_tag', mangapress_get_comic_archive_style()); ?>
 
     <?php
     /**
