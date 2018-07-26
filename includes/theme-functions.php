@@ -556,7 +556,6 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     } else {
         return apply_filters( 'mangapress_get_calendar', $calendar_output );
     }
-
 }
 
 

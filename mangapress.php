@@ -61,7 +61,7 @@ require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
 require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
 require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
-require_once MP_ABSPATH . 'includes/functions.php';
+require_once MP_ABSPATH . 'includes/general-functions.php';
 require_once MP_ABSPATH . 'includes/theme-functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'mangapress-install.php';

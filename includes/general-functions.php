@@ -9,7 +9,6 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 require_once MP_ABSPATH . 'includes/theme-compat/theme-compat.php';
-require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);
@@ -91,7 +90,6 @@ function mangapress_month_link ($monthlink, $year = '', $month = '')
  */
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
-
     $posts = MangaPress_Bootstrap::get_helper('posts');
     $slug = $posts->get_front_slug();
 
@@ -250,10 +248,10 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
  * @param bool $in_same_cat Optional. Whether returned post should be in same category.
  * @param bool $group_by_parent Optional. Whether to limit to category parent
  * @param string $taxonomy Optional. Which taxonomy to pull from.
- * @param string $excluded_categories Optional. Excluded categories IDs.
+ * @param array|string $excluded_categories Optional. Excluded categories IDs.
  * @param bool $start Optional. Whether to retrieve first or last post.
  *
- * @return object
+ * @return array
  */
 function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = array(), $start = true)
 {
@@ -374,5 +372,4 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
         . "{$parents} ORDER BY t.term_id ASC";
 
     return $wpdb->get_col($query);
-
 }
