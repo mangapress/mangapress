@@ -25,10 +25,10 @@ class MangaPress_Admin
      * Constructor method
      * @return void
      */
-    public function __construct()
+    public static function init()
     {
-        add_action('admin_menu', array($this, 'admin_menu'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('admin_menu', array(__CLASS__, 'admin_menu'));
+        add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_scripts'));
     }
 
     /**
@@ -36,7 +36,7 @@ class MangaPress_Admin
      *
      * @return void
      */
-    public function admin_menu()
+    public static function admin_menu()
     {
         global $mangapress_page_hook;
 
@@ -64,10 +64,10 @@ class MangaPress_Admin
             __("Manga+Press Options", MP_DOMAIN),
             'manage_options',
             self::ADMIN_PAGE_SLUG,
-            array($this, 'load_page')
+            array(__CLASS__, 'load_page')
         );
 
-        add_action("load-{$mangapress_page_hook}", array($this, 'load_help_tabs'));
+        add_action("load-{$mangapress_page_hook}", array(__CLASS__, 'load_help_tabs'));
     }
 
 
@@ -76,7 +76,7 @@ class MangaPress_Admin
      *
      * @return void
      */
-    public function load_page()
+    public static function load_page()
     {
         require_once MP_ABSPATH . '/includes/pages/options.php';
     }
@@ -87,12 +87,12 @@ class MangaPress_Admin
      *
      * @return void
      */
-    public function load_help_tabs()
+    public static function load_help_tabs()
     {
         $screen = get_current_screen();
 
-        $tab = $this->get_current_tab();
-        $screen->add_help_tab($this->get_help_tabs($tab));
+        $tab = self::get_current_tab();
+        $screen->add_help_tab(self::get_help_tabs($tab));
     }
 
 
@@ -102,23 +102,23 @@ class MangaPress_Admin
      * @param string $option_tab
      * @return array
      */
-    public function get_help_tabs($option_tab)
+    public static function get_help_tabs($option_tab)
     {
         $help_tabs = array(
             'basic'      => array(
                 'id'      => 'help_basic',
                 'title'   => __('Basic Options Help'),
-                'content' => $this->get_help_tab_contents(),
+                'content' => self::get_help_tab_contents(),
             ),
             'comic_page' => array(
                 'id'      => 'help_comic_page',
                 'title'   => __('Comic Page Options Help'),
-                'content' => $this->get_help_tab_contents('comic_page'),
+                'content' => self::get_help_tab_contents('comic_page'),
             ),
             'nav'        => array(
                 'id'      => 'help_nav',
                 'title'   => __('Navigation Options Help'),
-                'content' => $this->get_help_tab_contents('nav'),
+                'content' => self::get_help_tab_contents('nav'),
             ),
         );
 
@@ -132,7 +132,7 @@ class MangaPress_Admin
      * @param string $help_tab Name of tab content to get
      * @return string
      */
-    public function get_help_tab_contents($help_tab = 'basic')
+    public static function get_help_tab_contents($help_tab = 'basic')
     {
         ob_start();
         switch($help_tab) {
@@ -159,13 +159,12 @@ class MangaPress_Admin
      * @param string $current Current tab
      * @return void
      */
-    public function options_page_tabs($current = 'basic')
+    public static function options_page_tabs($current = 'basic')
     {
         $current = filter_input(INPUT_GET, 'tab')
                         ? filter_input(INPUT_GET, 'tab') : 'basic';
 
-        $options = MangaPress_Bootstrap::get_helper('options');
-        $tabs = $options->options_sections();
+        $tabs = MangaPress_Options::options_sections();
 
         $links = array();
         foreach($tabs as $tab => $tab_data) {
@@ -191,10 +190,9 @@ class MangaPress_Admin
      *
      * @return string
      */
-    public function get_current_tab()
+    public static function get_current_tab()
     {
-        $options = MangaPress_Bootstrap::get_helper('options');
-        $tabs    = $options->get_options_sections();
+        $tabs    = MangaPress_Options::get_options_sections();
 
         $current_tab = filter_input(INPUT_GET, 'tab');
         if (in_array($current_tab, $tabs)) {
@@ -211,7 +209,7 @@ class MangaPress_Admin
      * @global string $mangapress_page_hook
      * @param string $hook
      */
-    public function enqueue_scripts($hook)
+    public static function enqueue_scripts($hook)
     {
         global $mangapress_page_hook;
 

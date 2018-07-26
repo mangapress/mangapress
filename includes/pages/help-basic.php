@@ -20,17 +20,20 @@
     <dd>
         <?php _e('This options overrides the option above and groups comics according to the parent category.', MP_DOMAIN); ?>
     </dd>
-    <dt><strong><?php _e('Latest Comic Page', MP_DOMAIN); ?></strong></dt>
+    <dt><strong><?php _e('Comic Archive Page Style', MP_DOMAIN); ?></strong></dt>
     <dd>
-        <?php _e('Select an available page from the drop-down to use as your Latest Comic page. This page displays the most recent comic posted.', MP_DOMAIN); ?>
+        <?php _e('Choose an archive page style from the drop-down. This option can be overridden by adding a <code>archive-*.php</code> template to your theme inside the <code>comics</code> sub-directory.', MP_DOMAIN); ?>
+        <?php _e('Available templates are: <code>archive-list.php</code>, <code>archive-gallery.php</code>, and <code>archive-calendar.php</code>', MP_DOMAIN); ?>
     </dd>
-    <dt><strong><?php _e('Comic Archive Page', MP_DOMAIN) ?></strong></dt>
+    <dt><strong><?php _e('Latest Comic Page and Comic Archive Page', MP_DOMAIN); ?></strong></dt>
     <dd>
-        <?php _e('Select an available page from the drop-down to use as your Comic Archive page. This page displays all comics in chronological order, starting with the most recent.', MP_DOMAIN); ?>
-    </dd>
-    <dt><strong><?php echo _e('Comic Archive Page Style', MP_DOMAIN); ?></strong></dt>
-    <dd>
-        <?php _e('Select an archive page style from the drop-down. This option can be overridden by adding a comic-archive-*.php template to your theme inside the <code>comics</code> sub-directory.', MP_DOMAIN); ?>
-        <?php _e('Available templates are: comic-archive-list.php, comic-archive-calendar.php, and comic-archive-gallery.php', MP_DOMAIN); ?>
+        <p>
+            <?php _e('The Latest Comic and Comic Archive Page options have been deprecated in favor of custom end-points.', MP_DOMAIN); ?>
+            <?php _e('These end-points can be customized by overriding the plugin\'s default theme templates. '); ?>
+        </p>
+        <p>
+            <?php _e('Templates for Latest Comic Page and Comic Archive Page are (respectively) <code>latest-comic.php</code> and <code>archive-comic.php</code>.'); ?>
+            <?php _e('These templates can be overridden by placing them in your theme directory.'); ?>
+        </p>
     </dd>
 </dl>

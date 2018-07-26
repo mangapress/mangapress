@@ -113,7 +113,8 @@ class MangaPress_FlashMessages
      *
      * @param string $name Name of message. updated or error
      * @param string $message Message body
-     * @return FlashMessages
+     * @return \MangaPress_FlashMessages
+     * @throws \Exception
      */
     public function queue_flash_message($name, $message)
     {
@@ -137,13 +138,13 @@ class MangaPress_FlashMessages
     /**
      * Get flash message
      *
-     * @return mixed
+     * @throws \Exception
      */
     public function show_flash_message()
     {
-        $messages = get_transient($this->get_transient_name());
-        if (is_array($messages)) {
-            foreach ($messages as $class => $messages) {
+        $messages_arr = get_transient($this->get_transient_name());
+        if (is_array($messages_arr)) {
+            foreach ($messages_arr as $class => $messages) {
                 $this->display_flash_message_html($messages, $class);
             }
         }

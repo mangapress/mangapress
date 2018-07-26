@@ -151,9 +151,10 @@ class MangaPress_Bootstrap
     {
         self::set_options();
 
+        MangaPress_Admin::init();
+        MangaPress_Options::init();
+
         self::$posts_helper   = new MangaPress_Posts();
-        self::$admin_helper   = new MangaPress_Admin();
-        self::$options_helper = new MangaPress_Options();
         self::$flashmessage_helper = new MangaPress_FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));

@@ -68,14 +68,14 @@ class MangaPress_Install
     public function do_activate()
     {
         global $wp_version;
-        
+
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
         // Check for capability
         if ( !current_user_can('activate_plugins') ){
-            wp_die( __('Sorry, you do not have suffient permissions to activate this plugin.', MP_DOMAIN) );
+            wp_die( __('Sorry, you do not have sufficient permissions to activate this plugin.', MP_DOMAIN) );
         }
-        
+
         // Get the capabilities for the administrator
         $role = get_role('administrator');
 
@@ -83,11 +83,11 @@ class MangaPress_Install
         if ( empty($role) ) {
             wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN) );
         }
-        
-        if ( version_compare ($wp_version, '3.0', '<=')) {
+
+        if ( version_compare ($wp_version, '4.9.6', '<=')) {
             wp_die(
-                  'Sorry, only WordPress 3.0 and later are supported.'
-                . ' Please upgrade to WordPress 3.0', 'Wrong Version'
+                  'Sorry, only WordPress 4.9.6 and later are supported.'
+                . ' Please upgrade to WordPress 4.9.6', 'Wrong Version'
             );
         }
 
@@ -106,8 +106,7 @@ class MangaPress_Install
 
         }
 
-        $this->_bootstrap = MangaPress_Bootstrap::get_instance();
-        $this->_bootstrap->init();
+        MangaPress_Bootstrap::init();
         $this->after_plugin_activation();
 
         flush_rewrite_rules(false);
