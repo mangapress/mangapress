@@ -44,11 +44,9 @@ function mangapress_template_loader($template)
  */
 function mangapress_get_default_template_file()
 {
-    global $wp_query;
-
-    if (is_singular(MangaPress_Posts::POST_TYPE)) {
+    if (is_comic()) {
         $template = 'single-comic.php';
-    } elseif (is_post_type_archive(MangaPress_Posts::POST_TYPE) || is_comic_archive_page()) {
+    } elseif (is_comic_archive_page()) {
         $template = 'archive-comic.php';
     } elseif (is_latest_comic_page()) {
         $template = 'latest-comic.php';
@@ -70,7 +68,7 @@ function mangapress_get_template_hierarchy($template)
     global $wp_query;
 
     $templates[] = 'mangapress.php';
-    if (is_singular(MangaPress_Posts::POST_TYPE)) {
+    if (is_comic()) {
         $object = get_queried_object();
         $name_decoded = urldecode( $object->post_name );
         if ( $name_decoded !== $object->post_name ) {
@@ -83,7 +81,7 @@ function mangapress_get_template_hierarchy($template)
         $templates[] = "single-comic.php";
     }
 
-    if (is_post_type_archive(MangaPress_Posts::POST_TYPE) || is_comic_archive_page()) {
+    if (is_comic_archive_page()) {
         $templates[] = 'comic/archive-comic.php';
         $templates[] = 'archive-comic.php';
     }
@@ -240,8 +238,11 @@ function mangapress_archive_style_opening_tag($style)
         $class = ' class="%s"';
         if ($style == 'gallery') {
             $classes[] = 'mangapress-archive-gallery';
-            $class = sprintf($class, join(' ', $classes));
+
+        } else {
+            $classes[] = 'mangapress-archive-list';
         }
+        $class = sprintf($class, join(' ', $classes));
         echo "<ul $class>";
     }
 }

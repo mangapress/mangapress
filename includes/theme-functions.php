@@ -13,28 +13,14 @@
 if (!function_exists('is_comic')) {
     /**
      * is_comic()
-     *
-     * Used to detect if post contains a comic.
+     * Used to detect if post is a comic post
      * @since 0.1
-     *
-     * @global object $wpdb
-     * @global array $mp_options
-     * @param \WP_Post $post Post object
+     * @see \is_singular()
      * @return bool Returns true if post contains a comic, false if not.
      */
-    function is_comic($post = null)
+    function is_comic()
     {
-        if (is_integer($post)) {
-            $post = get_post($post);
-        }
-
-        if (is_null($post)) {
-            global $post;
-        }
-
-        $post_type = get_post_type($post);
-
-        return ($post_type == 'mangapress_comic');
+        return is_singular(MangaPress_Posts::POST_TYPE);
     }
 }
 if (!function_exists('is_comic_page')) {
