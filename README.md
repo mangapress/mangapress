@@ -16,8 +16,9 @@ WARNING: Last/Comic Archive page functionality has been changed. Please back up,
 WARNING: Child themes have been pulled from the plugin. These themes are now available for download here: https://manga-press.com/download/themes/. If you are using these themes, please move them to the `wp-content/themes` directory before upgrading.
 
 ## Changelog
-### 3.5.0
+### 4.0.0
    * Removed `the_content` processing for Latest/Comic Archive pages
+   * Added end-points and templates for Latest Comic and Comic Archive pages
 
 ### 3.0
 #### 3.0.0
