@@ -30,7 +30,7 @@ class MangaPress_ThemeCompatibility
                  *
                  * Allow third-party themes to declare Manga+Press compatibility options.
                  *
-                 * @since 3.5.0
+                 * @since 4.0.0
                  */
                 do_action("mangapress_theme_compatible-{$theme}");
         }

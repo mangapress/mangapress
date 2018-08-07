@@ -13,7 +13,7 @@ get_header('comic');
  * mangapress_before_content
  *
  * Run scripts or insert content before the main content area
- * @since 3.5.0
+ * @since 4.0.0
  */
 do_action('mangapress_before_content'); ?>
 
@@ -24,7 +24,7 @@ do_action('mangapress_before_content'); ?>
      * mangapress_before_comic_loop
      *
      * Run scripts or insert content before the main loop
-     * @since 3.5.0
+     * @since 4.0.0
      */
     do_action('mangapress_before_comic_loop'); ?>
 
@@ -43,7 +43,7 @@ do_action('mangapress_before_content'); ?>
      * mangapress_after_comic_loop
      *
      * Run scripts or insert content after the main loop
-     * @since 3.5.0
+     * @since 4.0.0
      */
     do_action('mangapress_after_comic_loop'); ?>
 
@@ -54,7 +54,7 @@ do_action('mangapress_before_content'); ?>
  * mangapress_after_content
  *
  * Run scripts or insert content after the main content area
- * @since 3.5.0
+ * @since 4.0.0
  */
 do_action('mangapress_after_content'); ?>
 
@@ -63,7 +63,7 @@ do_action('mangapress_after_content'); ?>
  * mangapress_sidebar
  *
  * Possibly insert a sidebar
- * @since 3.5.0
+ * @since 4.0.0
  */
 do_action('mangapress_sidebar'); ?>
 
