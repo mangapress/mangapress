@@ -126,7 +126,7 @@ function mangapress_get_template_part($slug, $name = '')
  */
 function mangapress_pre_get_posts(\WP_Query $query)
 {
-    if (is_latest_comic_page()) {
+    if ($query->is_main_query() && is_latest_comic_page()) {
         $query->set('post_type', MangaPress_Posts::POST_TYPE);
         $query->set('posts_per_page', 1);
     }
