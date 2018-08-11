@@ -86,14 +86,12 @@ add_action('plugins_loaded', array('MangaPress_Bootstrap', 'load_plugin'));
 class MangaPress_Bootstrap
 {
 
-
     /**
      * Options array
      *
      * @var array
      */
     protected static $options;
-
 
     /**
      * MangaPress Posts object
@@ -102,14 +100,12 @@ class MangaPress_Bootstrap
      */
     protected static $posts_helper;
 
-
     /**
      * Options helper object
      *
      * @var \MangaPress_Options
      */
     protected static $options_helper;
-
 
     /**
      * Admin page helper
@@ -118,7 +114,6 @@ class MangaPress_Bootstrap
      */
     protected static $admin_helper;
 
-
     /**
      * Flash Message helper
      *
@@ -126,6 +121,7 @@ class MangaPress_Bootstrap
      */
     protected static $flashmessage_helper;
 
+    protected static $plugin_basename;
 
     /**
      * Static function used to initialize Bootstrap
@@ -134,12 +130,61 @@ class MangaPress_Bootstrap
      */
     public static function load_plugin()
     {
-        load_plugin_textdomain(MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
+        self::$plugin_basename = plugin_basename(__FILE__);
+        load_plugin_textdomain(MP_DOMAIN, false, dirname( self::$plugin_basename ) . '/languages');
 
         add_action('init', array(__CLASS__, 'init'), 500);
         add_action('widgets_init', array(__CLASS__, 'widgets_init'));
+        add_filter('plugin_action_links_' . self::$plugin_basename, array(__CLASS__, 'plugin_action_links'), 10, 4);
+        add_filter('plugin_row_meta', array(__CLASS__, 'plugin_row_meta'), 10, 4);
     }
 
+    /**
+     * Add relevant links to plugin meta
+     * @param array  $plugin_meta An array of the plugin's metadata
+     * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
+     * @param array  $plugin_data An array of plugin data.
+     * @param string $status Status of the plugin.
+     *
+     * @return array
+     */
+    public static function plugin_row_meta($plugin_meta, $plugin_file, $plugin_data, $status)
+    {
+        if ($plugin_file !== self::$plugin_basename) {
+            return $plugin_meta;
+        }
+
+        $details_link = $plugin_meta[2];
+        unset($plugin_meta[2]);
+
+        $getting_started = __('Getting Started', MP_DOMAIN);
+        $developer_api = __('Developer API', MP_DOMAIN);
+        $plugin_meta[] = "<a aria-label='{$getting_started}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/getting-started/'>{$getting_started}</a>";
+        $plugin_meta[] = "<a aria-label='{$developer_api}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/developer-api/'>{$developer_api}</a>";
+
+        $plugin_meta[] = $details_link;
+        return $plugin_meta;
+    }
+
+    /**
+     * Add additional links to action menu
+     *
+     * @param array  $actions     An array of plugin action links.
+     * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+     * @param array  $plugin_data An array of plugin data. See `get_plugin_data()`.
+     * @param string $context     The plugin context. By default this can include 'all', 'active', 'inactive',
+     *                            'recently_activated', 'upgrade', 'mustuse', 'dropins', and 'search'.
+     *
+     * @return array
+     */
+    public static function plugin_action_links($actions, $plugin_file, $plugin_data, $context)
+    {
+        $menu_link = menu_page_url(MangaPress_Admin::ADMIN_PAGE_SLUG, false);
+        $settings = __('Settings', MP_DOMAIN);
+        $actions['settings'] = "<a href='{$menu_link}' aria-label='{$settings}'>{$settings}</a>";
+
+        return $actions;
+    }
 
     /**
      * Run init functionality
