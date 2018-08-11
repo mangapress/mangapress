@@ -39,7 +39,7 @@ class MangaPress_TwentySeventeen
     /**
      * Enqueue Manga+Press-specific stylesheet
      */
-    public function enqueue_styles()
+    public static function enqueue_styles()
     {
         wp_register_style(
             'mangapress-twentyseventeen',
