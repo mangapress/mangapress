@@ -23,22 +23,10 @@ if (!function_exists('is_comic')) {
         return is_singular(MangaPress_Posts::POST_TYPE);
     }
 }
-if (!function_exists('is_comic_page')) {
-    /**
-     * @since 1.0 RC1
-     *
-     * @global WP_Query $wp_query
-     * @return bool
-     */
-    function is_comic_page()
-    {
-        _deprecated_function(__FUNCTION__ . ' is deprecated', MP_VERSION, 'is_latest_comic_page');
-        return is_latest_comic_page();
-    }
-}
+
 if (!function_exists('is_latest_comic_page')) {
     /**
-     * @since 3.5
+     * @since 4.0.0
      *
      * @global WP_Query $wp_query
      * @return bool

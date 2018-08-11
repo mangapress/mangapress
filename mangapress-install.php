@@ -84,6 +84,12 @@ class MangaPress_Install
             wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN) );
         }
 
+        if (version_compare(PHP_VERSION, '5.6', '<=')) {
+            wp_die(
+                __('Sorry. Manga+Press is only supported on PHP 5.6 and newer. Please upgrade your server PHP version.')
+            );
+        }
+
         if ( version_compare ($wp_version, '4.9.6', '<=')) {
             wp_die(
                   'Sorry, only WordPress 4.9.6 and later are supported.'

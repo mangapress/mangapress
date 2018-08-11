@@ -145,16 +145,6 @@ add_action('pre_get_posts', 'mangapress_pre_get_posts');
 
 
 /**
- * Get all comics for archives page
- * @deprecated Since 3.5
- * @since 2.9
- */
-function mangapress_get_all_comics_for_archive($params = array())
-{
-    _deprecated_function(__FUNCTION__, MP_VERSION);
-}
-
-/**
  * Get the archive style template partial
  * @uses mangapress_archive_style_template action
  * @param string $style Archive style-type
