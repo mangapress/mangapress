@@ -24,8 +24,10 @@ class MangaPress_Options
      */
     protected static $_default_options = array(
         'basic' => array(
-            'group_comics' => 0,
-            'group_by_parent' => 0,
+            'latestcomic_page'  => '',
+            'comicarchive_page' => '',
+            'group_comics'      => 0,
+            'group_by_parent'   => 0,
             'comicarchive_page_style' => 'list',
             'archive_order' => 'DESC',
             'archive_orderby' => 'date',
@@ -226,6 +228,28 @@ class MangaPress_Options
          */
         $options = array(
             'basic' => array(
+                'latestcomic_page'  => array(
+                    'id'    => 'latest-comic-page',
+                    'type'  => 'select',
+                    'title' => __('Latest Comic Page', MP_DOMAIN),
+                    'value' => array(
+                        'no_val' => __('Select a Page', MP_DOMAIN),
+                    ),
+                    'valid' => 'array',
+                    'default'  => 0,
+                    'callback' => array(__CLASS__, 'ft_basic_page_dropdowns_cb'),
+                ),
+                'comicarchive_page' => array(
+                    'id'    => 'archive-page',
+                    'type'  => 'select',
+                    'title' => __('Comic Archive Page', MP_DOMAIN),
+                    'value' => array(
+                        'no_val' => __('Select a Page', MP_DOMAIN),
+                    ),
+                    'valid' => 'array',
+                    'default' => 0,
+                    'callback' => array(__CLASS__, 'ft_basic_page_dropdowns_cb'),
+                ),
                 'group_comics' => array(
                     'id' => 'group-comics',
                     'type' => 'checkbox',
@@ -410,6 +434,18 @@ class MangaPress_Options
         }
 
         if ($section == 'basic') {
+            if ($options['basic']['latestcomic_page'] !== 'no_val'){
+                $new_options['basic']['latestcomic_page'] = sanitize_title_with_dashes($options['basic']['latestcomic_page'], 'save');
+            } else {
+                $new_options['basic']['latestcomic_page'] = '';
+            }
+
+            if ($options['basic']['comicarchive_page'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page'] = sanitize_title_with_dashes($options['basic']['comicarchive_page'], 'save');
+            } else {
+                $new_options['basic']['comicarchive_page'] = '';
+            }
+
             $archive_order_values = array_keys($available_options['basic']['archive_order']['value']);
             $archive_orderby_values = array_keys($available_options['basic']['archive_orderby']['value']);
             //
@@ -431,7 +467,7 @@ class MangaPress_Options
                 $new_options['basic']['comicarchive_page_style'] = 'list';
             }
 
-            flush_rewrite_rules(false);
+            flush_rewrite_rules();
         }
 
         if ($section == 'comic_page') {
