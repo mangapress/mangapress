@@ -467,7 +467,8 @@ class MangaPress_Options
                 $new_options['basic']['comicarchive_page_style'] = 'list';
             }
 
-            flush_rewrite_rules();
+            // add a later check for rewrite rules to be updated on init
+            add_option('mangapress_flush_rewrite_rules', true, '', 'no');
         }
 
         if ($section == 'comic_page') {

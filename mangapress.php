@@ -195,6 +195,13 @@ class MangaPress_Bootstrap
      */
     public static function init()
     {
+        // check if rewrite rules need to be updated
+        $do_flush = boolval(get_option('mangapress_flush_rewrite_rules', false));
+        if ($do_flush) {
+            flush_rewrite_rules();
+            delete_option('mangapress_flush_rewrite_rules');
+        }
+
         self::set_options();
         self::load_current_options();
 
