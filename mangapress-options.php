@@ -236,7 +236,7 @@ class MangaPress_Options
                         'no_val' => __('Select a Page', MP_DOMAIN),
                     ),
                     'valid' => 'array',
-                    'default'  => 0,
+                    'default'  => '',
                     'callback' => array(__CLASS__, 'ft_basic_page_dropdowns_cb'),
                 ),
                 'comicarchive_page' => array(
@@ -247,7 +247,7 @@ class MangaPress_Options
                         'no_val' => __('Select a Page', MP_DOMAIN),
                     ),
                     'valid' => 'array',
-                    'default' => 0,
+                    'default' => '',
                     'callback' => array(__CLASS__, 'ft_basic_page_dropdowns_cb'),
                 ),
                 'group_comics' => array(
@@ -434,18 +434,6 @@ class MangaPress_Options
         }
 
         if ($section == 'basic') {
-            if ($options['basic']['latestcomic_page'] !== 'no_val'){
-                $new_options['basic']['latestcomic_page'] = sanitize_title_with_dashes($options['basic']['latestcomic_page'], 'save');
-            } else {
-                $new_options['basic']['latestcomic_page'] = '';
-            }
-
-            if ($options['basic']['comicarchive_page'] !== 'no_val') {
-                $new_options['basic']['comicarchive_page'] = sanitize_title_with_dashes($options['basic']['comicarchive_page'], 'save');
-            } else {
-                $new_options['basic']['comicarchive_page'] = '';
-            }
-
             $archive_order_values = array_keys($available_options['basic']['archive_order']['value']);
             $archive_orderby_values = array_keys($available_options['basic']['archive_orderby']['value']);
             //
@@ -460,6 +448,18 @@ class MangaPress_Options
                 'group_comics' => self::sanitize_integer($options, 'basic', 'group_comics'),
                 'group_by_parent' => self::sanitize_integer($options, 'basic', 'group_by_parent'),
             );
+
+            if ($options['basic']['latestcomic_page'] !== 'no_val'){
+                $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
+            } else {
+                $new_options['basic']['latestcomic_page'] = '';
+            }
+
+            if ($options['basic']['comicarchive_page'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
+            } else {
+                $new_options['basic']['comicarchive_page'] = '';
+            }
 
             if ($options['basic']['comicarchive_page_style'] !== 'no_val') {
                 $new_options['basic']['comicarchive_page_style'] = $options['basic']['comicarchive_page_style'];

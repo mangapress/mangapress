@@ -196,6 +196,7 @@ class MangaPress_Bootstrap
     public static function init()
     {
         self::set_options();
+        self::load_current_options();
 
         MangaPress_Admin::init();
         MangaPress_Options::init();
@@ -204,9 +205,6 @@ class MangaPress_Bootstrap
         self::$flashmessage_helper = new MangaPress_FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));
-
-
-        self::load_current_options();
 
         add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_enqueue_scripts'));
 
@@ -295,6 +293,14 @@ class MangaPress_Bootstrap
     private static function load_current_options()
     {
         $mp_options = self::get_options();
+
+        if ($mp_options['basic']['latestcomic_page']) {
+            add_filter('mangapress_latest_comic_slug', array(MangaPress_Posts::class, 'set_latest_comic_slug'));
+        }
+
+        if ($mp_options['basic']['comicarchive_page']) {
+            add_filter('mangapress_comic_archives_slug', array(MangaPress_Posts::class, 'set_comic_archives_slug'));
+        }
 
         /*
          * Disable/Enable Default Navigation CSS

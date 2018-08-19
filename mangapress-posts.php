@@ -204,6 +204,22 @@ class MangaPress_Posts
 
 
     /**
+     * Set the comic archive slug
+     * @param string $slug
+     *
+     * @return string
+     */
+    public static function set_comic_archives_slug($slug)
+    {
+        $comic_archive_slug = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page');
+        if (!$comic_archive_slug) {
+            return $slug;
+        }
+
+        return $comic_archive_slug;
+    }
+
+    /**
      * Get current user-specified front-slug for Latest Comic
      *
      * @return string
@@ -211,6 +227,23 @@ class MangaPress_Posts
     public function get_latest_comic_slug()
     {
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
+    }
+
+
+    /**
+     * Set the comic slug to a specified page
+     * @param string $slug
+     *
+     * @return string mixed
+     */
+    public static function set_latest_comic_slug($slug)
+    {
+        $latest_comic_slug = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
+        if (!$latest_comic_slug) {
+            return $slug;
+        }
+
+        return $latest_comic_slug;
     }
 
 
