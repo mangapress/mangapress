@@ -28,16 +28,38 @@ if (!function_exists('is_latest_comic_page')) {
     /**
      * @since 4.0.0
      *
-     * @global WP_Query $wp_query
      * @return bool
      */
     function is_latest_comic_page()
     {
-        global $wp_query;
+        // check for latest-comic query var
+        if (is_latest_comic_endpoint()) {
+            return false;
+        }
 
+        $latest_comic_page = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
+        if (empty($latest_comic_page)) {
+            return false;
+        }
+
+        return is_page($latest_comic_page);
+    }
+}
+
+if (!function_exists('is_latest_comic_endpoint')) {
+    /**
+     * @global WP_Query $wp_query
+     *
+     * @since 4.0.0
+     * @return bool
+     */
+    function is_latest_comic_endpoint()
+    {
+        global $wp_query;
         return isset($wp_query->query['latest-comic']);
     }
 }
+
 if (!function_exists('is_comic_archive_page')) {
     /**
      * Are we on an archive page for the comic post-type

@@ -49,6 +49,8 @@ function mangapress_get_default_template_file()
     } elseif (is_comic_archive_page()) {
         $template = 'archive-comic.php';
     } elseif (is_latest_comic_page()) {
+        $template = 'page-latest-comic.php';
+    } elseif ( is_latest_comic_endpoint()) {
         $template = 'latest-comic.php';
     } else {
         $template = '';
@@ -86,7 +88,7 @@ function mangapress_get_template_hierarchy($template)
         $templates[] = 'archive-comic.php';
     }
 
-    if (is_latest_comic_page()) {
+    if (is_latest_comic_endpoint()) {
         // no object to query
         $templates[] = 'comic/latest-comic.php';
         $templates[] = 'latest-comic.php';
@@ -126,7 +128,7 @@ function mangapress_get_template_part($slug, $name = '')
  */
 function mangapress_pre_get_posts(\WP_Query $query)
 {
-    if ($query->is_main_query() && is_latest_comic_page()) {
+    if ($query->is_main_query() && is_latest_comic_endpoint()) {
         $query->set('post_type', MangaPress_Posts::POST_TYPE);
         $query->set('posts_per_page', 1);
     }

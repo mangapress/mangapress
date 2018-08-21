@@ -170,7 +170,9 @@ class MangaPress_Posts
      */
     private function _rewrite_rules()
     {
-        add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
+        if (MangaPress_Bootstrap::get_option('basic', 'latestcomic_page') == '') {
+            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
+        }
     }
 
 
@@ -199,6 +201,7 @@ class MangaPress_Posts
      */
     public function get_comic_archives_slug()
     {
+        /** @todo add DocBlock */
         return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
     }
 
@@ -226,6 +229,7 @@ class MangaPress_Posts
      */
     public function get_latest_comic_slug()
     {
+        /** @todo add DocBlock */
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
     }
 
