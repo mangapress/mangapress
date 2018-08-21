@@ -37,7 +37,6 @@ do_action('mangapress_before_latest_comic'); ?>
      * @since 4.0.0
      */
     do_action('mangapress_before_latest_comic_loop'); ?>
-
     <?php while(have_posts()) : the_post(); ?>
         <article <?php post_class() ?>>
             <header class="mangapress_comic_title">

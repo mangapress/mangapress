@@ -313,3 +313,54 @@ function mangapress_archive_gallery_style()
      */
     return apply_filters('mangapress_archive_gallery_style', $styles);
 }
+
+/**
+ * Retrieves the most recent comic
+ *
+ * @since 2.7.2
+ * @return \WP_Query
+ */
+function mangapress_get_latest_comic()
+{
+    $single_comic_query = new WP_Query(array(
+        'post_type' => 'mangapress_comic',
+        'posts_per_page' => 1,
+        'post_status' => 'publish',
+        'order' => 'DESC',
+        'orderby' => 'date',
+    ));
+
+    return $single_comic_query;
+}
+
+/**
+ * Start a Latest Comic loop
+ * @since 2.9
+ * @global WP_Query $wp_query
+ * @return void
+ */
+function mangapress_start_latest_comic()
+{
+    global $wp_query;
+    do_action('latest_comic_start');
+    $wp_query = mangapress_get_latest_comic();
+    if ($wp_query->get('name') == 'no-comic-found'){
+        apply_filters(
+            'the_latest_comic_content_error',
+            '<p class="error">No comics was found.</p>'
+        );
+    }
+}
+
+/**
+ * End Latest Comic loop
+ * @since 2.9
+ * @global WP_Query $wp_query
+ * @return void
+ */
+function mangapress_end_latest_comic()
+{
+    global $wp_query;
+    do_action('latest_comic_end');
+    wp_reset_query();
+}

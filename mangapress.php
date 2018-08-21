@@ -134,6 +134,10 @@ class MangaPress_Bootstrap
         self::$plugin_basename = plugin_basename(__FILE__);
         load_plugin_textdomain(MP_DOMAIN, false, dirname( self::$plugin_basename ) . '/languages');
 
+        self::set_options();
+        self::load_current_options();
+        require_once MP_ABSPATH . 'includes/theme-compat/theme-compat.php';
+
         add_action('init', array(__CLASS__, 'init'), 500);
         add_action('widgets_init', array(__CLASS__, 'widgets_init'));
         add_filter('plugin_action_links_' . self::$plugin_basename, array(__CLASS__, 'plugin_action_links'), 10, 4);
@@ -201,9 +205,6 @@ class MangaPress_Bootstrap
             flush_rewrite_rules();
             delete_option('mangapress_flush_rewrite_rules');
         }
-
-        self::set_options();
-        self::load_current_options();
 
         MangaPress_Admin::init();
         MangaPress_Options::init();

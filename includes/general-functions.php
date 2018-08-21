@@ -8,7 +8,6 @@
  * @version $Id$
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
-require_once MP_ABSPATH . 'includes/theme-compat/theme-compat.php';
 
 
 define('MP_CATEGORY_PARENTS', 1);

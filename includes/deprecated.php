@@ -29,16 +29,6 @@ if (!function_exists('is_comic_page')) {
     }
 }
 
-function mangapress_start_latest_comic()
-{
-    _deprecated_function(__FUNCTION__, MP_VERSION, __('See Manga+Press documentation'));
-}
-
-function mangapress_end_latest_comic()
-{
-    _deprecated_function(__FUNCTION__, MP_VERSION, __('See Manga+Press documentation'));
-}
-
 add_filter('the_latest_comic_content_error', function($error) {
     $msg = __('This filter has been deprecated. Please see documentation for alternatives', MP_DOMAIN);
     _deprecated_hook('the_latest_comic_content_error', MP_VERSION, $msg);
