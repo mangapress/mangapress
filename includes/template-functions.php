@@ -133,7 +133,7 @@ function mangapress_pre_get_posts(\WP_Query $query)
         $query->set('posts_per_page', 1);
     }
 
-    if (is_comic_archive_page()) {
+    if ($query->is_main_query() && is_comic_archive_page()) {
         $mp_options = MangaPress_Bootstrap::get_options();
         $order = $mp_options['basic']['archive_order'];
         $orderby = $mp_options['basic']['archive_orderby'];
@@ -329,7 +329,7 @@ function mangapress_get_latest_comic()
         'order' => 'DESC',
         'orderby' => 'date',
     ));
-
+    $single_comic_query->is_post_type_archive = false;
     return $single_comic_query;
 }
 
