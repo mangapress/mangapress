@@ -344,7 +344,7 @@ function mangapress_start_latest_comic()
     global $wp_query;
     do_action('latest_comic_start');
     $wp_query = mangapress_get_latest_comic();
-    if ($wp_query->get('name') == 'no-comic-found'){
+    if ($wp_query->found_posts == 0){
         apply_filters(
             'the_latest_comic_content_error',
             '<p class="error">No comics was found.</p>'

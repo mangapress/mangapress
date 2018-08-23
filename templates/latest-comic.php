@@ -12,8 +12,8 @@ get_header('comic');
 
 /** This filter is documented in templates/single-comic.php */
 do_action('mangapress_before_content'); ?>
-<header class="mangapress-latest-comic-header">
-    <h1 class="manga-press-latest-comic-header__title">
+<header class="entry-header mangapress-latest-comic-header">
+    <h1 class="entry-title manga-press-latest-comic-header__title">
         <?php _e('Latest Comic', MP_DOMAIN); ?>
     </h1>
 </header>
@@ -40,8 +40,8 @@ do_action('mangapress_before_latest_comic'); ?>
 
     <?php while(have_posts()) : the_post(); ?>
         <article <?php post_class() ?>>
-            <header class="mangapress_comic_title">
-               <h2><?php the_title(); ?></h2>
+            <header class="entry-header mangapress_comic_title">
+               <h2 class="entry-title"><?php the_title(); ?></h2>
             </header>
             <?php the_post_thumbnail(); ?>
         </article>
