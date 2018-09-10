@@ -97,30 +97,27 @@ class MangaPress_Posts
      */
     public function __construct()
     {
-        $this->_register_post_type();
-        $this->_rewrite_rules();
+        $this->register_post_type();
+        $this->rewrite_rules();
 
         // Setup Manga+Press Post Options box
         add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
         add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
         add_action('save_post_mangapress_comic', array($this, 'save_post'), 500, 2);
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
-
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
         add_action('manage_posts_custom_column', array($this, 'comics_headers'));
         add_filter('manage_edit-mangapress_comic_columns', array($this, 'comics_columns'));
-
     }
-
 
     /**
      * Register the post-type
      *
      * @return void
      */
-    private function _register_post_type()
+    private function register_post_type()
     {
         // register taxonomy
         $taxonomy = new MangaPress_Taxonomy(array(
@@ -168,7 +165,7 @@ class MangaPress_Posts
     /**
      * Add new rewrite rules for Comic post-type
      */
-    private function _rewrite_rules()
+    private function rewrite_rules()
     {
         if (MangaPress_Bootstrap::get_option('basic', 'latestcomic_page') == '') {
             add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);

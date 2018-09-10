@@ -215,6 +215,7 @@ class MangaPress_Bootstrap
         ));
 
         add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_enqueue_scripts'));
+        add_action('current_screen', array(__CLASS__, 'add_edit_page_warnings'));
 
         add_filter('template_include', 'mangapress_template_loader');
 
@@ -373,5 +374,71 @@ class MangaPress_Bootstrap
             MP_VERSION,
             'screen'
         );
+    }
+
+    /**
+     * Show a warning on edit screens if the page is selected to be Latest/Comic Archive
+     */
+    public static function add_edit_page_warnings()
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_archive_page'], 555);
+        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_latest_page'], 555);
+        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_front_posts_page'], 555);
+    }
+
+    /**
+     * Warning for Comic Archive Page
+     */
+    public static function edit_form_after_title_archive_page()
+    {
+        $post_id = intval(filter_input(INPUT_GET, 'post'));
+        $post = get_post($post_id);
+        $page_slug = get_post_field('post_name', $post);
+        $post_type = get_post_type($post);
+        $archive_page = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page');
+
+        if ($page_slug == $archive_page) {
+            echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your archived comics.', MP_DOMAIN ) . '</p></div>';
+            remove_post_type_support( $post_type, 'editor' );
+        }
+    }
+
+    /**
+     * Warning for Comic Archive Page
+     */
+    public static function edit_form_after_title_latest_page()
+    {
+        $post_id = intval(filter_input(INPUT_GET, 'post'));
+        $post = get_post($post_id);
+        $page_slug = get_post_field('post_name', $post);
+        $post_type = get_post_type($post);
+        $latest_page = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
+
+        if ($page_slug == $latest_page) {
+            echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your latest comics.', MP_DOMAIN ) . '</p></div>';
+            remove_post_type_support( $post_type, 'editor' );
+        }
+    }
+
+    /**
+     * Warning for Front/Home Page
+     */
+    public static function edit_form_after_title_front_posts_page()
+    {
+        $post_id = intval(filter_input(INPUT_GET, 'post'));
+
+        $page_for_posts = get_option('page_for_posts', false);
+        $page_on_front = get_option('page_on_front', false);
+
+        if (in_array($post_id, [$page_for_posts, $page_on_front])) {
+            echo '<div class="notice notice-error inline">';
+            echo '<p>' . __( 'You have assigned this page to be the Home Page or the Posts page. This option is not compatible with Manga+Press and will break the functionality of these two pages.', MP_DOMAIN ) . '</p>';
+            echo '<p>' . __( 'Either assign Latest/Comic archive to different pages, or assign Home Page/Post Page to different pages.', MP_DOMAIN ) . '</p>';
+            echo '</div>';
+        }
     }
 }
