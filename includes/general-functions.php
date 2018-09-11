@@ -65,7 +65,7 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  * @param string $monthlink Existing link to be modified or replaced
  * @param string $year
  * @param string $month
- * @return string|void
+ * @return string
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {

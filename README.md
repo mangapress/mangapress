@@ -11,7 +11,7 @@ Manga+Press is a webcomic management system for WordPress.
     * [X] Change page option backend to make use of the slug filters to allow users to override these
     * [X] Add notice to the WordPress admin to inform users which pages are being used for Latest/Archive, similar to WordPress Posts/Home functionality
     * [X] Check if page has been set as Blog/Home static page and display a warning
-    * [ ] Add Latest Comic shortcode for displaying the latest comic in page content
+    * [X] Add Latest Comic shortcode for displaying the latest comic in page content
     * [ ] Add shortcode for pulling in a comic or group of comics — potentially based on category?
 
 ## Description

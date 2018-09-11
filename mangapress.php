@@ -396,6 +396,10 @@ class MangaPress_Bootstrap
     public static function edit_form_after_title_archive_page()
     {
         $post_id = intval(filter_input(INPUT_GET, 'post'));
+        if (!$post_id) {
+            return false;
+        }
+
         $post = get_post($post_id);
         $page_slug = get_post_field('post_name', $post);
         $post_type = get_post_type($post);
@@ -413,6 +417,10 @@ class MangaPress_Bootstrap
     public static function edit_form_after_title_latest_page()
     {
         $post_id = intval(filter_input(INPUT_GET, 'post'));
+        if (!$post_id) {
+            return false;
+        }
+
         $post = get_post($post_id);
         $page_slug = get_post_field('post_name', $post);
         $post_type = get_post_type($post);
@@ -430,6 +438,9 @@ class MangaPress_Bootstrap
     public static function edit_form_after_title_front_posts_page()
     {
         $post_id = intval(filter_input(INPUT_GET, 'post'));
+        if (!$post_id) {
+            return false;
+        }
 
         $page_for_posts = get_option('page_for_posts', false);
         $page_on_front = get_option('page_on_front', false);
