@@ -169,12 +169,12 @@ function mangapress_get_template_part($slug, $name = '')
 function mangapress_pre_get_posts(\WP_Query $query)
 {
     if ($query->is_main_query() && is_latest_comic_endpoint()) {
-        $query->set('post_type', MangaPress_Posts::POST_TYPE);
+        $query->set('post_type', MangaPress\Posts::POST_TYPE);
         $query->set('posts_per_page', 1);
     }
 
     if ($query->is_main_query() && is_comic_archive_page()) {
-        $mp_options = MangaPress_Bootstrap::get_options();
+        $mp_options = MangaPress\Bootstrap::get_options();
         $order = $mp_options['basic']['archive_order'];
         $orderby = $mp_options['basic']['archive_orderby'];
 

@@ -7,13 +7,14 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+namespace MangaPress\Lib;
 /**
  * MangaPress_PostType
  *
  * @package MangaPress_PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_PostType extends MangaPress_ContentType
+class PostType extends ContentType
 {
 
     /**

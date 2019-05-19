@@ -6,12 +6,13 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+namespace MangaPress;
 /**
- * @subpackage MangaPress_Install
+ * @subpackage Install
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
-class MangaPress_Install
+class Install
 {
 
 
@@ -108,11 +109,11 @@ class MangaPress_Install
         } elseif (self::$_version == '') {
 
             add_option( 'mangapress_ver', MP_VERSION, '', 'no');
-            add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
+            add_option( 'mangapress_options', serialize( Options::get_default_options() ), '', 'no' );
 
         }
 
-        MangaPress_Bootstrap::init();
+        Bootstrap::init();
         $this->after_plugin_activation();
 
         flush_rewrite_rules(false);
@@ -145,7 +146,7 @@ class MangaPress_Install
         // create a default series category
         $term = wp_insert_term(
             'Default Series',
-            MangaPress_Posts::TAX_SERIES,
+            Posts::TAX_SERIES,
             array(
                 'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
                 'slug'        => 'default-series',

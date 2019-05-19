@@ -5,15 +5,17 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Lib\Form\Element;
+use MangaPress\Lib\Form\Element as Element;
 
 /**
- * MangaPress_Checkbox
+ * Checkbox
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Checkbox
+ * @package Checkbox
  * @version $Id$
  */
-class MangaPress_Checkbox extends MangaPress_Element
+class Checkbox extends Element
 {
     /**
      * Display form element

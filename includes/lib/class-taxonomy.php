@@ -7,13 +7,14 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+namespace MangaPress\Lib;
 /**
- * MangaPress_Taxonomy
+ * Taxonomy
  *
  * @package MangaPress_Taxonomy
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_Taxonomy extends MangaPress_ContentType
+class Taxonomy extends ContentType
 {
 
     /**

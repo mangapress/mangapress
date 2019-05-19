@@ -7,13 +7,16 @@
  * @version $Id$
  * @license GPL
  */
+namespace MangaPress;
+use MangaPress\Lib\Form\Element\Select;
+
 
 /**
  * mangapress-options
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-class MangaPress_Options
+class Options
 {
     const OPTIONS_GROUP_NAME = 'mangapress_options';
 
@@ -92,7 +95,7 @@ class MangaPress_Options
     public static function output_settings_fields()
     {
         $field_sections = self::options_fields();
-        $current_tab = MangaPress_Admin::get_current_tab();
+        $current_tab = Admin::get_current_tab();
         $fields = $field_sections[$current_tab];
 
         foreach ($fields as $field_name => $field) {
@@ -117,7 +120,7 @@ class MangaPress_Options
      */
     public static function settings_field_cb($option)
     {
-        $mp_options = MangaPress_Bootstrap::get_options();
+        $mp_options = Bootstrap::get_options();
 
         $class = ucwords($option['type']);
         $value = isset($mp_options[$option['section']][$option['name']])
@@ -131,7 +134,8 @@ class MangaPress_Options
                 'value' => $value,
             );
 
-            $element = "MangaPress_{$class}";
+            $element = "MangaPress\Lib\Form\Element\\{$class}";
+
             echo new $element(array(
                 'attributes' => $attributes,
                 'description' => isset($option['description']) ? $option['description'] : '',
@@ -152,7 +156,7 @@ class MangaPress_Options
     public static function ft_basic_page_dropdowns_cb($option)
     {
 
-        $mp_options = MangaPress_Bootstrap::get_options();
+        $mp_options = Bootstrap::get_options();
 
         $value = $mp_options[$option['section']][$option['name']];
 
@@ -162,7 +166,7 @@ class MangaPress_Options
             $options[$page->post_name] = $page->post_title;
         }
 
-        echo new MangaPress_Select(array(
+        echo new Select(array(
             'attributes' => array(
                 'name' => "mangapress_options[{$option['section']}][{$option['name']}]",
                 'id' => $option['id'],
@@ -415,7 +419,7 @@ class MangaPress_Options
         if (!$options)
             return $options;
 
-        $mp_options = MangaPress_Bootstrap::get_options();
+        $mp_options = Bootstrap::get_options();
         $section = key($options);
         $available_options = self::options_fields();
         $new_options = $mp_options;

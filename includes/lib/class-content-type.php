@@ -10,15 +10,16 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+namespace MangaPress\Lib;
 /**
- * MangaPress_ContentType
+ * ContentType
  * This abstract class contains basic properties and methods
  * used by the PostType and Taxonomy classes.
  *
- * @package MangaPress_ContentType
+ * @package ContentType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-abstract class MangaPress_ContentType
+abstract class ContentType
 {
 
     /**

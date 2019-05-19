@@ -5,15 +5,17 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Lib\Form\Element;
+use MangaPress\Lib\Form\Element as Element;
 
 /**
- * MangaPress_Radio
+ * Radio
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress_Radio
  * @version $Id$
  */
-class MangaPress_Radio extends MangaPress_Element
+class Radio extends Element
 {
 
     /**

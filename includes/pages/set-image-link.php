@@ -15,6 +15,6 @@ if (empty($image_html) && !($wp instanceof WP))
 <div class="hide-if-no-js">
     <?php echo $image_html; ?>
     <p>
-        <a href="#" data-action="<?php echo MangaPress_Posts::ACTION_REMOVE_IMAGE; ?>" data-nonce="<?php echo MangaPress_Posts::NONCE_INSERT_COMIC; ?>" id="js-remove-comic-thumbnail"><?php esc_html_e( 'Remove Comic image', MP_DOMAIN ) ?></a>
+        <a href="#" data-action="<?php echo MangaPress\Posts::ACTION_REMOVE_IMAGE; ?>" data-nonce="<?php echo MangaPress\Posts::NONCE_INSERT_COMIC; ?>" id="js-remove-comic-thumbnail"><?php esc_html_e( 'Remove Comic image', MP_DOMAIN ) ?></a>
     </p>
 </div>

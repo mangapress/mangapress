@@ -28,7 +28,7 @@ function mangapress_is_queried_page($option)
 {
     global $wp_query;
 
-    $page = MangaPress_Bootstrap::get_option('basic', $option);
+    $page = \MangaPress\Bootstrap::get_option('basic', $option);
     $object = $wp_query->get_queried_object();
 
     if (!isset($object->post_name) || $object->post_name !== $page) {
@@ -51,7 +51,7 @@ function mangapress_is_queried_page($option)
  */
 function mangapress_disable_post_thumbnail($html, $post_id)
 {
-    if (get_post_type($post_id) == MangaPress_Posts::POST_TYPE) {
+    if (get_post_type($post_id) == MangaPress\Posts::POST_TYPE) {
         return '';
     }
 
@@ -69,7 +69,7 @@ function mangapress_disable_post_thumbnail($html, $post_id)
  */
 function mangapress_month_link ($monthlink, $year = '', $month = '')
 {
-    $posts = MangaPress_Bootstrap::get_helper('posts');
+    $posts = \MangaPress\Bootstrap::get_helper('posts');
     $slug = $posts->get_front_slug();
 
     $month_permalink = home_url("/{$slug}/{$year}/{$month}");
@@ -89,7 +89,7 @@ function mangapress_month_link ($monthlink, $year = '', $month = '')
  */
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
-    $posts = MangaPress_Bootstrap::get_helper('posts');
+    $posts = \MangaPress\Bootstrap::get_helper('posts');
     $slug = $posts->get_front_slug();
 
     $relative= "/{$slug}/{$year}/{$month}/{$day}";

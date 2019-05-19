@@ -2,17 +2,20 @@
 /**
  * MangaPress
  *
- * @package mangapress-admin
+ * @package Admin
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
  */
+namespace MangaPress;
+
 /**
- * mangapress-admin
+ * Admin
+ * Class that handles Manga+Press' admin page configuration
  *
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-class MangaPress_Admin
+class Admin
 {
     /**
      * Page slug constant
@@ -27,8 +30,8 @@ class MangaPress_Admin
      */
     public static function init()
     {
-        add_action('admin_menu', array(__CLASS__, 'admin_menu'));
-        add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue_scripts'));
+        add_action('admin_menu', [__CLASS__, 'admin_menu']);
+        add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue_scripts']);
     }
 
     /**
@@ -64,10 +67,10 @@ class MangaPress_Admin
             __("Manga+Press Options", MP_DOMAIN),
             'manage_options',
             self::ADMIN_PAGE_SLUG,
-            array(__CLASS__, 'load_page')
+            [__CLASS__, 'load_page']
         );
 
-        add_action("load-{$mangapress_page_hook}", array(__CLASS__, 'load_help_tabs'));
+        add_action("load-{$mangapress_page_hook}", [__CLASS__, 'load_help_tabs']);
     }
 
 
@@ -164,7 +167,7 @@ class MangaPress_Admin
         $current = filter_input(INPUT_GET, 'tab')
                         ? filter_input(INPUT_GET, 'tab') : 'basic';
 
-        $tabs = MangaPress_Options::options_sections();
+        $tabs = Options::options_sections();
 
         $links = array();
         foreach($tabs as $tab => $tab_data) {
@@ -192,7 +195,7 @@ class MangaPress_Admin
      */
     public static function get_current_tab()
     {
-        $tabs    = MangaPress_Options::get_options_sections();
+        $tabs    = Options::get_options_sections();
 
         $current_tab = filter_input(INPUT_GET, 'tab');
         if (in_array($current_tab, $tabs)) {

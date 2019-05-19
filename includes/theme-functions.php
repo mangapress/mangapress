@@ -20,7 +20,7 @@ if (!function_exists('is_comic')) {
      */
     function is_comic()
     {
-        return is_singular(MangaPress_Posts::POST_TYPE);
+        return is_singular(MangaPress\Posts::POST_TYPE);
     }
 }
 
@@ -37,7 +37,7 @@ if (!function_exists('is_latest_comic_page')) {
             return false;
         }
 
-        $latest_comic_page = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
+        $latest_comic_page = \MangaPress\Bootstrap::get_option('basic', 'latestcomic_page');
         if (empty($latest_comic_page)) {
             return false;
         }
@@ -72,7 +72,7 @@ if (!function_exists('is_comic_archive_page')) {
     {
         global $wp_query;
 
-        return $wp_query->is_post_type_archive(MangaPress_Posts::POST_TYPE);
+        return $wp_query->is_post_type_archive(MangaPress\Posts::POST_TYPE);
     }
 }
 
@@ -84,7 +84,7 @@ if (!function_exists('is_comic_archive_page')) {
  */
 function comic_archive_is_calendar()
 {
-    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
     return $archive_style === 'calendar';
 }
 
@@ -96,7 +96,7 @@ function comic_archive_is_calendar()
  */
 function comic_archive_is_gallery()
 {
-    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
     return $archive_style === 'gallery';
 }
 
@@ -108,7 +108,7 @@ function comic_archive_is_gallery()
  */
 function comic_archive_is_list()
 {
-    $archive_style = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
     return $archive_style === 'list';
 }
 
@@ -120,7 +120,7 @@ function comic_archive_is_list()
  */
 function mangapress_get_comic_archive_style()
 {
-    return MangaPress_Bootstrap::get_option('basic', 'comicarchive_page_style');
+    return \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
 }
 
 
@@ -177,7 +177,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 {
     global $post;
 
-    $mp_options = MangaPress_Bootstrap::get_options();
+    $mp_options = \MangaPress\Bootstrap::get_options();
 
     $defaults = array(
         'container'      => 'nav',
@@ -344,7 +344,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     // Quick check. If we have no posts at all, abort!
     if ( !$posts ) {
-        $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
+        $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
         if ( !$gotsome ) {
             $cache[ $key ] = '';
             wp_cache_set( 'mangapress_get_calendar', $cache, 'mangapress_calendar' );
@@ -388,7 +388,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
             FROM $wpdb->posts
             WHERE post_date < '$thisyear-$thismonth-01'
-            AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
+            AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
                 ORDER BY post_date DESC
                 LIMIT 1");
         $next = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
@@ -459,7 +459,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     // Get days with posts
     $dayswithposts = $wpdb->get_results("SELECT DISTINCT DAYOFMONTH(post_date)
 		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
-		AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'
+		AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
 		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", ARRAY_N);
 
 
@@ -485,7 +485,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         ."FROM $wpdb->posts "
         ."WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
         ."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-        ."AND post_type = '" . MangaPress_Posts::POST_TYPE . "' AND post_status = 'publish'"
+        ."AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'"
     );
 
     if ( $ak_post_titles ) {

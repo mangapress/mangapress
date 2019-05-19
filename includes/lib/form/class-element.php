@@ -5,20 +5,22 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Lib\Form;
+
 require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/select.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
 /**
- * MangaPress_Element
+ * Element
  * Abstract class used to define basic functionality for extending classes
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Element
+ * @package Element
  * @version $Id$
  */
-class MangaPress_Element
+class Element
 {
     /**
      * Elements HTML attributes array

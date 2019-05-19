@@ -17,7 +17,7 @@ if ( ! current_user_can('manage_options') ){
      SyntaxHighlighter.all();
 </script>
 <div class="wrap">
-    <?php MangaPress_Admin::options_page_tabs() ?>
+    <?php self::options_page_tabs() ?>
 
     <form action="options.php" method="post" id="mangapress_options_form">
         <?php settings_fields('mangapress_options'); ?>

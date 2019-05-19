@@ -4,17 +4,19 @@
  * @version $Id$
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
+namespace MangaPress;
+use MangaPress\Lib\Taxonomy as Taxonomy;
+use MangaPress\Lib\PostType as PostType;
 
 /**
  * MangaPress Posts class
  * Handles functionality for the Comic post-type
  *
- * @package MangaPress
- * @subpackage MangaPress_Posts
+ * @subpackage Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
-class MangaPress_Posts
+class Posts
 {
     /**
      * Get image html
@@ -67,7 +69,7 @@ class MangaPress_Posts
     /**
      * Class for initializing custom post-type
      *
-     * @var MangaPress_PostType
+     * @var Posts
      */
     private $_post_type = null;
 
@@ -120,7 +122,7 @@ class MangaPress_Posts
     private function register_post_type()
     {
         // register taxonomy
-        $taxonomy = new MangaPress_Taxonomy(array(
+        $taxonomy = new Taxonomy(array(
             'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
@@ -135,7 +137,7 @@ class MangaPress_Posts
             ),
         ));
 
-        $this->_post_type = new MangaPress_PostType(array(
+        $this->_post_type = new PostType(array(
             'name'          => self::POST_TYPE,
             'textdomain'    => MP_DOMAIN,
             'pluralname'    => __('Comics', MP_DOMAIN),
@@ -167,7 +169,7 @@ class MangaPress_Posts
      */
     private function rewrite_rules()
     {
-        if (MangaPress_Bootstrap::get_option('basic', 'latestcomic_page') == '') {
+        if (Bootstrap::get_option('basic', 'latestcomic_page') == '') {
             add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
         }
     }
@@ -211,7 +213,7 @@ class MangaPress_Posts
      */
     public static function set_comic_archives_slug($slug)
     {
-        $comic_archive_slug = MangaPress_Bootstrap::get_option('basic', 'comicarchive_page');
+        $comic_archive_slug = Bootstrap::get_option('basic', 'comicarchive_page');
         if (!$comic_archive_slug) {
             return $slug;
         }
@@ -239,7 +241,7 @@ class MangaPress_Posts
      */
     public static function set_latest_comic_slug($slug)
     {
-        $latest_comic_slug = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
+        $latest_comic_slug = Bootstrap::get_option('basic', 'latestcomic_page');
         if (!$latest_comic_slug) {
             return $slug;
         }
@@ -287,7 +289,7 @@ class MangaPress_Posts
     /**
      * Enqueue scripts for post-edit and post-add screens
      *
-     * @global WP_Post $post
+     * @global \WP_Post $post
      * @return void
      */
     public function enqueue_scripts()
@@ -326,7 +328,7 @@ class MangaPress_Posts
     /**
      * Modify header columns for Comic Post-type
      *
-     * @global WP_Post $post
+     * @global \WP_Post $post
      * @param array $column
      * @return void
      */
@@ -459,7 +461,7 @@ class MangaPress_Posts
      * meta key. This is the same meta key used for the post featured image.
      *
      * @param int $post_id
-     * @param WP_Post $post
+     * @param \WP_Post $post
      *
      * @return int
      */

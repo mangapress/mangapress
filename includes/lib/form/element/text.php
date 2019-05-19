@@ -5,15 +5,17 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
+namespace MangaPress\Lib\Form\Element;
+use MangaPress\Lib\Form\Element as Element;
 
 /**
- * MangaPress_Text
+ * Text
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress_Text
  * @version $Id$
  */
-class MangaPress_Text extends MangaPress_Element
+class Text extends Element
 {
 
     /**

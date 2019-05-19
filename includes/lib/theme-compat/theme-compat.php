@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme compatibility includes
  */
