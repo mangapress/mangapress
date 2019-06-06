@@ -6,7 +6,7 @@
  * @package Manga_Press
  * @subpackage Core_Functions
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jessica Green <support@manga-press.com>
  */
 
 

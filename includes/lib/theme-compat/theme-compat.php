@@ -1,9 +1,10 @@
 <?php
+namespace MangaPress\Lib\ThemeCompat;
 
 /**
  * Theme compatibility includes
  */
-class MangaPress_ThemeCompatibility
+class ThemeCompatibility
 {
 
     /**
@@ -12,30 +13,24 @@ class MangaPress_ThemeCompatibility
     public static function init()
     {
         $theme = get_template();
-        switch ($theme) {
-            case 'twentyfifteen':
-                // @todo Define a compatibility class
-            break;
+        $theme_compat_path = implode('/', ['includes', 'lib', 'theme-compat']) . '/';
+        $theme_compat_file = MP_ABSPATH . $theme_compat_path . $theme . '.php';
 
-            case 'twentysixteen':
-                // @todo Define a compatibility class
-            break;
-
-            case 'twentyseventeen' :
-                require_once MP_ABSPATH . 'includes/theme-compat/' . $theme . '.php';
-            break;
-
-            default:
-                /**
-                 * mangapress_theme_compatible-$theme
-                 *
-                 * Allow third-party themes to declare Manga+Press compatibility options.
-                 *
-                 * @since 4.0.0
-                 */
-                do_action("mangapress_theme_compatible-{$theme}");
+        if ( ! file_exists( $theme_compat_file )) {
+            do_action("mangapress_theme_compatible-{$theme}");
+        } else {
+            require_once MP_ABSPATH . 'includes/lib/theme-compat/ThemeMarkup.php';
+            /**
+             * mangapress_theme_compatible-$theme
+             *
+             * Allow third-party themes to declare Manga+Press compatibility options.
+             *
+             * @since 4.0.0
+             */
+            require_once $theme_compat_file;
         }
+
     }
 }
 
-MangaPress_ThemeCompatibility::init();
+ThemeCompatibility::init();

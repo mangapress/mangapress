@@ -4,7 +4,7 @@
  *
  * @package WordPress_PostType_Framework
  * @subpackage MangaPress_Taxonomy
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @version $Id$
  */
 namespace MangaPress\Lib;
@@ -12,7 +12,7 @@ namespace MangaPress\Lib;
  * Taxonomy
  *
  * @package MangaPress_Taxonomy
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  */
 class Taxonomy extends ContentType
 {

@@ -4,7 +4,7 @@
  *
  * @package WordPress_PostType_Framework
  * @subpackage MangaPress_PostType
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @version $Id$
  */
 namespace MangaPress\Lib;
@@ -12,7 +12,7 @@ namespace MangaPress\Lib;
  * MangaPress_PostType
  *
  * @package MangaPress_PostType
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  */
 class PostType extends ContentType
 {

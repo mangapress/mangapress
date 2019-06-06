@@ -1,0 +1,42 @@
+<?php
+
+
+namespace MangaPress\Lib\ThemeCompat;
+
+
+use MangaPress\Bootstrap;
+
+trait ThemeMarkup
+{
+    public static function init()
+    {
+        $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
+        add_action('mangapress_before_content', [__CLASS__, 'before_content']);
+        add_action('mangapress_after_content', [__CLASS__, 'after_content']);
+        if ($latest_comic_page_exists) {
+            add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
+            add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
+        }
+        add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_styles']);
+    }
+
+    abstract public static function before_content();
+    abstract public static function after_content();
+
+    /**
+     * Enqueue Manga+Press-specific stylesheet
+     */
+    public static function enqueue_styles()
+    {
+        $theme = get_template();
+
+        wp_register_style(
+            "mangapress-{$theme}",
+            MP_URLPATH . "assets/css/{$theme}.css",
+            null,
+            MP_VERSION
+        );
+
+        wp_enqueue_style("mangapress-{$theme}");
+    }
+}

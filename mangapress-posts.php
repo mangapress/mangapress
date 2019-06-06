@@ -2,7 +2,7 @@
 /**
  * @package Manga_Press
  * @version $Id$
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jessica Green <support@manga-press.com>
  */
 namespace MangaPress;
 use MangaPress\Lib\Taxonomy as Taxonomy;
@@ -13,9 +13,8 @@ use MangaPress\Lib\PostType as PostType;
  * Handles functionality for the Comic post-type
  *
  * @subpackage Posts
- * @author Jessica Green <jgreen@psy-dreamer.com>
+ * @author Jessica Green <support@manga-press.com>
  */
-
 class Posts
 {
     /**

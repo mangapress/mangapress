@@ -3,13 +3,13 @@
  * MangaPress Installation Class
  *
  * @package MangaPress
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @version $Id$
  */
 namespace MangaPress;
 /**
  * @subpackage Install
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @version $Id$
  */
 class Install

@@ -7,7 +7,7 @@
  * @package Manga_Press
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  */
 
 /**

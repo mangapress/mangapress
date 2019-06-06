@@ -3,7 +3,7 @@
  * @package Manga_Press
  * @subpackage Uninstall
  * @version $Id$
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  */
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
     die('You are not allowed to call this page directly.');

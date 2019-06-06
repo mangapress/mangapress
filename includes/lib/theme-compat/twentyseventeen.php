@@ -2,14 +2,18 @@
 /**
  * Provide theme compatibility for TwentySeventeen
  */
+namespace MangaPress\Lib\ThemeCompat;
+use MangaPress\Bootstrap;
 
-class MangaPress_TwentySeventeen
+class TwentySeventeen
 {
+    use ThemeMarkup;
+
     public static function init()
     {
-        $latest_comic_page_exists = MangaPress_Bootstrap::get_option('basic', 'latestcomic_page');
-        add_action('mangapress_before_content', array(__CLASS__, 'mangapress_twentyseventeen_before_content'));
-        add_action('mangapress_after_content', array(__CLASS__, 'mangapress_twentyseventeen_after_content'));
+        $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
+        add_action('mangapress_before_content', array(__CLASS__, 'before_content'));
+        add_action('mangapress_after_content', array(__CLASS__, 'after_content'));
         if ($latest_comic_page_exists) {
             add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
             add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
@@ -21,7 +25,7 @@ class MangaPress_TwentySeventeen
     /**
      * Add TwentySeventeen content area wrapping markup opening tags
      */
-    public static function mangapress_twentyseventeen_before_content()
+    public static function before_content()
     {
         echo '<div class="wrap">';
         echo '<div id="primary" class="content-area">';
@@ -32,7 +36,7 @@ class MangaPress_TwentySeventeen
     /**
      * TwentySeventeen content area closing tags
      */
-    public static function mangapress_twentyseventeen_after_content()
+    public static function after_content()
     {
         echo '</main>';
         echo '</div>';
@@ -59,4 +63,4 @@ class MangaPress_TwentySeventeen
     }
 }
 
-MangaPress_TwentySeventeen::init();
+TwentySeventeen::init();

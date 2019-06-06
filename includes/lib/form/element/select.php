@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package MangaPress
  */
 namespace MangaPress\Lib\Form\Element;
@@ -10,7 +10,7 @@ use MangaPress\Lib\Form\Element as Element;
 /**
  * MangaPress_Select
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package MangaPress_Select
  * @version $Id$
  */

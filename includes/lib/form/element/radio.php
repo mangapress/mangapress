@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package MangaPress
  */
 namespace MangaPress\Lib\Form\Element;
@@ -11,7 +11,7 @@ use MangaPress\Lib\Form\Element as Element;
 /**
  * Radio
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package MangaPress_Radio
  * @version $Id$
  */

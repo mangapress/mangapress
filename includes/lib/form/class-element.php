@@ -2,7 +2,7 @@
 /**
  * MangaPress_Framework
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package MangaPress
  */
 namespace MangaPress\Lib\Form;
@@ -16,7 +16,7 @@ require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
  * Element
  * Abstract class used to define basic functionality for extending classes
  *
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  * @package Element
  * @version $Id$
  */

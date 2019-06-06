@@ -8,7 +8,7 @@ use MangaPress\Lib\FlashMessages as FlashMessages;
  *
  * @package MangaPress
  * @subpackage Bootstrap
- * @author Jess Green <jgreen@psy-dreamer.com>
+ * @author Jess Green <support@manga-press.com>
  */
 class Bootstrap
 {
