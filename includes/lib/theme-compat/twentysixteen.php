@@ -1,9 +1,8 @@
 <?php
 /**
- * Provide theme compatibility for TwentySeventeen
+ * Provide theme compatibility for TwentySixteen
  */
 namespace MangaPress\Lib\ThemeCompat;
-use MangaPress\Bootstrap;
 
 class TwentySixteen
 {
