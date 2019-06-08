@@ -43,25 +43,6 @@ class Admin
     {
         global $mangapress_page_hook;
 
-        // Syntax highlighter
-        wp_register_script(
-            'mangapress-syntax-highlighter',
-            MP_URLPATH . 'includes/pages/js/syntaxhighlighter/scripts/shCore.js'
-        );
-
-        // the brush we need...
-        wp_register_script(
-            'mangapress-syntax-highlighter-cssbrush',
-            MP_URLPATH . 'includes/pages/js/syntaxhighlighter/scripts/shBrushCss.js',
-            array('mangapress-syntax-highlighter')
-        );
-
-        // the style
-        wp_register_style(
-            'mangapress-syntax-highlighter-css',
-            MP_URLPATH . 'includes/pages/js/syntaxhighlighter/styles/shCoreDefault.css'
-        );
-
         $mangapress_page_hook = add_options_page(
             __("Manga+Press Options", MP_DOMAIN),
             __("Manga+Press Options", MP_DOMAIN),

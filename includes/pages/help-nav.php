@@ -14,7 +14,7 @@
 <dl>
     <dt><strong><?php _e('Insert Navigation', MP_DOMAIN); ?></strong></dt>
     <dd>
-      <?php _e('When this option is enabled, comic navigation will automatically be inserted above the comic image. Not needed if you are using one of the child-theme that ships with Manga+Press.', MP_DOMAIN); ?>
+      <?php _e('When this option is enabled, comic navigation will automatically be inserted above the comic image.', MP_DOMAIN); ?>
     </dd>
     <dt><strong><?php _e('Navigation CSS', MP_DOMAIN); ?></strong></dt>
     <dd>
