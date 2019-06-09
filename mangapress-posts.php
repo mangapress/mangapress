@@ -199,7 +199,13 @@ class Posts
      */
     public function get_comic_archives_slug()
     {
-        /** @todo add DocBlock */
+        /**
+         * mangapress_comic_archives_slug
+         * Allow plugins (or options) to modify post-type archive slug
+         *
+         * @param string $slug Default post-type archive slug
+         * @return string
+         */
         return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
     }
 
@@ -227,7 +233,13 @@ class Posts
      */
     public function get_latest_comic_slug()
     {
-        /** @todo add DocBlock */
+        /**
+         * mangapress_latest_comic_slug
+         * Allow plugins (or options) to override the Latest Comic slug
+         * 
+         * @param string $slug Default Latest Comic slug
+         * @return string
+         */
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
     }
 
