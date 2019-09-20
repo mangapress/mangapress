@@ -3,7 +3,7 @@
  * Manga+Press Flash Message class
  *
  * @package Manga_Press
- * @author Jess Green <jgreen @ psy-dreamer.com>
+ * @author  Jess Green <jgreen @ psy-dreamer.com>
  * @version $Id$
  */
 namespace MangaPress\Lib;
@@ -11,7 +11,7 @@ namespace MangaPress\Lib;
  * Flash Messages helper class
  *
  * @package FlashMessages
- * @author Jess Green <jgreen @ psy-dreamer.com>
+ * @author  Jess Green <jgreen @ psy-dreamer.com>
  * @license http://opensource.org/licenses/MIT MIT
  */
 class FlashMessages
@@ -28,6 +28,7 @@ class FlashMessages
 
     /**
      * Default messages
+     *
      * @var array
      */
     public $messages = array();
@@ -35,6 +36,7 @@ class FlashMessages
 
     /**
      * Name of transient that stores messages
+     *
      * @var string
      */
     protected $transient_name = '';
@@ -71,7 +73,7 @@ class FlashMessages
     /**
      * Set messages in array
      *
-     * @param array $messages Array of messages to set
+     * @param  array $messages Array of messages to set
      * @return void
      */
     public function set_flash_messages($messages)
@@ -83,7 +85,7 @@ class FlashMessages
     /**
      * Set transient name
      *
-     * @param string $transient_name
+     * @param  string $transient_name
      * @return void
      */
     public function set_transient_name($transient_name)
@@ -111,8 +113,8 @@ class FlashMessages
     /**
      * Queue flash messages
      *
-     * @param string $name Name of message. updated or error
-     * @param string $message Message body
+     * @param  string $name    Name of message. updated or error
+     * @param  string $message Message body
      * @return \MangaPress_FlashMessages
      * @throws \Exception
      */
@@ -156,8 +158,8 @@ class FlashMessages
     /**
      * Display message HTML
      *
-     * @param array $messages Array of messages
-     * @param string $class Message CSS class
+     * @param  array  $messages Array of messages
+     * @param  string $class    Message CSS class
      * @return void
      */
     private function display_flash_message_html($messages, $class)

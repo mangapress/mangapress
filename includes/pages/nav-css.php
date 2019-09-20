@@ -3,7 +3,7 @@
  * MangaPress
  * 
  * @package nav-css
- * @author Jess Green <jgreen at psy-dreamer.com>
+ * @author  Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
  */

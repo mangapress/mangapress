@@ -5,10 +5,10 @@
  * So wish WordPress would drop PHP 5.2 support.
  * Namespaces would be very handy
  *
- * @package WordPress_PostType_Framework
+ * @package    WordPress_PostType_Framework
  * @subpackage MangaPress_FrameWork_Helper
- * @author Jess Green <support@manga-press.com>
- * @version $Id$
+ * @author     Jess Green <support@manga-press.com>
+ * @version    $Id$
  */
 namespace MangaPress\Lib;
 /**
@@ -17,7 +17,7 @@ namespace MangaPress\Lib;
  * used by the PostType and Taxonomy classes.
  *
  * @package ContentType
- * @author Jess Green <support@manga-press.com>
+ * @author  Jess Green <support@manga-press.com>
  */
 abstract class ContentType
 {
@@ -67,20 +67,21 @@ abstract class ContentType
 
     /**
      * PHP5 Constructor method
+     *
      * @param array $options Optional. Pass Object parameters on construct
      */
     public function __construct($options = null)
     {
         if (is_array($options)) {
             $this->set_options($options)
-                 ->init();
+                ->init();
         }
     }
 
     /**
      * Set the object name
      *
-     * @param string $object_name
+     * @param  string $object_name
      * @return MangaPress_ContentType
      */
     public function set_name($object_name)
@@ -103,7 +104,7 @@ abstract class ContentType
     /**
      * Set object options
      *
-     * @param array $options
+     * @param  array $options
      * @return MangaPress_ContentType
      */
     public function set_options($options)
@@ -121,7 +122,7 @@ abstract class ContentType
     /**
      * Set the object's singular label
      *
-     * @param string $object_single_name
+     * @param  string $object_single_name
      * @return MangaPress_ContentType
      */
     public function set_singlename($object_single_name)
@@ -134,7 +135,7 @@ abstract class ContentType
     /**
      * Set the object's plural label
      *
-     * @param string $object_pluralname
+     * @param  string $object_pluralname
      * @return MangaPress_ContentType
      */
     public function set_pluralname($object_pluralname)
@@ -148,6 +149,7 @@ abstract class ContentType
 
     /**
      * Set the text domain from the plugin
+     *
      * @param string $textdomain
      *
      * @return $this
@@ -162,7 +164,7 @@ abstract class ContentType
     /**
      * Set object arguments
      *
-     * @param array $args
+     * @param  array $args
      * @return MangaPress_ContentType
      */
     public function set_arguments($args = array())

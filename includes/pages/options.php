@@ -1,8 +1,9 @@
 <?php
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('You are not allowed to call this page directly.');
+}
 
-if ( ! current_user_can('manage_options') ){
+if (! current_user_can('manage_options') ) {
     wp_die(
         __(
             'You do not have sufficient permissions '
@@ -11,7 +12,7 @@ if ( ! current_user_can('manage_options') ){
         )
     );
 }
-    $tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'basic' );
+    $tab = ( isset($_GET['tab']) ? $_GET['tab'] : 'basic' );
 ?>
 <script type="text/javascript">
      SyntaxHighlighter.all();

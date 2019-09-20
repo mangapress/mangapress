@@ -2,7 +2,7 @@
 /**
  * @package Manga_Press
  * @version $Id$
- * @author Jessica Green <support@manga-press.com>
+ * @author  Jessica Green <support@manga-press.com>
  */
 namespace MangaPress;
 use MangaPress\Lib\Taxonomy as Taxonomy;
@@ -13,7 +13,7 @@ use MangaPress\Lib\PostType as PostType;
  * Handles functionality for the Comic post-type
  *
  * @subpackage Posts
- * @author Jessica Green <support@manga-press.com>
+ * @author     Jessica Green <support@manga-press.com>
  */
 class Posts
 {
@@ -75,12 +75,14 @@ class Posts
 
     /**
      * Post-type Slug. Defaults to comic.
+     *
      * @var string
      */
     protected $slug = 'comic';
 
     /**
      * Comic Archives slug
+     *
      * @var string
      */
     protected $archive_slug = 'comic-archives';
@@ -88,6 +90,7 @@ class Posts
 
     /**
      * Latest Comic slug
+     *
      * @var string
      */
     protected $latest_comic_slug = 'latest-comic';
@@ -121,7 +124,8 @@ class Posts
     private function register_post_type()
     {
         // register taxonomy
-        $taxonomy = new Taxonomy(array(
+        $taxonomy = new Taxonomy(
+            array(
             'name'       => self::TAX_SERIES,
             'textdomain' => MP_DOMAIN,
             'singlename' => __('Series', MP_DOMAIN),
@@ -134,9 +138,11 @@ class Posts
                     'slug' => 'series'
                 ),
             ),
-        ));
+            )
+        );
 
-        $this->_post_type = new PostType(array(
+        $this->_post_type = new PostType(
+            array(
             'name'          => self::POST_TYPE,
             'textdomain'    => MP_DOMAIN,
             'pluralname'    => __('Comics', MP_DOMAIN),
@@ -158,7 +164,8 @@ class Posts
                     $taxonomy->get_name(),
                 ),
             ),
-        ));
+            )
+        );
 
     }
 
@@ -185,7 +192,7 @@ class Posts
          * mangapress_comic_front_slug
          * Allow plugins (or options) to modify post-type front slug
          *
-         * @param string $slug Default post-type slug
+         * @param  string $slug Default post-type slug
          * @return string
          */
         return apply_filters('mangapress_comic_front_slug', $this->slug);
@@ -203,7 +210,7 @@ class Posts
          * mangapress_comic_archives_slug
          * Allow plugins (or options) to modify post-type archive slug
          *
-         * @param string $slug Default post-type archive slug
+         * @param  string $slug Default post-type archive slug
          * @return string
          */
         return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
@@ -212,6 +219,7 @@ class Posts
 
     /**
      * Set the comic archive slug
+     *
      * @param string $slug
      *
      * @return string
@@ -237,7 +245,7 @@ class Posts
          * mangapress_latest_comic_slug
          * Allow plugins (or options) to override the Latest Comic slug
          * 
-         * @param string $slug Default Latest Comic slug
+         * @param  string $slug Default Latest Comic slug
          * @return string
          */
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
@@ -246,6 +254,7 @@ class Posts
 
     /**
      * Set the comic slug to a specified page
+     *
      * @param string $slug
      *
      * @return string mixed
@@ -293,7 +302,7 @@ class Posts
      */
     public function comic_meta_box_cb()
     {
-        require_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
+        include_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
     }
 
 
@@ -307,17 +316,19 @@ class Posts
     {
         $current_screen = get_current_screen();
 
-        if (!isset($current_screen->post_type) || !isset($current_screen->base))
+        if (!isset($current_screen->post_type) || !isset($current_screen->base)) {
             return;
+        }
 
-        if (!($current_screen->post_type == self::POST_TYPE && $current_screen->base == 'post'))
+        if (!($current_screen->post_type == self::POST_TYPE && $current_screen->base == 'post')) {
             return;
+        }
 
         // Include in admin_enqueue_scripts action hook
         wp_enqueue_media();
         wp_register_script(
             'mangapress-media-popup',
-            plugins_url( '/assets/js/add-comic.js', __FILE__ ),
+            plugins_url('/assets/js/add-comic.js', __FILE__),
             array( 'jquery' ),
             MP_VERSION,
             true
@@ -340,7 +351,7 @@ class Posts
      * Modify header columns for Comic Post-type
      *
      * @global \WP_Post $post
-     * @param array $column
+     * @param  array $column
      * @return void
      */
     public function comics_headers($column)
@@ -362,16 +373,17 @@ class Posts
         } elseif ("title" == $column) {
             echo $post->post_title;
         } elseif ("series" == $column) {
-            $series = wp_get_object_terms( $post->ID, 'mangapress_series' );
-            if (!empty($series)){
+            $series = wp_get_object_terms($post->ID, 'mangapress_series');
+            if (!empty($series)) {
                 $series_html = array();
-                foreach ($series as $s)
+                foreach ($series as $s) {
                     array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">'.$s->name."</a>");
+                }
 
                 echo implode($series_html, ", ");
             }
         } elseif ("post_date" == $column) {
-            echo date( "Y/m/d", strtotime($post->post_date) );
+            echo date("Y/m/d", strtotime($post->post_date));
 
         } elseif ("description" == $column) {
             echo $post->post_excerpt;
@@ -384,7 +396,7 @@ class Posts
     /**
      * Modify comic columns for Comics screen
      *
-     * @param array $columns
+     * @param  array $columns
      * @return array
      */
     public function comics_columns($columns)
@@ -417,7 +429,7 @@ class Posts
                     ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
 
         header("Content-type: application/json");
-        if ($action == self::ACTION_GET_IMAGE_HTML){
+        if ($action == self::ACTION_GET_IMAGE_HTML) {
             if ($image_ID) {
                 echo json_encode(array('html' => $this->get_image_html($image_ID),));
             }
@@ -432,17 +444,18 @@ class Posts
     /**
      * Retrieve image html
      *
-     * @param int $image_ID
+     * @param  int $image_ID
      * @return string
      */
     public function get_image_html($image_ID)
     {
         $image_html = wp_get_attachment_image($image_ID, 'medium');
-        if ($image_html == '')
+        if ($image_html == '') {
             return '';
+        }
 
         ob_start();
-        require_once MP_ABSPATH . 'includes/pages/set-image-link.php';
+        include_once MP_ABSPATH . 'includes/pages/set-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
 
@@ -459,7 +472,7 @@ class Posts
     {
 
         ob_start();
-        require_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
+        include_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
 
@@ -471,18 +484,20 @@ class Posts
      * Save post meta data. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
      *
-     * @param int $post_id
+     * @param int      $post_id
      * @param \WP_Post $post
      *
      * @return int
      */
     public function save_post($post_id, $post)
     {
-        if ($post->post_type !== self::POST_TYPE || empty($_POST))
+        if ($post->post_type !== self::POST_TYPE || empty($_POST)) {
             return $post_id;
+        }
 
-        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC))
+        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC)) {
             return $post_id;
+        }
 
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {

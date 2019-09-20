@@ -3,7 +3,7 @@
  * MangaPress
  *
  * @package mangapress-options
- * @author Jess Green <jgreen at psy-dreamer.com>
+ * @author  Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
  */
@@ -63,8 +63,9 @@ class Options
     public static function admin_init()
     {
 
-        if (defined('DOING_AJAX') && DOING_AJAX)
+        if (defined('DOING_AJAX') && DOING_AJAX) {
             return;
+        }
 
         register_setting(
             self::OPTIONS_GROUP_NAME,
@@ -136,12 +137,14 @@ class Options
 
             $element = "MangaPress\Lib\Form\Element\\{$class}";
 
-            echo new $element(array(
+            echo new $element(
+                array(
                 'attributes' => $attributes,
                 'description' => isset($option['description']) ? $option['description'] : '',
                 'default' => isset($option['value']) ? $option['value'] : $option['default'],
                 'validation' => $option['valid']
-            ));
+                )
+            );
         }
     }
 
@@ -166,7 +169,8 @@ class Options
             $options[$page->post_name] = $page->post_title;
         }
 
-        echo new Select(array(
+        echo new Select(
+            array(
             'attributes' => array(
                 'name' => "mangapress_options[{$option['section']}][{$option['name']}]",
                 'id' => $option['id'],
@@ -175,7 +179,8 @@ class Options
             'description' => isset($option['description']) ? $option['description'] : '',
             'default' => $options,
             'validation' => $option['valid']
-        ));
+            )
+        );
 
     }
 
@@ -188,7 +193,7 @@ class Options
      */
     public static function ft_navigation_css_display_cb($option = array())
     {
-        require_once MP_ABSPATH . 'includes/pages/nav-css.php';
+        include_once MP_ABSPATH . 'includes/pages/nav-css.php';
     }
 
     /**
@@ -416,8 +421,9 @@ class Options
      */
     public static function sanitize_options($options)
     {
-        if (!$options)
+        if (!$options) {
             return $options;
+        }
 
         $mp_options = Bootstrap::get_options();
         $section = key($options);
@@ -453,7 +459,7 @@ class Options
                 'group_by_parent' => self::sanitize_integer($options, 'basic', 'group_by_parent'),
             );
 
-            if ($options['basic']['latestcomic_page'] !== 'no_val'){
+            if ($options['basic']['latestcomic_page'] !== 'no_val') {
                 $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
             } else {
                 $new_options['basic']['latestcomic_page'] = '';
@@ -490,7 +496,7 @@ class Options
     /**
      * Sanitize integers
      *
-     * @param array $option_array
+     * @param array  $option_array
      * @param string $section
      * @param string $name
      *

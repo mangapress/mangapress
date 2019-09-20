@@ -2,23 +2,24 @@
 /**
  * WordPress_PostType_Framework
  *
- * @package WordPress_PostType_Framework
+ * @package    WordPress_PostType_Framework
  * @subpackage MangaPress_Taxonomy
- * @author Jess Green <support@manga-press.com>
- * @version $Id$
+ * @author     Jess Green <support@manga-press.com>
+ * @version    $Id$
  */
 namespace MangaPress\Lib;
 /**
  * Taxonomy
  *
  * @package MangaPress_Taxonomy
- * @author Jess Green <support@manga-press.com>
+ * @author  Jess Green <support@manga-press.com>
  */
 class Taxonomy extends ContentType
 {
 
     /**
      * Objects that support this taxonomy
+     *
      * @var array
      */
     protected $_object_types  = array();
@@ -53,7 +54,7 @@ class Taxonomy extends ContentType
     /**
      * Set object arguments
      *
-     * @param array $args
+     * @param  array $args
      * @return JesGS_Taxonomy
      */
     public function set_arguments($args = array())
@@ -100,7 +101,7 @@ class Taxonomy extends ContentType
     /**
      * Set taxonomy objects
      *
-     * @param array $object_types
+     * @param  array $object_types
      * @return JesGS_Taxonomy
      */
     public function set_objects($object_types)

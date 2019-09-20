@@ -3,7 +3,7 @@
  * Basic Options Contextual Help file
  *
  * @package help-basic
- * @author Jess Green <jgreen AT psy-dreamer.com>
+ * @author  Jess Green <jgreen AT psy-dreamer.com>
  */
 ?>
 <h3><?php _e('Basic Options Help', MP_DOMAIN); ?></h3>

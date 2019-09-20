@@ -1,14 +1,15 @@
 <?php
 
 namespace MangaPress;
+
 use MangaPress\Lib\FlashMessages as FlashMessages;
 
 /**
  * Plugin bootstrap class.
  *
- * @package MangaPress
+ * @package    MangaPress
  * @subpackage Bootstrap
- * @author Jess Green <support@manga-press.com>
+ * @author     Jess Green <support@manga-press.com>
  */
 class Bootstrap
 {
@@ -55,6 +56,7 @@ class Bootstrap
 
     /**
      * Plugin's basename. Used for setting paths
+     *
      * @var string
      */
     protected static $plugin_basename;
@@ -67,25 +69,30 @@ class Bootstrap
     public static function load_plugin()
     {
         self::$plugin_basename = plugin_basename(__FILE__);
-        load_plugin_textdomain(MP_DOMAIN, false, dirname( self::$plugin_basename ) . '/languages');
+        load_plugin_textdomain(
+            MP_DOMAIN,
+            false,
+            dirname(self::$plugin_basename) . '/languages'
+        );
 
         self::set_options();
         self::load_current_options();
-        require_once MP_ABSPATH . 'includes/lib/theme-compat/theme-compat.php';
+        include_once MP_ABSPATH . 'includes/lib/theme-compat/theme-compat.php';
 
-        add_action('init', array(__CLASS__, 'init'), 500);
-        add_action('widgets_init', array(__CLASS__, 'widgets_init'));
-        add_filter('plugin_action_links_' . self::$plugin_basename, array(__CLASS__, 'plugin_action_links'), 10, 4);
-        add_filter('plugin_row_meta', array(__CLASS__, 'plugin_row_meta'), 10, 4);
+        add_action('init', ['\MangaPress\Bootstrap', 'init'], 500);
+        add_action('widgets_init', ['\MangaPress\Bootstrap', 'widgets_init']);
+        add_filter('plugin_action_links_' . self::$plugin_basename, ['\MangaPress\Bootstrap', 'plugin_action_links'], 10, 4);
+        add_filter('plugin_row_meta', ['\MangaPress\Bootstrap', 'plugin_row_meta'], 10, 4);
     }
 
 
     /**
      * Add relevant links to plugin meta
+     *
      * @param array  $plugin_meta An array of the plugin's metadata
      * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
      * @param array  $plugin_data An array of plugin data.
-     * @param string $status Status of the plugin.
+     * @param string $status      Status of the plugin.
      *
      * @return array
      */
@@ -99,9 +106,9 @@ class Bootstrap
         unset($plugin_meta[2]);
 
         $getting_started = __('Getting Started', MP_DOMAIN);
-        $developer_api = __('Developer API', MP_DOMAIN);
-        $plugin_meta[] = "<a aria-label='{$getting_started}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/getting-started/'>{$getting_started}</a>";
-        $plugin_meta[] = "<a aria-label='{$developer_api}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/developer-api/'>{$developer_api}</a>";
+        $developer_api   = __('Developer API', MP_DOMAIN);
+        $plugin_meta[]   = "<a aria-label='{$getting_started}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/getting-started/'>{$getting_started}</a>";
+        $plugin_meta[]   = "<a aria-label='{$developer_api}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/developer-api/'>{$developer_api}</a>";
 
         $plugin_meta[] = $details_link;
         return $plugin_meta;
@@ -121,8 +128,8 @@ class Bootstrap
      */
     public static function plugin_action_links($actions, $plugin_file, $plugin_data, $context)
     {
-        $menu_link = menu_page_url(Admin::ADMIN_PAGE_SLUG, false);
-        $settings = __('Settings', MP_DOMAIN);
+        $menu_link           = menu_page_url(Admin::ADMIN_PAGE_SLUG, false);
+        $settings            = __('Settings', MP_DOMAIN);
         $actions['settings'] = "<a href='{$menu_link}' aria-label='{$settings}'>{$settings}</a>";
 
         return $actions;
@@ -132,8 +139,8 @@ class Bootstrap
     /**
      * Run init functionality
      *
-     * @see init() hook
      * @return void
+     * @see    init() hook
      */
     public static function init()
     {
@@ -147,13 +154,15 @@ class Bootstrap
         Admin::init();
         Options::init();
 
-        self::$posts_helper   = new Posts();
-        self::$flashmessage_helper = new FlashMessages(array(
-            'transient_name' => 'mangapress_messages'
-        ));
+        self::$posts_helper        = new Posts();
+        self::$flashmessage_helper = new FlashMessages(
+            [
+            'transient_name' => 'mangapress_messages',
+            ]
+        );
 
-        add_action('admin_enqueue_scripts', array(__CLASS__, 'admin_enqueue_scripts'));
-        add_action('current_screen', array(__CLASS__, 'add_edit_page_warnings'));
+        add_action('admin_enqueue_scripts', ['\MangaPress\Bootstrap', 'admin_enqueue_scripts']);
+        add_action('current_screen', ['\MangaPress\Bootstrap', 'add_edit_page_warnings']);
 
         add_filter('template_include', 'mangapress_template_loader');
 
@@ -175,13 +184,13 @@ class Bootstrap
     /**
      * Get a MangaPress helper
      *
-     * @param string $helper_name Allowed values: admin, options, posts, flashmessages
+     * @param  string $helper_name Allowed values: admin, options, posts, flashmessages
      * @return Admin|Options|Posts|FlashMessages|\WP_Error
      */
     public static function get_helper($helper_name)
     {
         $helper = "{$helper_name}_helper";
-        if (property_exists(__CLASS__, $helper)) {
+        if (property_exists('\MangaPress\Bootstrap', $helper)) {
             return self::${$helper};
         }
 
@@ -193,10 +202,10 @@ class Bootstrap
      * Set MangaPress options. This method should run every time
      * MangaPress options are updated.
      *
-     * @uses init()
-     * @see MangaPress_Bootstrap::init()
-     *
      * @return void
+     * @see    MangaPress_Bootstrap::init()
+     *
+     * @uses init()
      */
     public static function set_options()
     {
@@ -218,8 +227,8 @@ class Bootstrap
     /**
      * Get one option from options array
      *
-     * @param string $section Option section
-     * @param string $option_name Option name
+     * @param  string $section     Option section
+     * @param  string $option_name Option name
      * @return boolean|mixed
      */
     public static function get_option($section, $option_name)
@@ -242,24 +251,24 @@ class Bootstrap
         $mp_options = self::get_options();
 
         if ($mp_options['basic']['latestcomic_page']) {
-            add_filter('mangapress_latest_comic_slug', array(Posts::class, 'set_latest_comic_slug'));
+            add_filter('mangapress_latest_comic_slug', [Posts::class, 'set_latest_comic_slug']);
         }
 
         if ($mp_options['basic']['comicarchive_page']) {
-            add_filter('mangapress_comic_archives_slug', array(Posts::class, 'set_comic_archives_slug'));
+            add_filter('mangapress_comic_archives_slug', [Posts::class, 'set_comic_archives_slug']);
         }
 
         /*
          * Disable/Enable Default Navigation CSS
          */
         if ($mp_options['nav']['nav_css'] == 'default_css') {
-            add_action('wp_enqueue_scripts', array(__CLASS__, 'wp_enqueue_scripts'));
+            add_action('wp_enqueue_scripts', ['\MangaPress\Bootstrap', 'wp_enqueue_scripts']);
         }
 
         /*
          * Comic Page size
          */
-        if ($mp_options['comic_page']['generate_comic_page']){
+        if ($mp_options['comic_page']['generate_comic_page']) {
             add_image_size(
                 'comic-page',
                 $mp_options['comic_page']['comic_page_width'],
@@ -272,7 +281,6 @@ class Bootstrap
          * Comic Thumbnail size for Comics Listing screen
          */
         add_image_size('comic-admin-thumb', 60, 80, true);
-
     }
 
 
@@ -324,9 +332,9 @@ class Bootstrap
             return;
         }
 
-        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_archive_page'], 555);
-        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_latest_page'], 555);
-        add_action( 'edit_form_after_title', [__CLASS__, 'edit_form_after_title_front_posts_page'], 555);
+        add_action('edit_form_after_title', ['\MangaPress\Bootstrap', 'edit_form_after_title_archive_page'], 555);
+        add_action('edit_form_after_title', ['\MangaPress\Bootstrap', 'edit_form_after_title_latest_page'], 555);
+        add_action('edit_form_after_title', ['\MangaPress\Bootstrap', 'edit_form_after_title_front_posts_page'], 555);
     }
 
 
@@ -340,14 +348,16 @@ class Bootstrap
             return false;
         }
 
-        $post = get_post($post_id);
-        $page_slug = get_post_field('post_name', $post);
-        $post_type = get_post_type($post);
+        $post         = get_post($post_id);
+        $page_slug    = get_post_field('post_name', $post);
+        $post_type    = get_post_type($post);
         $archive_page = self::get_option('basic', 'comicarchive_page');
 
         if ($page_slug == $archive_page) {
-            echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your archived comics.', MP_DOMAIN ) . '</p></div>';
-            remove_post_type_support( $post_type, 'editor' );
+            echo '<div class="notice notice-warning inline"><p>'
+                 . __('You are currently editing the page that shows your archived comics.', MP_DOMAIN)
+                 . '</p></div>';
+            remove_post_type_support($post_type, 'editor');
         }
     }
 
@@ -362,14 +372,14 @@ class Bootstrap
             return false;
         }
 
-        $post = get_post($post_id);
-        $page_slug = get_post_field('post_name', $post);
-        $post_type = get_post_type($post);
+        $post        = get_post($post_id);
+        $page_slug   = get_post_field('post_name', $post);
+        $post_type   = get_post_type($post);
         $latest_page = self::get_option('basic', 'latestcomic_page');
 
         if ($page_slug == $latest_page) {
-            echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your latest comics.', MP_DOMAIN ) . '</p></div>';
-            remove_post_type_support( $post_type, 'editor' );
+            echo '<div class="notice notice-warning inline"><p>' . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN) . '</p></div>';
+            remove_post_type_support($post_type, 'editor');
         }
     }
 
@@ -385,12 +395,18 @@ class Bootstrap
         }
 
         $page_for_posts = get_option('page_for_posts', false);
-        $page_on_front = get_option('page_on_front', false);
+        $page_on_front  = get_option('page_on_front', false);
 
         if (in_array($post_id, [$page_for_posts, $page_on_front])) {
             echo '<div class="notice notice-error inline">';
-            echo '<p>' . __( 'You have assigned this page to be the Home Page or the Posts page. This option is not compatible with Manga+Press and will break the functionality of these two pages.', MP_DOMAIN ) . '</p>';
-            echo '<p>' . __( 'Either assign Latest/Comic archive to different pages, or assign Home Page/Post Page to different pages.', MP_DOMAIN ) . '</p>';
+            echo '<p>'
+                . __(
+                    'You have assigned this page to be the Home Page or the Posts page. '
+                    . 'This option is not compatible with Manga+Press and will break the functionality of these two pages.',
+                    MP_DOMAIN
+                )
+                 . '</p>';
+            echo '<p>' . __('Either assign Latest/Comic archive to different pages, or assign Home Page/Post Page to different pages.', MP_DOMAIN) . '</p>';
             echo '</div>';
         }
     }

@@ -4,7 +4,7 @@
  *
  * @package Manga_Press
  * @version $Id$
- * @author Jessica Green <support@manga-press.com>
+ * @author  Jessica Green <support@manga-press.com>
  */
 namespace MangaPress\Lib;
  /**
@@ -23,7 +23,7 @@ class Widget_Calendar extends \WP_Widget
     {
         $widget_ops = array(
             'classname' => 'mangapress_widget_calendar',
-            'description' => __( 'A calendar of your site&#8217;s archived Comic Posts.', MP_DOMAIN)
+            'description' => __('A calendar of your site&#8217;s archived Comic Posts.', MP_DOMAIN)
         );
 
         parent::__construct('mangapress_calendar', __('Manga+Press Calendar', MP_DOMAIN), $widget_ops);
@@ -36,11 +36,13 @@ class Widget_Calendar extends \WP_Widget
     public function widget($args, $instance)
     {
 
-        /** This filter is documented in wp-includes/default-widgets.php */
-        $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+        /**
+ * This filter is documented in wp-includes/default-widgets.php 
+*/
+        $title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
 
         echo $args['before_widget'];
-        if ( $title ) {
+        if ($title ) {
             echo $args['before_title'] . $title . $args['after_title'];
         }
         echo '<div id="calendar_wrap">';
@@ -67,7 +69,7 @@ class Widget_Calendar extends \WP_Widget
      */
     public function form( $instance )
     {
-        $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+        $instance = wp_parse_args((array) $instance, array( 'title' => '' ));
         $title = strip_tags($instance['title']);
         ?>
         <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', MP_DOMAIN); ?></label>

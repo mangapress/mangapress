@@ -3,14 +3,15 @@
  * MangaPress Installation Class
  *
  * @package MangaPress
- * @author Jess Green <support@manga-press.com>
+ * @author  Jess Green <support@manga-press.com>
  * @version $Id$
  */
+
 namespace MangaPress;
 /**
  * @subpackage Install
- * @author Jess Green <support@manga-press.com>
- * @version $Id$
+ * @author     Jess Green <support@manga-press.com>
+ * @version    $Id$
  */
 class Install
 {
@@ -34,14 +35,16 @@ class Install
 
     /**
      * Instance of Bootstrap class
-     * @var \MangaPress_Bootstrap
+     *
+     * @var Bootstrap
      */
     protected $_bootstrap;
 
 
     /**
-     * Instance of MangaPress_Install
-     * @var \MangaPress_Install
+     * Instance of Install
+     *
+     * @var Install
      */
     protected static $_instance;
 
@@ -49,7 +52,7 @@ class Install
     /**
      * Get instance of
      *
-     * @return MangaPress_Install
+     * @return Install
      */
     public static function get_instance()
     {
@@ -70,19 +73,19 @@ class Install
     {
         global $wp_version;
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        include_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
         // Check for capability
-        if ( !current_user_can('activate_plugins') ){
-            wp_die( __('Sorry, you do not have sufficient permissions to activate this plugin.', MP_DOMAIN) );
+        if (!current_user_can('activate_plugins')) {
+            wp_die(__('Sorry, you do not have sufficient permissions to activate this plugin.', MP_DOMAIN));
         }
 
         // Get the capabilities for the administrator
         $role = get_role('administrator');
 
         // Must have admin privileges in order to activate.
-        if ( empty($role) ) {
-            wp_die( __('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN) );
+        if (empty($role)) {
+            wp_die(__('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN));
         }
 
         if (version_compare(PHP_VERSION, '5.6', '<=')) {
@@ -91,25 +94,25 @@ class Install
             );
         }
 
-        if ( version_compare ($wp_version, '4.9.6', '<=')) {
+        if (version_compare($wp_version, '4.9.6', '<=')) {
             wp_die(
-                  'Sorry, only WordPress 4.9.6 and later are supported.'
+                'Sorry, only WordPress 4.9.6 and later are supported.'
                 . ' Please upgrade to WordPress 4.9.6', 'Wrong Version'
             );
         }
 
-        self::$_version = strval( get_option('mangapress_ver') );
+        self::$_version = strval(get_option('mangapress_ver'));
 
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
         if (version_compare(self::$_version, MP_VERSION, '<') && !(self::$_version == '')) {
 
-            add_option( 'mangapress_upgrade', 'yes', '', 'no');
+            add_option('mangapress_upgrade', 'yes', '', 'no');
 
         } elseif (self::$_version == '') {
 
-            add_option( 'mangapress_ver', MP_VERSION, '', 'no');
-            add_option( 'mangapress_options', serialize( Options::get_default_options() ), '', 'no' );
+            add_option('mangapress_ver', MP_VERSION, '', 'no');
+            add_option('mangapress_options', serialize(Options::get_default_options()), '', 'no');
 
         }
 
@@ -123,9 +126,8 @@ class Install
     /**
      * Run routines after plugin has been activated
      *
-     * @todo check for existing terms in Series
-     *
      * @return void
+     * @todo   check for existing terms in Series
      */
     public function after_plugin_activation()
     {
@@ -147,10 +149,10 @@ class Install
         $term = wp_insert_term(
             'Default Series',
             Posts::TAX_SERIES,
-            array(
+            [
                 'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
                 'slug'        => 'default-series',
-            )
+            ]
         );
 
         if (!($term instanceof WP_Error)) {
@@ -179,7 +181,7 @@ class Install
     {
         update_option('mangapress_ver', MP_VERSION);
 
-        delete_option( 'mangapress_upgrade' );
+        delete_option('mangapress_upgrade');
 
         flush_rewrite_rules(false);
     }

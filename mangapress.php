@@ -2,8 +2,7 @@
 /**
  * @package Manga_Press
  * @version $Id$
- * @author Jessica Green <support@manga-press.com>
- *
+ * @author  Jessica Green <support@manga-press.com>
  */
 /*
  Plugin Name: Manga+Press Comic Manager
@@ -33,28 +32,35 @@ namespace MangaPress;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('You are not allowed to call this page directly.');
+}
 
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
-if (!defined('MP_VERSION'))
+if (!defined('MP_VERSION')) {
     define('MP_VERSION', '4.0.0'); // @todo replace with a call to get_plugin_data
+}
 
-if (!defined('MP_FOLDER'))
+if (!defined('MP_FOLDER')) {
     define('MP_FOLDER', $plugin_folder);
+}
 
-if (!defined('MP_ABSPATH'))
+if (!defined('MP_ABSPATH')) {
     define('MP_ABSPATH', dirname(__FILE__) . '/');
+}
 
-if (!defined('MP_URLPATH'))
+if (!defined('MP_URLPATH')) {
     define('MP_URLPATH', plugin_dir_url(__FILE__));
+}
 
-if (!defined('MP_LANG'))
+if (!defined('MP_LANG')) {
     define('MP_LANG', $plugin_folder . '/languages');
+}
 
-if (!defined('MP_DOMAIN'))
+if (!defined('MP_DOMAIN')) {
     define('MP_DOMAIN', 'mangapress');
+}
 
 require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
 require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
@@ -74,7 +80,7 @@ require_once MP_ABSPATH . 'mangapress-bootstrap.php';
 
 $install = Install::get_instance();
 
-register_activation_hook(__FILE__, array($install, 'do_activate'));
-register_deactivation_hook(__FILE__, array($install, 'do_deactivate'));
+register_activation_hook(__FILE__, [$install, 'do_activate']);
+register_deactivation_hook(__FILE__, [$install, 'do_deactivate']);
 
-add_action('plugins_loaded', [ __NAMESPACE__ . '\Bootstrap', 'load_plugin']);
+add_action('plugins_loaded', [ 'MangaPress\Bootstrap', 'load_plugin']);

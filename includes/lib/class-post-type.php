@@ -2,23 +2,24 @@
 /**
  * WordPress_PostType_Framework
  *
- * @package WordPress_PostType_Framework
+ * @package    WordPress_PostType_Framework
  * @subpackage MangaPress_PostType
- * @author Jess Green <support@manga-press.com>
- * @version $Id$
+ * @author     Jess Green <support@manga-press.com>
+ * @version    $Id$
  */
 namespace MangaPress\Lib;
 /**
  * MangaPress_PostType
  *
  * @package MangaPress_PostType
- * @author Jess Green <support@manga-press.com>
+ * @author  Jess Green <support@manga-press.com>
  */
 class PostType extends ContentType
 {
 
     /**
      * PostType Capabilities
+     *
      * @var array
      */
     protected $_capabilities = array(
@@ -84,7 +85,7 @@ class PostType extends ContentType
     /**
      * Set object arguments
      *
-     * @param array $args Array of arguments. Optional
+     * @param  array $args Array of arguments. Optional
      * @return \MangaPress_PostType
      */
     public function set_arguments($args = array())
@@ -140,7 +141,7 @@ class PostType extends ContentType
     /**
      * Set object taxonomies
      *
-     * @param array $taxonomies
+     * @param  array $taxonomies
      * @return JesGS_PostType
      */
     public function set_taxonomies($taxonomies)
