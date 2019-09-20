@@ -86,7 +86,7 @@ abstract class ContentType
      */
     public function set_name($object_name)
     {
-        $this->_name = $object_name;
+        $this->name = $object_name;
 
         return $this;
     }

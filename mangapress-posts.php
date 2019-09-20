@@ -4,7 +4,9 @@
  * @version $Id$
  * @author  Jessica Green <support@manga-press.com>
  */
+
 namespace MangaPress;
+
 use MangaPress\Lib\Taxonomy as Taxonomy;
 use MangaPress\Lib\PostType as PostType;
 
@@ -30,7 +32,7 @@ class Posts
      *
      * @var string
      */
-    const ACTION_REMOVE_IMAGE  = 'mangapress-remove-image';
+    const ACTION_REMOVE_IMAGE = 'mangapress-remove-image';
 
 
     /**
@@ -70,7 +72,7 @@ class Posts
      *
      * @var Posts
      */
-    private $_post_type = null;
+    private $post_type = null;
 
 
     /**
@@ -105,15 +107,15 @@ class Posts
         $this->rewrite_rules();
 
         // Setup Manga+Press Post Options box
-        add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, array($this, 'get_image_html_ajax'));
-        add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, array($this, 'get_image_html_ajax'));
-        add_action('save_post_mangapress_comic', array($this, 'save_post'), 500, 2);
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action("wp_ajax_" . self::ACTION_GET_IMAGE_HTML, [$this, 'get_image_html_ajax']);
+        add_action("wp_ajax_" . self::ACTION_REMOVE_IMAGE, [$this, 'get_image_html_ajax']);
+        add_action('save_post_mangapress_comic', [$this, 'save_post'], 500, 2);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
-        add_action('manage_posts_custom_column', array($this, 'comics_headers'));
-        add_filter('manage_edit-mangapress_comic_columns', array($this, 'comics_columns'));
+        add_action('manage_posts_custom_column', [$this, 'comics_headers']);
+        add_filter('manage_edit-mangapress_comic_columns', [$this, 'comics_columns']);
     }
 
     /**
@@ -125,48 +127,47 @@ class Posts
     {
         // register taxonomy
         $taxonomy = new Taxonomy(
-            array(
-            'name'       => self::TAX_SERIES,
-            'textdomain' => MP_DOMAIN,
-            'singlename' => __('Series', MP_DOMAIN),
-            'pluralname' => __('Series', MP_DOMAIN),
-            'objects'    => array('mangapress_comic'),
-            'arguments'  => array(
-                'hierarchical' => true,
-                'query_var'    => 'series',
-                'rewrite'      => array(
-                    'slug' => 'series'
-                ),
-            ),
-            )
+            [
+                'name'       => self::TAX_SERIES,
+                'textdomain' => MP_DOMAIN,
+                'singlename' => __('Series', MP_DOMAIN),
+                'pluralname' => __('Series', MP_DOMAIN),
+                'objects'    => ['mangapress_comic'],
+                'arguments'  => [
+                    'hierarchical' => true,
+                    'query_var'    => 'series',
+                    'rewrite'      => [
+                        'slug' => 'series',
+                    ],
+                ],
+            ]
         );
 
-        $this->_post_type = new PostType(
-            array(
-            'name'          => self::POST_TYPE,
-            'textdomain'    => MP_DOMAIN,
-            'pluralname'    => __('Comics', MP_DOMAIN),
-            'singlename'    => __('Comic', MP_DOMAIN),
-            'arguments'     => array(
-                'supports'      => array(
-                    'title',
-                    'comments',
-                    'thumbnails',
-                    'publicize',
-                ),
-                'register_meta_box_cb' => array($this, 'meta_box_cb'),
-                'menu_icon' => null,
-                'rewrite'   => array(
-                    'slug' => $this->get_front_slug(),
-                ),
-                'has_archive' => $this->get_comic_archives_slug(),
-                'taxonomies' => array(
-                    $taxonomy->get_name(),
-                ),
-            ),
-            )
+        $this->post_type = new PostType(
+            [
+                'name'       => self::POST_TYPE,
+                'textdomain' => MP_DOMAIN,
+                'pluralname' => __('Comics', MP_DOMAIN),
+                'singlename' => __('Comic', MP_DOMAIN),
+                'arguments'  => [
+                    'supports'             => [
+                        'title',
+                        'comments',
+                        'thumbnails',
+                        'publicize',
+                    ],
+                    'register_meta_box_cb' => [$this, 'meta_box_cb'],
+                    'menu_icon'            => null,
+                    'rewrite'              => [
+                        'slug' => $this->get_front_slug(),
+                    ],
+                    'has_archive'          => $this->get_comic_archives_slug(),
+                    'taxonomies'           => [
+                        $taxonomy->get_name(),
+                    ],
+                ],
+            ]
         );
-
     }
 
 
@@ -192,7 +193,7 @@ class Posts
          * mangapress_comic_front_slug
          * Allow plugins (or options) to modify post-type front slug
          *
-         * @param  string $slug Default post-type slug
+         * @param string $slug Default post-type slug
          * @return string
          */
         return apply_filters('mangapress_comic_front_slug', $this->slug);
@@ -210,7 +211,7 @@ class Posts
          * mangapress_comic_archives_slug
          * Allow plugins (or options) to modify post-type archive slug
          *
-         * @param  string $slug Default post-type archive slug
+         * @param string $slug Default post-type archive slug
          * @return string
          */
         return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
@@ -244,8 +245,8 @@ class Posts
         /**
          * mangapress_latest_comic_slug
          * Allow plugins (or options) to override the Latest Comic slug
-         * 
-         * @param  string $slug Default Latest Comic slug
+         *
+         * @param string $slug Default Latest Comic slug
          * @return string
          */
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
@@ -280,8 +281,8 @@ class Posts
         add_meta_box(
             'comic-image',
             __('Comic Image', MP_DOMAIN),
-            array($this, 'comic_meta_box_cb'),
-            $this->_post_type->get_name(),
+            [$this, 'comic_meta_box_cb'],
+            $this->post_type->get_name(),
             'normal',
             'high'
         );
@@ -309,8 +310,8 @@ class Posts
     /**
      * Enqueue scripts for post-edit and post-add screens
      *
-     * @global \WP_Post $post
      * @return void
+     * @global \WP_Post $post
      */
     public function enqueue_scripts()
     {
@@ -329,7 +330,7 @@ class Posts
         wp_register_script(
             'mangapress-media-popup',
             plugins_url('/assets/js/add-comic.js', __FILE__),
-            array( 'jquery' ),
+            ['jquery'],
             MP_VERSION,
             true
         );
@@ -337,10 +338,10 @@ class Posts
         wp_localize_script(
             'mangapress-media-popup',
             MP_DOMAIN,
-            array(
+            [
                 'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
                 'button' => __('Insert Comic into Post', MP_DOMAIN),
-            )
+            ]
         );
 
         wp_enqueue_script('mangapress-media-popup');
@@ -350,9 +351,9 @@ class Posts
     /**
      * Modify header columns for Comic Post-type
      *
-     * @global \WP_Post $post
-     * @param  array $column
+     * @param array $column
      * @return void
+     * @global \WP_Post $post
      */
     public function comics_headers($column)
     {
@@ -362,7 +363,7 @@ class Posts
             echo "<input type=\"checkbox\" value=\"{$post->ID}\" name=\"post[]\" />";
         } elseif ("thumbnail" == $column) {
 
-            $thumbnail_html = get_the_post_thumbnail($post->ID, 'comic-admin-thumb', array('class' => 'wp-caption'));
+            $thumbnail_html = get_the_post_thumbnail($post->ID, 'comic-admin-thumb', ['class' => 'wp-caption']);
 
             if ($thumbnail_html) {
                 $edit_link = get_edit_post_link($post->ID, 'display');
@@ -375,9 +376,9 @@ class Posts
         } elseif ("series" == $column) {
             $series = wp_get_object_terms($post->ID, 'mangapress_series');
             if (!empty($series)) {
-                $series_html = array();
+                $series_html = [];
                 foreach ($series as $s) {
-                    array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">'.$s->name."</a>");
+                    array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">' . $s->name . "</a>");
                 }
 
                 echo implode($series_html, ", ");
@@ -396,19 +397,19 @@ class Posts
     /**
      * Modify comic columns for Comics screen
      *
-     * @param  array $columns
+     * @param array $columns
      * @return array
      */
     public function comics_columns($columns)
     {
 
-        $columns = array(
+        $columns = [
             "cb"          => "<input type=\"checkbox\" />",
             "thumbnail"   => __("Thumbnail", MP_DOMAIN),
             "title"       => __("Comic Title", MP_DOMAIN),
             "series"      => __("Series", MP_DOMAIN),
             "description" => __("Description", MP_DOMAIN),
-        );
+        ];
 
         return $columns;
     }
@@ -426,15 +427,15 @@ class Posts
         // get image
         $image_ID = filter_input(INPUT_POST, 'id') ? filter_input(INPUT_POST, 'id') : false;
         $action   = filter_input(INPUT_POST, 'action')
-                    ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
+            ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
 
         header("Content-type: application/json");
         if ($action == self::ACTION_GET_IMAGE_HTML) {
             if ($image_ID) {
-                echo json_encode(array('html' => $this->get_image_html($image_ID),));
+                echo json_encode(['html' => $this->get_image_html($image_ID),]);
             }
         } else {
-            echo json_encode(array('html' => $this->get_remove_image_html(),));
+            echo json_encode(['html' => $this->get_remove_image_html(),]);
         }
 
         die();
@@ -444,7 +445,7 @@ class Posts
     /**
      * Retrieve image html
      *
-     * @param  int $image_ID
+     * @param int $image_ID
      * @return string
      */
     public function get_image_html($image_ID)
@@ -484,7 +485,7 @@ class Posts
      * Save post meta data. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
      *
-     * @param int      $post_id
+     * @param int $post_id
      * @param \WP_Post $post
      *
      * @return int
@@ -505,7 +506,10 @@ class Posts
         }
 
         // if no terms have been assigned, assign the default
-        if (!isset($_POST['tax_input'][self::TAX_SERIES][0]) || ($_POST['tax_input'][self::TAX_SERIES][0] == 0 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
+        if (!isset($_POST['tax_input'][self::TAX_SERIES][0])
+            || ($_POST['tax_input'][self::TAX_SERIES][0] == 0
+                && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
+
             $default_cat = get_option('mangapress_default_category');
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
         } else {

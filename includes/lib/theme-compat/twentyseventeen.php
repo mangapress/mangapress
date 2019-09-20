@@ -11,23 +11,23 @@ class TwentySeventeen
 {
     use ThemeMarkup;
 
-    public static function init()
+    public function init()
     {
         $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
-        add_action('mangapress_before_content', [__CLASS__, 'before_content']);
-        add_action('mangapress_after_content', [__CLASS__, 'after_content']);
+        add_action('mangapress_before_content', [$this, 'before_content']);
+        add_action('mangapress_after_content', [$this, 'after_content']);
         if ($latest_comic_page_exists) {
             add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
             add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
         }
-        add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_styles']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
     }
 
 
     /**
      * Add TwentySeventeen content area wrapping markup opening tags
      */
-    public static function before_content()
+    public function before_content()
     {
         echo '<div class="wrap">';
         echo '<div id="primary" class="content-area">';
@@ -38,7 +38,7 @@ class TwentySeventeen
     /**
      * TwentySeventeen content area closing tags
      */
-    public static function after_content()
+    public function after_content()
     {
         echo '</main>';
         echo '</div>';
@@ -52,7 +52,7 @@ class TwentySeventeen
     /**
      * Enqueue Manga+Press-specific stylesheet
      */
-    public static function enqueue_styles()
+    public function enqueue_styles()
     {
         wp_register_style(
             'mangapress-twentyseventeen',
@@ -65,4 +65,4 @@ class TwentySeventeen
     }
 }
 
-TwentySeventeen::init();
+new TwentySeventeen();

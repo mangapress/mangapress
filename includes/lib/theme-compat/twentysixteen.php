@@ -11,7 +11,7 @@ class TwentySixteen
     /**
      * Add TwentySixteen content area wrapping markup opening tags
      */
-    public static function before_content()
+    public function before_content()
     {
         echo '<div class="wrap">';
         echo '<div id="primary" class="content-area">';
@@ -22,7 +22,7 @@ class TwentySixteen
     /**
      * TwentySixteen content area closing tags
      */
-    public static function after_content()
+    public function after_content()
     {
         echo '</main>';
         echo '</div>';
@@ -33,4 +33,4 @@ class TwentySixteen
     }
 }
 
-TwentySixteen::init();
+new TwentySixteen();

@@ -3,6 +3,7 @@ namespace MangaPress\Lib\ThemeCompat;
 
 /**
  * Theme compatibility includes
+ * @todo Switch to registry/service-provider pattern
  */
 class ThemeCompatibility
 {
@@ -32,5 +33,3 @@ class ThemeCompatibility
         }
     }
 }
-
-ThemeCompatibility::init();

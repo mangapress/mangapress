@@ -3,6 +3,7 @@
 namespace MangaPress;
 
 use MangaPress\Lib\FlashMessages as FlashMessages;
+use MangaPress\Lib\ThemeCompat\ThemeCompatibility;
 
 /**
  * Plugin bootstrap class.
@@ -83,6 +84,8 @@ class Bootstrap
         add_action('widgets_init', ['\MangaPress\Bootstrap', 'widgets_init']);
         add_filter('plugin_action_links_' . self::$plugin_basename, ['\MangaPress\Bootstrap', 'plugin_action_links'], 10, 4);
         add_filter('plugin_row_meta', ['\MangaPress\Bootstrap', 'plugin_row_meta'], 10, 4);
+
+        ThemeCompatibility::init();
     }
 
 

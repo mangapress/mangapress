@@ -11,43 +11,44 @@ class TwentyNineteen
 {
     use ThemeMarkup;
 
-    public static function init()
+    public function init()
     {
         $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
-        add_action('mangapress_before_content', ['TwentyNineteen', 'before_content']);
-        add_action('mangapress_after_content', ['TwentyNineteen', 'after_content']);
+        add_action('mangapress_before_content', [$this, 'before_content']);
+        add_action('mangapress_after_content', [$this, 'after_content']);
 
-        add_action('mangapress_before_article_content', ['TwentyNineteen', 'before_article_content']);
-        add_action('mangapress_after_article_content', ['TwentyNineteen', 'after_article_content']);
+        add_action('mangapress_before_article_content', [$this, 'before_article_content']);
+        add_action('mangapress_after_article_content', [$this, 'after_article_content']);
 
         if ($latest_comic_page_exists) {
             add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
             add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
         }
-        add_action('wp_enqueue_scripts', ['TwentyNineteen', 'enqueue_styles']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
     }
 
-    public static function before_content()
+    public function before_content()
     {
         echo '<section id="primary" class="content-area">';
         echo '<main id="main" class="site-main">';
     }
 
-    public static function after_content()
+    public function after_content()
     {
         echo '</main>';
         echo '</section>';
     }
 
-    public static function before_article_content()
+    public function before_article_content()
     {
         echo '<div class="entry-content">';
     }
 
-    public static function after_article_content()
+    public function after_article_content()
     {
         echo '</div>';
     }
 }
 
-TwentyNineteen::init();
+// @todo replace with registry/service-provider pattern
+new TwentyNineteen();
