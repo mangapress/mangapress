@@ -27,21 +27,21 @@ abstract class ContentType
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * Object singular (human-readable) label
      *
      * @var string
      */
-    protected $_label_single;
+    protected $label_single;
 
     /**
      * Object plural (human-readable) label
      *
      * @var string
      */
-    protected $_label_plural;
+    protected $label_plural;
 
     /**
      * Text domain string for i8n
@@ -49,14 +49,14 @@ abstract class ContentType
      *
      * @var string
      */
-    protected $_textdomain = '';
+    protected $textdomain = '';
 
     /**
      * Object arguments
      *
      * @var array
      */
-    protected $_args;
+    protected $args;
 
     /**
      * Object init
@@ -82,7 +82,7 @@ abstract class ContentType
      * Set the object name
      *
      * @param  string $object_name
-     * @return MangaPress_ContentType
+     * @return ContentType
      */
     public function set_name($object_name)
     {
@@ -98,14 +98,14 @@ abstract class ContentType
      */
     public function get_name()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
      * Set object options
      *
      * @param  array $options
-     * @return MangaPress_ContentType
+     * @return ContentType
      */
     public function set_options($options)
     {
@@ -123,11 +123,11 @@ abstract class ContentType
      * Set the object's singular label
      *
      * @param  string $object_single_name
-     * @return MangaPress_ContentType
+     * @return ContentType
      */
     public function set_singlename($object_single_name)
     {
-        $this->_label_single = $object_single_name;
+        $this->label_single = $object_single_name;
 
         return $this;
     }
@@ -136,12 +136,12 @@ abstract class ContentType
      * Set the object's plural label
      *
      * @param  string $object_pluralname
-     * @return MangaPress_ContentType
+     * @return ContentType
      */
     public function set_pluralname($object_pluralname)
     {
 
-        $this->_label_plural = $object_pluralname;
+        $this->label_plural = $object_pluralname;
 
         return $this;
     }
@@ -156,7 +156,7 @@ abstract class ContentType
      */
     public function set_textdomain($textdomain)
     {
-        $this->_textdomain = $textdomain;
+        $this->textdomain = $textdomain;
 
         return $this;
     }
@@ -165,11 +165,11 @@ abstract class ContentType
      * Set object arguments
      *
      * @param  array $args
-     * @return MangaPress_ContentType
+     * @return ContentType
      */
     public function set_arguments($args = array())
     {
-        $this->_args = $args;
+        $this->args = $args;
 
         return $this;
     }

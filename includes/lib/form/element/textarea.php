@@ -25,7 +25,7 @@ class Textarea extends Element
      */
     public function __toString()
     {
-        return $this->_html;
+        return $this->html;
     }
 
 }

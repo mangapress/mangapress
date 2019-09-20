@@ -21,7 +21,7 @@ class Select extends Element
      *
      * @var array
      */
-    protected $_options = array();
+    protected $options = array();
 
     /**
      * Echo form element
@@ -32,7 +32,7 @@ class Select extends Element
     {
         $options = $this->get_default();
         $attr_arr = array();
-        foreach ($this->_attr as $name => $value) {
+        foreach ($this->attr as $name => $value) {
             if ($name != 'value')
                 $attr_arr[] = "{$name}=\"{$value}\"";
         }
@@ -53,9 +53,9 @@ class Select extends Element
             $options_str .= "<option value=\"$option_val\" $selected>{$option_text}</option>";
         }
 
-        $this->_html = "<select $attr>\n$options_str</select> {$description}";
+        $this->html = "<select $attr>\n$options_str</select> {$description}";
 
-        return $this->_html;
+        return $this->html;
     }
 
     /**
@@ -67,7 +67,7 @@ class Select extends Element
     public function set_default($values)
     {
         foreach ($values as $key => $value) {
-            $this->_options[$key] = $value;
+            $this->options[$key] = $value;
         }
 
         return $this;
@@ -80,6 +80,6 @@ class Select extends Element
      */
     public function get_default()
     {
-        return $this->_options;
+        return $this->options;
     }
 }

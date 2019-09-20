@@ -6,7 +6,9 @@
  * @author  Jess Green <jgreen @ psy-dreamer.com>
  * @version $Id$
  */
+
 namespace MangaPress\Lib;
+
 /**
  * Flash Messages helper class
  *
@@ -23,7 +25,7 @@ class FlashMessages
      *
      * @var array
      */
-    protected $classes = array('error', 'updated');
+    protected $classes = ['error', 'updated'];
 
 
     /**
@@ -31,7 +33,7 @@ class FlashMessages
      *
      * @var array
      */
-    public $messages = array();
+    public $messages = [];
 
 
     /**
@@ -55,7 +57,7 @@ class FlashMessages
             }
         }
 
-        add_action('admin_notices', array($this, 'show_flash_message'));
+        add_action('admin_notices', [$this, 'show_flash_message']);
     }
 
 
@@ -73,7 +75,7 @@ class FlashMessages
     /**
      * Set messages in array
      *
-     * @param  array $messages Array of messages to set
+     * @param array $messages Array of messages to set
      * @return void
      */
     public function set_flash_messages($messages)
@@ -85,7 +87,7 @@ class FlashMessages
     /**
      * Set transient name
      *
-     * @param  string $transient_name
+     * @param string $transient_name
      * @return void
      */
     public function set_transient_name($transient_name)
@@ -103,7 +105,7 @@ class FlashMessages
     public function get_transient_name()
     {
         if ($this->transient_name == '') {
-            throw new Exception("Transient name is not set");
+            throw new Exception('Transient name is not set');
         }
 
         return $this->transient_name;
@@ -113,14 +115,14 @@ class FlashMessages
     /**
      * Queue flash messages
      *
-     * @param  string $name    Name of message. updated or error
-     * @param  string $message Message body
-     * @return \MangaPress_FlashMessages
+     * @param string $name Name of message. updated or error
+     * @param string $message Message body
+     * @return FlashMessages
      * @throws \Exception
      */
     public function queue_flash_message($name, $message)
     {
-        $messages = array();
+        $messages      = [];
         $classes       = apply_filters('flashmessage_classes', $this->classes);
         $default_class = apply_filters('flashmessages_default_class', 'updated');
 
@@ -158,8 +160,8 @@ class FlashMessages
     /**
      * Display message HTML
      *
-     * @param  array  $messages Array of messages
-     * @param  string $class    Message CSS class
+     * @param array $messages Array of messages
+     * @param string $class Message CSS class
      * @return void
      */
     private function display_flash_message_html($messages, $class)

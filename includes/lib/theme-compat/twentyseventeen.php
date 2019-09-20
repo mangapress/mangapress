@@ -2,7 +2,9 @@
 /**
  * Provide theme compatibility for TwentySeventeen
  */
+
 namespace MangaPress\Lib\ThemeCompat;
+
 use MangaPress\Bootstrap;
 
 class TwentySeventeen
@@ -12,13 +14,13 @@ class TwentySeventeen
     public static function init()
     {
         $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
-        add_action('mangapress_before_content', array(__CLASS__, 'before_content'));
-        add_action('mangapress_after_content', array(__CLASS__, 'after_content'));
+        add_action('mangapress_before_content', [__CLASS__, 'before_content']);
+        add_action('mangapress_after_content', [__CLASS__, 'after_content']);
         if ($latest_comic_page_exists) {
             add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
             add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
         }
-        add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_styles'));
+        add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_styles']);
     }
 
 

@@ -26,10 +26,10 @@ class Text extends Element
     public function __toString()
     {
         $label = '';
-        if (!empty($this->_label)) {
+        if (!empty($this->label)) {
             $id = $this->get_attributes('id');
             $class = " class=\"label-$id\"";
-            $label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
+            $label = "<label for=\"$id\"$class>$this->label</label>\r\n";
         }
 
         $desc = $this->get_description();
@@ -42,8 +42,8 @@ class Text extends Element
 
         $htmlArray['content'] = "{$label}<input type=\"text\" $attr />\r\n{$description}";
 
-        $this->_html = implode(' ', $htmlArray);
+        $this->html = implode(' ', $htmlArray);
 
-        return $this->_html;
+        return $this->html;
     }
 }

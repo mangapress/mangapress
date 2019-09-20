@@ -22,14 +22,14 @@ class Taxonomy extends ContentType
      *
      * @var array
      */
-    protected $_object_types  = array();
+    protected $object_types  = array();
 
     /**
      * Object arguments
      *
      * @var array
      */
-    protected $_args = array(
+    protected $args = array(
         'labels'                => '',
         'public'                => true,
         'can_export'            => true,
@@ -48,38 +48,49 @@ class Taxonomy extends ContentType
      */
     public function init()
     {
-        register_taxonomy($this->_name, $this->_object_types, $this->_args);
+        register_taxonomy($this->name, $this->object_types, $this->args);
     }
 
     /**
      * Set object arguments
      *
      * @param  array $args
-     * @return JesGS_Taxonomy
+     * @return Taxonomy
      */
     public function set_arguments($args = array())
     {
 
-        $args = array_merge($this->_args, $args);
+        $args = array_merge($this->args, $args);
+        /**
+         * @var $public
+         * @var $can_export
+         * @var $show_in_nav_menus
+         * @var $show_ui
+         * @var $show_tagcloud
+         * @var $hierarchical
+         * @var $rewrite
+         * @var $query_var
+         * @var $capabilities
+         */
         extract($args);
 
         $args
             = array(
                 'labels' => array(
-                    'name'                       => $this->_label_plural,
-                    'singular_name'              => $this->_label_single,
-                    'search_items'               => sprintf(__('Search %s', $this->_textdomain), $this->_label_plural),
-                    'popular_items'              => sprintf(__('Popular %s', $this->_textdomain), $this->_label_plural),
-                    'all_items'                  => sprintf(__('All %s', $this->_textdomain), $this->_label_plural),
-                    'parent_item'                => sprintf(__('Parent %s', $this->_textdomain), $this->_label_single),
-                    'parent_item_colon'          => sprintf(__('Parent %s:: ', $this->_textdomain), $this->_label_single),
-                    'edit_item'                  => sprintf(__('Edit %s', $this->_textdomain), $this->_label_single),
-                    'update_item'                => sprintf(__('Update %s', $this->_textdomain), $this->_label_single),
-                    'add_new_item'               => sprintf(__('Add New %s', $this->_textdomain), $this->_label_single),
-                    'new_item_name'              => sprintf(__('New %s name', $this->_textdomain), $this->_label_single),
-                    'separate_items_with_commas' => sprintf(__('Separate %s with commas', $this->_textdomain), $this->_label_plural),
-                    'add_or_remove_items'        => sprintf(__('Add or remove %s', $this->_textdomain), $this->_label_plural),
-                    'choose_from_most_used'      => sprintf(__('Choose from most used %s', $this->_textdomain), $this->_label_plural),
+                    'name'                       => $this->label_plural,
+                    'singular_name'              => $this->label_single,
+                    'search_items'               => sprintf(__('Search %s', $this->textdomain), $this->label_plural),
+                    'popular_items'              => sprintf(__('Popular %s', $this->textdomain), $this->label_plural),
+                    'all_items'                  => sprintf(__('All %s', $this->textdomain), $this->label_plural),
+                    'parent_item'                => sprintf(__('Parent %s', $this->textdomain), $this->label_single),
+                    'parent_item_colon'          => sprintf(__('Parent %s:: ', $this->textdomain), $this->label_single),
+                    'edit_item'                  => sprintf(__('Edit %s', $this->textdomain), $this->label_single),
+                    'update_item'                => sprintf(__('Update %s', $this->textdomain), $this->label_single),
+                    'add_new_item'               => sprintf(__('Add New %s', $this->textdomain), $this->label_single),
+                    'new_item_name'              => sprintf(__('New %s name', $this->textdomain), $this->label_single),
+                    'separate_items_with_commas' => sprintf(__('Separate %s with commas', $this->textdomain), $this->label_plural),
+                    'add_or_remove_items'        => sprintf(__('Add or remove %s', $this->textdomain), $this->label_plural),
+                    'choose_from_most_used'      => sprintf(__('Choose from most used %s', $this->textdomain), $this->label_plural),
                 ),
                 'public'                => $public,
                 'can_export'            => $can_export,
@@ -93,7 +104,7 @@ class Taxonomy extends ContentType
                 'capabilities'          => $capabilities,
             );
 
-        $this->_args = $args;
+        $this->args = $args;
 
         return $this;
     }
@@ -102,11 +113,11 @@ class Taxonomy extends ContentType
      * Set taxonomy objects
      *
      * @param  array $object_types
-     * @return JesGS_Taxonomy
+     * @return Taxonomy
      */
     public function set_objects($object_types)
     {
-        $this->_object_types  = $object_types;
+        $this->object_types  = $object_types;
 
         return $this;
     }

@@ -11,20 +11,20 @@ class TwentyNineteen
 {
     use ThemeMarkup;
 
-    public function init()
+    public static function init()
     {
         $latest_comic_page_exists = Bootstrap::get_option('basic', 'latestcomic_page');
-        add_action('mangapress_before_content', [__CLASS__, 'before_content']);
-        add_action('mangapress_after_content', [__CLASS__, 'after_content']);
+        add_action('mangapress_before_content', ['TwentyNineteen', 'before_content']);
+        add_action('mangapress_after_content', ['TwentyNineteen', 'after_content']);
 
-        add_action('mangapress_before_article_content', [__CLASS__, 'before_article_content']);
-        add_action('mangapress_after_article_content', [__CLASS__, 'after_article_content']);
+        add_action('mangapress_before_article_content', ['TwentyNineteen', 'before_article_content']);
+        add_action('mangapress_after_article_content', ['TwentyNineteen', 'after_article_content']);
 
         if ($latest_comic_page_exists) {
             add_action('mangapress_before_latest_comic_loop', 'mangapress_start_latest_comic');
             add_action('mangapress_after_latest_comic_loop', 'mangapress_end_latest_comic');
         }
-        add_action('wp_enqueue_scripts', [__CLASS__, 'enqueue_styles']);
+        add_action('wp_enqueue_scripts', ['TwentyNineteen', 'enqueue_styles']);
     }
 
     public static function before_content()
