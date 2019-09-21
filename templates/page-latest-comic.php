@@ -28,7 +28,6 @@ do_action('mangapress_before_content'); ?>
 do_action('mangapress_before_latest_comic'); ?>
 
 <?php if (have_posts()) : ?>
-
     <?php
     /**
      * mangapress_before_latest_comic_loop
@@ -38,7 +37,8 @@ do_action('mangapress_before_latest_comic'); ?>
      */
     do_action('mangapress_before_latest_comic_loop');?>
 
-    <?php while(have_posts()) : the_post(); ?>
+    <?php while (have_posts()) :
+        the_post(); ?>
         <?php
         /**
          * mangapress_before_article

@@ -29,7 +29,7 @@ if (!function_exists('is_comic_page')) {
     }
 }
 
-add_filter('the_latest_comic_content_error', function($error) {
+add_filter('the_latest_comic_content_error', function ($error) {
     $msg = __('This filter has been deprecated. Please see documentation for alternatives', MP_DOMAIN);
     _deprecated_hook('the_latest_comic_content_error', MP_VERSION, $msg);
 });
@@ -39,7 +39,7 @@ add_filter('the_comicarchive_content_error', function ($error) {
     _deprecated_hook('the_latest_comic_content_error', MP_VERSION, $msg);
 });
 
-add_action('latest_comic_start', function(){
+add_action('latest_comic_start', function () {
     $msg = __('This action has been deprecated. Please see plugin documentation.', MP_DOMAIN);
     _deprecated_hook(
         'latest_comic_start',
@@ -49,7 +49,7 @@ add_action('latest_comic_start', function(){
     );
 });
 
-add_action('latest_comic_end', function(){
+add_action('latest_comic_end', function () {
     $msg = __('This action has been deprecated. Please see plugin documentation.', MP_DOMAIN);
     _deprecated_hook(
         'latest_comic_end',

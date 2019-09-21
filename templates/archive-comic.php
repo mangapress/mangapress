@@ -19,7 +19,6 @@ do_action('mangapress_before_content'); ?>
 </header>
 
 <?php if (have_posts() && (comic_archive_is_gallery() || comic_archive_is_list())) :  ?>
-
     <?php
     /**
      * mangapress_before_archive_comic_loop
@@ -40,7 +39,8 @@ do_action('mangapress_before_content'); ?>
      */
     do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style()); ?>
 
-    <?php while(have_posts()) : the_post(); ?>
+    <?php while (have_posts()) :
+        the_post(); ?>
 
         <?php
         /**
@@ -104,8 +104,7 @@ do_action('mangapress_before_content'); ?>
      * @since 4.0.0
      */
     do_action('mangapress_after_archive_comic_loop'); ?>
-<?php else: ?>
-
+<?php else : ?>
     <?php mangapress_get_archive_style_template('calendar'); ?>
 
 <?php endif; ?>

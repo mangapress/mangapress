@@ -30,7 +30,8 @@ function mangapress_latest_comic_shortcode($attrs = [])
         return __('No comics found', MP_DOMAIN);
     }
     global $post;
-    $old = $post; $post = $comics->post;
+    $old = $post;
+    $post = $comics->post;
     setup_postdata($comics->post);
 
     ob_start();
@@ -47,7 +48,7 @@ function mangapress_latest_comic_shortcode($attrs = [])
 
     return $content;
 }
-add_shortcode( 'latest-comic', 'mangapress_latest_comic_shortcode' );
+add_shortcode('latest-comic', 'mangapress_latest_comic_shortcode');
 
 
 /**
@@ -58,17 +59,16 @@ add_shortcode( 'latest-comic', 'mangapress_latest_comic_shortcode' );
 function mangapress_template_loader($template)
 {
     global $wp_query;
-    if ( is_embed() ) {
+    if (is_embed()) {
         return $template;
     }
 
     $default = mangapress_get_default_template_file();
-    if ( $default ) {
-
+    if ($default) {
         $templates = mangapress_get_template_hierarchy($default);
         $template = locate_template($templates);
 
-        if ( ! $template ) {
+        if (! $template) {
             $template = MP_ABSPATH . 'templates/' . $default;
         }
     }
@@ -90,7 +90,7 @@ function mangapress_get_default_template_file()
         $template = 'archive-comic.php';
     } elseif (is_latest_comic_page()) {
         $template = 'page-latest-comic.php';
-    } elseif ( is_latest_comic_endpoint()) {
+    } elseif (is_latest_comic_endpoint()) {
         $template = 'latest-comic.php';
     } else {
         $template = '';
@@ -112,8 +112,8 @@ function mangapress_get_template_hierarchy($template)
     $templates[] = 'mangapress.php';
     if (is_comic()) {
         $object = get_queried_object();
-        $name_decoded = urldecode( $object->post_name );
-        if ( $name_decoded !== $object->post_name ) {
+        $name_decoded = urldecode($object->post_name);
+        if ($name_decoded !== $object->post_name) {
             $templates[] = "comic/single-comic-{$name_decoded}.php";
             $templates[] = "single-comic-{$name_decoded}.php";
         }
@@ -144,18 +144,19 @@ function mangapress_get_template_hierarchy($template)
  */
 function mangapress_get_template_part($slug, $name = '')
 {
-    do_action( "mangapress_get_template_part_{$slug}", $slug, $name );
+    do_action("mangapress_get_template_part_{$slug}", $slug, $name);
 
     $templates = array();
     $name = (string) $name;
-    if ( '' !== $name )
+    if ('' !== $name) {
         $templates[] = "{$slug}-{$name}.php";
+    }
 
     $templates[] = "{$slug}.php";
 
     $template = locate_template($templates);
 
-    if ( $template ) {
+    if ($template) {
         require $template;
     } else {
         require MP_ABSPATH . "templates/{$slug}-{$name}.php";
@@ -213,7 +214,7 @@ function mangapress_opening_article_tag($tag, $params)
 {
     $attr_string = '';
     if (isset($params['attr'])) {
-        foreach ( $params['attr'] as $name => $value ) {
+        foreach ($params['attr'] as $name => $value) {
             $attr_string .= " $name=" . '"' . $value . '"';
         }
     }
@@ -270,7 +271,6 @@ function mangapress_archive_style_opening_tag($style)
         $class = ' class="%s"';
         if ($style == 'gallery') {
             $classes[] = 'mangapress-archive-gallery';
-
         } else {
             $classes[] = 'mangapress-archive-list';
         }
@@ -384,7 +384,7 @@ function mangapress_start_latest_comic()
     global $wp_query;
     do_action('latest_comic_start');
     $wp_query = mangapress_get_latest_comic();
-    if ($wp_query->found_posts == 0){
+    if ($wp_query->found_posts == 0) {
         apply_filters(
             'the_latest_comic_content_error',
             '<p class="error">No comics was found.</p>'
