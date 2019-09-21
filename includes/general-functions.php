@@ -18,17 +18,17 @@ define('MP_CATEGORY_ALL', 3);
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.
  *
+ * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page
+ * @return boolean
  * @since 2.9
  *
  * @global WP_Query $wp_query
- * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page
- * @return boolean
  */
 function mangapress_is_queried_page($option)
 {
     global $wp_query;
 
-    $page = \MangaPress\Bootstrap::get_option('basic', $option);
+    $page   = \MangaPress\Bootstrap::get_option('basic', $option);
     $object = $wp_query->get_queried_object();
 
     if (!isset($object->post_name) || $object->post_name !== $page) {
@@ -43,11 +43,11 @@ function mangapress_is_queried_page($option)
  * Remove post thumbnail from Comic Posts since post thumbnails are already
  * assigned when the_content filter is run
  *
- * @since 2.9
- *
  * @param string $html Generated image html
  * @param int $post_id Post ID
  * @return string
+ * @since 2.9
+ *
  */
 function mangapress_disable_post_thumbnail($html, $post_id)
 {
@@ -70,7 +70,7 @@ function mangapress_disable_post_thumbnail($html, $post_id)
 function mangapress_month_link($monthlink, $year = '', $month = '')
 {
     $posts = \MangaPress\Bootstrap::get_helper('posts');
-    $slug = $posts->get_front_slug();
+    $slug  = $posts->get_front_slug();
 
     $month_permalink = home_url("/{$slug}/{$year}/{$month}");
     return $month_permalink;
@@ -90,9 +90,9 @@ function mangapress_month_link($monthlink, $year = '', $month = '')
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {
     $posts = \MangaPress\Bootstrap::get_helper('posts');
-    $slug = $posts->get_front_slug();
+    $slug  = $posts->get_front_slug();
 
-    $relative= "/{$slug}/{$year}/{$month}/{$day}";
+    $relative      = "/{$slug}/{$year}/{$month}/{$day}";
     $day_permalink = home_url($relative);
 
     return $day_permalink;
@@ -104,8 +104,8 @@ function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
  * echoes the current version of Manga+Press.
  * Replaces mpp_comic_version()
  *
- * @since 2.9
  * @return void
+ * @since 2.9
  */
 function mangapress_version()
 {
@@ -127,12 +127,9 @@ function _mangapress_set_post_type_for_boundary($query)
 }
 
 
-
 /**
  * Clone of WordPress function get_adjacent_post()
  * Handles looking for previous and next comics.
- *
- * @since 2.7
  *
  * @param bool $in_same_cat Optional. Whether returned post should be in same category.
  * @param bool $group_by_parent Optional. Whether to limit to category parent
@@ -140,26 +137,33 @@ function _mangapress_set_post_type_for_boundary($query)
  * @param string $excluded_categories Optional. Excluded categories IDs.
  * @param bool $previous Optional. Whether to retrieve next or previous post.
  *
- * @global WP_Post $post
  * @return string
+ * @global WP_Post $post
+ * @since 2.7
+ *
  */
-function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = '', $previous = true)
-{
+function mangapress_get_adjacent_comic(
+    $in_same_cat = false,
+    $group_by_parent = false,
+    $taxonomy = 'category',
+    $excluded_categories = '',
+    $previous = true
+) {
     global $post, $wpdb;
     if (empty($post)) {
         return null;
     }
-    $current_post_date = $post->post_date;
-    $join = '';
-    $terms_in = '';
+    $current_post_date    = $post->post_date;
+    $join                 = '';
+    $terms_in             = '';
     $posts_in_ex_cats_sql = '';
     if ($in_same_cat || !empty($excluded_categories)) {
         $join = " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id "
-            . "INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+                . "INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
         if ($in_same_cat && !$group_by_parent) {
             $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
             if (empty($cat_array)) {
-                $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                $cat_array = wp_get_object_terms($post->ID, $taxonomy, ['fields' => 'ids']);
             }
 
             $terms_in .= " AND tt.taxonomy = '{$taxonomy}' AND tt.term_id IN (" . implode(',', $cat_array) . ")";
@@ -168,11 +172,11 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
         if ($in_same_cat && $group_by_parent) {
             $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy);
             if (empty($cat_array)) {
-                $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                $cat_array = wp_get_object_terms($post->ID, $taxonomy, ['fields' => 'ids']);
 
                 // if it's _still_ empty
                 if (empty($cat_array)) {
-                    $cat_array = array(0);
+                    $cat_array = [0];
                 }
             }
 
@@ -187,7 +191,7 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
                 // because the default is from lowest to highest in the hierarchy
                 // we flip the array to grap the top-most parent.
                 $ancestor_array = array_reverse($ancestor_array);
-                $ancestor = absint($ancestor_array[0]);
+                $ancestor       = absint($ancestor_array[0]);
             }
 
             if ($cat_array[0] == 0) {
@@ -207,25 +211,35 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
         if (!empty($excluded_categories)) {
             $excluded_categories = array_map('intval', explode(' and ', $excluded_categories));
             if (!empty($cat_array)) {
-                $excluded_categories = array_diff($excluded_categories, $cat_array);
+                $excluded_categories  = array_diff($excluded_categories, $cat_array);
                 $posts_in_ex_cats_sql = '';
             }
             if (!empty($excluded_categories)) {
                 $posts_in_ex_cats_sql = " AND tt.taxonomy = '{$taxonomy}' "
-                    . "AND tt.term_id NOT IN (" . implode($excluded_categories, ',') . ')';
+                                        . "AND tt.term_id NOT IN (" . implode($excluded_categories, ',') . ')';
             }
         }
     }
 
-    $adjacent = $previous ? 'previous' : 'next';
-    $op       = $previous ? '<' : '>';
-    $order    = $previous ? 'DESC' : 'ASC';
-    $join  = apply_filters("mangapress_get_{$adjacent}_post_join", $join, $in_same_cat, $excluded_categories);
-    $where = apply_filters("mangapress_get_{$adjacent}_post_where", $wpdb->prepare("WHERE p.post_date $op %s AND p.post_type = %s AND p.post_status = 'publish' $terms_in $posts_in_ex_cats_sql", $current_post_date, $post->post_type), $in_same_cat, $excluded_categories);
-    $sort  = apply_filters("mangapress_get_{$adjacent}_post_sort", "ORDER BY p.post_date $order LIMIT 1");
-    $query = "SELECT p.* FROM $wpdb->posts AS p $join $where $sort";
+    $adjacent  = $previous ? 'previous' : 'next';
+    $op        = $previous ? '<' : '>';
+    $order     = $previous ? 'DESC' : 'ASC';
+    $join      = apply_filters("mangapress_get_{$adjacent}_post_join", $join, $in_same_cat, $excluded_categories);
+    $where     = apply_filters(
+        "mangapress_get_{$adjacent}_post_where",
+        $wpdb->prepare(
+            "WHERE p.post_date $op %s AND p.post_type = %s AND p.post_status = 'publish' "
+            . "$terms_in $posts_in_ex_cats_sql",
+            $current_post_date,
+            $post->post_type
+        ),
+        $in_same_cat,
+        $excluded_categories
+    );
+    $sort      = apply_filters("mangapress_get_{$adjacent}_post_sort", "ORDER BY p.post_date $order LIMIT 1");
+    $query     = "SELECT p.* FROM $wpdb->posts AS p $join $where $sort";
     $query_key = 'mangapress_adjacent_post_' . md5($query);
-    $result = wp_cache_get($query_key, 'mangapress_counts');
+    $result    = wp_cache_get($query_key, 'mangapress_counts');
     if (false !== $result) {
         return $result;
     }
@@ -242,10 +256,6 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
  * Clone of WordPress function get_boundary_post(). Retrieves first and last
  * comic posts.
  *
- * @since 2.7
- *
- * @global WP_Post $post WordPress post object
- *
  * @param bool $in_same_cat Optional. Whether returned post should be in same category.
  * @param bool $group_by_parent Optional. Whether to limit to category parent
  * @param string $taxonomy Optional. Which taxonomy to pull from.
@@ -253,45 +263,54 @@ function mangapress_get_adjacent_comic($in_same_cat = false, $group_by_parent = 
  * @param bool $start Optional. Whether to retrieve first or last post.
  *
  * @return array
+ * @since 2.7
+ *
+ * @global WP_Post $post WordPress post object
+ *
  */
-function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = false, $taxonomy = 'category', $excluded_categories = array(), $start = true)
-{
+function mangapress_get_boundary_comic(
+    $in_same_cat = false,
+    $group_by_parent = false,
+    $taxonomy = 'category',
+    $excluded_categories = [],
+    $start = true
+) {
     global $post;
     if (empty($post) || is_attachment()) {
         return null;
     }
 
-    $cat_array = array();
-    $excluded_categories = array();
+    $cat_array           = [];
+    $excluded_categories = [];
     if ($in_same_cat || !empty($excluded_categories)) {
         if ($in_same_cat && !$group_by_parent) {
             $cat_array = _mangapress_get_object_terms($post->ID, $taxonomy, MP_CATEGORY_CHILDREN);
             if (empty($cat_array)) {
-                $cat_array = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                $cat_array = wp_get_object_terms($post->ID, $taxonomy, ['fields' => 'ids']);
             }
         }
 
         if ($in_same_cat && $group_by_parent) {
             $cat_array_children = _mangapress_get_object_terms($post->ID, $taxonomy);
             if (empty($cat_array_children)) {
-                $cat_array_children = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+                $cat_array_children = wp_get_object_terms($post->ID, $taxonomy, ['fields' => 'ids']);
 
                 // if it's _still_ empty
                 if (empty($cat_array_children)) {
-                    $cat_array_children = array(0);
+                    $cat_array_children = [0];
                 }
             }
             // use the first category...
             $cat_array = get_ancestors($cat_array_children[0], $taxonomy);
             // if the ancestor array is empty, use the cat_array value
             if (empty($cat_array) || count($cat_array) == 1) {
-                $cat_array = array($cat_array_children[0]);
+                $cat_array = [$cat_array_children[0]];
             } else {
                 //
                 // because the default is from lowest to highest in the hierarchy
                 // we flip the array to grap the top-most parent.
                 $cat_array_rev = array_reverse($cat_array);
-                $cat_array = array($cat_array_rev[0]);
+                $cat_array     = [$cat_array_rev[0]];
             }
         }
 
@@ -300,7 +319,7 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
             if (!empty($cat_array)) {
                 $excluded_categories = array_diff($excluded_categories, $cat_array);
             }
-            $inverse_cats = array();
+            $inverse_cats = [];
             foreach ($excluded_categories as $excluded_category) {
                 $inverse_cats[] = $excluded_category * -1;
             }
@@ -316,27 +335,27 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
 
     $categories = implode(',', $cat_array);
     if (!empty($categories) && $categories != '0') {
-        $tax_query = array(
-            array(
-                'taxonomy' => $taxonomy,
-                'field'    => 'id',
-                'terms'    => $categories,
-                'operator' => 'IN',
+        $tax_query = [
+            [
+                'taxonomy'         => $taxonomy,
+                'field'            => 'id',
+                'terms'            => $categories,
+                'operator'         => 'IN',
                 'include_children' => !$group_by_parent,
-            )
-        );
+            ],
+        ];
     } else {
         $tax_query = null;
     }
-    $order = $start ? 'ASC' : 'DESC';
-    $post_query = array(
+    $order      = $start ? 'ASC' : 'DESC';
+    $post_query = [
         'post_type'              => 'mangapress_comic',
         'posts_per_page'         => 1,
         'tax_query'              => $tax_query,
         'order'                  => $order,
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false,
-    );
+    ];
 
     return get_posts($post_query);
 }
@@ -345,12 +364,12 @@ function mangapress_get_boundary_comic($in_same_cat = false, $group_by_parent = 
 /**
  * Retrieve term IDs. Either child-cats or parent-cats.
  *
- * @global wpdb $wpdb
  * @param integer $object_ID Object ID
  * @param mixed $taxonomy Taxonomy name or array of names
  * @param integer $get Whether or not to get child-cats or top-level cats
  *
  * @return array
+ * @global wpdb $wpdb
  */
 function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_PARENTS)
 {
@@ -364,15 +383,15 @@ function _mangapress_get_object_terms($object_ID, $taxonomy, $get = MP_CATEGORY_
         $parents = "";
     }
 
-    $tax = (array) $taxonomy;
+    $tax        = (array)$taxonomy;
     $taxonomies = "'" . implode("', '", $tax) . "'";
 
     $query = "SELECT t.term_id FROM {$wpdb->terms} AS t "
-        . "INNER JOIN {$wpdb->term_taxonomy} AS tt ON tt.term_id = t.term_id "
-        . "INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id "
-        . "WHERE tt.taxonomy IN ({$taxonomies}) "
-        . "AND tr.object_id IN ({$object_ID}) "
-        . "{$parents} ORDER BY t.term_id ASC";
+             . "INNER JOIN {$wpdb->term_taxonomy} AS tt ON tt.term_id = t.term_id "
+             . "INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id "
+             . "WHERE tt.taxonomy IN ({$taxonomies}) "
+             . "AND tr.object_id IN ({$object_ID}) "
+             . "{$parents} ORDER BY t.term_id ASC";
 
     return $wpdb->get_col($query);
 }

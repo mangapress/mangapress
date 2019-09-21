@@ -9,7 +9,7 @@
  * @version $Id$
  * @author Jess Green <support@manga-press.com>
  */
-
+// phpcs:disable
 /**
  * Shortcode handler
  * @param array $attrs
@@ -18,11 +18,11 @@
 function mangapress_latest_comic_shortcode($attrs = [])
 {
     $args = [
-        'post_type' => 'mangapress_comic',
+        'post_type'      => 'mangapress_comic',
         'posts_per_page' => 1,
-        'post_status' => 'publish',
-        'order' => 'DESC',
-        'orderby' => 'date',
+        'post_status'    => 'publish',
+        'order'          => 'DESC',
+        'orderby'        => 'date',
     ];
 
     $comics = new WP_Query($args);
@@ -30,7 +30,7 @@ function mangapress_latest_comic_shortcode($attrs = [])
         return __('No comics found', MP_DOMAIN);
     }
     global $post;
-    $old = $post;
+    $old  = $post;
     $post = $comics->post;
     setup_postdata($comics->post);
 
@@ -48,6 +48,7 @@ function mangapress_latest_comic_shortcode($attrs = [])
 
     return $content;
 }
+
 add_shortcode('latest-comic', 'mangapress_latest_comic_shortcode');
 
 
@@ -66,9 +67,9 @@ function mangapress_template_loader($template)
     $default = mangapress_get_default_template_file();
     if ($default) {
         $templates = mangapress_get_template_hierarchy($default);
-        $template = locate_template($templates);
+        $template  = locate_template($templates);
 
-        if (! $template) {
+        if (!$template) {
             $template = MP_ABSPATH . 'templates/' . $default;
         }
     }
@@ -111,7 +112,7 @@ function mangapress_get_template_hierarchy($template)
 
     $templates[] = 'mangapress.php';
     if (is_comic()) {
-        $object = get_queried_object();
+        $object       = get_queried_object();
         $name_decoded = urldecode($object->post_name);
         if ($name_decoded !== $object->post_name) {
             $templates[] = "comic/single-comic-{$name_decoded}.php";
@@ -146,8 +147,8 @@ function mangapress_get_template_part($slug, $name = '')
 {
     do_action("mangapress_get_template_part_{$slug}", $slug, $name);
 
-    $templates = array();
-    $name = (string) $name;
+    $templates = [];
+    $name      = (string)$name;
     if ('' !== $name) {
         $templates[] = "{$slug}-{$name}.php";
     }
@@ -176,21 +177,22 @@ function mangapress_pre_get_posts(\WP_Query $query)
 
     if ($query->is_main_query() && is_comic_archive_page()) {
         $mp_options = MangaPress\Bootstrap::get_options();
-        $order = $mp_options['basic']['archive_order'];
-        $orderby = $mp_options['basic']['archive_orderby'];
+        $order      = $mp_options['basic']['archive_order'];
+        $orderby    = $mp_options['basic']['archive_orderby'];
 
         $query->set('order', $order);
         $query->set('orderby', $orderby);
         $query->set('posts_per_page', -1);
     }
 }
+
 add_action('pre_get_posts', 'mangapress_pre_get_posts');
 
 
 /**
  * Get the archive style template partial
- * @uses mangapress_archive_style_template action
  * @param string $style Archive style-type
+ * @uses mangapress_archive_style_template action
  */
 function mangapress_get_archive_style_template($style)
 {
@@ -200,15 +202,16 @@ function mangapress_get_archive_style_template($style)
         mangapress_get_template_part('content/archive', 'list');
     }
 }
+
 add_action('mangapress_archive_style_template', 'mangapress_get_archive_style_template');
 
 /**
  * Open the article tag inside the loop. Used primarily on the archive-comic.php template
- * @uses mangapress_opening_article_tag filter
  * @param string $tag HTML tag. Defaults to article
  * @param array $params Array of parameters @todo document accepted parameters
  *
  * @return string
+ * @uses mangapress_opening_article_tag filter
  */
 function mangapress_opening_article_tag($tag, $params)
 {
@@ -226,7 +229,7 @@ function mangapress_opening_article_tag($tag, $params)
             $tag = 'li';
         }
 
-        $classes[] = 'mangapress-archive-' . $params['style'] . '-item';
+        $classes[]   = 'mangapress-archive-' . $params['style'] . '-item';
         $attr_string .= ' class="' . join(' ', $classes) . '"';
     }
 
@@ -234,15 +237,16 @@ function mangapress_opening_article_tag($tag, $params)
 
     return $tag_string;
 }
+
 add_filter('mangapress_opening_article_tag', 'mangapress_opening_article_tag', 10, 2);
 
 /**
  * Close the article tag inside the loop. Used primarily on the archive-comic.php template
- * @uses mangapress_closing_article_tag filter
  * @param string $tag HTML tag. Defaults to article
  * @param array $params Array of parameters @todo document accepted parameters
  *
  * @return string
+ * @uses mangapress_closing_article_tag filter
  */
 function mangapress_closing_article_tag($tag, $params)
 {
@@ -256,6 +260,7 @@ function mangapress_closing_article_tag($tag, $params)
 
     return $tag_string;
 }
+
 add_filter('mangapress_closing_article_tag', 'mangapress_closing_article_tag', 10, 2);
 
 /**
@@ -265,7 +270,7 @@ add_filter('mangapress_closing_article_tag', 'mangapress_closing_article_tag', 1
 function mangapress_archive_style_opening_tag($style)
 {
     $classes = [
-        'mangapress-archive-feed'
+        'mangapress-archive-feed',
     ];
     if (in_array($style, ['list', 'gallery'])) {
         $class = ' class="%s"';
@@ -278,12 +283,13 @@ function mangapress_archive_style_opening_tag($style)
         echo "<ul $class>";
     }
 }
+
 add_action('mangapress_archive_style_opening_tag', 'mangapress_archive_style_opening_tag');
 
 /**
  * Close the for the archive list. Used for the archive-comic.php template
- * @uses mangapress_archive_style_opening_tag action
  * @param string $style Archive style-type
+ * @uses mangapress_archive_style_opening_tag action
  */
 function mangapress_archive_style_closing_tag($style)
 {
@@ -291,6 +297,7 @@ function mangapress_archive_style_closing_tag($style)
         echo '</ul>';
     }
 }
+
 add_action('mangapress_archive_style_closing_tag', 'mangapress_archive_style_closing_tag');
 
 
@@ -357,27 +364,27 @@ function mangapress_archive_gallery_style()
 /**
  * Retrieves the most recent comic
  *
- * @since 2.7.2
  * @return \WP_Query
+ * @since 2.7.2
  */
 function mangapress_get_latest_comic()
 {
-    $single_comic_query = new WP_Query(array(
-        'post_type' => 'mangapress_comic',
+    $single_comic_query                       = new WP_Query([
+        'post_type'      => 'mangapress_comic',
         'posts_per_page' => 1,
-        'post_status' => 'publish',
-        'order' => 'DESC',
-        'orderby' => 'date',
-    ));
+        'post_status'    => 'publish',
+        'order'          => 'DESC',
+        'orderby'        => 'date',
+    ]);
     $single_comic_query->is_post_type_archive = false;
     return $single_comic_query;
 }
 
 /**
  * Start a Latest Comic loop
- * @since 2.9
- * @global WP_Query $wp_query
  * @return void
+ * @global WP_Query $wp_query
+ * @since 2.9
  */
 function mangapress_start_latest_comic()
 {
@@ -394,9 +401,9 @@ function mangapress_start_latest_comic()
 
 /**
  * End Latest Comic loop
- * @since 2.9
- * @global WP_Query $wp_query
  * @return void
+ * @global WP_Query $wp_query
+ * @since 2.9
  */
 function mangapress_end_latest_comic()
 {
@@ -404,3 +411,4 @@ function mangapress_end_latest_comic()
     do_action('latest_comic_end');
     wp_reset_query();
 }
+// phpcs:enable

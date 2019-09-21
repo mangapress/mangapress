@@ -55,7 +55,11 @@ do_action('mangapress_before_content'); ?>
          *      @type string $style
          * }
          */
-        echo apply_filters('mangapress_opening_article_tag', 'article', ['style' => mangapress_get_comic_archive_style()]) ?>
+        echo apply_filters(
+            'mangapress_opening_article_tag',
+            'article',
+            ['style' => mangapress_get_comic_archive_style()]
+        ) ?>
 
         <?php
         /**
@@ -81,7 +85,11 @@ do_action('mangapress_before_content'); ?>
          *      @type string $style
          * }
          */
-        echo apply_filters('mangapress_closing_article_tag', 'article', ['style' => mangapress_get_comic_archive_style()]); ?>
+        echo apply_filters(
+            'mangapress_closing_article_tag',
+            'article',
+            ['style' => mangapress_get_comic_archive_style()]
+        ); ?>
 
     <?php endwhile; ?>
 

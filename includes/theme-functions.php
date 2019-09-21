@@ -290,6 +290,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 }
 
 
+// phpcs:disable
 /**
  * CPT-neutral Clone of WordPress' get_calendar
  *
@@ -527,7 +528,14 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
         if (in_array($day, $daywithpost)) { // any posts today?
             add_filter('day_link', 'mangapress_day_link', 10, 4);
-            $calendar_output .= '<a href="' . get_day_link($thisyear, $thismonth, $day) . '" title="' . esc_attr($ak_titles_for_day[ $day ]) . "\">$day</a>";
+            $calendar_output .= vsprintf(
+                '<a href="%1$s" title="%2$s">%3$s</a>',
+                [
+                    get_day_link($thisyear, $thismonth, $day),
+                    esc_attr($ak_titles_for_day[$day]),
+                    $day
+                ]
+            );
             remove_filter('day_link', 'mangapress_day_link');
         } else {
             $calendar_output .= $day;
@@ -578,3 +586,4 @@ add_action('save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache')
 add_action('delete_post', 'mangapress_delete_get_calendar_cache');
 add_action('update_option_start_of_week', 'mangapress_delete_get_calendar_cache');
 add_action('update_option_gmt_offset', 'mangapress_delete_get_calendar_cache');
+// phpcs:enable
