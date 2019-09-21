@@ -292,7 +292,6 @@ class Posts
          * TODO add an option for users to override this "functionality"
          */
         remove_meta_box('postimagediv', 'mangapress_comic', 'side');
-
     }
 
 
@@ -362,7 +361,6 @@ class Posts
         if ("cb" == $column) {
             echo "<input type=\"checkbox\" value=\"{$post->ID}\" name=\"post[]\" />";
         } elseif ("thumbnail" == $column) {
-
             $thumbnail_html = get_the_post_thumbnail($post->ID, 'comic-admin-thumb', ['class' => 'wp-caption']);
 
             if ($thumbnail_html) {
@@ -377,15 +375,26 @@ class Posts
             $series = wp_get_object_terms($post->ID, 'mangapress_series');
             if (!empty($series)) {
                 $series_html = [];
+                /**
+                 * @var \WP_Term $s
+                 */
                 foreach ($series as $s) {
-                    array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">' . $s->name . "</a>");
+                    array_push(
+                        $series_html,
+                        vsprintf(
+                            '<a href="%s">%s</a>',
+                            [
+                                get_term_link($s->slug, 'mangapress_series'),
+                                $s->name,
+                            ]
+                        )
+                    );
                 }
 
                 echo implode($series_html, ", ");
             }
         } elseif ("post_date" == $column) {
             echo date("Y/m/d", strtotime($post->post_date));
-
         } elseif ("description" == $column) {
             echo $post->post_excerpt;
         } elseif ("author" == $column) {
@@ -509,7 +518,6 @@ class Posts
         if (!isset($_POST['tax_input'][self::TAX_SERIES][0])
             || ($_POST['tax_input'][self::TAX_SERIES][0] == 0
                 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
-
             $default_cat = get_option('mangapress_default_category');
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
         } else {
@@ -518,7 +526,5 @@ class Posts
         }
 
         return $post_id;
-
     }
-
 }

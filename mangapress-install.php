@@ -8,6 +8,7 @@
  */
 
 namespace MangaPress;
+
 /**
  * @subpackage Install
  * @author     Jess Green <support@manga-press.com>
@@ -22,7 +23,7 @@ class Install
      *
      * @var string
      */
-    protected static $_version;
+    protected static $version;
 
 
     /**
@@ -30,7 +31,7 @@ class Install
      *
      * @var string
      */
-    protected $_type;
+    protected $type;
 
 
     /**
@@ -38,7 +39,7 @@ class Install
      *
      * @var Bootstrap
      */
-    protected $_bootstrap;
+    protected $bootstrap;
 
 
     /**
@@ -46,7 +47,7 @@ class Install
      *
      * @var Install
      */
-    protected static $_instance;
+    protected static $instance;
 
 
     /**
@@ -56,11 +57,11 @@ class Install
      */
     public static function get_instance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new self();
+        if (self::$instance == null) {
+            self::$instance = new self();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
 
@@ -88,8 +89,14 @@ class Install
             wp_die(__('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN));
         }
 
-        if (version_compare(PHP_VERSION, '5.6', '<=')) {
-            wp_die(__('Sorry. Manga+Press is only supported on PHP 5.6 and newer. Please upgrade your server PHP version.'));
+        if (version_compare(PHP_VERSION, '7.0', '<=')) {
+            wp_die(
+                __(
+                    'Sorry. Manga+Press is only supported on PHP 7.0 and newer. '
+                    . 'Please upgrade your server PHP version.',
+                    MP_DOMAIN
+                )
+            );
         }
 
         if (version_compare($wp_version, '4.9.6', '<=')) {
@@ -99,19 +106,15 @@ class Install
             );
         }
 
-        self::$_version = strval(get_option('mangapress_ver'));
+        self::$version = strval(get_option('mangapress_ver'));
 
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
-        if (version_compare(self::$_version, MP_VERSION, '<') && !(self::$_version == '')) {
-
+        if (version_compare(self::$version, MP_VERSION, '<') && !(self::$version == '')) {
             add_option('mangapress_upgrade', 'yes', '', 'no');
-
-        } elseif (self::$_version == '') {
-
+        } elseif (self::$version == '') {
             add_option('mangapress_ver', MP_VERSION, '', 'no');
             add_option('mangapress_options', serialize(Options::get_default_options()), '', 'no');
-
         }
 
         Bootstrap::init();
