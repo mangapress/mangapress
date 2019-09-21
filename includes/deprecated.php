@@ -7,20 +7,22 @@
 
 /**
  * Get all comics for archives page
+ * @param array $params
  * @deprecated Since 4.0.0
  * @since 2.9
  */
-function mangapress_get_all_comics_for_archive($params = array())
+function mangapress_get_all_comics_for_archive($params = [])
 {
     _deprecated_function(__FUNCTION__, MP_VERSION);
 }
 
 if (!function_exists('is_comic_page')) {
     /**
-     * @since 1.0 RC1
+     * Checks if the page is a comic page
      *
-     * @global WP_Query $wp_query
      * @return bool
+     * @global WP_Query $wp_query
+     * @since 1.0 RC1
      */
     function is_comic_page()
     {
