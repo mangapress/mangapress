@@ -82,7 +82,12 @@ class Bootstrap
 
         add_action('init', ['\MangaPress\Bootstrap', 'init'], 500);
         add_action('widgets_init', ['\MangaPress\Bootstrap', 'widgets_init']);
-        add_filter('plugin_action_links_' . self::$plugin_basename, ['\MangaPress\Bootstrap', 'plugin_action_links'], 10, 4);
+        add_filter(
+            'plugin_action_links_' . self::$plugin_basename,
+            ['\MangaPress\Bootstrap', 'plugin_action_links'],
+            10,
+            4
+        );
         add_filter('plugin_row_meta', ['\MangaPress\Bootstrap', 'plugin_row_meta'], 10, 4);
 
         ThemeCompatibility::init();
@@ -92,10 +97,10 @@ class Bootstrap
     /**
      * Add relevant links to plugin meta
      *
-     * @param array  $plugin_meta An array of the plugin's metadata
+     * @param array $plugin_meta An array of the plugin's metadata
      * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
-     * @param array  $plugin_data An array of plugin data.
-     * @param string $status      Status of the plugin.
+     * @param array $plugin_data An array of plugin data.
+     * @param string $status Status of the plugin.
      *
      * @return array
      */
@@ -107,11 +112,15 @@ class Bootstrap
 
         $details_link = $plugin_meta[2];
         unset($plugin_meta[2]);
+        $link_html = '<a aria-label="%1$s" target="_blank" rel="noopener noreferrer" href="%2$s">%1$s</a>';
 
-        $getting_started = __('Getting Started', MP_DOMAIN);
-        $developer_api   = __('Developer API', MP_DOMAIN);
-        $plugin_meta[]   = "<a aria-label='{$getting_started}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/getting-started/'>{$getting_started}</a>";
-        $plugin_meta[]   = "<a aria-label='{$developer_api}' target='_blank' rel='noopener noreferrer' href='https://docs.manga-press.com/developer-api/'>{$developer_api}</a>";
+        $getting_started      = __('Getting Started', MP_DOMAIN);
+        $getting_started_link = 'https://docs.manga-press.com/getting-started/';
+        $developer_api        = __('Developer API', MP_DOMAIN);
+        $developer_api_link   = 'https://docs.manga-press.com/developer-api/';
+
+        $plugin_meta[] = vsprintf($link_html, [$getting_started, $getting_started_link,]);
+        $plugin_meta[] = vsprintf($link_html, [$developer_api, $developer_api_link,]);
 
         $plugin_meta[] = $details_link;
         return $plugin_meta;
@@ -121,10 +130,10 @@ class Bootstrap
     /**
      * Add additional links to action menu
      *
-     * @param array  $actions     An array of plugin action links.
+     * @param array $actions An array of plugin action links.
      * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-     * @param array  $plugin_data An array of plugin data. See `get_plugin_data()`.
-     * @param string $context     The plugin context. By default this can include 'all', 'active', 'inactive',
+     * @param array $plugin_data An array of plugin data. See `get_plugin_data()`.
+     * @param string $context The plugin context. By default this can include 'all', 'active', 'inactive',
      *                            'recently_activated', 'upgrade', 'mustuse', 'dropins', and 'search'.
      *
      * @return array
@@ -160,7 +169,7 @@ class Bootstrap
         self::$posts_helper        = new Posts();
         self::$flashmessage_helper = new FlashMessages(
             [
-            'transient_name' => 'mangapress_messages',
+                'transient_name' => 'mangapress_messages',
             ]
         );
 
@@ -187,7 +196,7 @@ class Bootstrap
     /**
      * Get a MangaPress helper
      *
-     * @param  string $helper_name Allowed values: admin, options, posts, flashmessages
+     * @param string $helper_name Allowed values: admin, options, posts, flashmessages
      * @return Admin|Options|Posts|FlashMessages|\WP_Error
      */
     public static function get_helper($helper_name)
@@ -208,7 +217,7 @@ class Bootstrap
      * @return void
      * @see    MangaPress_Bootstrap::init()
      *
-     * @uses init()
+     * @uses   init()
      */
     public static function set_options()
     {
@@ -230,8 +239,8 @@ class Bootstrap
     /**
      * Get one option from options array
      *
-     * @param  string $section     Option section
-     * @param  string $option_name Option name
+     * @param string $section Option section
+     * @param string $option_name Option name
      * @return boolean|mixed
      */
     public static function get_option($section, $option_name)
@@ -381,7 +390,9 @@ class Bootstrap
         $latest_page = self::get_option('basic', 'latestcomic_page');
 
         if ($page_slug == $latest_page) {
-            echo '<div class="notice notice-warning inline"><p>' . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN) . '</p></div>';
+            echo '<div class="notice notice-warning inline"><p>'
+                 . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
+                 . '</p></div>';
             remove_post_type_support($post_type, 'editor');
         }
     }
@@ -403,13 +414,21 @@ class Bootstrap
         if (in_array($post_id, [$page_for_posts, $page_on_front])) {
             echo '<div class="notice notice-error inline">';
             echo '<p>'
-                . __(
-                    'You have assigned this page to be the Home Page or the Posts page. '
-                    . 'This option is not compatible with Manga+Press and will break the functionality of these two pages.',
-                    MP_DOMAIN
-                )
+                 . __(
+                     'You have assigned this page to be the Home Page or the Posts page. '
+                     . 'This option is not compatible with Manga+Press and will break the functionality '
+                     . 'of these two pages.',
+                     MP_DOMAIN
+                 )
                  . '</p>';
-            echo '<p>' . __('Either assign Latest/Comic archive to different pages, or assign Home Page/Post Page to different pages.', MP_DOMAIN) . '</p>';
+
+            echo '<p>'
+                 . __(
+                     'Either assign Latest/Comic archive to different pages, '
+                     . 'or assign Home Page/Post Page to different pages.',
+                     MP_DOMAIN
+                 )
+                 . '</p>';
             echo '</div>';
         }
     }

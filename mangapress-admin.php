@@ -85,7 +85,7 @@ class Admin
     /**
      * Get help tab data for current option tab
      *
-     * @param  string $option_tab
+     * @param string $option_tab
      * @return array
      */
     public static function get_help_tabs($option_tab)
@@ -115,24 +115,24 @@ class Admin
     /**
      * Get help tab contents from file
      *
-     * @param  string $help_tab Name of tab content to get
+     * @param string $help_tab Name of tab content to get
      * @return string
      */
     public static function get_help_tab_contents($help_tab = 'basic')
     {
         ob_start();
         switch ($help_tab) {
-        case 'basic' :
-            include_once MP_ABSPATH . '/includes/pages/help-basic.php';
-            break;
-        case 'comic_page':
-            include_once MP_ABSPATH . '/includes/pages/help-comic-page.php';
-            break;
-        case 'nav':
-            include_once MP_ABSPATH . '/includes/pages/help-nav.php';
-            break;
-        default:
-            // have a default response
+            case 'basic':
+                include_once MP_ABSPATH . '/includes/pages/help-basic.php';
+                break;
+            case 'comic_page':
+                include_once MP_ABSPATH . '/includes/pages/help-comic-page.php';
+                break;
+            case 'nav':
+                include_once MP_ABSPATH . '/includes/pages/help-nav.php';
+                break;
+            default:
+                // have a default response
         }
 
         return ob_get_clean();
@@ -142,7 +142,7 @@ class Admin
     /**
      * Display options tabs
      *
-     * @param  string $current Current tab
+     * @param string $current Current tab
      * @return void
      */
     public static function options_page_tabs($current = 'basic')
@@ -154,11 +154,24 @@ class Admin
 
         $links = [];
         foreach ($tabs as $tab => $tab_data) {
-            if ($tab == $current) {
-                $links[] = "<a class=\"nav-tab nav-tab-active\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
-            } else {
-                $links[] = "<a class=\"nav-tab\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
-            }
+            $admin_link = add_query_arg(
+                [
+                    'page' => 'mangapress-options-page',
+                    'tab'  => $tab,
+                ],
+                admin_url('/')
+            );
+
+            $classes = $tab === $current ? 'nav-tab nav-tab-active' : 'nav-tab';
+
+            $links[] = vsprintf(
+                '<a class="%1$s" href="%2$s">%3$s</a>',
+                [
+                    $classes,
+                    $admin_link,
+                    $tab_data['title'],
+                ]
+            );
         }
 
         echo '<h2 class="nav-tab-wrapper">';
@@ -192,7 +205,7 @@ class Admin
     /**
      * Enqueue scripts for admin
      *
-     * @param  string $hook
+     * @param string $hook
      * @global string $mangapress_page_hook
      */
     public static function enqueue_scripts($hook)

@@ -89,15 +89,13 @@ class Install
         }
 
         if (version_compare(PHP_VERSION, '5.6', '<=')) {
-            wp_die(
-                __('Sorry. Manga+Press is only supported on PHP 5.6 and newer. Please upgrade your server PHP version.')
-            );
+            wp_die(__('Sorry. Manga+Press is only supported on PHP 5.6 and newer. Please upgrade your server PHP version.'));
         }
 
         if (version_compare($wp_version, '4.9.6', '<=')) {
             wp_die(
-                'Sorry, only WordPress 4.9.6 and later are supported.'
-                . ' Please upgrade to WordPress 4.9.6', 'Wrong Version'
+                'Sorry, only WordPress 4.9.6 and later are supported. Please upgrade to WordPress 4.9.6',
+                'Wrong Version'
             );
         }
 
@@ -150,12 +148,16 @@ class Install
             'Default Series',
             Posts::TAX_SERIES,
             [
-                'description' => __('Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN),
+                'description' => __(
+                    'Default Series category created when plugin is activated. '
+                    . 'It is suggested that you rename this category.',
+                    MP_DOMAIN
+                ),
                 'slug'        => 'default-series',
             ]
         );
 
-        if (!($term instanceof WP_Error)) {
+        if (!($term instanceof \WP_Error)) {
             add_option('mangapress_default_category', $term['term_id'], '', 'no');
         }
     }
