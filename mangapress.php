@@ -34,6 +34,10 @@ if (!defined('MP_BASENAME')) {
     define('MP_BASENAME', plugin_basename(__FILE__));
 }
 
+if (!defined('MP_ABSPATH')) {
+    define('MP_ABSPATH', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . MP_BASENAME);
+}
+
 $install = Install::get_instance();
 
 register_activation_hook(__FILE__, [$install, 'do_activate']);

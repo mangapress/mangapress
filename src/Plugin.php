@@ -9,6 +9,27 @@ namespace MangaPress;
  */
 class Plugin
 {
+
+    /**
+     * @var array $plugin_data
+     */
+    protected $plugin_data = [];
+
+    /**
+     * Plugin constructor.
+     */
+    public function __construct()
+    {
+        if (!function_exists('get_plugin_data')) {
+            require ABSPATH . '/wp-admin/includes/plugin.php';
+        }
+
+        $this->plugin_data = get_plugin_data(MP_ABSPATH);
+
+        // define some other constants
+        define('MP_VERSION', $this->plugin_data['Version']);
+    }
+
     /**
      * Init
      */
@@ -22,7 +43,6 @@ class Plugin
         );
 
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
-
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
     }
@@ -72,7 +92,7 @@ class Plugin
      */
     public function plugin_action_links($actions, $plugin_file, $plugin_data, $context)
     {
-        $menu_link           = menu_page_url(Admin::ADMIN_PAGE_SLUG, false);
+        $menu_link           = menu_page_url('mangapress-options-page', false);
         $settings            = __('Settings', MP_DOMAIN);
         $actions['settings'] = vsprintf(
             '<a href="%1$s" aria-label="%2$s">%2$s</a>',

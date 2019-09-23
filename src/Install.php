@@ -13,7 +13,7 @@ class Install
     /**
      * @var Install
      */
-    protected $install;
+    protected static $instance;
 
     /**
      * Current MangaPress DB version
@@ -91,16 +91,20 @@ class Install
             );
         }
 
-        self::$version = strval(get_option('mangapress_ver'));
+        $plugin = new Plugin();
+
+        $version = strval(get_option('mangapress_ver'));
 
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
-        if (version_compare(self::$version, MP_VERSION, '<') && !(self::$version == '')) {
+        if (version_compare($version, MP_VERSION, '<') && !($version == '')) {
             add_option('mangapress_upgrade', 'yes', '', 'no');
-        } elseif (self::$version == '') {
+        } elseif ($version == '') {
             add_option('mangapress_ver', MP_VERSION, '', 'no');
             add_option('mangapress_options', serialize(Options::get_default_options()), '', 'no');
         }
+
+        unset($plugin);
 
         (new Bootstrap())->init();
 

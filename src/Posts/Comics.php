@@ -7,7 +7,7 @@ namespace MangaPress\Posts;
  * Class Posts
  * @package MangaPress\Posts
  */
-class Posts
+class Comics
 {
 
 }
