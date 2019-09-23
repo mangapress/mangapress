@@ -1,0 +1,19 @@
+ {
+    "name": "mangapress/mangapress",
+    "description": "Manga+Press is a webcomic management system for WordPress",
+    "type": "project",
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "jesgs",
+            "email": "2304490+jesgs@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+     "autoload": {
+         "psr-4": {
+             "MangaPress\\": "src"
+         }
+     }
+}
