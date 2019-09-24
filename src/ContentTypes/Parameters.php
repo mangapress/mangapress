@@ -43,14 +43,7 @@ trait Parameters
      *
      * @var array
      */
-    protected $object_types  = array();
-
-    /**
-     * Object arguments
-     *
-     * @var array
-     */
-    protected $args;
+    protected $object_types = [];
 
     /**
      * PHP5 Constructor method
@@ -67,7 +60,7 @@ trait Parameters
 
     public function init()
     {
-        add_action('init', 'register_content_type');
+        add_action('init', [$this, 'register_content_type']);
     }
 
     /**

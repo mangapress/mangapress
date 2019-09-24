@@ -3,6 +3,8 @@
 
 namespace MangaPress;
 
+use MangaPress\Posts\Comics;
+
 /**
  * Class Plugin
  * @package MangaPress
@@ -45,6 +47,8 @@ class Plugin
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
+
+        (new Comics())->init();
     }
 
     /**
