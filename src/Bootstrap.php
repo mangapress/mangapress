@@ -37,7 +37,7 @@ class Bootstrap
         load_plugin_textdomain(
             MP_DOMAIN,
             false,
-            dirname(MP_BASENAME) . '/languages'
+            dirname(MP_BASENAME) . '/resources/languages'
         );
     }
 
