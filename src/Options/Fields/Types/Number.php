@@ -4,10 +4,10 @@
 namespace MangaPress\Options\Fields\Types;
 
 /**
- * Class Text
+ * Class Number
  * @package MangaPress\Options\Fields\Types
  */
-class Text extends Input
+class Number extends Input
 {
-    protected $type = 'text';
+    protected $type = 'number';
 }
