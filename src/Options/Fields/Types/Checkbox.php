@@ -11,6 +11,8 @@ use MangaPress\Options\Fields\Field;
  */
 class Checkbox extends Field
 {
+    protected $type = 'checkbox';
+
     /**
      * Display form element
      *
@@ -30,12 +32,6 @@ class Checkbox extends Field
             ) . CRLF;
         }
 
-        $desc = $this->get_description();
-        $description = '';
-        if ($desc) {
-            $description = sprintf('<span class="description">%s</span>', $desc);
-        }
-
         $default = $this->get_default();
         $attr_arr = array();
         foreach ($this->attr as $name => $value) {
@@ -51,12 +47,13 @@ class Checkbox extends Field
         $checked = checked($default, $this->get_value(), false);
 
         $htmlArray['content'] = vsprint(
-            '%1$s<input type="checkbox" %2$s %3$s /> %4$s',
+            '%1$s<input type="%5$s" %2$s %3$s /> %4$s',
             [
                 $label,
                 $attr,
                 $checked,
-                $description,
+                $this->get_description(),
+                $this->type,
             ]
         );
 

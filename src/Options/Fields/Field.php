@@ -227,6 +227,10 @@ class Field
      */
     public function get_description()
     {
+        if ($this->description) {
+            return sprintf('<span class="description">%s</span>', $this->description);
+        }
+
         return $this->description;
     }
 
