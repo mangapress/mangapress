@@ -50,7 +50,7 @@ class Select extends Field
         }
 
         $this->html = vsprintf(
-            '<select %1$s>%2$s</select> %3$s}',
+            '<select %1$s>%2$s</select> %3$s',
             [
                 $attr,
                 $options_str,

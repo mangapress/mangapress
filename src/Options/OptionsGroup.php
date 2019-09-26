@@ -4,7 +4,6 @@
 namespace MangaPress\Options;
 
 use MangaPress\Bootstrap;
-use MangaPress\Options\Fields;
 
 /**
  * Class OptionsGroup
@@ -66,8 +65,6 @@ class OptionsGroup
     public function settings_field_cb($option)
     {
         $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $option['type'])));
-        var_dump(class_exists('MangaPress\Options\Fields\\' . $class), class_exists($class));
-        return;
         $value = Options::get_option($option['name'], $option['section']);
 
         if ($class !== "") {
@@ -77,7 +74,7 @@ class OptionsGroup
                 'value' => $value,
             ];
 
-            $element = $class;
+            $element = 'MangaPress\Options\Fields\Types\\' . $class;
 
             echo new $element(
                 [

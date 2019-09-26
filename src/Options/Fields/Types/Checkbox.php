@@ -46,7 +46,7 @@ class Checkbox extends Field
 
         $checked = checked($default, $this->get_value(), false);
 
-        $htmlArray['content'] = vsprint(
+        $htmlArray['content'] = vsprintf(
             '%1$s<input type="%5$s" %2$s %3$s /> %4$s',
             [
                 $label,

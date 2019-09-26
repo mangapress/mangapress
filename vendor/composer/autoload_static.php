@@ -20,11 +20,35 @@ class ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0
         ),
     );
 
+    public static $classMap = array (
+        'MangaPress\\Admin\\Admin' => __DIR__ . '/../..' . '/src/Admin/Admin.php',
+        'MangaPress\\Bootstrap' => __DIR__ . '/../..' . '/src/Bootstrap.php',
+        'MangaPress\\ContentTypes\\ContentType' => __DIR__ . '/../..' . '/src/ContentTypes/ContentType.php',
+        'MangaPress\\ContentTypes\\Parameters' => __DIR__ . '/../..' . '/src/ContentTypes/Parameters.php',
+        'MangaPress\\ContentTypes\\PostType' => __DIR__ . '/../..' . '/src/ContentTypes/PostType.php',
+        'MangaPress\\ContentTypes\\Taxonomy' => __DIR__ . '/../..' . '/src/ContentTypes/Taxonomy.php',
+        'MangaPress\\Install' => __DIR__ . '/../..' . '/src/Install.php',
+        'MangaPress\\Options\\Fields\\Field' => __DIR__ . '/../..' . '/src/Options/Fields/Field.php',
+        'MangaPress\\Options\\Fields\\Types\\Checkbox' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Checkbox.php',
+        'MangaPress\\Options\\Fields\\Types\\Input' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Input.php',
+        'MangaPress\\Options\\Fields\\Types\\Number' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Number.php',
+        'MangaPress\\Options\\Fields\\Types\\PageSelect' => __DIR__ . '/../..' . '/src/Options/Fields/Types/PageSelect.php',
+        'MangaPress\\Options\\Fields\\Types\\Radio' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Radio.php',
+        'MangaPress\\Options\\Fields\\Types\\Select' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Select.php',
+        'MangaPress\\Options\\Fields\\Types\\Text' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Text.php',
+        'MangaPress\\Options\\Fields\\Types\\Textarea' => __DIR__ . '/../..' . '/src/Options/Fields/Types/Textarea.php',
+        'MangaPress\\Options\\Options' => __DIR__ . '/../..' . '/src/Options/Options.php',
+        'MangaPress\\Options\\OptionsGroup' => __DIR__ . '/../..' . '/src/Options/OptionsGroup.php',
+        'MangaPress\\Plugin' => __DIR__ . '/../..' . '/src/Plugin.php',
+        'MangaPress\\Posts\\Comics' => __DIR__ . '/../..' . '/src/Posts/Comics.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0::$classMap;
 
         }, null, ClassLoader::class);
     }
