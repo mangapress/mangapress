@@ -3,6 +3,8 @@
 
 namespace MangaPress;
 
+use MangaPress\Admin\Admin;
+use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
 
 /**
@@ -16,6 +18,11 @@ class Plugin
      * @var array $plugin_data
      */
     protected $plugin_data = [];
+
+    /**
+     * @var OptionsGroup $options_group
+     */
+    protected $options_group;
 
     /**
      * Plugin constructor.
@@ -37,6 +44,8 @@ class Plugin
      */
     public function init()
     {
+        $this->options_group = new OptionsGroup();
+
         add_filter(
             'plugin_action_links_' . MP_BASENAME,
             [$this, 'plugin_action_links'],
@@ -48,7 +57,26 @@ class Plugin
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
 
+        add_action('admin_menu', [$this, 'admin_menu']);
+        add_action('admin_init', [$this, 'admin_init']);
+
         (new Comics())->init();
+    }
+
+    /**
+     * Load options page
+     */
+    public function admin_menu()
+    {
+        (new Admin($this->options_group))->init();
+    }
+
+    /**
+     * Set up options group
+     */
+    public function admin_init()
+    {
+        $this->options_group->init();
     }
 
     /**

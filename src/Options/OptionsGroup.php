@@ -31,7 +31,7 @@ class OptionsGroup
 
         $sections = $this->options_sections();
         foreach ($sections as $section_name => $data) {
-            add_settings_section(
+            \add_settings_section(
                 self::OPTIONS_GROUP_NAME . "-{$section_name}",
                 $data['title'],
                 [$this, 'settings_section_cb'],
@@ -63,14 +63,12 @@ class OptionsGroup
         }
     }
 
-    public function settings_section_cb($option)
+    public function settings_field_cb($option)
     {
-        $mp_options = Options::get_options();
-
-        $class = str_replace('-', '', ucwords($option['type']));
-        $value = isset($mp_options[$option['section']][$option['name']])
-            ? $mp_options[$option['section']][$option['name']]
-            : self::$default_options[$option['section']][$option['name']];
+        $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $option['type'])));
+        var_dump(class_exists('MangaPress\Options\Fields\\' . $class), class_exists($class));
+        return;
+        $value = Options::get_option($option['name'], $option['section']);
 
         if ($class !== "") {
             $attributes = [
@@ -90,6 +88,21 @@ class OptionsGroup
                 ]
             );
         }
+    }
+
+    /**
+     * settings_section_cb()
+     * Outputs Settings Sections
+     *
+     * @param string $section Name of section
+     *
+     * @return void
+     */
+    public function settings_section_cb($section)
+    {
+        $options = $this->options_sections();
+        $current = (substr($section['id'], strpos($section['id'], '-') + 1));
+        echo "<p>{$options[$current]['description']}</p>";
     }
 
     /**
@@ -113,7 +126,7 @@ class OptionsGroup
                     ],
                     'valid'    => 'array',
                     'default'  => '',
-                    'callback' => [$this, 'ft_basic_page_dropdowns_cb'],
+                    'callback' => [$this, 'settings_field_cb'],
                 ],
                 'comicarchive_page'       => [
                     'id'       => 'archive-page',
@@ -124,7 +137,7 @@ class OptionsGroup
                     ],
                     'valid'    => 'array',
                     'default'  => '',
-                    'callback' => [$this, 'ft_basic_page_dropdowns_cb'],
+                    'callback' => [$this, 'settings_field_cb'],
                 ],
                 'group_comics'            => [
                     'id'          => 'group-comics',

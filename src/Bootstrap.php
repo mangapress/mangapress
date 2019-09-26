@@ -3,6 +3,7 @@
 
 namespace MangaPress;
 
+use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 
 /**
@@ -19,7 +20,6 @@ class Bootstrap
     {
         add_action('plugins_loaded', [$this, 'load_plugin']);
         add_action('init', [$this, 'plugin_init'], 500);
-        add_action('admin_init', [$this, 'admin_init']);
         add_action('widgets_init', [$this, 'widgets_init']);
     }
 
@@ -42,14 +42,6 @@ class Bootstrap
             false,
             dirname(MP_BASENAME) . '/resources/languages'
         );
-    }
-
-    /**
-     * Handle admin-side initialization
-     */
-    public function admin_init()
-    {
-        (new OptionsGroup())->init();
     }
 
     /**

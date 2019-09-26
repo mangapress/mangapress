@@ -35,7 +35,7 @@ if (!defined('MP_BASENAME')) {
 }
 
 if (!defined('MP_ABSPATH')) {
-    define('MP_ABSPATH', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . MP_BASENAME);
+    define('MP_ABSPATH', trailingslashit(dirname(WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . MP_BASENAME)));
 }
 
 $install = Install::get_instance();
