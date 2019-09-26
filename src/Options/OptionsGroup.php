@@ -3,6 +3,9 @@
 
 namespace MangaPress\Options;
 
+use MangaPress\Bootstrap;
+use MangaPress\Options\Fields;
+
 /**
  * Class OptionsGroup
  * @package MangaPress\Options
@@ -60,9 +63,33 @@ class OptionsGroup
         }
     }
 
-    public function settings_section_cb()
+    public function settings_section_cb($option)
     {
-        //
+        $mp_options = Options::get_options();
+
+        $class = str_replace('-', '', ucwords($option['type']));
+        $value = isset($mp_options[$option['section']][$option['name']])
+            ? $mp_options[$option['section']][$option['name']]
+            : self::$default_options[$option['section']][$option['name']];
+
+        if ($class !== "") {
+            $attributes = [
+                'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
+                'id'    => $option['id'],
+                'value' => $value,
+            ];
+
+            $element = $class;
+
+            echo new $element(
+                [
+                    'attributes'  => $attributes,
+                    'description' => isset($option['description']) ? $option['description'] : '',
+                    'default'     => isset($option['value']) ? $option['value'] : $option['default'],
+                    'validation'  => $option['valid'],
+                ]
+            );
+        }
     }
 
     /**

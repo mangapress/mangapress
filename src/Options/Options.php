@@ -44,7 +44,7 @@ class Options
      */
     public function init()
     {
-        self::$options = maybe_unserialize(get_option());
+        self::$options = maybe_unserialize(get_option(OptionsGroup::OPTIONS_GROUP_NAME));
     }
 
     /**
