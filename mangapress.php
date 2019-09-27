@@ -38,6 +38,10 @@ if (!defined('MP_ABSPATH')) {
     define('MP_ABSPATH', trailingslashit(dirname(WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . MP_BASENAME)));
 }
 
+if (!defined('MP_URLPATH')) {
+    define('MP_URLPATH', plugin_dir_url(__FILE__));
+}
+
 $install = Install::get_instance();
 
 register_activation_hook(__FILE__, [$install, 'do_activate']);

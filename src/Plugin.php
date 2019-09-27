@@ -6,6 +6,7 @@ namespace MangaPress;
 use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
+use MangaPress\Theme\Compatibility;
 
 /**
  * Class Plugin
@@ -61,6 +62,7 @@ class Plugin
         add_action('admin_init', [$this, 'admin_init']);
 
         (new Comics())->init();
+        (new Compatibility())->init();
     }
 
     /**
