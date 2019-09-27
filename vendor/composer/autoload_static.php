@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0
 {
+    public static $files = array (
+        '69fe0151f57708588107850a1562c294' => __DIR__ . '/../..' . '/resources/helpers/template-functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'M' => 
         array (
@@ -45,6 +49,7 @@ class ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0
         'MangaPress\\Theme\\Compatible\\Twentynineteen' => __DIR__ . '/../..' . '/src/Theme/Compatible/Twentynineteen.php',
         'MangaPress\\Theme\\Interfaces\\Theme' => __DIR__ . '/../..' . '/src/Theme/Interfaces/Theme.php',
         'MangaPress\\Theme\\Traits\\Markup' => __DIR__ . '/../..' . '/src/Theme/Traits/Markup.php',
+        'MangaPress\\Widgets\\Calendar' => __DIR__ . '/../..' . '/src/Widgets/Calendar.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

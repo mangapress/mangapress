@@ -30,4 +30,5 @@ return array(
     'MangaPress\\Theme\\Compatible\\Twentynineteen' => $baseDir . '/src/Theme/Compatible/Twentynineteen.php',
     'MangaPress\\Theme\\Interfaces\\Theme' => $baseDir . '/src/Theme/Interfaces/Theme.php',
     'MangaPress\\Theme\\Traits\\Markup' => $baseDir . '/src/Theme/Traits/Markup.php',
+    'MangaPress\\Widgets\\Calendar' => $baseDir . '/src/Widgets/Calendar.php',
 );
