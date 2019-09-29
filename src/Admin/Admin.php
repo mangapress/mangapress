@@ -3,6 +3,7 @@
 
 namespace MangaPress\Admin;
 
+use MangaPress\Component;
 use MangaPress\Options\Options;
 use MangaPress\Options\OptionsGroup;
 
@@ -10,7 +11,7 @@ use MangaPress\Options\OptionsGroup;
  * Class Admin
  * @package MangaPress\Admin
  */
-class Admin
+class Admin implements Component
 {
     /**
      * @var OptionsGroup $options_group
@@ -24,9 +25,9 @@ class Admin
      */
     const ADMIN_PAGE_SLUG = 'mangapress-options-page';
 
-    public function __construct($options_group)
+    public function __construct()
     {
-        $this->options_group = $options_group;
+        $this->options_group = OptionsGroup::get_instance();
     }
 
     /**
@@ -36,7 +37,7 @@ class Admin
      */
     public function init()
     {
-        $this->admin_menu();
+        add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     }
 

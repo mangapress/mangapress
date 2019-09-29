@@ -4,6 +4,7 @@
 namespace MangaPress\Posts;
 
 use MangaPress\Bootstrap;
+use MangaPress\Component;
 use MangaPress\ContentTypes\Taxonomy;
 use MangaPress\ContentTypes\PostType;
 
@@ -11,7 +12,7 @@ use MangaPress\ContentTypes\PostType;
  * Class Posts
  * @package MangaPress\Posts
  */
-class Comics
+class Comics implements Component
 {
     /**
      * Get image html
@@ -64,7 +65,7 @@ class Comics
     /**
      * Class for initializing custom post-type
      *
-     * @var $this
+     * @var PostType
      */
     private $post_type = null;
 
@@ -97,8 +98,7 @@ class Comics
 
     public function init()
     {
-        $this->register_content_types();
-
+        add_action('init', [$this, 'register_content_types']);
         // Setup Manga+Press Post Options box
 //        add_action('wp_ajax_' . self::ACTION_GET_IMAGE_HTML, [$this, 'get_image_html_ajax']);
 //        add_action('wp_ajax_' . self::ACTION_REMOVE_IMAGE, [$this, 'get_image_html_ajax']);
@@ -119,6 +119,7 @@ class Comics
      */
     public function register_content_types()
     {
+        echo "ohai";
         // register taxonomy
         $taxonomy = new Taxonomy(
             [
@@ -164,8 +165,6 @@ class Comics
                 ],
             ]
         );
-
-        $this->post_type->init();
     }
 
 

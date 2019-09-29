@@ -7,12 +7,13 @@ use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\Compatibility;
+use MangaPress\Component;
 
 /**
  * Class Plugin
  * @package MangaPress
  */
-class Plugin
+class Plugin implements Component
 {
 
     /**
@@ -58,28 +59,29 @@ class Plugin
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
 
-        add_action('admin_menu', [$this, 'admin_menu']);
-        add_action('admin_init', [$this, 'admin_init']);
+//        add_action('admin_menu', [$this, 'admin_menu']);
+//        add_action('admin_init', [$this, 'admin_init']);
 
-        (new Comics())->init();
-        (new Compatibility())->init();
+        return $this;
     }
 
     /**
-     * Load options page
+     * Load plugin components
+     * @param array $components
      */
-    public function admin_menu()
+    public function load_components($components = [])
     {
-        (new Admin($this->options_group))->init();
+        /**
+         * @var \MangaPress\Component $component
+         */
+        foreach ($components as $component) {
+            $comp = new $component;
+            if ($comp instanceof Component) {
+                $comp->init();
+            }
+        }
     }
 
-    /**
-     * Set up options group
-     */
-    public function admin_init()
-    {
-        $this->options_group->init();
-    }
 
     /**
      * Add relevant links to plugin meta

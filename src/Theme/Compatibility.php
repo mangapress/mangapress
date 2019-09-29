@@ -3,13 +3,14 @@
 
 namespace MangaPress\Theme;
 
+use MangaPress\Component;
 use MangaPress\Theme\Interfaces\Theme;
 
 /**
  * Class Compatibility
  * @package MangaPress\Theme
  */
-class Compatibility
+class Compatibility implements Component
 {
     /**
      * Determine if there's compatibility out of the box

@@ -5,6 +5,11 @@ namespace MangaPress;
 
 use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
+use MangaPress\Posts\Comics;
+use MangaPress\Theme\Compatibility;
+use MangaPress\Theme\Shortcode;
+use MangaPress\Theme\TemplateLoader;
+use MangaPress\Widgets\WidgetsRegistry;
 
 /**
  * Class Bootstrap
@@ -19,8 +24,6 @@ class Bootstrap
     public function init()
     {
         add_action('plugins_loaded', [$this, 'load_plugin']);
-        add_action('init', [$this, 'plugin_init'], 500);
-        add_action('widgets_init', [$this, 'widgets_init']);
     }
 
     /**
@@ -29,7 +32,20 @@ class Bootstrap
     public function load_plugin()
     {
         $this->load_textdomain();
-        (new Plugin())->init();
+
+        (new Plugin())
+            ->init()
+            ->load_components([
+                Comics::class,
+                Compatibility::class,
+                Shortcode::class,
+                OptionsGroup::class,
+                Admin::class,
+                WidgetsRegistry::class,
+                Compatibility::class,
+                Shortcode::class,
+                TemplateLoader::class,
+            ]);
     }
 
     /**
@@ -42,26 +58,5 @@ class Bootstrap
             false,
             dirname(MP_BASENAME) . '/resources/languages'
         );
-    }
-
-    /**
-     * Handle loading of frontend assets
-     */
-    public function plugin_init()
-    {
-        // do plugin initialization things here
-    }
-
-    /**
-     * Initialize associated widgets
-     */
-    public function widgets_init()
-    {
-        // initialize Widgets here
-    }
-
-    public function theme_compat_init()
-    {
-        // initialize theme compatibility here
     }
 }

@@ -4,19 +4,49 @@
 namespace MangaPress\Options;
 
 use MangaPress\Bootstrap;
+use MangaPress\Component;
 
 /**
  * Class OptionsGroup
  * @package MangaPress\Options
  */
-class OptionsGroup
+class OptionsGroup implements Component
 {
     const OPTIONS_GROUP_NAME = 'mangapress_options';
 
     /**
+     * Story object for later use
+     * @var OptionsGroup
+     */
+    protected static $instance;
+
+    /**
+     * OptionsGroup constructor.
+     * Initialize object
+     */
+    public function __construct()
+    {
+        self::$instance = $this;
+    }
+
+    /**
+     * Get the object instance that was originally created
+     * @return OptionsGroup
+     */
+    public static function get_instance()
+    {
+        return self::$instance;
+    }
+
+    public function init()
+    {
+        add_action('admin_init', [$this, 'options_group_init']);
+    }
+
+    /**
      * Initialize OptionsGroup
      */
-    public function init()
+    public function options_group_init()
     {
         if (defined('DOING_AJAX') && DOING_AJAX) {
             return;
@@ -62,6 +92,10 @@ class OptionsGroup
         }
     }
 
+    /**
+     * Callback function to generate field markup
+     * @param array $option
+     */
     public function settings_field_cb($option)
     {
         $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $option['type'])));
