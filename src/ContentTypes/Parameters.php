@@ -58,6 +58,10 @@ trait Parameters
         }
     }
 
+    public function init()
+    {
+        add_action('init', [$this, 'register_content_type']);
+    }
 
     /**
      * Set the object name

@@ -3,10 +3,10 @@
 
 namespace MangaPress\Posts;
 
-use MangaPress\Bootstrap;
 use MangaPress\Component;
 use MangaPress\ContentTypes\Taxonomy;
 use MangaPress\ContentTypes\PostType;
+use MangaPress\Options\Options;
 
 /**
  * Class Posts
@@ -92,18 +92,16 @@ class Comics implements Component
      */
     protected $latest_comic_slug = 'latest-comic';
 
-    public function __construct()
-    {
-    }
-
     public function init()
     {
-        add_action('init', [$this, 'register_content_types']);
+        $this->register_content_types();
+
         // Setup Manga+Press Post Options box
-//        add_action('wp_ajax_' . self::ACTION_GET_IMAGE_HTML, [$this, 'get_image_html_ajax']);
-//        add_action('wp_ajax_' . self::ACTION_REMOVE_IMAGE, [$this, 'get_image_html_ajax']);
-//        add_action('save_post_mangapress_comic', [$this, 'save_post'], 500, 2);
-//        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_ajax_' . self::ACTION_GET_IMAGE_HTML, [$this, 'get_image_html_ajax']);
+        add_action('wp_ajax_' . self::ACTION_REMOVE_IMAGE, [$this, 'get_image_html_ajax']);
+        add_action('save_post_mangapress_comic', [$this, 'save_post'], 500, 2);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+
         /*
          * Actions and filters for modifying our Edit Comics page.
          */
@@ -119,7 +117,6 @@ class Comics implements Component
      */
     public function register_content_types()
     {
-        echo "ohai";
         // register taxonomy
         $taxonomy = new Taxonomy(
             [
@@ -173,9 +170,9 @@ class Comics implements Component
      */
     public function rewrite_rules()
     {
-//        if (Bootstrap::get_option('basic', 'latestcomic_page') == '') {
-//            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
-//        }
+        if (Options::get_option('latestcomic_page', 'basic') == '') {
+            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
+        }
     }
 
     /**
@@ -373,7 +370,7 @@ class Comics implements Component
      */
     public function comic_meta_box_cb()
     {
-        include_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
+        include_once MP_ABSPATH . 'resources/admin/pages/meta-box-add-comic.php';
     }
 
     /**
@@ -398,7 +395,7 @@ class Comics implements Component
         wp_enqueue_media();
         wp_register_script(
             'mangapress-media-popup',
-            plugins_url('/assets/js/add-comic.js', __FILE__),
+            plugins_url('/resources/assets/js/add-comic.js', __FILE__),
             ['jquery'],
             MP_VERSION,
             true
@@ -474,7 +471,7 @@ class Comics implements Component
     {
 
         ob_start();
-        include_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
+        include_once MP_ABSPATH . 'resources/admin/pages/remove-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
 

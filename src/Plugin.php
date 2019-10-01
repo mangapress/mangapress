@@ -22,11 +22,6 @@ class Plugin implements Component
     protected $plugin_data = [];
 
     /**
-     * @var OptionsGroup $options_group
-     */
-    protected $options_group;
-
-    /**
      * Plugin constructor.
      */
     public function __construct()
@@ -46,8 +41,6 @@ class Plugin implements Component
      */
     public function init()
     {
-        $this->options_group = new OptionsGroup();
-
         add_filter(
             'plugin_action_links_' . MP_BASENAME,
             [$this, 'plugin_action_links'],
@@ -58,9 +51,6 @@ class Plugin implements Component
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
-
-//        add_action('admin_menu', [$this, 'admin_menu']);
-//        add_action('admin_init', [$this, 'admin_init']);
 
         return $this;
     }
