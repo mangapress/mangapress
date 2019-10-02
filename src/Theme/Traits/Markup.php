@@ -11,8 +11,6 @@ use MangaPress\Options\Options;
  */
 trait Markup
 {
-    abstract public function before_content();
-    abstract public function after_content();
 
     /**
      * Markup constructor.
