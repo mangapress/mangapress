@@ -3,13 +3,13 @@
 
 namespace MangaPress\Theme;
 
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 
 /**
  * Class TemplateLoader
  * @package MangaPress\Theme
  */
-class TemplateLoader implements Component
+class TemplateLoader implements PluginComponent
 {
     public function init()
     {

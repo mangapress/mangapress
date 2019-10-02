@@ -7,13 +7,13 @@ use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\Compatibility;
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 
 /**
  * Class Plugin
  * @package MangaPress
  */
-class Plugin implements Component
+class Plugin implements PluginComponent
 {
 
     /**
@@ -62,11 +62,11 @@ class Plugin implements Component
     public function load_components($components = [])
     {
         /**
-         * @var \MangaPress\Component $component
+         * @var \MangaPress\PluginComponent $component
          */
         foreach ($components as $component) {
             $comp = new $component;
-            if ($comp instanceof Component) {
+            if ($comp instanceof PluginComponent) {
                 $comp->init();
             }
         }

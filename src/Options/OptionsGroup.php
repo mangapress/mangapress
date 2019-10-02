@@ -4,13 +4,13 @@
 namespace MangaPress\Options;
 
 use MangaPress\Bootstrap;
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 
 /**
  * Class OptionsGroup
  * @package MangaPress\Options
  */
-class OptionsGroup implements Component
+class OptionsGroup implements PluginComponent
 {
     const OPTIONS_GROUP_NAME = 'mangapress_options';
 

@@ -3,13 +3,13 @@
 
 namespace MangaPress\Theme;
 
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 
 /**
  * Class Shortcode
  * @package MangaPress\Theme
  */
-class Shortcode implements Component
+class Shortcode implements PluginComponent
 {
     public function init()
     {

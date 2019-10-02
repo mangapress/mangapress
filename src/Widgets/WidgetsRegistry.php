@@ -3,13 +3,13 @@
 
 namespace MangaPress\Widgets;
 
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 
 /**
  * Class WidgetsRegistry
  * @package MangaPress\Widgets
  */
-class WidgetsRegistry implements Component
+class WidgetsRegistry implements PluginComponent
 {
     protected $registered_widgets = [];
 

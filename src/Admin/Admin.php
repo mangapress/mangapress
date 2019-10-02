@@ -3,7 +3,7 @@
 
 namespace MangaPress\Admin;
 
-use MangaPress\Component;
+use MangaPress\PluginComponent;
 use MangaPress\Options\Options;
 use MangaPress\Options\OptionsGroup;
 
@@ -11,7 +11,7 @@ use MangaPress\Options\OptionsGroup;
  * Class Admin
  * @package MangaPress\Admin
  */
-class Admin implements Component
+class Admin implements PluginComponent
 {
     /**
      * @var OptionsGroup $options_group

@@ -4,10 +4,10 @@
 namespace MangaPress;
 
 /**
- * Interface Component
+ * Interface PluginComponent
  * @package MangaPress
  */
-interface Component
+interface PluginComponent
 {
     /**
      * Run hooks on init hook
