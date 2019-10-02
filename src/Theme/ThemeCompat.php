@@ -7,10 +7,10 @@ use MangaPress\PluginComponent;
 use MangaPress\Theme\Interfaces\Theme;
 
 /**
- * Class Compatibility
+ * Class ThemeCompat
  * @package MangaPress\Theme
  */
-class Compatibility implements PluginComponent
+class ThemeCompat implements PluginComponent
 {
     /**
      * Determine if there's compatibility out of the box
@@ -19,7 +19,7 @@ class Compatibility implements PluginComponent
     {
         // get current theme name
         // theme names should have dashes and no underscores
-        $theme       = get_template();
+        $theme = get_template();
 
         // needs to have FQN to work properly
         $theme_class = '\MangaPress\Theme\Compatible\\' . str_replace('-', '', ucwords($theme, '-'));
@@ -34,7 +34,7 @@ class Compatibility implements PluginComponent
              */
             do_action("mangapress_theme_compatible-{$theme}");
         } else {
-            if ($theme_class instanceof Theme) {
+            if ($theme_class instanceof ThemeCompat) {
                 (new $theme_class())->init();
             }
         }

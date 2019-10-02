@@ -4,9 +4,10 @@
 namespace MangaPress;
 
 use MangaPress\Admin\Admin;
+use MangaPress\Options\Options;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
-use MangaPress\Theme\Compatibility;
+use MangaPress\Theme\ThemeCompat;
 use MangaPress\PluginComponent;
 
 /**
@@ -174,7 +175,7 @@ class Plugin implements PluginComponent
         $post         = get_post($post_id);
         $page_slug    = get_post_field('post_name', $post);
         $post_type    = get_post_type($post);
-        $archive_page = self::get_option('basic', 'comicarchive_page');
+        $archive_page = Options::get_option('comicarchive_page', 'basic');
 
         if ($page_slug == $archive_page) {
             echo '<div class="notice notice-warning inline"><p>'
@@ -197,7 +198,7 @@ class Plugin implements PluginComponent
         $post        = get_post($post_id);
         $page_slug   = get_post_field('post_name', $post);
         $post_type   = get_post_type($post);
-        $latest_page = self::get_option('basic', 'latestcomic_page');
+        $latest_page = Options::get_option('latestcomic_page', 'basic');
 
         if ($page_slug == $latest_page) {
             echo '<div class="notice notice-warning inline"><p>'

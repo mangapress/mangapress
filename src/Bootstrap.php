@@ -6,7 +6,7 @@ namespace MangaPress;
 use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
-use MangaPress\Theme\Compatibility;
+use MangaPress\Theme\ThemeCompat;
 use MangaPress\Theme\Shortcode;
 use MangaPress\Theme\TemplateLoader;
 use MangaPress\Widgets\WidgetsRegistry;
@@ -37,12 +37,12 @@ class Bootstrap
             ->init()
             ->load_components([
                 Comics::class,
-                Compatibility::class,
+                ThemeCompat::class,
                 Shortcode::class,
                 OptionsGroup::class,
                 Admin::class,
                 WidgetsRegistry::class,
-                Compatibility::class,
+                ThemeCompat::class,
                 Shortcode::class,
                 TemplateLoader::class,
             ]);
