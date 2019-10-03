@@ -9,4 +9,5 @@ namespace MangaPress\Theme\Interfaces;
  */
 interface Theme
 {
+    public function init();
 }

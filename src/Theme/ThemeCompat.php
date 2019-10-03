@@ -34,8 +34,12 @@ class ThemeCompat implements PluginComponent
              */
             do_action("mangapress_theme_compatible-{$theme}");
         } else {
-            if ($theme_class instanceof ThemeCompat) {
-                (new $theme_class())->init();
+            /**
+             * @var Theme $theme_class
+             */
+            $theme_compat = new $theme_class;
+            if ($theme_compat instanceof Theme) {
+                $theme_compat->init();
             }
         }
     }
