@@ -7,6 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0
 {
     public static $files = array (
+        '1367ace84c06813584f13fe55a24f7a9' => __DIR__ . '/../..' . '/resources/helpers/admin-functions.php',
+        '46e7214b52a93ba9b3fab1575891b16d' => __DIR__ . '/../..' . '/resources/helpers/fields-functions.php',
         '69fe0151f57708588107850a1562c294' => __DIR__ . '/../..' . '/resources/helpers/template-functions.php',
     );
 

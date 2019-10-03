@@ -1,10 +1,14 @@
 <?php
-
+/**
+ * OptionsGroup
+ * @package MangaPress
+ */
 
 namespace MangaPress\Options;
 
-use MangaPress\Bootstrap;
 use MangaPress\PluginComponent;
+use function MangaPress\Admin\Functions\get_current_tab;
+use function MangaPress\Admin\Functions\options_tabs;
 
 /**
  * Class OptionsGroup
@@ -38,6 +42,9 @@ class OptionsGroup implements PluginComponent
         return self::$instance;
     }
 
+    /**
+     * Initialize options group
+     */
     public function init()
     {
         add_action('admin_init', [$this, 'options_group_init']);
@@ -77,7 +84,7 @@ class OptionsGroup implements PluginComponent
     public function output_settings_fields()
     {
         $field_sections = $this->options_fields();
-        $current_tab    = 'basic' ; //Admin::get_current_tab();
+        $current_tab    = get_current_tab();
         $fields         = $field_sections[$current_tab];
 
         foreach ($fields as $field_name => $field) {
@@ -138,6 +145,7 @@ class OptionsGroup implements PluginComponent
 
     /**
      * Options field config
+     * @return array
      */
     public function options_fields()
     {
@@ -296,7 +304,7 @@ class OptionsGroup implements PluginComponent
                 ],
                 'display_css' => [
                     'id'       => 'display',
-                    'callback' => [$this, 'ft_navigation_css_display_cb'],
+                    'callback' => '\MangaPress\Options\Fields\Functions\navigation_css_display_cb',
                 ],
             ],
         ];
@@ -310,37 +318,12 @@ class OptionsGroup implements PluginComponent
      */
     public function options_sections()
     {
-        $sections = [
-            'basic'      => [
-                'title'       => __('Basic Options', MP_DOMAIN),
-                'description' => __(
-                    'This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; pages, '
-                    . 'number of comics per page, and grouping comics together by category.',
-                    MP_DOMAIN
-                ),
-            ],
-            'comic_page' => [
-                'title'       => __('Comic Page Options', MP_DOMAIN),
-                'description' => __(
-                    'Handles image sizing options for comic pages. Thumbnail support may need to be '
-                    . 'enabled for some features to work properly. If page- or thumbnail sizes are changed, '
-                    . 'then a plugin such as Regenerate Thumbnails may be used to create the new thumbnails.',
-                    MP_DOMAIN
-                ),
-            ],
-            'nav'        => [
-                'title'       => __('Navigation Options', MP_DOMAIN),
-                'description' => __(
-                    'Options for comic navigation. Whether to have navigation automatically inserted on comic pages, '
-                    . 'or to enable/disable default comic navigation CSS.',
-                    MP_DOMAIN
-                ),
-            ],
-        ];
-
-        return apply_filters('mangapress_options_sections', $sections);
+        return options_tabs();
     }
 
+    /**
+     * Sanitize options
+     */
     public function sanitize_options()
     {
         //

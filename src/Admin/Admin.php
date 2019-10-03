@@ -1,11 +1,15 @@
 <?php
-
+/**
+ * Admin
+ * @package MangaPress
+ */
 
 namespace MangaPress\Admin;
 
 use MangaPress\PluginComponent;
-use MangaPress\Options\Options;
 use MangaPress\Options\OptionsGroup;
+use function MangaPress\Admin\Functions\get_current_tab;
+use function MangaPress\Admin\Functions\options_tabs;
 
 /**
  * Class Admin
@@ -82,7 +86,7 @@ class Admin implements PluginComponent
     {
         $screen = get_current_screen();
 
-        $tab = $this->get_current_tab();
+        $tab = get_current_tab();
         $screen->add_help_tab($this->get_help_tabs($tab));
     }
 
@@ -146,18 +150,12 @@ class Admin implements PluginComponent
 
     /**
      * Display options tabs
-     *
-     * @param string $current Current tab
-     * @return void
      */
-    public function options_page_tabs($current = 'basic')
+    public function options_page_tabs()
     {
-        $current = filter_input(INPUT_GET, 'tab')
-            ? filter_input(INPUT_GET, 'tab') : 'basic';
-
-        $tabs = $this->options_group->options_sections();
-
-        $links = [];
+        $current = get_current_tab();
+        $tabs    = options_tabs();
+        $links   = [];
         foreach ($tabs as $tab => $tab_data) {
             $admin_link = add_query_arg(
                 [
@@ -187,25 +185,6 @@ class Admin implements PluginComponent
 
         echo '</h2>';
     }
-
-
-    /**
-     * Create options page tabs
-     *
-     * @return string
-     */
-    public function get_current_tab()
-    {
-        $tabs = $this->options_group->options_sections();
-
-        $current_tab = filter_input(INPUT_GET, 'tab');
-        if (in_array($current_tab, $tabs)) {
-            return $current_tab;
-        } else {
-            return 'basic';
-        }
-    }
-
 
     /**
      * Enqueue scripts for admin
