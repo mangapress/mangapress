@@ -18,7 +18,8 @@
          "files": [
              "resources/helpers/admin-functions.php",
              "resources/helpers/fields-functions.php",
-             "resources/helpers/template-functions.php"
+             "resources/helpers/template-functions.php",
+             "resources/helpers/theme-functions.php"
          ]
      }
 }

@@ -4,9 +4,28 @@
  */
 namespace MangaPress\Theme\Functions;
 
-function init()
+/**
+ * Run all related actions and filters
+ */
+function theme_init()
 {
-    //
+    add_filter('mangapress_opening_article_tag', '\MangaPress\Theme\Functions\opening_article_tag', 10, 2);
+    add_filter('mangapress_closing_article_tag', '\MangaPress\Theme\Functions\closing_article_tag', 10, 2);
+
+    add_action(
+        'mangapress_archive_style_template',
+        '\MangaPress\Theme\Functions\get_archive_style_template'
+    );
+
+    add_action(
+        'mangapress_archive_style_opening_tag',
+        '\MangaPress\Theme\Functions\archive_style_opening_tag'
+    );
+
+    add_action(
+        'mangapress_archive_style_closing_tag',
+        '\MangaPress\Theme\Functions\archive_style_closing_tag'
+    );
 }
 
 /**
@@ -14,7 +33,7 @@ function init()
  * @param string $slug
  * @param string $name
  */
-function mangapress_get_template_part($slug, $name = '')
+function get_template_part($slug, $name = '')
 {
     do_action("mangapress_get_template_part_{$slug}", $slug, $name);
 
@@ -40,7 +59,7 @@ function mangapress_get_template_part($slug, $name = '')
  * @param string $style Archive style-type
  * @uses mangapress_archive_style_template action
  */
-function mangapress_get_archive_style_template($style)
+function get_archive_style_template($style)
 {
     if (in_array($style, ['list', 'gallery', 'calendar'])) {
         mangapress_get_template_part('content/archive', $style);
@@ -48,7 +67,6 @@ function mangapress_get_archive_style_template($style)
         mangapress_get_template_part('content/archive', 'list');
     }
 }
-add_action('mangapress_archive_style_template', 'mangapress_get_archive_style_template');
 
 /**
  * Open the article tag inside the loop. Used primarily on the archive-comic.php template
@@ -58,7 +76,7 @@ add_action('mangapress_archive_style_template', 'mangapress_get_archive_style_te
  * @return string
  * @uses mangapress_opening_article_tag filter
  */
-function mangapress_opening_article_tag($tag, $params)
+function opening_article_tag($tag, $params)
 {
     $attr_string = '';
     if (isset($params['attr'])) {
@@ -82,7 +100,6 @@ function mangapress_opening_article_tag($tag, $params)
 
     return $tag_string;
 }
-add_filter('mangapress_opening_article_tag', 'mangapress_opening_article_tag', 10, 2);
 
 /**
  * Close the article tag inside the loop. Used primarily on the archive-comic.php template
@@ -92,7 +109,7 @@ add_filter('mangapress_opening_article_tag', 'mangapress_opening_article_tag', 1
  * @return string
  * @uses mangapress_closing_article_tag filter
  */
-function mangapress_closing_article_tag($tag, $params)
+function closing_article_tag($tag, $params)
 {
     if (isset($params['style'])) {
         if (in_array($params['style'], ['list', 'gallery'])) {
@@ -104,13 +121,13 @@ function mangapress_closing_article_tag($tag, $params)
 
     return $tag_string;
 }
-add_filter('mangapress_closing_article_tag', 'mangapress_closing_article_tag', 10, 2);
+
 
 /**
  * Create a wrapper for the archive list. Used for the archive-comic.php template
  * @param string $style Archive style-type
  */
-function mangapress_archive_style_opening_tag($style)
+function archive_style_opening_tag($style)
 {
     $classes = [
         'mangapress-archive-feed',
@@ -126,20 +143,18 @@ function mangapress_archive_style_opening_tag($style)
         echo "<ul $class>";
     }
 }
-add_action('mangapress_archive_style_opening_tag', 'mangapress_archive_style_opening_tag');
 
 /**
  * Close the for the archive list. Used for the archive-comic.php template
  * @param string $style Archive style-type
  * @uses mangapress_archive_style_opening_tag action
  */
-function mangapress_archive_style_closing_tag($style)
+function archive_style_closing_tag($style)
 {
     if (in_array($style, ['list', 'gallery'])) {
         echo '</ul>';
     }
 }
-add_action('mangapress_archive_style_closing_tag', 'mangapress_archive_style_closing_tag');
 
 
 /**
@@ -147,7 +162,7 @@ add_action('mangapress_archive_style_closing_tag', 'mangapress_archive_style_clo
  *
  * @return string
  */
-function mangapress_archive_gallery_style()
+function archive_gallery_style()
 {
     $styles = "
 <style type=\"text/css\">
@@ -208,7 +223,7 @@ function mangapress_archive_gallery_style()
  * @return \WP_Query
  * @since 2.7.2
  */
-function mangapress_get_latest_comic()
+function get_latest_comic()
 {
     $single_comic_query = new \WP_Query([
         'post_type'      => 'mangapress_comic',
@@ -227,11 +242,11 @@ function mangapress_get_latest_comic()
  * @global \WP_Query $wp_query
  * @since 2.9
  */
-function mangapress_start_latest_comic()
+function start_latest_comic()
 {
     global $wp_query;
     do_action('latest_comic_start');
-    $wp_query = mangapress_get_latest_comic();
+    $wp_query = get_latest_comic();
     if ($wp_query->found_posts == 0) {
         apply_filters(
             'the_latest_comic_content_error',
@@ -246,7 +261,7 @@ function mangapress_start_latest_comic()
  * @global WP_Query $wp_query
  * @since 2.9
  */
-function mangapress_end_latest_comic()
+function end_latest_comic()
 {
     global $wp_query;
     do_action('latest_comic_end');
