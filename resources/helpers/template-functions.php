@@ -1,4 +1,7 @@
 <?php
+/**
+ * General functions used for building themes
+ */
 if (!function_exists('is_comic')) {
     /**
      * is_comic()
@@ -72,7 +75,7 @@ if (!function_exists('is_comic_archive_page')) {
  */
 function comic_archive_is_calendar()
 {
-    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
     return $archive_style === 'calendar';
 }
 
@@ -84,7 +87,8 @@ function comic_archive_is_calendar()
  */
 function comic_archive_is_gallery()
 {
-    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
+
     return $archive_style === 'gallery';
 }
 
@@ -96,7 +100,7 @@ function comic_archive_is_gallery()
  */
 function comic_archive_is_list()
 {
-    $archive_style = \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
+    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
     return $archive_style === 'list';
 }
 
@@ -108,7 +112,7 @@ function comic_archive_is_list()
  */
 function mangapress_get_comic_archive_style()
 {
-    return \MangaPress\Bootstrap::get_option('basic', 'comicarchive_page_style');
+    return \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
 }
 
 
@@ -187,12 +191,12 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     $group = (bool)$mp_options['basic']['group_comics'];
     $by_parent = (bool)$mp_options['basic']['group_by_parent'];
 
-    $next_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, false);
-    $prev_post  = mangapress_get_adjacent_comic($group, $by_parent, 'mangapress_series', false, true);
-    add_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
-    $last_post  = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, false);
-    $first_post = mangapress_get_boundary_comic($group, $by_parent, 'mangapress_series', false, true);
-    remove_filter('pre_get_posts', '_mangapress_set_post_type_for_boundary');
+    $next_post  = get_adjacent_post($group, false, false, 'mangapress_series');
+    $prev_post  = get_adjacent_post($group, false, true, 'mangapress_series');
+
+    $last_post  = get_boundary_post($group, false, false, 'mangapress_series');
+    $first_post = get_boundary_post($group, false, true, 'mangapress_series');
+
     $current_page = $post->ID; // use post ID this time.
 
     $next_page = !isset($next_post->ID) ? $current_page : $next_post->ID;
