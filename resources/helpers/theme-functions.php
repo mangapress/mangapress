@@ -62,9 +62,9 @@ function get_template_part($slug, $name = '')
 function get_archive_style_template($style)
 {
     if (in_array($style, ['list', 'gallery', 'calendar'])) {
-        mangapress_get_template_part('content/archive', $style);
+        get_template_part('content/archive', $style);
     } else {
-        mangapress_get_template_part('content/archive', 'list');
+        get_template_part('content/archive', 'list');
     }
 }
 
