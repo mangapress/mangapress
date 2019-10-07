@@ -3,11 +3,13 @@
 
 namespace MangaPress\Options;
 
+use MangaPress\PluginComponent;
+
 /**
  * Class Options
  * @package MangaPress\Options
  */
-class Options
+class Options implements PluginComponent
 {
     /**
      * Options array
@@ -53,7 +55,7 @@ class Options
      */
     public static function get_options()
     {
-        return self::$options;
+        return array_merge(self::$options, self::$default_options);
     }
 
     /**

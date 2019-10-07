@@ -41,7 +41,7 @@ class TemplateLoader implements PluginComponent
             $template  = locate_template($templates);
 
             if (!$template) {
-                $template = MP_ABSPATH . 'templates/' . $default;
+                $template = MP_ABSPATH . 'resources/templates/' . $default;
             }
         }
 
@@ -120,9 +120,8 @@ class TemplateLoader implements PluginComponent
         }
 
         if ($query->is_main_query() && is_comic_archive_page()) {
-            $mp_options = Options::get_options();
-            $order      = $mp_options['basic']['archive_order'];
-            $orderby    = $mp_options['basic']['archive_orderby'];
+            $order      = Options::get_option('archive_order', 'basic');
+            $orderby    = Options::get_option('archive_orderby', 'basic');
 
             $query->set('order', $order);
             $query->set('orderby', $orderby);

@@ -62,7 +62,9 @@ class OptionsGroup implements PluginComponent
         register_setting(
             self::OPTIONS_GROUP_NAME,
             self::OPTIONS_GROUP_NAME,
-            [$this, 'sanitize_options']
+            [
+                'sanitize_callback' => [$this, 'sanitize_options']
+            ]
         );
 
         $sections = $this->options_sections();
@@ -324,8 +326,9 @@ class OptionsGroup implements PluginComponent
     /**
      * Sanitize options
      */
-    public function sanitize_options()
+    public function sanitize_options($options)
     {
-        //
+        $default = Options::get_options();
+        return array_merge($options, $default);
     }
 }
