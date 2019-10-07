@@ -267,3 +267,16 @@ function end_latest_comic()
     do_action('latest_comic_end');
     wp_reset_query();
 }
+
+/**
+ * Set the post-type for get_boundary_post()
+ * Workaround for issue #27094 {@link https://core.trac.wordpress.org/ticket/27094}
+ *
+ * @access private
+ * @param \WP_Query $query
+ * @return void
+ */
+function set_post_type_for_boundary($query)
+{
+    $query->set('post_type', 'mangapress_comic');
+}
