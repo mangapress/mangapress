@@ -2,7 +2,11 @@
 /**
  * Template functions
  */
+
 namespace MangaPress\Theme\Functions;
+
+use MangaPress\ContentTypes\Taxonomy;
+use MangaPress\Posts\Comics;
 
 /**
  * Run all related actions and filters
@@ -225,7 +229,7 @@ function archive_gallery_style()
  */
 function get_latest_comic()
 {
-    $single_comic_query = new \WP_Query([
+    $single_comic_query                       = new \WP_Query([
         'post_type'      => 'mangapress_comic',
         'posts_per_page' => 1,
         'post_status'    => 'publish',
@@ -279,4 +283,95 @@ function end_latest_comic()
 function set_post_type_for_boundary($query)
 {
     $query->set('post_type', 'mangapress_comic');
+}
+
+/**
+ * Get adjacent comic
+ *
+ * @param bool $previous
+ * @param bool $group_by
+ * @param bool $group_by_parent
+ * @param string $taxonomy
+ *
+ * @return \WP_Post|false
+ */
+function get_adjacent_comic($previous = true, $group_by = false, $group_by_parent = false, $taxonomy = Comics::TAX_SERIES)
+{
+    global $post;
+
+    $order     = $previous ? 'DESC' : 'ASC';
+    $direction = $previous ? 'before' : 'after';
+
+    $args = [
+        'post_not__in'   => $post->ID,
+        'post_type'      => Comics::POST_TYPE,
+        'posts_per_page' => 1,
+        'order'          => $order,
+        'orderby'        => 'date',
+        'date_query'     => [
+            $direction => $post->post_date,
+        ],
+    ];
+
+    if ($group_by) {
+        /**
+         * @var \WP_Term[] $terms
+         */
+        $terms = wp_get_object_terms([$post->ID], $taxonomy, ['fields' => 'ids']);
+        if (isset($terms[0])) {
+            $args['tax_query'] = [
+                'relation' => 'OR',
+                [
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'term_id',
+                    'terms'    => [$terms[0]->term_id],
+                ],
+            ];
+        }
+
+        // if $group_by_parent...
+    }
+
+    $posts = get_posts($args);
+
+    if (!isset($posts[0])) {
+        return false;
+    }
+
+    return $posts[0];
+}
+
+/**
+ * Get boundary comic
+ *
+ * @param bool $start
+ * @param bool $group_by
+ * @param bool $group_by_parent
+ * @param string $taxonomy
+ * @return bool|\WP_Post
+ */
+function get_boundary_comic($start = true, $group_by = false, $group_by_parent = false, $taxonomy = Comics::TAX_SERIES)
+{
+    global $post;
+
+    $order = $start ? 'ASC' : 'DESC';
+
+    $args = [
+        'post_not__in'   => [$post->ID],
+        'post_type'      => Comics::POST_TYPE,
+        'posts_per_page' => 1,
+        'order'          => $order,
+        'orderby'        => 'date',
+    ];
+
+    /**
+     * @var \WP_Post[] $posts
+     */
+    $posts = get_posts($args);
+
+    if (!isset($posts[0]) || $post->ID === $posts[0]->ID) {
+        return false;
+    }
+
+    return $posts[0];
 }

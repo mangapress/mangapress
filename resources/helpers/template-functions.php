@@ -6,9 +6,9 @@ if (!function_exists('is_comic')) {
     /**
      * is_comic()
      * Used to detect if post is a comic post
-     * @since 0.1
-     * @see \is_singular()
      * @return bool Returns true if post contains a comic, false if not.
+     * @see \is_singular()
+     * @since 0.1
      */
     function is_comic()
     {
@@ -18,9 +18,9 @@ if (!function_exists('is_comic')) {
 
 if (!function_exists('is_latest_comic_page')) {
     /**
+     * @return bool
      * @since 4.0.0
      *
-     * @return bool
      */
     function is_latest_comic_page()
     {
@@ -40,10 +40,10 @@ if (!function_exists('is_latest_comic_page')) {
 
 if (!function_exists('is_latest_comic_endpoint')) {
     /**
+     * @return bool
+     * @since 4.0.0
      * @global WP_Query $wp_query
      *
-     * @since 4.0.0
-     * @return bool
      */
     function is_latest_comic_endpoint()
     {
@@ -55,10 +55,10 @@ if (!function_exists('is_latest_comic_endpoint')) {
 if (!function_exists('is_comic_archive_page')) {
     /**
      * Are we on an archive page for the comic post-type
+     * @return bool
+     * @global WP_Query $wp_query
      * @since 1.0 RC1
      *
-     * @global WP_Query $wp_query
-     * @return bool
      */
     function is_comic_archive_page()
     {
@@ -119,8 +119,8 @@ function mangapress_get_comic_archive_style()
 /**
  * Retrieve the previous post in The Loop. We have our reasons
  *
- * @global WP_Query $wp_query
  * @return WP_Post|false
+ * @global WP_Query $wp_query
  */
 function mangapress_get_previous_post_in_loop()
 {
@@ -137,8 +137,8 @@ function mangapress_get_previous_post_in_loop()
 /**
  * Get the next post in the loop. Might come in handy.
  *
- * @global WP_Query $wp_query
  * @return WP_Post|false
+ * @global WP_Query $wp_query
  */
 function mangapress_get_next_post_in_loop()
 {
@@ -157,53 +157,51 @@ function mangapress_get_next_post_in_loop()
  *
  * Displays navigation for post specified by $post_id.
  *
- * @since 0.1b
- *
- * @global object $wpdb
- *
  * @param array $args Arguments for navigation output
  * @param bool $echo Specifies whether to echo comic navigation or return it as a string
  * @return string Returns navigation string if $echo is set to false.
+ * @global object $wpdb
+ *
+ * @since 0.1b
+ *
  */
-function mangapress_comic_navigation($args = array(), $echo = true)
+function mangapress_comic_navigation($args = [], $echo = true)
 {
     global $post;
 
     $mp_options = \MangaPress\Options\Options::get_options();
 
-    $defaults = array(
-        'container'      => 'nav',
-        'container_attr' => array(
+    $defaults = [
+        'container'       => 'nav',
+        'container_attr'  => [
             'id'    => 'comic-navigation',
             'class' => 'comic-nav-hlist-wrapper',
-        ),
-        'items_wrap'     => '<ul%1$s>%2$s</ul>',
-        'items_wrap_attr' => array('class' => 'comic-nav-hlist'),
-        'link_wrap'      => 'li',
-        'link_before'    => '',
-        'link_after'     => '',
-    );
+        ],
+        'items_wrap'      => '<ul%1$s>%2$s</ul>',
+        'items_wrap_attr' => ['class' => 'comic-nav-hlist'],
+        'link_wrap'       => 'li',
+        'link_before'     => '',
+        'link_after'      => '',
+    ];
 
     $parsed_args = wp_parse_args($args, $defaults);
-    $r = apply_filters('mangapress_comic_navigation_args', $parsed_args);
-    $args = (object) $r;
+    $r           = apply_filters('mangapress_comic_navigation_args', $parsed_args);
+    $args        = (object)$r;
 
-    $group = boolval($mp_options['basic']['group_comics']);
+    $group     = boolval($mp_options['basic']['group_comics']);
     $by_parent = boolval($mp_options['basic']['group_by_parent']);
+    $next_post = \MangaPress\Theme\Functions\get_adjacent_comic(false, $group, $by_parent, 'mangapress_series');
+    $prev_post = \MangaPress\Theme\Functions\get_adjacent_comic(true, $group, $by_parent, 'mangapress_series');
 
-    $next_post  = get_adjacent_post($group, false, false, 'mangapress_series');
-    $prev_post  = get_adjacent_post($group, false, true, 'mangapress_series');
-    add_filter('pre_get_posts', '\MangaPress\Theme\Functions\set_post_type_for_boundary');
-    $last_post  = get_boundary_post($group, false, false, 'mangapress_series');
-    $first_post = get_boundary_post($group, false, true, 'mangapress_series');
-    remove_filter('pre_get_posts', '\MangaPress\Theme\Functions\set_post_type_for_boundary');
+    $last_post  = \MangaPress\Theme\Functions\get_boundary_comic(false, $group, $by_parent, 'mangapress_series');
+    $first_post = \MangaPress\Theme\Functions\get_boundary_comic(true, $group, $by_parent, 'mangapress_series');
 
     $current_page = $post->ID; // use post ID this time.
 
     $next_page = !isset($next_post->ID) ? $current_page : $next_post->ID;
     $prev_page = !isset($prev_post->ID) ? $current_page : $prev_post->ID;
-    $last      = !isset($last_post[0]->ID) ? $current_page : $last_post[0]->ID;
-    $first     = !isset($first_post[0]->ID) ? $current_page : $first_post[0]->ID;
+    $last      = !isset($last_post->ID) ? $current_page : $last_post->ID;
+    $first     = !isset($first_post->ID) ? $current_page : $first_post->ID;
 
     $first_url = get_permalink($first);
     $last_url  = get_permalink($last);
@@ -216,7 +214,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
         $show_container = true;
         $attr           = "";
         if (!empty($args->container_attr)) {
-            $attr_arr = array();
+            $attr_arr = [];
             foreach ($args->container_attr as $name => $value) {
                 $attr_arr[] = "{$name}=\"" . esc_attr($value) . "\"";
             }
@@ -229,7 +227,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
 
     $items_wrap_attr = "";
     if (!empty($args->items_wrap_attr)) {
-        $items_attr_arr = array();
+        $items_attr_arr = [];
         foreach ($args->items_wrap_attr as $name => $value) {
             $items_attr_arr[] = "{$name}=\"" . esc_attr($value) . "\"";
         }
@@ -237,29 +235,29 @@ function mangapress_comic_navigation($args = array(), $echo = true)
         $items_wrap_attr = " " . implode(" ", $items_attr_arr);
     }
 
-    $items = array();
+    $items = [];
 
     // Here, we start processing the urls.
     // Let's do first page first.
-    $first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ($first == $current_page)
+    $first_html = "<{$args->link_wrap} class=\"link-first\">" . (($first == $current_page)
             ? '<span class="comic-nav--nolink">' . __('First', MP_DOMAIN) . '</span>'
-            : '<a class="comic-link-item" href="' . $first_url . '">' . __('First', MP_DOMAIN) . '</a>' )
+            : '<a class="comic-link-item" href="' . $first_url . '">' . __('First', MP_DOMAIN) . '</a>')
                   . "</{$args->link_wrap}>";
 
     $last_html = "<{$args->link_wrap} class=\"link-last\">" .
-                 ( ($last == $current_page)
+                 (($last == $current_page)
                      ? '<span class="comic-nav--nolink">' . __('Last', MP_DOMAIN) . '</span>'
-                     : '<a class="comic-link-item" href="' . $last_url . '">'. __('Last', MP_DOMAIN) . '</a>')
+                     : '<a class="comic-link-item" href="' . $last_url . '">' . __('Last', MP_DOMAIN) . '</a>')
                  . "</{$args->link_wrap}>";
 
-    $next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ($next_page == $current_page)
+    $next_html = "<{$args->link_wrap} class=\"link-next\">" . (($next_page == $current_page)
             ? '<span class="comic-nav--nolink">' . __('Next', MP_DOMAIN) . '</span>'
-            : '<a class="comic-link-item" href="' . $next_url . '">'. __('Next', MP_DOMAIN) . '</a>' )
+            : '<a class="comic-link-item" href="' . $next_url . '">' . __('Next', MP_DOMAIN) . '</a>')
                  . "</{$args->link_wrap}>";
 
-    $prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ($prev_page == $current_page)
+    $prev_html = "<{$args->link_wrap} class=\"link-prev\">" . (($prev_page == $current_page)
             ? '<span class="comic-nav--nolink">' . __('Prev', MP_DOMAIN) . '</span>'
-            : '<a class="comic-link-item" href="' . $prev_url . '">'. __('Prev', MP_DOMAIN) . '</a>' )
+            : '<a class="comic-link-item" href="' . $prev_url . '">' . __('Prev', MP_DOMAIN) . '</a>')
                  . "</{$args->link_wrap}>";
 
     $items['first'] = apply_filters('mangapress_comic_navigation_first', $first_html, $args);
@@ -267,7 +265,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
     $items['next']  = apply_filters('mangapress_comic_navigation_next', $next_html, $args);
     $items['last']  = apply_filters('mangapress_comic_navigation_last', $last_html, $args);
 
-    $items_str      = implode(" ", apply_filters('mangapress_comic_navigation_items', $items, $args));
+    $items_str = implode(" ", apply_filters('mangapress_comic_navigation_items', $items, $args));
 
     $comic_nav .= sprintf($args->items_wrap, $items_wrap_attr, $items_str);
 
@@ -291,7 +289,7 @@ function mangapress_comic_navigation($args = array(), $echo = true)
  * @param bool $nav Output navigation
  * @param bool $skip_empty_months Skip over months that don't contain posts
  * @param bool $initial Optional, default is true. Use initial calendar names.
- * @param bool $echo    Optional, default is true. Set to false for return.
+ * @param bool $echo Optional, default is true. Set to false for return.
  * @return void|string
  */
 function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true)
@@ -312,14 +310,13 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     $key = md5($m . $monthnum . $year);
     if ($cache = wp_cache_get('mangapress_get_calendar', 'calendar')) {
-        if (is_array($cache) && isset($cache[ $key ])) {
+        if (is_array($cache) && isset($cache[$key])) {
             if ($echo) {
                 /**
                  * Filter the HTML calendar output.
                  *
-                 * @since 2.9.0
-                 *
                  * @param string $calendar_output HTML output of the calendar.
+                 * @since 2.9.0
                  */
                 echo apply_filters('mangapress_get_calendar', $cache[$key]);
                 return '';
@@ -331,21 +328,21 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     }
 
     if (!is_array($cache)) {
-        $cache = array();
+        $cache = [];
     }
 
     // Quick check. If we have no posts at all, abort!
     if (!$posts) {
         $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
         if (!$gotsome) {
-            $cache[ $key ] = '';
+            $cache[$key] = '';
             wp_cache_set('mangapress_get_calendar', $cache, 'mangapress_calendar');
             return '';
         }
     }
 
     if (isset($_GET['w'])) {
-        $w = ''.intval($_GET['w']);
+        $w = '' . intval($_GET['w']);
     }
 
     // week_begins = 0 stands for Sunday
@@ -353,30 +350,30 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     // Let's figure out when we are
     if (!empty($monthnum) && !empty($year)) {
-        $thismonth = ''.zeroise(intval($monthnum), 2);
-        $thisyear = ''.intval($year);
+        $thismonth = '' . zeroise(intval($monthnum), 2);
+        $thisyear  = '' . intval($year);
     } elseif (!empty($w)) {
         // We need to get the month from MySQL
-        $thisyear = ''.intval(substr($m, 0, 4));
-        $d = (($w - 1) * 7) + 6; //it seems MySQL's weeks disagree with PHP's
+        $thisyear  = '' . intval(substr($m, 0, 4));
+        $d         = (($w - 1) * 7) + 6; //it seems MySQL's weeks disagree with PHP's
         $thismonth = $wpdb->get_var("SELECT DATE_FORMAT((DATE_ADD('{$thisyear}0101', INTERVAL $d DAY) ), '%m')");
     } elseif (!empty($m)) {
-        $thisyear = ''.intval(substr($m, 0, 4));
+        $thisyear = '' . intval(substr($m, 0, 4));
         if (strlen($m) < 6) {
             $thismonth = '01';
         } else {
-            $thismonth = ''.zeroise(intval(substr($m, 4, 2)), 2);
+            $thismonth = '' . zeroise(intval(substr($m, 4, 2)), 2);
         }
     } else {
-        $thisyear = gmdate('Y', current_time('timestamp'));
+        $thisyear  = gmdate('Y', current_time('timestamp'));
         $thismonth = gmdate('m', current_time('timestamp'));
     }
 
     $unixmonth = mktime(0, 0, 0, $thismonth, 1, $thisyear);
-    $last_day = date('t', $unixmonth);
+    $last_day  = date('t', $unixmonth);
 
     $previous = '';
-    $next = '';
+    $next     = '';
     if ($nav) {
         // Get the next and previous month and year with at least one post
         $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
@@ -385,7 +382,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
             AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
                 ORDER BY post_date DESC
                 LIMIT 1");
-        $next = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
+        $next     = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
             FROM $wpdb->posts
             WHERE post_date > '$thisyear-$thismonth-{$last_day} 23:59:59'
             AND post_type = 'post' AND post_status = 'publish'
@@ -395,20 +392,20 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
     /* translators: Calendar caption: 1: month name, 2: 4-digit year */
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output = '<table class="mangapress-calendar">
+    $calendar_output  = '<table class="mangapress-calendar">
 	<caption>' . sprintf($calendar_caption, $wp_locale->get_month($thismonth), date('Y', $unixmonth)) . '</caption>
 	<thead>
 	<tr>';
 
-    $myweek = array();
+    $myweek = [];
 
-    for ($wdcount=0; $wdcount<=6; $wdcount++) {
-        $myweek[] = $wp_locale->get_weekday(($wdcount+$week_begins)%7);
+    for ($wdcount = 0; $wdcount <= 6; $wdcount++) {
+        $myweek[] = $wp_locale->get_weekday(($wdcount + $week_begins) % 7);
     }
 
     foreach ($myweek as $wd) {
-        $day_name = (true == $initial) ? $wp_locale->get_weekday_initial($wd) : $wp_locale->get_weekday_abbrev($wd);
-        $wd = esc_attr($wd);
+        $day_name        = (true == $initial) ? $wp_locale->get_weekday_initial($wd) : $wp_locale->get_weekday_abbrev($wd);
+        $wd              = esc_attr($wd);
         $calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$day_name</th>";
     }
 
@@ -458,11 +455,11 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
 
 
     if ($dayswithposts) {
-        foreach ((array) $dayswithposts as $daywith) {
+        foreach ((array)$dayswithposts as $daywith) {
             $daywithpost[] = $daywith[0];
         }
     } else {
-        $daywithpost = array();
+        $daywithpost = [];
     }
 
     if (empty($daywithpost) && $skip_empty_months) {
@@ -475,21 +472,21 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         $ak_title_separator = ', ';
     }
 
-    $ak_titles_for_day = array();
-    $ak_post_titles = $wpdb->get_results("SELECT ID, post_title, DAYOFMONTH(post_date) as dom "
-                                         ."FROM $wpdb->posts "
-                                         ."WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
-                                         ."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-                                         ."AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'");
+    $ak_titles_for_day = [];
+    $ak_post_titles    = $wpdb->get_results("SELECT ID, post_title, DAYOFMONTH(post_date) as dom "
+                                            . "FROM $wpdb->posts "
+                                            . "WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
+                                            . "AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
+                                            . "AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'");
 
     if ($ak_post_titles) {
-        foreach ((array) $ak_post_titles as $ak_post_title) {
+        foreach ((array)$ak_post_titles as $ak_post_title) {
 
             /** This filter is documented in wp-includes/post-template.php */
             $post_title = esc_attr(apply_filters('the_title', $ak_post_title->post_title, $ak_post_title->ID));
 
-            if (empty($ak_titles_for_day['day_'.$ak_post_title->dom])) {
-                $ak_titles_for_day['day_'.$ak_post_title->dom] = '';
+            if (empty($ak_titles_for_day['day_' . $ak_post_title->dom])) {
+                $ak_titles_for_day['day_' . $ak_post_title->dom] = '';
             }
             if (empty($ak_titles_for_day["$ak_post_title->dom"])) { // first one
                 $ak_titles_for_day["$ak_post_title->dom"] = $post_title;
@@ -500,9 +497,9 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     }
 
     // See how much we should pad in the beginning
-    $pad = calendar_week_mod(date('w', $unixmonth)-$week_begins);
+    $pad = calendar_week_mod(date('w', $unixmonth) - $week_begins);
     if (0 != $pad) {
-        $calendar_output .= "\n\t\t".'<td colspan="'. esc_attr($pad) .'" class="pad">&nbsp;</td>';
+        $calendar_output .= "\n\t\t" . '<td colspan="' . esc_attr($pad) . '" class="pad">&nbsp;</td>';
     }
 
     $daysinmonth = intval(date('t', $unixmonth));
@@ -525,7 +522,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
                 [
                     get_day_link($thisyear, $thismonth, $day),
                     esc_attr($ak_titles_for_day[$day]),
-                    $day
+                    $day,
                 ]
             );
             remove_filter('day_link', 'mangapress_day_link');
@@ -534,28 +531,28 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         }
         $calendar_output .= '</td>';
 
-        if (6 == calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear))-$week_begins)) {
+        if (6 == calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear)) - $week_begins)) {
             $newrow = true;
         }
     }
 
-    $pad = 7 - calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear))-$week_begins);
+    $pad = 7 - calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear)) - $week_begins);
     if ($pad != 0 && $pad != 7) {
-        $calendar_output .= "\n\t\t".'<td class="pad" colspan="'. esc_attr($pad) .'">&nbsp;</td>';
+        $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . esc_attr($pad) . '">&nbsp;</td>';
     }
 
     $calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
 
-    $cache[ $key ] = $calendar_output;
+    $cache[$key] = $calendar_output;
     wp_cache_set('mangapress_get_calendar', $cache, 'mangapress_calendar');
 
     if ($echo) {
         /**
          * Filter the HTML calendar output.
          *
+         * @param string $calendar_output HTML output of the calendar.
          * @since 2.9
          *
-         * @param string $calendar_output HTML output of the calendar.
          */
         echo apply_filters('mangapress_get_calendar', $calendar_output);
     } else {
@@ -574,6 +571,7 @@ function mangapress_delete_get_calendar_cache()
 {
     wp_cache_delete('mangapress_get_calendar', 'mangapress_calendar');
 }
+
 add_action('save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache');
 add_action('delete_post', 'mangapress_delete_get_calendar_cache');
 add_action('update_option_start_of_week', 'mangapress_delete_get_calendar_cache');
