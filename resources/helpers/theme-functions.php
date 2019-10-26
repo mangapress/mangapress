@@ -230,12 +230,12 @@ function archive_gallery_style()
 function get_latest_comic()
 {
     $single_comic_query                       = new \WP_Query([
-        'post_type'      => 'mangapress_comic',
-        'posts_per_page' => 1,
-        'post_status'    => 'publish',
-        'order'          => 'DESC',
-        'orderby'        => 'date',
-    ]);
+                                                                  'post_type'      => 'mangapress_comic',
+                                                                  'posts_per_page' => 1,
+                                                                  'post_status'    => 'publish',
+                                                                  'order'          => 'DESC',
+                                                                  'orderby'        => 'date',
+                                                              ]);
     $single_comic_query->is_post_type_archive = false;
     return $single_comic_query;
 }
@@ -295,8 +295,12 @@ function set_post_type_for_boundary($query)
  *
  * @return \WP_Post|false
  */
-function get_adjacent_comic($previous = true, $group_by = false, $group_by_parent = false, $taxonomy = Comics::TAX_SERIES)
-{
+function get_adjacent_comic(
+    $previous = true,
+    $group_by = false,
+    $group_by_parent = false,
+    $taxonomy = Comics::TAX_SERIES
+) {
     global $post;
 
     $order     = $previous ? 'DESC' : 'ASC';
