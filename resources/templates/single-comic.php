@@ -8,7 +8,7 @@
  * @author Jess Green <support@manga-press.com>
  */
 
-get_header('comic');
+do_action('mangapress_get_comic_header');
 /**
  * mangapress_before_content
  *
@@ -38,7 +38,7 @@ do_action('mangapress_before_content'); ?>
          */
         do_action('mangapress_before_article') ?>
         <article <?php post_class() ?>>
-            <header class="mangapress_comic_title">
+            <header class="entry-header mangapress_comic_title">
                 <h2><?php the_title(); ?></h2>
             </header>
             <?php
@@ -59,7 +59,7 @@ do_action('mangapress_before_content'); ?>
              * Run scripts or insert content after the article content but before the article closing tag
              * @since 4.0.0
              */
-            do_action('mangapress_after_article_content');  ?>
+            do_action('mangapress_after_article_content'); ?>
         </article>
 
         <?php mangapress_comic_navigation(); ?>
@@ -104,4 +104,4 @@ do_action('mangapress_after_content'); ?>
  */
 do_action('mangapress_sidebar'); ?>
 
-<?php get_footer('comic');
+<?php do_action('mangapress_get_comic_footer');

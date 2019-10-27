@@ -5,7 +5,6 @@
 
 namespace MangaPress\Theme\Functions;
 
-use MangaPress\ContentTypes\Taxonomy;
 use MangaPress\Posts\Comics;
 
 /**
@@ -15,6 +14,9 @@ function theme_init()
 {
     add_filter('mangapress_opening_article_tag', '\MangaPress\Theme\Functions\opening_article_tag', 10, 2);
     add_filter('mangapress_closing_article_tag', '\MangaPress\Theme\Functions\closing_article_tag', 10, 2);
+
+    add_action('mangapress_get_comic_header', '\MangaPress\Theme\Functions\get_comic_header');
+    add_action('mangapress_get_comic_footer', '\MangaPress\Theme\Functions\get_comic_footer');
 
     add_action(
         'mangapress_archive_style_template',
@@ -30,6 +32,22 @@ function theme_init()
         'mangapress_archive_style_closing_tag',
         '\MangaPress\Theme\Functions\archive_style_closing_tag'
     );
+}
+
+/**
+ * Load comic page header
+ */
+function get_comic_header()
+{
+    get_template_part('header', 'comic');
+}
+
+/**
+ * Load comic page footer
+ */
+function get_comic_footer()
+{
+    get_template_part('footer', 'comic');
 }
 
 /**
@@ -50,11 +68,10 @@ function get_template_part($slug, $name = '')
     $templates[] = "{$slug}.php";
 
     $template = locate_template($templates);
-
-    if ($template) {
-        require $template;
+    if (file_exists(MP_ABSPATH . "/resources/templates/{$slug}-{$name}.php")) {
+        require MP_ABSPATH . "/resources/templates/{$slug}-{$name}.php";
     } else {
-        require MP_ABSPATH . "templates/{$slug}-{$name}.php";
+        require $template;
     }
 }
 
