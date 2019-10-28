@@ -34,7 +34,7 @@ trait Markup
         $theme = get_template();
         wp_register_style(
             "mangapress-{$theme}",
-            MP_URLPATH . "assets/css/{$theme}.css",
+            MP_URLPATH . "/resources/assets/css/{$theme}.css",
             null,
             MP_VERSION
         );

@@ -11,6 +11,10 @@
     list-style: none;
 }
 
+.comic-nav-hlist > li {
+    display: inline-block;
+}
+
 .comic-nav--nolink {
     color: #cccccc;
 }
@@ -49,6 +53,7 @@
     padding: 15px 10px;
     text-align: center;
 }
+
 .mangapress-archive-gallery {
     display: flex;
     flex-direction: row;
