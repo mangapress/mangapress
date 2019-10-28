@@ -246,13 +246,16 @@ function archive_gallery_style()
  */
 function get_latest_comic()
 {
-    $single_comic_query                       = new \WP_Query([
-                                                                  'post_type'      => 'mangapress_comic',
-                                                                  'posts_per_page' => 1,
-                                                                  'post_status'    => 'publish',
-                                                                  'order'          => 'DESC',
-                                                                  'orderby'        => 'date',
-                                                              ]);
+    $single_comic_query = new \WP_Query(
+        [
+            'post_type'      => 'mangapress_comic',
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+            'order'          => 'DESC',
+            'orderby'        => 'date',
+        ]
+    );
+
     $single_comic_query->is_post_type_archive = false;
     return $single_comic_query;
 }
@@ -266,6 +269,12 @@ function get_latest_comic()
 function start_latest_comic()
 {
     global $wp_query;
+
+    /**
+     * latest_comic_start
+     * Runs before latest comic is retrieved
+     * @since 2.9
+     */
     do_action('latest_comic_start');
     $wp_query = get_latest_comic();
     if ($wp_query->found_posts == 0) {
@@ -285,21 +294,13 @@ function start_latest_comic()
 function end_latest_comic()
 {
     global $wp_query;
+    /**
+     * latest_comic_end
+     * Runs after latest comic is retrieved but before $wp_query is reset
+     * @since 2.9
+     */
     do_action('latest_comic_end');
     wp_reset_query();
-}
-
-/**
- * Set the post-type for get_boundary_post()
- * Workaround for issue #27094 {@link https://core.trac.wordpress.org/ticket/27094}
- *
- * @access private
- * @param \WP_Query $query
- * @return void
- */
-function set_post_type_for_boundary($query)
-{
-    $query->set('post_type', 'mangapress_comic');
 }
 
 /**
@@ -334,24 +335,16 @@ function get_adjacent_comic(
         ],
     ];
 
-    if ($group_by) {
-        /**
-         * @var \WP_Term[] $terms
-         */
-        $terms = wp_get_object_terms([$post->ID], $taxonomy, ['fields' => 'ids']);
-        if (isset($terms[0])) {
-            $args['tax_query'] = [
-                'relation' => 'OR',
-                [
-                    'taxonomy' => $taxonomy,
-                    'field'    => 'term_id',
-                    'terms'    => [$terms[0]->term_id],
-                ],
-            ];
-        }
+    $args = get_group_by_args($args, $taxonomy, $group_by, $group_by_parent);
 
-        // if $group_by_parent...
-    }
+    /**
+     * mangapress_get_adjacent_comic_args
+     * @param array $args
+     * @param boolean $previous
+     *
+     * @since 4.0.0
+     */
+    $args = apply_filters('mangapress_get_adjacent_comic_args', $args, $previous);
 
     $posts = get_posts($args);
 
@@ -385,6 +378,16 @@ function get_boundary_comic($start = true, $group_by = false, $group_by_parent =
         'orderby'        => 'date',
     ];
 
+    $args = get_group_by_args($args, $taxonomy, $group_by, $group_by_parent);
+    /**
+     * mangapress_get_boundary_comic_args
+     * @param array $args
+     * @param boolean $start
+     *
+     * @since 4.0.0
+     */
+    $args = apply_filters('mangapress_get_boundary_comic_args', $args, $start);
+
     /**
      * @var \WP_Post[] $posts
      */
@@ -395,4 +398,46 @@ function get_boundary_comic($start = true, $group_by = false, $group_by_parent =
     }
 
     return $posts[0];
+}
+
+/**
+ * Get group-by arguments
+ *
+ * @param array $args
+ * @param string $taxonomy
+ * @param bool $group_by
+ * @param bool $group_by_parent
+ * @return array
+ */
+function get_group_by_args($args, $taxonomy, $group_by = false, $group_by_parent = false)
+{
+    global $post;
+
+    if ($group_by) {
+        /**
+         * @var \WP_Term[] $terms
+         */
+        $terms = wp_get_object_terms(
+            [$post->ID],
+            $taxonomy,
+            ['orderby' => 'parent', 'order' => 'DESC', 'fields' => 'all']
+        );
+
+        if (!empty($terms)) {
+            if ($group_by_parent) {
+                $terms = array_reverse($terms);
+            }
+
+            $args['tax_query'] = [
+                'relation' => 'OR',
+                [
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'term_id',
+                    'terms'    => [$terms[0]->term_id],
+                ],
+            ];
+        }
+    }
+
+    return $args;
 }
