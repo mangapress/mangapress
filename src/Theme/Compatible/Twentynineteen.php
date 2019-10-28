@@ -15,10 +15,12 @@ class Twentynineteen implements Theme
     use Markup;
 
     /**
-     * Set up all needed hook
+     * Set up all needed hooks
      */
     public function init()
     {
+        add_theme_support('mangapress', ['cover-images']);
+
         add_action('mangapress_head', [$this, 'head']);
         add_action('mangapress_after_body_open', [$this, 'after_body_open']);
         add_action('mangapress_page_header', [$this, 'page_header']);

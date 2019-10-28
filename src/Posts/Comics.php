@@ -14,28 +14,6 @@ use MangaPress\Options\Options;
  */
 class Comics implements PluginComponent
 {
-    /**
-     * Get image html
-     *
-     * @var string
-     */
-    const ACTION_GET_IMAGE_HTML = 'mangapress-get-image-html';
-
-
-    /**
-     * Remove image html and return Add Image string
-     *
-     * @var string
-     */
-    const ACTION_REMOVE_IMAGE = 'mangapress-remove-image';
-
-
-    /**
-     * Nonce string
-     *
-     * @var string
-     */
-    const NONCE_INSERT_COMIC = 'mangapress_comic-insert-comic';
 
 
     /**
@@ -60,8 +38,24 @@ class Comics implements PluginComponent
      * @var string
      */
     const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
-
-
+    /**
+     * Post-type Slug. Defaults to comic.
+     *
+     * @var string
+     */
+    protected $slug = 'comic';
+    /**
+     * Comic Archives slug
+     *
+     * @var string
+     */
+    protected $archive_slug = 'comic-archives';
+    /**
+     * Latest Comic slug
+     *
+     * @var string
+     */
+    protected $latest_comic_slug = 'latest-comic';
     /**
      * Class for initializing custom post-type
      *
@@ -69,36 +63,15 @@ class Comics implements PluginComponent
      */
     private $post_type = null;
 
-
-    /**
-     * Post-type Slug. Defaults to comic.
-     *
-     * @var string
-     */
-    protected $slug = 'comic';
-
-    /**
-     * Comic Archives slug
-     *
-     * @var string
-     */
-    protected $archive_slug = 'comic-archives';
-
-
-    /**
-     * Latest Comic slug
-     *
-     * @var string
-     */
-    protected $latest_comic_slug = 'latest-comic';
-
     public function init()
     {
         $this->register_content_types();
 
         // Setup Manga+Press Post Options box
-        add_action('wp_ajax_' . self::ACTION_GET_IMAGE_HTML, [$this, 'get_image_html_ajax']);
-        add_action('wp_ajax_' . self::ACTION_REMOVE_IMAGE, [$this, 'get_image_html_ajax']);
+        add_action('wp_ajax_' . Actions::ACTION_INSERT_COMIC, [$this, 'get_image_html_ajax']);
+        add_action('wp_ajax_' . Actions::ACTION_REMOVE_COMIC, [$this, 'get_image_html_ajax']);
+        add_action('wp_ajax_' . Actions::ACTION_INSERT_COVER, [$this, 'get_image_html_ajax']);
+        add_action('wp_ajax_' . Actions::ACTION_REMOVE_COVER, [$this, 'get_image_html_ajax']);
         add_action('save_post_mangapress_comic', [$this, 'save_post'], 500, 2);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
 
@@ -147,6 +120,7 @@ class Comics implements PluginComponent
                         'comments',
                         'thumbnails',
                         'publicize',
+                        'cover-images',
                     ],
                     'register_meta_box_cb' => [$this, 'meta_box_cb'],
                     //phpcs:disable
@@ -162,17 +136,6 @@ class Comics implements PluginComponent
                 ],
             ]
         );
-    }
-
-
-    /**
-     * Add new rewrite rules for Comic post-type
-     */
-    public function rewrite_rules()
-    {
-        if (Options::get_option('latestcomic_page', 'basic') == '') {
-            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
-        }
     }
 
     /**
@@ -192,7 +155,6 @@ class Comics implements PluginComponent
         return apply_filters('mangapress_comic_front_slug', $this->slug);
     }
 
-
     /**
      * Get current user-specified front-slug for Comic archives
      *
@@ -210,22 +172,14 @@ class Comics implements PluginComponent
         return apply_filters('mangapress_comic_archives_slug', $this->archive_slug);
     }
 
-
     /**
-     * Set the comic archive slug
-     *
-     * @param string $slug
-     *
-     * @return string
+     * Add new rewrite rules for Comic post-type
      */
-    public function set_comic_archives_slug($slug)
+    public function rewrite_rules()
     {
-        $comic_archive_slug = 'comic-archives';
-        if (!$comic_archive_slug) {
-            return $slug;
+        if (Options::get_option('latestcomic_page', 'basic') == '') {
+            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
         }
-
-        return $comic_archive_slug;
     }
 
     /**
@@ -245,7 +199,6 @@ class Comics implements PluginComponent
         return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
     }
 
-
     /**
      * Set the comic slug to a specified page
      *
@@ -261,6 +214,23 @@ class Comics implements PluginComponent
         }
 
         return $latest_comic_slug;
+    }
+
+    /**
+     * Set the comic archive slug
+     *
+     * @param string $slug
+     *
+     * @return string
+     */
+    public function set_comic_archives_slug($slug)
+    {
+        $comic_archive_slug = 'comic-archives';
+        if (!$comic_archive_slug) {
+            return $slug;
+        }
+
+        return $comic_archive_slug;
     }
 
     /**
@@ -339,6 +309,7 @@ class Comics implements PluginComponent
 
         return $columns;
     }
+
     /**
      * Meta box call-back function.
      *
@@ -346,6 +317,19 @@ class Comics implements PluginComponent
      */
     public function meta_box_cb()
     {
+
+        $theme_supports = get_theme_support('mangapress');
+        if (!empty($theme_supports) && in_array('cover-images', $theme_supports[0])) {
+            add_meta_box(
+                'cover-image',
+                __('Cover Image', MP_DOMAIN),
+                [$this, 'cover_image_cb'],
+                $this->post_type->get_name(),
+                'normal',
+                'high'
+            );
+        }
+
         add_meta_box(
             'comic-image',
             __('Comic Image', MP_DOMAIN),
@@ -365,12 +349,18 @@ class Comics implements PluginComponent
 
     /**
      * Comic meta box
-     *
-     * @return void
      */
     public function comic_meta_box_cb()
     {
         include_once MP_ABSPATH . 'resources/admin/pages/meta-box-add-comic.php';
+    }
+
+    /**
+     * Cover image meta box
+     */
+    public function cover_image_cb()
+    {
+        include_once MP_ABSPATH . 'resources/admin/pages/meta-box-add-cover.php';
     }
 
     /**
@@ -403,7 +393,7 @@ class Comics implements PluginComponent
 
         wp_localize_script(
             'mangapress-media-popup',
-            MP_DOMAIN,
+            strtoupper(MP_DOMAIN),
             [
                 'title'  => __('Upload or Choose Your Comic Image File', MP_DOMAIN),
                 'button' => __('Insert Comic into Post', MP_DOMAIN),
@@ -425,10 +415,10 @@ class Comics implements PluginComponent
         // get image
         $image_ID = filter_input(INPUT_POST, 'id') ? filter_input(INPUT_POST, 'id') : false;
         $action   = filter_input(INPUT_POST, 'action')
-            ? filter_input(INPUT_POST, 'action') : self::ACTION_REMOVE_IMAGE;
+            ? filter_input(INPUT_POST, 'action') : Actions::ACTION_INSERT_COMIC;
 
         header("Content-type: application/json");
-        if ($action == self::ACTION_GET_IMAGE_HTML) {
+        if ($action == Actions::ACTION_INSERT_COMIC) {
             if ($image_ID) {
                 echo json_encode(['html' => $this->get_image_html($image_ID),]);
             }
@@ -444,9 +434,10 @@ class Comics implements PluginComponent
      * Retrieve image html
      *
      * @param int $image_ID
+     * @param boolean $is_cover
      * @return string
      */
-    public function get_image_html($image_ID)
+    public function get_image_html($image_ID, $is_cover = false)
     {
         $image_html = wp_get_attachment_image($image_ID, 'medium');
         if ($image_html == '') {
@@ -454,7 +445,7 @@ class Comics implements PluginComponent
         }
 
         ob_start();
-        include_once MP_ABSPATH . 'includes/pages/set-image-link.php';
+        include MP_ABSPATH . 'resources/admin/pages/set-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
 
@@ -464,14 +455,13 @@ class Comics implements PluginComponent
 
     /**
      * Reset comic image html
-     *
+     * @param boolean $is_cover
      * @return string
      */
-    public function get_remove_image_html()
+    public function get_remove_image_html($is_cover = false)
     {
-
         ob_start();
-        include_once MP_ABSPATH . 'resources/admin/pages/remove-image-link.php';
+        include MP_ABSPATH . 'resources/admin/pages/remove-image-link.php';
         $html = ob_get_contents();
         ob_end_clean();
 
@@ -494,7 +484,7 @@ class Comics implements PluginComponent
             return $post_id;
         }
 
-        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), self::NONCE_INSERT_COMIC)) {
+        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), Actions::NONCE_INSERT_COMIC)) {
             return $post_id;
         }
 
@@ -509,10 +499,11 @@ class Comics implements PluginComponent
                 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
             $default_cat = get_option('mangapress_default_category');
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
-        } else {
-            // continue as normal
-            wp_set_post_terms($post_id, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
         }
+//        else {
+//            // continue as normal
+//            wp_set_post_terms($post_id, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
+//        }
 
         return $post_id;
     }

@@ -18,7 +18,7 @@ $image_ID = get_post_thumbnail_id();
     }
     ?>
 </div>
-<?php wp_nonce_field(\MangaPress\Posts\Comics::NONCE_INSERT_COMIC, '_insert_comic'); ?>
+<?php wp_nonce_field(\MangaPress\Posts\Actions::NONCE_INSERT_COMIC, '_insert_comic'); ?>
 <input
-    type="hidden"
-    id="js-mangapress-comic-image" name="_mangapress_comic_image" value="<?php echo esc_attr($image_ID); ?>" />
+        type="hidden"
+        id="js-mangapress-comic-image" name="_mangapress_comic_image" value="<?php echo esc_attr($image_ID); ?>"/>
