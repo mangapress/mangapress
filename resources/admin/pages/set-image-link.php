@@ -26,7 +26,7 @@ $label  = $is_cover ? esc_html(__('Remove Cover image', MP_DOMAIN)) : esc_html(_
     <?php echo $image_html; ?>
     <p>
         <a href="#" data-action="<?php echo $action; ?>"
-           data-nonce="<?php echo $nonce; ?>"
+           data-nonce="<?php echo wp_create_nonce($nonce); ?>"
            data-field="<?php echo $field; ?>"
            id="js-<?php echo $action; ?>" class="js-remove-mangapress-thumbnail"><?php echo $label; ?></a>
     </p>

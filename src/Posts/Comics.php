@@ -418,12 +418,13 @@ class Comics implements PluginComponent
             ? filter_input(INPUT_POST, 'action') : Actions::ACTION_INSERT_COMIC;
 
         header("Content-type: application/json");
+        $is_cover = (($action === Actions::ACTION_INSERT_COVER) || ($action === Actions::ACTION_REMOVE_COVER));
         if ($action == Actions::ACTION_INSERT_COMIC || $action == Actions::ACTION_INSERT_COVER) {
             if ($image_ID) {
-                echo json_encode(['html' => $this->get_image_html($image_ID),]);
+                echo json_encode(['html' => $this->get_image_html($image_ID, $is_cover),]);
             }
         } else {
-            echo json_encode(['html' => $this->get_remove_image_html(),]);
+            echo json_encode(['html' => $this->get_remove_image_html($is_cover),]);
         }
 
         die();
