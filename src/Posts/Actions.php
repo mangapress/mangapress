@@ -6,6 +6,16 @@ namespace MangaPress\Posts;
 class Actions
 {
     /**
+     * Comic image hidden input field ID
+     */
+    const FIELD_COMIC = 'mangapress-comic-image';
+
+    /**
+     * Cover image hidden input field ID
+     */
+    const FIELD_COVER = 'mangapress-cover-image';
+
+    /**
      * Get image html
      *
      * @var string

@@ -2,19 +2,25 @@
  * Plugin namespace
  * @type namespace
  */
-var MANGAPRESS = MANGAPRESS || {};
+if (typeof MANGAPRESS === 'undefined') {
+    let MANGAPRESS = {
+        title: '',
+        button: ''
+    };
+}
 
 (function ($) {
 
     MANGAPRESS.library_frame = false;
 
-    $(document).on('click', '#choose-from-library-link', function (e) {
+    $(document).on('click', '.js-choose-from-library-link', function (e) {
         e.preventDefault();
 
-        var $thumbnailInput = $('#js-mangapress-comic-image');
-        var $imageFrame = $('#js-image-frame');
-        var nonce = $(this).attr('data-nonce');
-        var action = $(this).attr('data-action');
+        const nonce = $(this).attr('data-nonce');
+        const action = $(this).attr('data-action');
+        const field = $(this).attr('data-field');
+        const $thumbnailInput = $('#js-input-' + field);
+        const $imageFrame = $('#js-image-frame--' + field);
 
         if (MANGAPRESS.library_frame) {
             MANGAPRESS.library_frame.open();
@@ -36,8 +42,8 @@ var MANGAPRESS = MANGAPRESS || {};
 
         MANGAPRESS.library_frame.on('select', function () {
             // Grab our attachment selection and construct a JSON representation of the model.
-            var media_attachment = MANGAPRESS.library_frame.state().get('selection').first().toJSON();
-            var data = {
+            const media_attachment = MANGAPRESS.library_frame.state().get('selection').first().toJSON();
+            const data = {
                 id: media_attachment.id,
                 nonce: nonce,
                 action: action
@@ -47,7 +53,7 @@ var MANGAPRESS = MANGAPRESS || {};
             $.post(ajaxurl, data, function (data) {
                 $imageFrame.html(data.html);
             });
-
+            console.log($thumbnailInput);
             // Send the attachment URL to our custom input field via jQuery.
             $thumbnailInput.val(media_attachment.id);
         });
@@ -55,13 +61,16 @@ var MANGAPRESS = MANGAPRESS || {};
         MANGAPRESS.library_frame.open();
     });
 
-    $(document).on('click', '#js-remove-comic-thumbnail', function (e) {
+    $(document).on('click', '.js-remove-mangapress-thumbnail', function (e) {
         e.preventDefault();
-        var $thumbnailInput = $('#js-mangapress-comic-image');
-        var $imageFrame = $('#js-image-frame');
-        var nonce = $(this).attr('data-nonce');
-        var action = $(this).attr('data-action');
-        var data = {
+
+        const nonce = $(this).attr('data-nonce');
+        const action = $(this).attr('data-action');
+        const field = $(this).attr('data-field');
+        const $thumbnailInput = $('#js-input-' + field);
+        const $imageFrame = $('#js-image-frame--' + field);
+
+        const data = {
             nonce: nonce,
             action: action
         };

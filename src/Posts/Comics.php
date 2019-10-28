@@ -385,7 +385,7 @@ class Comics implements PluginComponent
         wp_enqueue_media();
         wp_register_script(
             'mangapress-media-popup',
-            plugins_url('/resources/assets/js/add-comic.js', __FILE__),
+            MP_URLPATH . '/resources/assets/js/add-comic.js',
             ['jquery'],
             MP_VERSION,
             true
@@ -418,7 +418,7 @@ class Comics implements PluginComponent
             ? filter_input(INPUT_POST, 'action') : Actions::ACTION_INSERT_COMIC;
 
         header("Content-type: application/json");
-        if ($action == Actions::ACTION_INSERT_COMIC) {
+        if ($action == Actions::ACTION_INSERT_COMIC || $action == Actions::ACTION_INSERT_COVER) {
             if ($image_ID) {
                 echo json_encode(['html' => $this->get_image_html($image_ID),]);
             }
@@ -491,6 +491,13 @@ class Comics implements PluginComponent
         $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
         if ($image_ID) {
             set_post_thumbnail($post_id, $image_ID);
+        }
+
+        $cove_image_id = (int)filter_input(INPUT_POST, '_mangapress_cover_image', FILTER_SANITIZE_NUMBER_INT);
+        if ($cove_image_id) {
+            update_post_meta($post_id, 'mangapress_cover_image_id', $cove_image_id);
+        } else {
+            delete_post_meta($post_id, 'mangapress_cover_image_id');
         }
 
         // if no terms have been assigned, assign the default

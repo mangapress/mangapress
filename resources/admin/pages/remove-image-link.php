@@ -17,11 +17,13 @@ if (!($wp instanceof WP)) {
  */
 $nonce  = $is_cover ? \MangaPress\Posts\Actions::NONCE_INSERT_COVER : \MangaPress\Posts\Actions::NONCE_INSERT_COMIC;
 $action = $is_cover ? \MangaPress\Posts\Actions::ACTION_INSERT_COVER : \MangaPress\Posts\Actions::ACTION_INSERT_COMIC;
+$field  = $is_cover ? \MangaPress\Posts\Actions::FIELD_COVER : \MangaPress\Posts\Actions::FIELD_COMIC;
 ?>
 <a href="#"
-   id="choose-from-library-link"
+   class="js-choose-from-library-link"
    data-nonce="<?php echo wp_create_nonce($nonce) ?>"
-   data-action="<?php echo esc_attr($action) ?>">
+   data-action="<?php echo esc_attr($action) ?>"
+   data-field="<?php echo esc_attr($field) ?>">
     <?php
     if ($is_cover) {
         _e('Set Cover Image', MP_DOMAIN);
