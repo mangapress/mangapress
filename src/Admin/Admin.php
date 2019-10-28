@@ -18,16 +18,15 @@ use function MangaPress\Admin\Functions\options_tabs;
 class Admin implements PluginComponent
 {
     /**
-     * @var OptionsGroup $options_group
-     */
-    protected $options_group;
-
-    /**
      * Page slug constant
      *
      * @var string
      */
     const ADMIN_PAGE_SLUG = 'mangapress-options-page';
+    /**
+     * @var OptionsGroup $options_group
+     */
+    protected $options_group;
 
     public function __construct()
     {
@@ -196,8 +195,20 @@ class Admin implements PluginComponent
     {
         global $mangapress_page_hook;
 
+        // Syntax highlighter
+        wp_register_script(
+            'mangapress-syntax-highlighter',
+            MP_URLPATH . '/resources/assets/js/highlight.pack.js'
+        );
+
+        // the style
+        wp_register_style(
+            'mangapress-syntax-highlighter-css',
+            MP_URLPATH . '/resources/assets/css/github.css'
+        );
+
         if ($hook == $mangapress_page_hook) {
-            wp_enqueue_script('mangapress-syntax-highlighter-cssbrush');
+            wp_enqueue_script('mangapress-syntax-highlighter');
             wp_enqueue_style('mangapress-syntax-highlighter-css');
         }
     }

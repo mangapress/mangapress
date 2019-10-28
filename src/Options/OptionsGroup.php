@@ -63,7 +63,7 @@ class OptionsGroup implements PluginComponent
             self::OPTIONS_GROUP_NAME,
             self::OPTIONS_GROUP_NAME,
             [
-                'sanitize_callback' => [$this, 'sanitize_options']
+                'sanitize_callback' => [$this, 'sanitize_options'],
             ]
         );
 
@@ -78,6 +78,15 @@ class OptionsGroup implements PluginComponent
         }
 
         $this->output_settings_fields();
+    }
+
+    /**
+     * Build options sections
+     * @return array
+     */
+    public function options_sections()
+    {
+        return options_tabs();
     }
 
     /**
@@ -99,50 +108,6 @@ class OptionsGroup implements PluginComponent
                 array_merge(['name' => $field_name, 'section' => $current_tab], $field)
             );
         }
-    }
-
-    /**
-     * Callback function to generate field markup
-     * @param array $option
-     */
-    public function settings_field_cb($option)
-    {
-        $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $option['type'])));
-        $value = Options::get_option($option['name'], $option['section']);
-
-        if ($class !== "") {
-            $attributes = [
-                'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
-                'id'    => $option['id'],
-                'value' => $value,
-            ];
-
-            $element = 'MangaPress\Options\Fields\Types\\' . $class;
-
-            echo new $element(
-                [
-                    'attributes'  => $attributes,
-                    'description' => isset($option['description']) ? $option['description'] : '',
-                    'default'     => isset($option['value']) ? $option['value'] : $option['default'],
-                    'validation'  => $option['valid'],
-                ]
-            );
-        }
-    }
-
-    /**
-     * settings_section_cb()
-     * Outputs Settings Sections
-     *
-     * @param string $section Name of section
-     *
-     * @return void
-     */
-    public function settings_section_cb($section)
-    {
-        $options = $this->options_sections();
-        $current = (substr($section['id'], strpos($section['id'], '-') + 1));
-        echo "<p>{$options[$current]['description']}</p>";
     }
 
     /**
@@ -315,12 +280,47 @@ class OptionsGroup implements PluginComponent
     }
 
     /**
-     * Build options sections
-     * @return array
+     * Callback function to generate field markup
+     * @param array $option
      */
-    public function options_sections()
+    public function settings_field_cb($option)
     {
-        return options_tabs();
+        $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $option['type'])));
+        $value = Options::get_option($option['name'], $option['section']);
+
+        if ($class !== "") {
+            $attributes = [
+                'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
+                'id'    => $option['id'],
+                'value' => $value,
+            ];
+
+            $element = 'MangaPress\Options\Fields\Types\\' . $class;
+
+            echo new $element(
+                [
+                    'attributes'  => $attributes,
+                    'description' => isset($option['description']) ? $option['description'] : '',
+                    'default'     => isset($option['value']) ? $option['value'] : $option['default'],
+                    'validation'  => $option['valid'],
+                ]
+            );
+        }
+    }
+
+    /**
+     * settings_section_cb()
+     * Outputs Settings Sections
+     *
+     * @param string $section Name of section
+     *
+     * @return void
+     */
+    public function settings_section_cb($section)
+    {
+        $options = $this->options_sections();
+        $current = (substr($section['id'], strpos($section['id'], '-') + 1));
+        echo "<p>{$options[$current]['description']}</p>";
     }
 
     /**

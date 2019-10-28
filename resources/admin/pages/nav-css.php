@@ -1,7 +1,7 @@
 <?php
 /**
  * MangaPress
- * 
+ *
  * @package nav-css
  * @author  Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
@@ -10,7 +10,7 @@
 ?>
 
 <?php _e('Copy and paste this code into the <code>style.css</code> file of your theme.', MP_DOMAIN); ?>
-<code style="display: block; width: 550px;"><pre class="brush: css;">
+<pre><code class="language-css" style="display: block; width: 550px;">
 /* comic navigation */
 .comic-nav-hlist-wrapper {
     text-align: left;
@@ -28,5 +28,5 @@
     float: left;
     margin-right: 10px;
 }
-</pre></code>
-<?php 
+</code></pre>
+

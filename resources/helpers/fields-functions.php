@@ -10,5 +10,5 @@ namespace MangaPress\Options\Fields\Functions;
  */
 function navigation_css_display_cb()
 {
-    echo '';
+    require MP_ABSPATH . '/resources/admin/pages/nav-css.php';
 }
