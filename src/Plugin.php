@@ -52,7 +52,7 @@ class Plugin implements PluginComponent
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
-
+        add_action('init', [$this, 'do_rewrite_flush']);
         return $this;
     }
 
@@ -73,6 +73,17 @@ class Plugin implements PluginComponent
         }
     }
 
+    /**
+     * Get for mangapress_flush_rewrite_rules option, if true then flush rules
+     */
+    public function do_rewrite_flush()
+    {
+        $do_flush = boolval(get_option('mangapress_flush_rewrite_rules', false));
+        if ($do_flush) {
+            flush_rewrite_rules();
+            delete_option('mangapress_flush_rewrite_rules');
+        }
+    }
 
     /**
      * Add relevant links to plugin meta

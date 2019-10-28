@@ -325,10 +325,94 @@ class OptionsGroup implements PluginComponent
 
     /**
      * Sanitize options
+     * @param array $options
+     * @return array
      */
     public function sanitize_options($options)
     {
-        $default = Options::get_options();
+        if (!$options) {
+            return $options;
+        }
+
+        $section           = key($options);
+        $available_options = self::options_fields();
+        $default           = Options::get_options();
+
+        if ($section === 'nav') {
+            //
+            // if the value of the option doesn't match the correct values in the array, then
+            // the value of the option is set to its default.
+            $nav_css_values = array_keys($available_options['nav']['nav_css']['value']);
+
+            if (in_array($default['nav']['nav_css'], $nav_css_values)) {
+                $new_options['nav']['nav_css'] = strval($options['nav']['nav_css']);
+            } else {
+                $new_options['nav']['nav_css'] = 'default_css';
+            }
+        }
+
+        if ($section == 'basic') {
+            $archive_order_values   = array_keys($available_options['basic']['archive_order']['value']);
+            $archive_orderby_values = array_keys($available_options['basic']['archive_orderby']['value']);
+            //
+            // Converting the values to their correct data-types should be enough for now...
+            $new_options['basic'] = [
+                'archive_order'   => in_array($options['basic']['archive_order'], $archive_order_values)
+                    ? $options['basic']['archive_order']
+                    : $available_options['basic']['archive_order']['default'],
+                'archive_orderby' => in_array($options['basic']['archive_orderby'], $archive_orderby_values)
+                    ? $options['basic']['archive_orderby']
+                    : $available_options['basic']['archive_orderby']['default'],
+                'group_comics'    => $this->sanitize_integer($options, 'basic', 'group_comics'),
+                'group_by_parent' => $this->sanitize_integer($options, 'basic', 'group_by_parent'),
+            ];
+
+            if ($options['basic']['latestcomic_page'] !== 'no_val') {
+                $new_options['basic']['latestcomic_page'] = $options['basic']['latestcomic_page'];
+            } else {
+                $new_options['basic']['latestcomic_page'] = '';
+            }
+
+            if ($options['basic']['comicarchive_page'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page'] = $options['basic']['comicarchive_page'];
+            } else {
+                $new_options['basic']['comicarchive_page'] = '';
+            }
+
+            if ($options['basic']['comicarchive_page_style'] !== 'no_val') {
+                $new_options['basic']['comicarchive_page_style'] = $options['basic']['comicarchive_page_style'];
+            } else {
+                $new_options['basic']['comicarchive_page_style'] = 'list';
+            }
+
+            // add a later check for rewrite rules to be updated on init
+            add_option('mangapress_flush_rewrite_rules', true, '', 'no');
+        }
+
+        if ($section == 'comic_page') {
+            $new_options['comic_page'] = [
+                'generate_comic_page' => $this->sanitize_integer($options, 'comic_page', 'generate_comic_page'),
+                'comic_page_width'    => $this->sanitize_integer($options, 'comic_page', 'comic_page_width'),
+                'comic_page_height'   => $this->sanitize_integer($options, 'comic_page', 'comic_page_height'),
+            ];
+        }
+
         return array_merge($options, $default);
+    }
+
+
+    /**
+     * Sanitize integers
+     *
+     * @param array $option_array
+     * @param string $section
+     * @param string $name
+     *
+     * @return mixed
+     */
+    private function sanitize_integer($option_array, $section, $name)
+    {
+        return isset($option_array[$section][$name])
+            ? intval($option_array[$section][$name]) : 0;
     }
 }
