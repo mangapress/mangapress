@@ -151,6 +151,59 @@ function mangapress_get_next_post_in_loop()
     return $wp_query->posts[$wp_query->current_post + 1];
 }
 
+/**
+ * Check if theme supports mangapress cover images
+ * @return bool
+ */
+function mangapress_theme_supports_cover_images()
+{
+    $theme_supports = get_theme_support('mangapress');
+
+    if (empty($theme_supports) || !in_array('cover-images', $theme_supports[0])) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Check if the current post has a cover image
+ * @return bool|string
+ */
+function mangapress_has_cover_image()
+{
+    global $post;
+
+    if (!$post) {
+        return false;
+    }
+
+    return (bool)get_post_meta($post->ID, 'mangapress_cover_image_id', true);
+}
+
+/**
+ * Get the comic's cover image
+ *
+ * @param null|\WP_Post $post
+ * @param string $size
+ * @param array $attr
+ * @return string|void
+ */
+function mangapress_the_comic_cover($post = null, $size = 'thumbnail', $attr = [])
+{
+    $post = get_post($post);
+    if (!$post) {
+        return '';
+    }
+
+    $cover_image_id = get_post_meta($post->ID, 'mangapress_cover_image_id', true);
+
+    if (!$cover_image_id) {
+        return '';
+    } else {
+        echo wp_get_attachment_image($cover_image_id, $size, false, $attr);
+    }
+}
 
 /**
  * mangapress_comic_navigation()

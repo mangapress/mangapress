@@ -317,9 +317,7 @@ class Comics implements PluginComponent
      */
     public function meta_box_cb()
     {
-
-        $theme_supports = get_theme_support('mangapress');
-        if (!empty($theme_supports) && in_array('cover-images', $theme_supports[0])) {
+        if (mangapress_theme_supports_cover_images()) {
             add_meta_box(
                 'cover-image',
                 __('Cover Image', MP_DOMAIN),

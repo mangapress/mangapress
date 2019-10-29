@@ -26,6 +26,7 @@ return array(
     'MangaPress\\Options\\OptionsGroup' => $baseDir . '/src/Options/OptionsGroup.php',
     'MangaPress\\Plugin' => $baseDir . '/src/Plugin.php',
     'MangaPress\\PluginComponent' => $baseDir . '/src/PluginComponent.php',
+    'MangaPress\\Posts\\Actions' => $baseDir . '/src/Posts/Actions.php',
     'MangaPress\\Posts\\Comics' => $baseDir . '/src/Posts/Comics.php',
     'MangaPress\\Theme\\Compatible\\Twentynineteen' => $baseDir . '/src/Theme/Compatible/Twentynineteen.php',
     'MangaPress\\Theme\\Interfaces\\Theme' => $baseDir . '/src/Theme/Interfaces/Theme.php',

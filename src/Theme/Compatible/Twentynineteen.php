@@ -58,20 +58,22 @@ class Twentynineteen implements Theme
      */
     public function page_header()
     {
+        $classes = is_singular() && twentynineteen_can_show_post_thumbnail() && mangapress_has_cover_image()
+            ? 'site-header featured-image' : 'site-header';
         ?>
-        <header id="masthead" class="site-header">
+        <header id="masthead" class="<?php echo $classes; ?>">
 
             <div class="site-branding-container">
                 <?php get_template_part('template-parts/header/site', 'branding'); ?>
             </div><!-- .site-branding-container -->
 
-            <?php /* if (is_singular() && twentynineteen_can_show_post_thumbnail()) : ?>
+            <?php
+            if (is_singular() && mangapress_has_cover_image()) : ?>
                 <div class="site-featured-image">
                     <?php
-                    twentynineteen_post_thumbnail();
+                    mangapress_twentynineteen_comic_cover();
                     the_post();
-                    $discussion = !is_page() && twentynineteen_can_show_post_thumbnail()
-                                            ? twentynineteen_get_discussion_data() : null;
+                    $discussion = !is_page() ? twentynineteen_get_discussion_data() : null;
 
                     $classes = 'entry-header';
                     if (!empty($discussion) && absint($discussion->responses) > 0) {
@@ -83,7 +85,7 @@ class Twentynineteen implements Theme
                     </div><!-- .entry-header -->
                     <?php rewind_posts(); ?>
                 </div>
-            <?php endif; */ ?>
+            <?php endif; ?>
         </header><!-- #masthead -->
         <?php
     }
