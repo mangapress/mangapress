@@ -337,6 +337,7 @@ class OptionsGroup implements PluginComponent
         $section           = key($options);
         $available_options = self::options_fields();
         $default           = Options::get_options();
+        $new_options       = $default;
 
         if ($section === 'nav') {
             //
@@ -397,7 +398,7 @@ class OptionsGroup implements PluginComponent
             ];
         }
 
-        return array_merge($options, $default);
+        return array_merge($default, $new_options);
     }
 
 

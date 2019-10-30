@@ -25,8 +25,8 @@ class TemplateLoader implements PluginComponent
     /**
      * Load Manga+Press templates
      * @param string $template
-     * @global \WP_Query $wp_query
      * @return string
+     * @global \WP_Query $wp_query
      */
     public function template_loader($template)
     {
@@ -120,8 +120,8 @@ class TemplateLoader implements PluginComponent
         }
 
         if ($query->is_main_query() && is_comic_archive_page()) {
-            $order      = Options::get_option('archive_order', 'basic');
-            $orderby    = Options::get_option('archive_orderby', 'basic');
+            $order   = Options::get_option('archive_order', 'basic');
+            $orderby = Options::get_option('archive_orderby', 'basic');
 
             $query->set('order', $order);
             $query->set('orderby', $orderby);
