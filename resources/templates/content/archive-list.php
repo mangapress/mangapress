@@ -1,2 +1,2 @@
-<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-<span class="comic-post-date"><?php the_time(MangaPress\Posts::COMIC_ARCHIVE_DATEFORMAT); ?></span>
+<span class="comic-bookmark"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></span>
+<span class="comic-postdate"><?php the_time(\MangaPress\Posts\Comics::COMIC_ARCHIVE_DATEFORMAT); ?></span>

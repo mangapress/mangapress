@@ -54,6 +54,15 @@
     text-align: center;
 }
 
+.mangapress-archive-feed {
+    list-style: none;
+}
+
+.mangapress-archive-feed > .entry {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .mangapress-archive-gallery {
     display: flex;
     flex-direction: row;
@@ -76,8 +85,7 @@
     display: inline-block;
 }
 
-.comic-title-caption,
-.comic-post-date {
+.comic-title-caption {
     display: block;
     text-align: center;
     margin: 0;

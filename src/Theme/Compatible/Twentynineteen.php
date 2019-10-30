@@ -29,6 +29,8 @@ class Twentynineteen implements Theme
         add_action('mangapress_after_content', [$this, 'after_content']);
         add_action('mangapress_before_article_content', [$this, 'before_article_content']);
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
+        add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
+        add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
     }
 
     /**
@@ -121,7 +123,9 @@ class Twentynineteen implements Theme
      */
     public function before_article_content()
     {
-        echo '<div class="entry-content">';
+        if (!(comic_archive_is_gallery() || comic_archive_is_list())) {
+            echo '<div class="entry-content">';
+        }
     }
 
     /**
@@ -129,6 +133,26 @@ class Twentynineteen implements Theme
      */
     public function after_article_content()
     {
+        if (!(comic_archive_is_gallery() || comic_archive_is_list())) {
+            echo '</div>';
+        }
+    }
+
+    /**
+     * Add markup before start of loop on archive page
+     */
+    public function before_archive_comic_loop()
+    {
+        echo sprintf('<article class="%s">', implode(' ', get_post_class()));
+        echo '<div class="entry-content">';
+    }
+
+    /**
+     * Add markup after end of loop on archive page
+     */
+    public function after_archive_comic_loop()
+    {
         echo '</div>';
+        echo '</article>';
     }
 }
