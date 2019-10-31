@@ -169,6 +169,7 @@ class Plugin implements PluginComponent
             return;
         }
 
+        // these hooks will only work with the Classic Editor
         add_action('edit_form_after_title', [$this, 'edit_form_after_title_archive_page'], 555);
         add_action('edit_form_after_title', [$this, 'edit_form_after_title_latest_page'], 555);
         add_action('edit_form_after_title', [$this, 'edit_form_after_title_front_posts_page'], 555);
