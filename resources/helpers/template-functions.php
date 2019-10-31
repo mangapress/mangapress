@@ -426,9 +426,11 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     }
 
     $calendar_output .= "</tr>\n</thead>\n";
-    $calendar_output .= "<tfoot>\n<tr>\n";
-    $calendar_output .= "<td colspan='7'></td>";
-    $calendar_output .= "</tr>\n</tfoot>\n";
+    if ($nav) {
+        $calendar_output .= "<tfoot>\n<tr>\n";
+        $calendar_output .= "<td colspan='7'></td>";
+        $calendar_output .= "</tr>\n</tfoot>\n";
+    }
 
     $calendar_body = "<tbody>%s</tbody>\n</table>";
     $week_days     = '';
