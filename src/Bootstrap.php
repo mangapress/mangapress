@@ -36,17 +36,18 @@ class Bootstrap
 
         (new Plugin())
             ->init()
-            ->load_components([
-                Comics::class,
-                Shortcode::class,
-                OptionsGroup::class,
-                Options::class,
-                Admin::class,
-                WidgetsRegistry::class,
-                ThemeCompat::class,
-                Shortcode::class,
-                TemplateLoader::class,
-            ]);
+            ->load_components(
+                [
+                    Comics::class,
+                    OptionsGroup::class,
+                    Options::class,
+                    Admin::class,
+                    WidgetsRegistry::class,
+                    ThemeCompat::class,
+                    Shortcode::class,
+                    TemplateLoader::class,
+                ]
+            );
     }
 
     /**
