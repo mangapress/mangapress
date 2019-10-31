@@ -122,7 +122,25 @@ do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_s
 
         endwhile;
     } else {
-        // here
+        /**
+         * @global wpdb $wpdb WordPress DB object
+         */
+        global $wpdb;
+
+        $years = $wpdb->get_col(
+            "SELECT DISTINCT YEAR(post_date) as year FROM {$wpdb->posts} 
+                WHERE 1=1 
+                    AND post_type='mangapress_comic'
+                    AND post_status='publish'    
+                ORDER BY post_date DESC"
+        );
+
+        foreach ($years as $year) {
+            for ($i = 12; $i > 1; $i--) {
+                mangapress_get_calendar($i, $year, false, true);
+            }
+        }
+
     };
 } else {
 // something this way goes

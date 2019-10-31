@@ -341,13 +341,14 @@ function mangapress_comic_navigation($args = [], $echo = true)
  * @param int $yr Calendar year
  * @param bool $nav Output navigation
  * @param bool $skip_empty_months Skip over months that don't contain posts
- * @param bool $initial Optional, default is true. Use initial calendar names.
+ * @param bool $abbr Optional, default is true. Use initial calendar names.
+ * @param bool|array $posts
  * @param bool $echo Optional, default is true. Set to false for return.
  * @return void|string
  */
-function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true)
+function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $abbr = true, $echo = true)
 {
-    global $wpdb, $m, $wp_locale, $posts;
+    global $wpdb, $m, $wp_locale;
 
     if (!$month) {
         global $monthnum;
@@ -361,256 +362,169 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         $year = $yr;
     }
 
-    $key = md5($m . $monthnum . $year);
-    if ($cache = wp_cache_get('mangapress_get_calendar', 'calendar')) {
-        if (is_array($cache) && isset($cache[$key])) {
-            if ($echo) {
-                /**
-                 * Filter the HTML calendar output.
-                 *
-                 * @param string $calendar_output HTML output of the calendar.
-                 * @since 2.9.0
-                 */
-                echo apply_filters('mangapress_get_calendar', $cache[$key]);
-                return '';
-            } else {
-                /** This filter is documented in wp-includes/general-template.php */
-                return apply_filters('mangapress_get_calendar', $cache[$key]);
-            }
-        }
-    }
+    $cache_key = 'mangapress_calendar-' . $year . $monthnum;
 
-    if (!is_array($cache)) {
-        $cache = [];
-    }
-
-    // Quick check. If we have no posts at all, abort!
+    $posts = wp_cache_get($cache_key, MP_DOMAIN);
     if (!$posts) {
-        $gotsome = $wpdb->get_var("SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1");
-        if (!$gotsome) {
-            $cache[$key] = '';
-            wp_cache_set('mangapress_get_calendar', $cache, 'mangapress_calendar');
-            return '';
-        }
+        // check the month for posts—bail if none exist
+        $sql   = $wpdb->prepare(
+            "SELECT DISTINCT post_date, ID FROM {$wpdb->posts} WHERE "
+            . "MONTH(post_date) = %s AND YEAR(post_date) = %s "
+            . "AND post_type=%s "
+            . "AND post_status='publish' "
+            . "GROUP BY DAYOFMONTH(post_date) "
+            . "ORDER BY post_date DESC",
+            $monthnum,
+            $year,
+            \MangaPress\Posts\Comics::POST_TYPE
+        );
+        $posts = $wpdb->get_results($sql, OBJECT_K);
+
+        // cache in transients for 30 days, or when a new comic post is added
+        // additionally, we'll cache the markup once it's generated
+        wp_cache_set($cache_key, $posts, MP_DOMAIN);
     }
 
-    if (isset($_GET['w'])) {
-        $w = '' . intval($_GET['w']);
+    if (empty($posts)) {
+        return '';
     }
 
-    // week_begins = 0 stands for Sunday
-    $week_begins = intval(get_option('start_of_week'));
-
-    // Let's figure out when we are
-    if (!empty($monthnum) && !empty($year)) {
-        $thismonth = '' . zeroise(intval($monthnum), 2);
-        $thisyear  = '' . intval($year);
-    } elseif (!empty($w)) {
-        // We need to get the month from MySQL
-        $thisyear  = '' . intval(substr($m, 0, 4));
-        $d         = (($w - 1) * 7) + 6; //it seems MySQL's weeks disagree with PHP's
-        $thismonth = $wpdb->get_var("SELECT DATE_FORMAT((DATE_ADD('{$thisyear}0101', INTERVAL $d DAY) ), '%m')");
-    } elseif (!empty($m)) {
-        $thisyear = '' . intval(substr($m, 0, 4));
-        if (strlen($m) < 6) {
-            $thismonth = '01';
-        } else {
-            $thismonth = '' . zeroise(intval(substr($m, 4, 2)), 2);
-        }
-    } else {
-        $thisyear  = gmdate('Y', current_time('timestamp'));
-        $thismonth = gmdate('m', current_time('timestamp'));
-    }
-
-    $unixmonth = mktime(0, 0, 0, $thismonth, 1, $thisyear);
-    $last_day  = date('t', $unixmonth);
-
-    $previous = '';
-    $next     = '';
-    if ($nav) {
-        // Get the next and previous month and year with at least one post
-        $previous = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-            FROM $wpdb->posts
-            WHERE post_date < '$thisyear-$thismonth-01'
-            AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
-                ORDER BY post_date DESC
-                LIMIT 1");
-        $next     = $wpdb->get_row("SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-            FROM $wpdb->posts
-            WHERE post_date > '$thisyear-$thismonth-{$last_day} 23:59:59'
-            AND post_type = 'post' AND post_status = 'publish'
-                ORDER BY post_date ASC
-                LIMIT 1");
-    }
-
-    /* translators: Calendar caption: 1: month name, 2: 4-digit year */
-    $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output  = '<table class="mangapress-calendar">
-	<caption>' . sprintf($calendar_caption, $wp_locale->get_month($thismonth), date('Y', $unixmonth)) . '</caption>
-	<thead>
-	<tr>';
-
-    $myweek = [];
-
-    for ($wdcount = 0; $wdcount <= 6; $wdcount++) {
-        $myweek[] = $wp_locale->get_weekday(($wdcount + $week_begins) % 7);
-    }
-
-    foreach ($myweek as $wd) {
-        $day_name        = (true == $initial) ? $wp_locale->get_weekday_initial($wd) : $wp_locale->get_weekday_abbrev($wd);
-        $wd              = esc_attr($wd);
-        $calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$day_name</th>";
-    }
-
+    add_filter('day_link', 'mangapress_day_link', 10, 4);
     add_filter('month_link', 'mangapress_month_link', 10, 3);
-    $calendar_output .= '
-	</tr>
-	</thead>';
 
-    if ($nav) {
-        $calendar_output .= "
-        <tfoot>
-        <tr>";
-
-        if ($previous) {
-            $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . get_month_link($previous->year, $previous->month) . '">&laquo; ' . $wp_locale->get_month_abbrev($wp_locale->get_month($previous->month)) . '</a></td>';
-        } else {
-            $calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
-        }
-
-        $calendar_output .= "\n\t\t" . '<td class="pad">&nbsp;</td>';
-
-        if ($next) {
-            $calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . get_month_link($next->year, $next->month) . '">' . $wp_locale->get_month_abbrev($wp_locale->get_month($next->month)) . ' &raquo;</a></td>';
-        } else {
-            $calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
-        }
-
-        $calendar_output .= "
-        	</tr>
-	    </tfoot>";
-    } else {
-        $calendar_output .= "<tfoot><tr><td colspan=\"7\">&nbsp;</td></tr></tfoot>";
+    $dayswithposts = [];
+    foreach ($posts as $post) {
+        $date                   = date('Y-m-d', strtotime($post->post_date));
+        $dayswithposts[$date][] = $post;
     }
 
-    remove_filter('month_link', 'mangapress_month_link');
+    $unix_month = mktime(0, 0, 0, $monthnum, 1, $year);
+    $last_day   = date('t', $unix_month);
 
-    $calendar_output .= '
+    $calendar_caption = _x('%1$s %2$s', 'calendar caption');
+    $calendar_output  = '<table id="mangapress-calendar-' . intval(date('m', $unix_month)) . '">
+	<caption>' . sprintf(
+            $calendar_caption,
+            $wp_locale->get_month($monthnum),
+            date('Y', $unix_month)
+        ) . "</caption>
+	<thead>\n
+	<tr>\n";
 
-	<tbody>
-	<tr>';
+    for ($wd_count = 0; $wd_count <= 6; $wd_count++) {
+        $day_name = $abbr
+            ? $wp_locale->get_weekday(($wd_count) % 7)
+            : $wp_locale->get_weekday_abbrev(($wd_count) % 7);
 
-    // Get days with posts
-    $dayswithposts = $wpdb->get_results("SELECT DISTINCT DAYOFMONTH(post_date)
-		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
-		AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
-		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", ARRAY_N);
+        $wd = esc_attr($day_name);
 
-
-    if ($dayswithposts) {
-        foreach ((array)$dayswithposts as $daywith) {
-            $daywithpost[] = $daywith[0];
-        }
-    } else {
-        $daywithpost = [];
+        $calendar_output .= sprintf(
+            '<th scope="col" title="%s">%s</th>' . "\n",
+            $wd,
+            $day_name
+        );
     }
 
-    if (empty($daywithpost) && $skip_empty_months) {
-        return;
-    }
+    $calendar_output .= "</tr>\n</thead>\n";
+    $calendar_output .= "<tfoot>\n<tr>\n";
+    $calendar_output .= "<td colspan='7'></td>";
+    $calendar_output .= "</tr>\n</tfoot>\n";
 
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'camino') !== false || stripos($_SERVER['HTTP_USER_AGENT'], 'safari') !== false) {
-        $ak_title_separator = "\n";
-    } else {
-        $ak_title_separator = ', ';
-    }
+    $calendar_body = "<tbody>%s</tbody>\n</table>";
+    $week_days     = '';
+    $week_count    = 1; // can't be higher than 5?
 
-    $ak_titles_for_day = [];
-    $ak_post_titles    = $wpdb->get_results("SELECT ID, post_title, DAYOFMONTH(post_date) as dom "
-                                            . "FROM $wpdb->posts "
-                                            . "WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
-                                            . "AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-                                            . "AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'");
+    for ($day = 1; $day <= $last_day; $day++) {
+        $date  = mktime(0, 0, 0, $monthnum, $day, $year);
+        $today = mktime(0, 0, 0);
 
-    if ($ak_post_titles) {
-        foreach ((array)$ak_post_titles as $ak_post_title) {
+        $day_of_week = (int)date('w', $date);
+        $pad         = calendar_week_mod(date('w', $date));
 
-            /** This filter is documented in wp-includes/post-template.php */
-            $post_title = esc_attr(apply_filters('the_title', $ak_post_title->post_title, $ak_post_title->ID));
+        $is_today = $date === $today;
 
-            if (empty($ak_titles_for_day['day_' . $ak_post_title->dom])) {
-                $ak_titles_for_day['day_' . $ak_post_title->dom] = '';
-            }
-            if (empty($ak_titles_for_day["$ak_post_title->dom"])) { // first one
-                $ak_titles_for_day["$ak_post_title->dom"] = $post_title;
-            } else {
-                $ak_titles_for_day["$ak_post_title->dom"] .= $ak_title_separator . $post_title;
-            }
-        }
-    }
-
-    // See how much we should pad in the beginning
-    $pad = calendar_week_mod(date('w', $unixmonth) - $week_begins);
-    if (0 != $pad) {
-        $calendar_output .= "\n\t\t" . '<td colspan="' . esc_attr($pad) . '" class="pad">&nbsp;</td>';
-    }
-
-    $daysinmonth = intval(date('t', $unixmonth));
-    for ($day = 1; $day <= $daysinmonth; ++$day) {
-        if (isset($newrow) && $newrow) {
-            $calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
-        }
-        $newrow = false;
-
-        if ($day == gmdate('j', current_time('timestamp')) && $thismonth == gmdate('m', current_time('timestamp')) && $thisyear == gmdate('Y', current_time('timestamp'))) {
-            $calendar_output .= '<td id="today">';
-        } else {
-            $calendar_output .= '<td>';
-        }
-
-        if (in_array($day, $daywithpost)) { // any posts today?
-            add_filter('day_link', 'mangapress_day_link', 10, 4);
-            $calendar_output .= vsprintf(
-                '<a href="%1$s" title="%2$s">%3$s</a>',
-                [
-                    get_day_link($thisyear, $thismonth, $day),
-                    esc_attr($ak_titles_for_day[$day]),
-                    $day,
-                ]
+        if (isset($dayswithposts[date('Y-m-d', $date)])) {
+            $week_day = sprintf(
+                '<td%s><a href="%s">%s</a></td>',
+                $is_today ? ' id="today"' : '',
+                get_day_link($year, $monthnum, $day),
+                $day
             );
-            remove_filter('day_link', 'mangapress_day_link');
         } else {
-            $calendar_output .= $day;
+            $week_day = sprintf(
+                '<td%s>%s</td>',
+                $is_today ? ' id="today"' : '',
+                $day
+            );
         }
-        $calendar_output .= '</td>';
 
-        if (6 == calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear)) - $week_begins)) {
-            $newrow = true;
+
+        if ($pad != 0 && $week_count == 1) {
+            if ($day === 1) {
+                $week_days .= "\t" . sprintf('<tr><td colspan="%s"></td>', $pad);
+            }
+            $week_days .= $week_day;
+        } else {
+            if ($day_of_week == 0) {
+                $week_days .= '<tr>';
+            }
+            $week_days .= $week_day;
         }
+
+        if ($day == $last_day) {
+            $pad       = 6 - $day_of_week;
+            $week_days .= "\n\t\t" . '<td class="pad" colspan="' . esc_attr($pad) . '">&nbsp;</td>';
+        }
+
+
+        if (6 == (int)calendar_week_mod(date('w', mktime(0, 0, 0, $monthnum, $day, $year)))) {
+            $week_days .= '</tr>';
+            $week_count++;
+        }
+
     }
 
-    $pad = 7 - calendar_week_mod(date('w', mktime(0, 0, 0, $thismonth, $day, $thisyear)) - $week_begins);
-    if ($pad != 0 && $pad != 7) {
-        $calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . esc_attr($pad) . '">&nbsp;</td>';
-    }
+    $calendar_output .= sprintf($calendar_body, $week_days);
 
-    $calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
+    echo $calendar_output;
 
-    $cache[$key] = $calendar_output;
-    wp_cache_set('mangapress_get_calendar', $cache, 'mangapress_calendar');
+    remove_filter('day_link', 'mangapress_day_link');
+    remove_filter('month_link', 'mangapress_month_link');
+}
 
-    if ($echo) {
-        /**
-         * Filter the HTML calendar output.
-         *
-         * @param string $calendar_output HTML output of the calendar.
-         * @since 2.9
-         *
-         */
-        echo apply_filters('mangapress_get_calendar', $calendar_output);
-    } else {
-        return apply_filters('mangapress_get_calendar', $calendar_output);
-    }
+/**
+ * Create a date-archive permalink for Comics (for monthly links)
+ *
+ * @param string $monthlink Existing link to be modified or replaced
+ * @param string $year
+ * @param string $month
+ * @return string|void
+ */
+function mangapress_month_link($monthlink, $year = '', $month = '')
+{
+    $comic           = new \MangaPress\Posts\Comics();
+    $slug            = $comic->get_front_slug();
+    $month_permalink = home_url("/{$slug}/{$year}/{$month}");
+    return $month_permalink;
+}
+
+/**
+ * Create a date-archive permalink for Comics
+ *
+ * @param string $daylink Existing link to be modified or replaced
+ * @param string $year Year
+ * @param string $month Month
+ * @param string $day Day
+ *
+ * @return string
+ */
+function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
+{
+    $comic         = new \MangaPress\Posts\Comics();
+    $slug          = $comic->get_front_slug();
+    $relative      = "/{$slug}/{$year}/{$month}/{$day}";
+    $day_permalink = home_url($relative);
+    return $day_permalink;
 }
 
 

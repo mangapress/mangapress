@@ -66,6 +66,9 @@ class Comics implements PluginComponent
     public function init()
     {
         $this->register_content_types();
+//        $this->rewrite_rules();
+
+        add_action('init', [$this, 'rewrite_rules']);
 
         // Setup Manga+Press Post Options box
         add_action('wp_ajax_' . Actions::ACTION_INSERT_COMIC, [$this, 'get_image_html_ajax']);
@@ -180,6 +183,81 @@ class Comics implements PluginComponent
         if (Options::get_option('latestcomic_page', 'basic') == '') {
             add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
         }
+
+        $post_type = self::POST_TYPE;
+        $slug      = $this->get_front_slug();
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/([0-9]{1,2})/?$",
+            'index.php?year=$matches[1]&monthnum=$matches[2]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$",
+            'index.php?year=$matches[1]&feed=$matches[2]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/page/?([0-9]{1,})/?$",
+            'index.php?year=$matches[1]&paged=$matches[2]&post_type=' . $post_type,
+            'top'
+        );
+
+        add_rewrite_rule(
+            "{$slug}/([0-9]{4})/?$",
+            'index.php?year=$matches[1]&post_type=' . $post_type,
+            'top'
+        );
     }
 
     /**
@@ -247,7 +325,7 @@ class Comics implements PluginComponent
         if ("cb" == $column) {
             echo "<input type=\"checkbox\" value=\"{$post->ID}\" name=\"post[]\" />";
         } elseif ("thumbnail" == $column) {
-            $thumbnail_html = get_the_post_thumbnail($post->ID, 'comic-admin-thumb', ['class' => 'wp-caption']);
+            $thumbnail_html = get_the_post_thumbnail($post->ID, 'thumbnail', ['class' => 'wp-caption']);
 
             if ($thumbnail_html) {
                 $edit_link = get_edit_post_link($post->ID, 'display');

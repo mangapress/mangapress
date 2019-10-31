@@ -53,6 +53,7 @@ class Plugin implements PluginComponent
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
         add_action('init', [$this, 'do_rewrite_flush']);
+
         return $this;
     }
 
