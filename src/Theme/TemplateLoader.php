@@ -57,7 +57,7 @@ class TemplateLoader implements PluginComponent
     {
         if (is_comic()) {
             $template = 'single-comic.php';
-        } elseif (is_comic_archive_page()) {
+        } elseif (is_comic_archive_page() && !is_date()) {
             $template = 'archive-comic.php';
         } elseif (is_latest_comic_page()) {
             $template = 'page-latest-comic.php';
