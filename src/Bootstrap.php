@@ -6,6 +6,7 @@ namespace MangaPress;
 use MangaPress\Admin\Admin;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Options\Options;
+use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\ThemeCompat;
 use MangaPress\Theme\Shortcode;
@@ -39,6 +40,7 @@ class Bootstrap
             ->load_components(
                 [
                     Comics::class,
+                    ComicPages::class,
                     OptionsGroup::class,
                     Options::class,
                     Admin::class,

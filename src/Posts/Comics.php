@@ -3,6 +3,7 @@
 
 namespace MangaPress\Posts;
 
+use MangaPress\ContentTypes\ContentTypeRegistry;
 use MangaPress\PluginComponent;
 use MangaPress\ContentTypes\Taxonomy;
 use MangaPress\ContentTypes\PostType;
@@ -12,7 +13,7 @@ use MangaPress\Options\Options;
  * Class Posts
  * @package MangaPress\Posts
  */
-class Comics implements PluginComponent
+class Comics implements PluginComponent, ContentTypeRegistry
 {
 
 

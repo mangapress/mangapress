@@ -3,6 +3,9 @@
 
 namespace MangaPress;
 
+use MangaPress\Posts\ComicPages;
+use MangaPress\Posts\Comics;
+
 /**
  * Class Install
  * @package MangaPress
@@ -114,17 +117,6 @@ class Install
     }
 
     /**
-     * Static function for plugin deactivation.
-     *
-     * @return void
-     */
-    public function do_deactivate()
-    {
-        delete_option('rewrite_rules');
-        flush_rewrite_rules(false);
-    }
-
-    /**
      * Run routines after plugin has been activated
      *
      * @return void
@@ -149,7 +141,7 @@ class Install
         // create a default series category
         $term = wp_insert_term(
             'Default Series',
-            Posts::TAX_SERIES,
+            Comics::TAX_SERIES,
             [
                 'description' => __(
                     'Default Series category created when plugin is activated. '
@@ -160,9 +152,37 @@ class Install
             ]
         );
 
+        // create latest comic and comic archive posts
+        wp_insert_post(
+            [
+                'post_type'  => ComicPages::POST_TYPE,
+                'post_title' => 'Comic Archives',
+                'post_name'  => 'comic-archives',
+            ]
+        );
+
+        wp_insert_post(
+            [
+                'post_type'  => ComicPages::POST_TYPE,
+                'post_title' => 'Latest Comic',
+                'post_name'  => 'latest-comic',
+            ]
+        );
+
         if (!($term instanceof \WP_Error)) {
             add_option('mangapress_default_category', $term['term_id'], '', 'no');
         }
+    }
+
+    /**
+     * Static function for plugin deactivation.
+     *
+     * @return void
+     */
+    public function do_deactivate()
+    {
+        delete_option('rewrite_rules');
+        flush_rewrite_rules(false);
     }
 
     /**
