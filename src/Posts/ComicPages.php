@@ -26,6 +26,8 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     public function init()
     {
         $this->register_content_types();
+
+        add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
     }
 
     /**
@@ -57,5 +59,31 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
                 ],
             ]
         );
+    }
+
+    /**
+     * Add to statuses to indicate what pages do what
+     *
+     * @param string[] $post_statuses Array of post status
+     * @param \WP_Post $post Current post in the loop
+     *
+     * @return string[]
+     */
+    public function display_post_states($post_statuses, $post)
+    {
+        if (!is_admin() || get_post_type($post) !== ComicPages::POST_TYPE) {
+            return $post_statuses;
+        }
+
+        $is_what = get_post_meta($post->ID, 'comic_page__type', true);
+        if ($is_what === 'latest') {
+            $post_statuses[] = __('Latest Comic Page', MP_DOMAIN);
+        }
+
+        if ($is_what === 'archive') {
+            $post_statuses[] = __('Comic Archive Page', MP_DOMAIN);
+        }
+
+        return $post_statuses;
     }
 }

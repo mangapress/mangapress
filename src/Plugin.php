@@ -9,7 +9,6 @@ use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\ThemeCompat;
 use MangaPress\PluginComponent;
-use PhpOption\Option;
 
 /**
  * Class Plugin

@@ -5,6 +5,7 @@ namespace MangaPress\Theme;
 
 use MangaPress\Options\Options;
 use MangaPress\PluginComponent;
+use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 
 /**

@@ -25,17 +25,21 @@ if (!function_exists('is_latest_comic_page')) {
      */
     function is_latest_comic_page()
     {
-        global $post;
+        global $wp_query, $post;
 
         // check for latest-comic query var
         if (is_latest_comic_endpoint()) {
             return false;
         }
 
-        if (is_singular(\MangaPress\Posts\ComicPages::POST_TYPE)) {
-            $page_id = get_option('mangapress_latest_page', false);
+        if ($wp_query->get('post_type') === \MangaPress\Posts\ComicPages::POST_TYPE) {
+            $page_id = (int)get_option('mangapress_latest_page', false);
             if ($page_id) {
-                return is_page($page_id);
+                /**
+                 * @var \WP_Post $page
+                 */
+                $page = get_post($page_id);
+                return (get_post_field('post_name', $page) === $wp_query->get('name', false));
             }
         }
 
@@ -44,7 +48,8 @@ if (!function_exists('is_latest_comic_page')) {
             return false;
         }
 
-        return is_page($latest_comic_page);
+
+        return (get_post_field('post_name', $post) === $latest_comic_page);
     }
 }
 
@@ -74,10 +79,21 @@ if (!function_exists('is_comic_archive_page')) {
     {
         global $wp_query, $post;
 
-        if (is_singular(\MangaPress\Posts\ComicPages::POST_TYPE)) {
-            $page_id = get_option('mangapress_latest_page', false);
+        if ($wp_query->get_queried_object() === null) {
+            $page_id = (int)get_option('mangapress_archive_page', false);
             if ($page_id) {
-                return is_page($page_id);
+                /**
+                 * @var \WP_Post $page
+                 */
+                $page = get_post($page_id);
+                return (get_post_field('post_name', $page) === $wp_query->get('name', false));
+            }
+        }
+
+        if ($wp_query->is_singular([\MangaPress\Posts\ComicPages::POST_TYPE])) {
+            $page_id = (int)get_option('mangapress_archive_page', false);
+            if ($page_id) {
+                return is_single($page_id);
             }
         }
 

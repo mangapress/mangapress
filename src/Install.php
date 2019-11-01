@@ -158,11 +158,12 @@ class Install
             // create latest comic and comic archive posts
             $archives = wp_insert_post(
                 [
-                    'post_type'  => ComicPages::POST_TYPE,
-                    'post_title' => 'Comic Archives',
-                    'post_name'  => 'comic-archives',
-                    'meta_input' => [
-                        'comicarchive_page' => true,
+                    'post_type'   => ComicPages::POST_TYPE,
+                    'post_title'  => 'Comic Archives',
+                    'post_name'   => 'comic-archives',
+                    'post_status' => 'draft',
+                    'meta_input'  => [
+                        'comic_page__type' => 'archive',
                     ],
                 ]
             );
@@ -175,12 +176,13 @@ class Install
         if (!get_option('mangapress_latest_page')) {
             $latest = wp_insert_post(
                 [
-                    'post_type'  => ComicPages::POST_TYPE,
-                    'post_title' => 'Latest Comic',
-                    'post_name'  => 'latest-comic',
+                    'post_type'   => ComicPages::POST_TYPE,
+                    'post_title'  => 'Latest Comic',
+                    'post_name'   => 'latest-comic',
+                    'post_status' => 'draft',
                     [
                         'meta_input' => [
-                            'latestcomic_page' => true,
+                            'comic_page__type' => 'latest',
                         ],
                     ],
                 ]
