@@ -161,6 +161,9 @@ class Install
                     'post_type'  => ComicPages::POST_TYPE,
                     'post_title' => 'Comic Archives',
                     'post_name'  => 'comic-archives',
+                    'meta_input' => [
+                        'comicarchive_page' => true,
+                    ],
                 ]
             );
 
@@ -175,6 +178,11 @@ class Install
                     'post_type'  => ComicPages::POST_TYPE,
                     'post_title' => 'Latest Comic',
                     'post_name'  => 'latest-comic',
+                    [
+                        'meta_input' => [
+                            'latestcomic_page' => true,
+                        ],
+                    ],
                 ]
             );
 
