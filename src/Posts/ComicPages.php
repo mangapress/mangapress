@@ -7,6 +7,10 @@ use MangaPress\ContentTypes\ContentTypeRegistry;
 use MangaPress\ContentTypes\PostType;
 use MangaPress\PluginComponent;
 
+/**
+ * Class ComicPages
+ * @package MangaPress\Posts
+ */
 class ComicPages implements PluginComponent, ContentTypeRegistry
 {
     const POST_TYPE = 'mangapress_comicpage';
