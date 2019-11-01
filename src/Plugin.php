@@ -9,6 +9,7 @@ use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\ThemeCompat;
 use MangaPress\PluginComponent;
+use PhpOption\Option;
 
 /**
  * Class Plugin
@@ -50,6 +51,7 @@ class Plugin implements PluginComponent
         );
 
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
+        add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
         add_action('init', [$this, 'do_rewrite_flush']);
@@ -119,6 +121,32 @@ class Plugin implements PluginComponent
     }
 
     /**
+     * Set post status for designated pages
+     *
+     * @param string[] $post_states Array of post states
+     * @param \WP_Post $post
+     * @return array
+     */
+    public function display_post_states($post_states, $post)
+    {
+        if (!is_admin()) {
+            return $post_states;
+        }
+
+        $latest  = Options::get_option('latestcomic_page', 'basic');
+        $archive = Options::get_option('comicarchive_page', 'basic');
+        if ($latest === $post->post_name) {
+            $post_states[] = 'Latest Comic Page';
+        }
+
+        if ($archive === $post->post_name) {
+            $post_states[] = 'Comic Archive Page';
+        }
+
+        return $post_states;
+    }
+
+    /**
      * Add additional links to action menu
      *
      * @param array $actions An array of plugin action links.
@@ -134,7 +162,7 @@ class Plugin implements PluginComponent
         $menu_link           = menu_page_url('mangapress-options-page', false);
         $settings            = __('Settings', MP_DOMAIN);
         $actions['settings'] = vsprintf(
-            '<a href="%1$s" aria-label="%2$s">%2$s</a>',
+            '<a href=" % 1$s" aria-label=" % 2$s">%2$s</a>',
             [
                 $menu_link,
                 $settings,
@@ -201,15 +229,15 @@ class Plugin implements PluginComponent
                 wp_add_inline_script(
                     'wp-notices',
                     sprintf(
-                        'wp.data.dispatch( "core/notices" )' .
-                        '.createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
+                        'wp.data.dispatch( "core / notices" )' .
+                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
                         __('You are currently editing the page that shows your archived comics.', MP_DOMAIN),
                         false
                     ),
                     'after'
                 );
             } else {
-                echo '<div class="notice notice-warning inline"><p>'
+                echo '<div class="notice notice - warning inline"><p>'
                      . __('You are currently editing the page that shows your archived comics.', MP_DOMAIN)
                      . '</p></div>';
                 remove_post_type_support($post_type, 'editor');
@@ -244,15 +272,15 @@ class Plugin implements PluginComponent
                 wp_add_inline_script(
                     'wp-notices',
                     sprintf(
-                        'wp.data.dispatch( "core/notices" )' .
-                        '.createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
+                        'wp.data.dispatch( "core / notices" )' .
+                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
                         __('You are currently editing the page that shows your latest comics.', MP_DOMAIN),
                         false
                     ),
                     'after'
                 );
             } else {
-                echo '<div class="notice notice-warning inline"><p>'
+                echo '<div class="notice notice - warning inline"><p>'
                      . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
                      . '</p></div>';
                 remove_post_type_support($post_type, 'editor');
@@ -280,8 +308,8 @@ class Plugin implements PluginComponent
                 wp_add_inline_script(
                     'wp-notices',
                     sprintf(
-                        'wp.data.dispatch( "core/notices" )' .
-                        '.createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
+                        'wp.data.dispatch( "core / notices" )' .
+                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
                         __(
                             'Either assign Latest/Comic archive to different pages, '
                             . 'or assign Home Page/Post Page to different pages.',
@@ -300,8 +328,8 @@ class Plugin implements PluginComponent
                 wp_add_inline_script(
                     'wp-notices',
                     sprintf(
-                        'wp.data.dispatch( "core/notices" )' .
-                        '.createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
+                        'wp.data.dispatch( "core / notices" )' .
+                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
                         __(
                             'You have assigned this page to be the Home Page or the Posts page. '
                             . 'This option is not compatible with Manga+Press and will break the functionality '
@@ -313,7 +341,7 @@ class Plugin implements PluginComponent
                     'after'
                 );
             } else {
-                echo '<div class="notice notice-error inline">';
+                echo '<div class="notice notice - error inline">';
                 echo '<p>'
                      . __(
                          'You have assigned this page to be the Home Page or the Posts page. '
