@@ -122,7 +122,7 @@ class Comics implements PluginComponent, ContentTypeRegistry
                     'supports'             => [
                         'title',
                         'comments',
-                        'thumbnails',
+                        'thumbnail',
                         'publicize',
                         'cover-images',
                     ],
