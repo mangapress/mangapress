@@ -562,20 +562,20 @@ class Comics implements PluginComponent, ContentTypeRegistry
             return $post_id;
         }
 
-        if (!wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), Actions::NONCE_INSERT_COMIC)) {
-            return $post_id;
+        if (wp_verify_nonce(filter_input(INPUT_POST, '_insert_comic'), Actions::NONCE_INSERT_COMIC)) {
+            $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
+            if ($image_ID) {
+                set_post_thumbnail($post_id, $image_ID);
+            }
         }
 
-        $image_ID = (int)filter_input(INPUT_POST, '_mangapress_comic_image', FILTER_SANITIZE_NUMBER_INT);
-        if ($image_ID) {
-            set_post_thumbnail($post_id, $image_ID);
-        }
-
-        $cove_image_id = (int)filter_input(INPUT_POST, '_mangapress_cover_image', FILTER_SANITIZE_NUMBER_INT);
-        if ($cove_image_id) {
-            update_post_meta($post_id, 'mangapress_cover_image_id', $cove_image_id);
-        } else {
-            delete_post_meta($post_id, 'mangapress_cover_image_id');
+        if (wp_verify_nonce(filter_input(INPUT_POST, '_insert_cover-image'), Actions::NONCE_INSERT_COMIC)) {
+            $cover_image_id = (int)filter_input(INPUT_POST, '_mangapress_cover_image', FILTER_SANITIZE_NUMBER_INT);
+            if ($cover_image_id) {
+                update_post_meta($post_id, 'mangapress_cover_image_id', $cover_image_id);
+            } else {
+                delete_post_meta($post_id, 'mangapress_cover_image_id');
+            }
         }
 
         // if no terms have been assigned, assign the default
