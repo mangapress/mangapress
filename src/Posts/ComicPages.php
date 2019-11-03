@@ -79,8 +79,8 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
 
         $comic_type = self::get_page_type(get_post_field('ID', $post));
         if (in_array($comic_type, ['latest', 'archive'])) {
-//            remove_meta_box('postimagediv', self::POST_TYPE, 'side');
-//            remove_meta_box('mangapress_seriesdiv', self::POST_TYPE, 'side');
+            remove_meta_box('postimagediv', self::POST_TYPE, 'side');
+            remove_meta_box('mangapress_seriesdiv', self::POST_TYPE, 'side');
         }
 
         add_meta_box(
