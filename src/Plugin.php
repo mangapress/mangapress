@@ -6,6 +6,7 @@ namespace MangaPress;
 use MangaPress\Admin\Admin;
 use MangaPress\Options\Options;
 use MangaPress\Options\OptionsGroup;
+use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 use MangaPress\Theme\ThemeCompat;
 use MangaPress\PluginComponent;
@@ -236,7 +237,7 @@ class Plugin implements PluginComponent
                     'after'
                 );
             } else {
-                echo '<div class="notice notice - warning inline"><p>'
+                echo '<div class="notice notice-warning inline"><p>'
                      . __('You are currently editing the page that shows your archived comics.', MP_DOMAIN)
                      . '</p></div>';
                 remove_post_type_support($post_type, 'editor');
@@ -279,7 +280,7 @@ class Plugin implements PluginComponent
                     'after'
                 );
             } else {
-                echo '<div class="notice notice - warning inline"><p>'
+                echo '<div class="notice notice-warning inline"><p>'
                      . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
                      . '</p></div>';
                 remove_post_type_support($post_type, 'editor');
@@ -340,7 +341,7 @@ class Plugin implements PluginComponent
                     'after'
                 );
             } else {
-                echo '<div class="notice notice - error inline">';
+                echo '<div class="notice notice-error inline">';
                 echo '<p>'
                      . __(
                          'You have assigned this page to be the Home Page or the Posts page. '
