@@ -156,7 +156,7 @@ class Comics implements PluginComponent, ContentTypeRegistry
          * @param string $slug Default post-type slug
          * @return string
          */
-        return apply_filters('mangapress_comic_front_slug', $this->slug);
+        return apply_filters('mangapress_comic_front_slug', 'comics/' . $this->slug);
     }
 
     /**
