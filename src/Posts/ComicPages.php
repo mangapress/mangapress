@@ -71,9 +71,18 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
 
     /**
      * Load meta boxes
+     * @global \WP_Post $post
      */
     public function meta_box_cb()
     {
+        global $post;
+
+        $comic_type = self::get_page_type(get_post_field('ID', $post));
+        if (in_array($comic_type, ['latest', 'archive'])) {
+//            remove_meta_box('postimagediv', self::POST_TYPE, 'side');
+//            remove_meta_box('mangapress_seriesdiv', self::POST_TYPE, 'side');
+        }
+
         add_meta_box(
             'comicpage-type',
             __('Comic Page Type', MP_DOMAIN),
@@ -82,6 +91,16 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
             'side',
             'high'
         );
+    }
+
+    /**
+     * Get the current page's type
+     * @param int $id
+     * @return string
+     */
+    public static function get_page_type($id)
+    {
+        return get_post_meta($id, 'comic_page__type', true);
     }
 
     /**

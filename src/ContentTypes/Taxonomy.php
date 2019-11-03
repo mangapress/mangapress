@@ -35,6 +35,9 @@ class Taxonomy implements ContentType
         'rewrite'               => true,
         'query_var'             => true,
         'capabilities'          => [],
+        'show_in_rest'          => false,
+        'rest_base'             => false,
+        'rest_controller_class' => false,
     ];
 
     public function register_content_type()
@@ -52,7 +55,7 @@ class Taxonomy implements ContentType
     public function set_arguments($args = [])
     {
 
-        $args = array_merge($this->args, $args);
+        $args = wp_parse_args($args, $this->args);
 
         /**
          * @var $public
@@ -64,6 +67,9 @@ class Taxonomy implements ContentType
          * @var $rewrite
          * @var $query_var
          * @var $capabilities
+         * @var $show_in_rest
+         * @var $rest_base
+         * @var $rest_controller_class
          */
         extract($args);
 
@@ -100,6 +106,9 @@ class Taxonomy implements ContentType
             'rewrite'               => $rewrite,
             'query_var'             => $query_var,
             'capabilities'          => $capabilities,
+            'show_in_rest'          => $show_in_rest,
+            'rest_base'             => $rest_base,
+            'rest_controller_class' => $rest_controller_class,
         ];
 
         $this->args = $args;

@@ -103,11 +103,14 @@ class Comics implements PluginComponent, ContentTypeRegistry
                 'label_plural' => __('Series', MP_DOMAIN),
                 'objects'      => [self::POST_TYPE],
                 'arguments'    => [
-                    'hierarchical' => true,
-                    'query_var'    => 'series',
-                    'rewrite'      => [
+                    'hierarchical'          => true,
+                    'query_var'             => 'series',
+                    'rewrite'               => [
                         'slug' => 'series',
                     ],
+                    'show_in_rest'          => true,
+                    'rest_base'             => 'series',
+                    'rest_controller_class' => 'WP_REST_Terms_Controller',
                 ],
             ]
         );

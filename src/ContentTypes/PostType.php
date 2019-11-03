@@ -79,7 +79,7 @@ class PostType implements ContentType
      */
     public function set_arguments($args = [])
     {
-        $args = array_merge($this->args, $args);
+        $args = wp_parse_args($args, $this->args);
 
         /**
          * @var $labels
