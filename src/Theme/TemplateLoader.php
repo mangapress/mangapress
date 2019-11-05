@@ -109,11 +109,6 @@ class TemplateLoader implements PluginComponent
      */
     public function pre_get_posts(\WP_Query $query)
     {
-        if ($query->is_main_query() && is_latest_comic_endpoint()) {
-            $query->set('post_type', Comics::POST_TYPE);
-            $query->set('posts_per_page', 1);
-        }
-
         if ($query->is_main_query() && is_comic_archive_page()) {
             $order   = Options::get_option('archive_order', 'basic');
             $orderby = Options::get_option('archive_orderby', 'basic');

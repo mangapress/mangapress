@@ -67,7 +67,6 @@ class Comics implements PluginComponent, ContentTypeRegistry
     public function init()
     {
         $this->register_content_types();
-//        $this->rewrite_rules();
 
         add_action('init', [$this, 'rewrite_rules']);
 
@@ -158,6 +157,7 @@ class Comics implements PluginComponent, ContentTypeRegistry
          *
          * @param string $slug Default post-type slug
          * @return string
+         * @since 4.0.0
          */
         return apply_filters('mangapress_comic_front_slug', 'comics/' . $this->slug);
     }
@@ -184,10 +184,6 @@ class Comics implements PluginComponent, ContentTypeRegistry
      */
     public function rewrite_rules()
     {
-        if (Options::get_option('latestcomic_page', 'basic') == '') {
-            add_rewrite_endpoint($this->get_latest_comic_slug(), EP_ROOT);
-        }
-
         $post_type = self::POST_TYPE;
         $slug      = $this->get_front_slug();
 
@@ -262,40 +258,6 @@ class Comics implements PluginComponent, ContentTypeRegistry
             'index.php?year=$matches[1]&post_type=' . $post_type,
             'top'
         );
-    }
-
-    /**
-     * Get current user-specified front-slug for Latest Comic
-     *
-     * @return string
-     */
-    public function get_latest_comic_slug()
-    {
-        /**
-         * mangapress_latest_comic_slug
-         * Allow plugins (or options) to override the Latest Comic slug
-         *
-         * @param string $slug Default Latest Comic slug
-         * @return string
-         */
-        return apply_filters('mangapress_latest_comic_slug', $this->latest_comic_slug);
-    }
-
-    /**
-     * Set the comic slug to a specified page
-     *
-     * @param string $slug
-     *
-     * @return string mixed
-     */
-    public function set_latest_comic_slug($slug)
-    {
-        $latest_comic_slug = 'latest-comic';
-        if (!$latest_comic_slug) {
-            return $slug;
-        }
-
-        return $latest_comic_slug;
     }
 
     /**
@@ -587,11 +549,10 @@ class Comics implements PluginComponent, ContentTypeRegistry
                 && count($_POST['tax_input'][self::TAX_SERIES]) == 1)) {
             $default_cat = get_option('mangapress_default_category');
             wp_set_post_terms($post_id, $default_cat, self::TAX_SERIES);
+        } else {
+            // continue as normal
+            wp_set_post_terms($post_id, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
         }
-//        else {
-//            // continue as normal
-//            wp_set_post_terms($post_id, $_POST['tax_input'][self::TAX_SERIES], self::TAX_SERIES);
-//        }
 
         return $post_id;
     }
