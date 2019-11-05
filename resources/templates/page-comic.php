@@ -3,17 +3,17 @@
  * MangaPress
  *
  * @package Manga_Press
- * @subpackage Manga_Press_Templates\Single_Comic
+ * @subpackage Manga_Press_Templates\Page_Comic
  * @version $Id$
  * @author Jess Green <support@manga-press.com>
  */
 
 /**
- * mangapress_get_comic_header
- *
- * Output theme header specific to Manga+Press, or normal theme header
- * @since 4.0.0
+ * @var \WP_Post $post
  */
+global $post;
+
+/** This action is documented in resources/templates/single-comic.php **/
 do_action('mangapress_get_comic_header');
 
 /**
@@ -25,7 +25,6 @@ do_action('mangapress_get_comic_header');
 do_action('mangapress_before_content');
 
 if (have_posts()) :
-
     /**
      * mangapress_before_comic_loop
      *
@@ -45,6 +44,19 @@ if (have_posts()) :
          */
         do_action('mangapress_before_article');
 
+        /**
+         * mangapress_opening_article_tag
+         *
+         * Filter and then output the opening article tag
+         * @param string $the_content Original post content
+         * @param string $tag The content wrapper tag
+         * @param array $args {
+         * Array of accepted arguments
+         * @type string|array $class Wrapper tag's CSS class
+         * }
+         * @since 4.0.0
+         *
+         */
         echo apply_filters(
             'mangapress_opening_article_tag',
             'article',
@@ -63,8 +75,25 @@ if (have_posts()) :
          */
         do_action('mangapress_before_article_content');
 
-        /** Outputs the post thumbnail */
-        the_post_thumbnail();
+        /**
+         * mangapress_the_comic_page_content
+         *
+         * Filter and then output the closing article tag
+         * @param string $the_content Original post content
+         * @param string $tag The content wrapper tag
+         * @param array $args {
+         * Array of accepted arguments
+         * @type string|array $class Wrapper tag's CSS class
+         * }
+         * @since 4.0.0
+         *
+         */
+        echo apply_filters(
+            'mangapress_the_comic_page_content',
+            get_the_content(),
+            'div',
+            ['class' => ['entry-content']]
+        );
 
         /**
          * mangapress_after_article_content
@@ -72,16 +101,26 @@ if (have_posts()) :
          * Run scripts or insert content after the article content but before the article closing tag
          * @since 4.0.0
          */
-        do_action('mangapress_after_article_content');
+        do_action('mangapress_after_article_content', $post);
 
-        /** This filter is documented in resources/templates/archive-comic.php **/
+        /**
+         * mangapress_closing_article_tag
+         *
+         * Filter and then output the closing article tag
+         * @param string $the_content Original post content
+         * @param string $tag The content wrapper tag
+         * @param array $args {
+         * Array of accepted arguments
+         * @type string|array $class Wrapper tag's CSS class
+         * }
+         * @since 4.0.0
+         *
+         */
         echo apply_filters(
             'mangapress_closing_article_tag',
             'article',
             ['style' => mangapress_get_comic_archive_style()]
         );
-
-        mangapress_comic_navigation();
 
         /**
          * mangapress_after_article
@@ -90,7 +129,7 @@ if (have_posts()) :
          * but before the main loop ends or iterates to the next post
          * @since 4.0.0
          */
-        do_action('mangapress_after_article');
+        do_action('mangapress_after_article', $post);
     endwhile;
 
     /**
@@ -119,10 +158,5 @@ do_action('mangapress_after_content');
  */
 do_action('mangapress_sidebar');
 
-/**
- * mangapress_get_comic_footer
- *
- * Output theme footer specific to Manga+Press, or normal theme footer
- * @since 4.0.0
- */
+/** This action is documented in resources/templates/single-comic.php **/
 do_action('mangapress_get_comic_footer');

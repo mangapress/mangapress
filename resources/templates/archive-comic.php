@@ -8,7 +8,8 @@
  * @author Jess Green <support@manga-press.com>
  */
 
-get_header('comic');
+/** This action is documented in resources/templates/single-comic.php **/
+do_action('mangapress_get_comic_header');
 
 /** This filter is documented in templates/single-comic.php */
 do_action('mangapress_before_content'); ?>
@@ -34,9 +35,9 @@ do_action('mangapress_before_archive_comic_loop');
  * @since 4.0.0
  *
  */
-do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style()); ?>
+do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style());
 
-<?php if (have_posts()) {
+if (have_posts()) {
     if ((comic_archive_is_gallery() || comic_archive_is_list())) {
         while (have_posts()) :
             the_post();
@@ -162,14 +163,13 @@ do_action('mangapress_archive_style_closing_tag', mangapress_get_comic_archive_s
  * Run scripts or insert content directly after comic archive loop
  * @since 4.0.0
  */
-do_action('mangapress_after_archive_comic_loop'); ?>
+do_action('mangapress_after_archive_comic_loop');
 
-<?php
-/** This filter is documented in templates/single-comic.php */
-do_action('mangapress_after_content'); ?>
+/** This filter is documented in resources/templates/single-comic.php */
+do_action('mangapress_after_content');
 
-<?php
-/** This filter is documented in templates/single-comic.php */
-do_action('mangapress_sidebar'); ?>
+/** This filter is documented in resources/templates/single-comic.php */
+do_action('mangapress_sidebar');
 
-<?php get_footer('comic');
+/** This action is documented in resources/templates/single-comic.php **/
+do_action('mangapress_get_comic_footer');

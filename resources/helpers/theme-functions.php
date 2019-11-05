@@ -5,6 +5,7 @@
 
 namespace MangaPress\Theme\Functions;
 
+use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 
 /**
@@ -32,6 +33,8 @@ function theme_init()
         'mangapress_archive_style_closing_tag',
         '\MangaPress\Theme\Functions\archive_style_closing_tag'
     );
+
+    add_action('mangapress_after_article_content', 'MangaPress\Theme\Functions\comic_page__after_article_content');
 }
 
 /**
@@ -143,6 +146,26 @@ function closing_article_tag($tag, $params)
     return $tag_string;
 }
 
+/**
+ * after_article_content
+ * Runs on Comic Pages after output of page content
+ *
+ * @param \WP_Post $post
+ */
+function comic_page__after_article_content($post = null)
+{
+    if (get_post_type($post) !== ComicPages::POST_TYPE) {
+        return; // exit if post-type doesn't match
+    }
+
+    /**
+     * mangapress_comic_page_content
+     * Outputs content and templates for Comic Pages
+     * @param \WP_Post $post WordPress post object
+     * @since 4.0.0
+     */
+    do_action('mangapress_comic_page_content', $post);
+}
 
 /**
  * Create a wrapper for the archive list. Used for the archive-comic.php template

@@ -31,6 +31,8 @@ class Twentynineteen implements Theme
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
         add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
         add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
+
+        add_filter('mangapress_the_comic_page_content', [$this, 'the_comic_page_content'], 10, 3);
     }
 
     /**
@@ -154,5 +156,32 @@ class Twentynineteen implements Theme
     {
         echo '</div>';
         echo '</article>';
+    }
+
+    /**
+     * Modify comic page's content
+     *
+     * @param string $the_content
+     * @param string $tag
+     * @param array $attr
+     * @return string
+     * @global \WP_Post $post
+     */
+    public function the_comic_page_content($the_content, $tag = 'div', $attr = [])
+    {
+        global $post;
+
+        $attr = wp_parse_args($attr, [
+            'class' => ['entry-content'],
+        ]);
+
+        $content = sprintf(
+            '<%1$s %2$s>%3$s</%1$s>',
+            $tag,
+            'class="' . implode(' ', $attr['class']) . '"',
+            $the_content
+        );
+
+        return $the_content;
     }
 }

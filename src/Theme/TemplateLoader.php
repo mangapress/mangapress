@@ -62,8 +62,8 @@ class TemplateLoader implements PluginComponent
             $template = 'archive-comic.php';
         } elseif (is_latest_comic_page()) {
             $template = 'page-latest-comic.php';
-        } elseif (is_latest_comic_endpoint()) {
-            $template = 'latest-comic.php';
+        } elseif (is_comic_page()) {
+            $template = 'page-comic.php';
         } else {
             $template = '';
         }
@@ -98,12 +98,6 @@ class TemplateLoader implements PluginComponent
         if (is_comic_archive_page()) {
             $templates[] = 'comic/archive-comic.php';
             $templates[] = 'archive-comic.php';
-        }
-
-        if (is_latest_comic_endpoint()) {
-            // no object to query
-            $templates[] = 'comic/latest-comic.php';
-            $templates[] = 'latest-comic.php';
         }
 
         return $templates;
