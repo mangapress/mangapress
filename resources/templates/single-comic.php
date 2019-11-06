@@ -96,6 +96,14 @@ if (have_posts()) :
          * @since 4.0.0
          */
         do_action('mangapress_after_article');
+
+        /**
+         * mangapress_article_footer
+         *
+         * Output article footer
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_footer');
     endwhile;
 
     /**

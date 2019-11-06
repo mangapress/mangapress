@@ -97,6 +97,14 @@ if (have_posts()) :
         mangapress_comic_navigation();
 
         /**
+         * mangapress_article_footer
+         *
+         * Output article footer
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_footer');
+
+        /**
          * mangapress_after_article
          *
          * Run scripts or insert content after the closing article tag
