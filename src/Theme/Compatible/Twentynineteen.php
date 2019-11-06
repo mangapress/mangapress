@@ -29,8 +29,8 @@ class Twentynineteen implements Theme
         add_action('mangapress_after_content', [$this, 'after_content']);
         add_action('mangapress_before_article_content', [$this, 'before_article_content']);
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
-        add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
-        add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
+
+        add_action('mangapress_latest_comic_header', [$this, 'latest_comic_header']);
 
         add_filter('mangapress_the_comic_page_content', [$this, 'the_comic_page_content'], 10, 3);
     }
@@ -183,5 +183,19 @@ class Twentynineteen implements Theme
         );
 
         return $the_content;
+    }
+
+    /**
+     * Output the Latest Comic Page header
+     */
+    public function latest_comic_header()
+    {
+        ?>
+        <header class="entry-header mangapress-latest-comic-header">
+            <h1 class="entry-title manga-press-latest-comic-header__title">
+                <?php _e('Latest Comic', MP_DOMAIN); ?>
+            </h1>
+        </header>
+        <?php
     }
 }

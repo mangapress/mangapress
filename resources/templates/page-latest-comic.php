@@ -8,73 +8,93 @@
  * @author Jess Green <support@manga-press.com>
  */
 
-get_header('comic');
 
 /** This filter is documented in templates/single-comic.php */
-do_action('mangapress_before_content'); ?>
-    <header class="entry-header mangapress-latest-comic-header">
-        <h1 class="entry-title manga-press-latest-comic-header__title">
-            <?php _e('Latest Comic', MP_DOMAIN); ?>
-        </h1>
-    </header>
+do_action('mangapress_get_comic_header');
 
-<?php
+/** This filter is documented in templates/single-comic.php */
+do_action('mangapress_before_content');
+
+/**
+ * mangapress_latest_comic_header
+ *
+ * Output page header
+ * @since 4.0.0
+ */
+do_action('mangapress_latest_comic_header');
+
 /**
  * mangapress_before_latest_comic
  *
  * Run scripts or insert content before latest comic loop conditional
  * @since 4.0.0
  */
-do_action('mangapress_before_latest_comic'); ?>
+do_action('mangapress_before_latest_comic');
 
-<?php if (have_posts()) : ?>
-    <?php
+if (have_posts()) :
+
     /**
      * mangapress_before_latest_comic_loop
      *
      * Run scripts or insert content directly before latest comic loop
      * @since 4.0.0
      */
-    do_action('mangapress_before_latest_comic_loop'); ?>
+    do_action('mangapress_before_latest_comic_loop');
 
-    <?php while (have_posts()) :
-        the_post(); ?>
-        <?php
+    while (have_posts()) :
+        the_post();
+
         /**
          * mangapress_before_article
          *
          * Run scripts or insert content before the article tag but after the loop starts
          * @since 4.0.0
          */
-        do_action('mangapress_before_article') ?>
-        <article <?php post_class() ?>>
-            <header class="entry-header mangapress_comic_title">
-                <h2><?php the_title(); ?></h2>
-            </header>
-            <?php
-            /**
-             * mangapress_before_article_content
-             *
-             * Run scripts or insert content before the article content but after the article opening tag
-             * @since 4.0.0
-             */
-            do_action('mangapress_before_article_content'); ?>
+        do_action('mangapress_before_article');
 
-            <?php the_post_thumbnail(); ?>
+        echo apply_filters(
+            'mangapress_opening_article_tag',
+            'article',
+            ['style' => mangapress_get_comic_archive_style()]
+        );
 
-            <?php
-            /**
-             * mangapress_after_article_content
-             *
-             * Run scripts or insert content after the article content but before the article closing tag
-             * @since 4.0.0
-             */
-            do_action('mangapress_after_article_content'); ?>
-        </article>
+        /**
+         * mangapress_article_header
+         *
+         * Add post header
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_header', $post);
 
-        <?php mangapress_comic_navigation(); ?>
+        /**
+         * mangapress_before_article_content
+         *
+         * Run scripts or insert content before the article content but after the article opening tag
+         * @since 4.0.0
+         */
+        do_action('mangapress_before_article_content');
 
-        <?php
+        /** Output comic image */
+        the_post_thumbnail();
+
+        /**
+         * mangapress_after_article_content
+         *
+         * Run scripts or insert content after the article content but before the article closing tag
+         * @since 4.0.0
+         */
+        do_action('mangapress_after_article_content');
+
+        /** This filter is documented in resources/templates/archive-comic.php **/
+        echo apply_filters(
+            'mangapress_closing_article_tag',
+            'article',
+            ['style' => mangapress_get_comic_archive_style()]
+        );
+
+        /** Output navigation */
+        mangapress_comic_navigation();
+
         /**
          * mangapress_after_article
          *
@@ -82,36 +102,37 @@ do_action('mangapress_before_latest_comic'); ?>
          * but before the main loop ends or iterates to the next post
          * @since 4.0.0
          */
-        do_action('mangapress_after_article') ?>
-    <?php endwhile; ?>
+        do_action('mangapress_after_article');
+    endwhile;
 
-    <?php
     /**
      * mangapress_after_latest_comic_loop
      *
      * Run scripts or insert content directly after latest comic loop
      * @since 4.0.0
      */
-    do_action('mangapress_after_latest_comic_loop'); ?>
+    do_action('mangapress_after_latest_comic_loop');
 
-<?php endif; ?>
+endif;
 
-
-<?php
 /**
  * mangapress_after_latest_comic
  *
  * Run scripts or insert content after latest comic loop conditional
  * @since 4.0.0
  */
-do_action('mangapress_after_latest_comic'); ?>
+do_action('mangapress_after_latest_comic');
 
-<?php
 /** This filter is documented in templates/single-comic.php */
-do_action('mangapress_after_content'); ?>
+do_action('mangapress_after_content');
 
-<?php
 /** This filter is documented in templates/single-comic.php */
-do_action('mangapress_sidebar'); ?>
+do_action('mangapress_sidebar');
 
-<?php get_footer('comic');
+/**
+ * mangapress_get_comic_footer
+ *
+ * Output theme footer specific to Manga+Press, or normal theme footer
+ * @since 4.0.0
+ */
+do_action('mangapress_get_comic_footer');
