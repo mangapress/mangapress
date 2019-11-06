@@ -14,6 +14,7 @@ Manga+Press is a webcomic management system for WordPress.
     * [X] Add Latest Comic shortcode for displaying the latest comic in page content
     * [X] Add compatibility for WordPress themes TwentySixteen and newer
     * [ ] Update documentation
+    * [ ] Update demo site to example/documentation in the form of comics
 
 ## Description
 
