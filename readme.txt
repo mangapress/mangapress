@@ -2,8 +2,8 @@
 Contributors: ArdathkSheyna
 Donate link: https://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 4.8
-Tested up to: 4.9.7
+Requires at least: 5.0
+Tested up to: 5.2.4
 Stable tag: 4.0.0
 License: GPLv2
 
@@ -20,7 +20,8 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
 
 = 4.0.0 =
    * Removed `the_content` processing for Latest/Comic Archive pages
-   * Added end-points and templates for Latest Comic and Comic Archive pages
+   * Added templates for Latest Comic and Comic Archive pages
+   * Added new "Comic Pages" post-type
    * Added warnings for assigning Latest/Comic Archive pages
    * Added shortcode for inserting Latest Comic + navigation into posts or pages.
 
@@ -66,7 +67,7 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
       * Updated and fixed loading of Spanish Language files
       * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
       * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-         * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+         * Incidentally corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
 
 = 2.8 =
    * 2.8.3
