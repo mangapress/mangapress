@@ -62,11 +62,15 @@ if (have_posts()) :
             'article',
             ['style' => mangapress_get_comic_archive_style()]
         );
-        ?>
-        <header class="entry-header mangapress_comic_title">
-            <h2><?php the_title(); ?></h2>
-        </header>
-        <?php
+
+        /**
+         * mangapress_article_header
+         *
+         * Add post header
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_header', $post);
+
         /**
          * mangapress_before_article_content
          *
@@ -157,6 +161,14 @@ do_action('mangapress_after_content');
  * @since 4.0.0
  */
 do_action('mangapress_sidebar');
+
+/**
+ * mangapress_before_footer
+ *
+ * Handle output before footer
+ * @since 4.0.0
+ */
+do_action('mangapress_before_footer');
 
 /** This action is documented in resources/templates/single-comic.php **/
 do_action('mangapress_get_comic_footer');

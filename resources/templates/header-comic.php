@@ -7,23 +7,20 @@
  * @version $Id$
  * @author Jess Green <support@manga-press.com>
  */
-?>
-
-    <!doctype html>
-
+?><!doctype html>
 <html <?php language_attributes(); ?>>
-    <head>
-        <?php
-        /**
-         * mangapress_head
-         *
-         * Insert <head> specific markup before wp_head is run
-         * @since 4.0.0
-         */
-        do_action('mangapress_head');
-        ?>
-        <?php wp_head(); ?>
-    </head>
+<head>
+    <?php
+    /**
+     * mangapress_head
+     *
+     * Insert <head> specific markup before wp_head is run
+     * @since 4.0.0
+     */
+    do_action('mangapress_head');
+    ?>
+    <?php wp_head(); ?>
+</head>
 
 <body <?php body_class(); ?>>
 <?php do_action('wp_body_open'); ?>

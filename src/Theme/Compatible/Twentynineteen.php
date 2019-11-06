@@ -25,12 +25,15 @@ class Twentynineteen implements Theme
         add_action('mangapress_after_body_open', [$this, 'after_body_open']);
         add_action('mangapress_page_header', [$this, 'page_header']);
         add_action('mangapress_after_page_header', [$this, 'after_page_header']);
+
         add_action('mangapress_before_content', [$this, 'before_content']);
         add_action('mangapress_after_content', [$this, 'after_content']);
+
         add_action('mangapress_before_article_content', [$this, 'before_article_content']);
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
 
-        add_action('mangapress_latest_comic_header', [$this, 'latest_comic_header']);
+        add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
+        add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
 
         add_filter('mangapress_the_comic_page_content', [$this, 'the_comic_page_content'], 10, 3);
     }

@@ -12,13 +12,15 @@
 do_action('mangapress_get_comic_header');
 
 /** This filter is documented in templates/single-comic.php */
-do_action('mangapress_before_content'); ?>
-    <header class="mangapress-comic-archives-header entry-header">
-        <h1 class="manga-press-comic-archives-header__title entry-title">
-            <?php _e('Comic Archives', MP_DOMAIN); ?>
-        </h1>
-    </header>
-<?php
+do_action('mangapress_before_content');
+
+/**
+ * mangapress_comic_archive_header
+ *
+ * Output Comic Archive page header
+ */
+do_action('mangapress_comic_archive_header');
+
 /**
  * mangapress_before_archive_comic_loop
  *
@@ -141,10 +143,9 @@ if (have_posts()) {
                 mangapress_get_calendar($i, $year, false, true);
             }
         }
-
-    };
+    }
 } else {
-// something this way goes
+    do_action('mangapress_output_no_comics_message');
 }
 
 /**
@@ -170,6 +171,14 @@ do_action('mangapress_after_content');
 
 /** This filter is documented in resources/templates/single-comic.php */
 do_action('mangapress_sidebar');
+
+/**
+ * mangapress_before_footer
+ *
+ * Handle output before footer
+ * @since 4.0.0
+ */
+do_action('mangapress_before_footer');
 
 /** This action is documented in resources/templates/single-comic.php **/
 do_action('mangapress_get_comic_footer');

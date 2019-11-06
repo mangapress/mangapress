@@ -109,6 +109,10 @@ class TemplateLoader implements PluginComponent
      */
     public function pre_get_posts(\WP_Query $query)
     {
+        if (is_admin()) {
+            return;
+        }
+
         if ($query->is_main_query() && is_comic_archive_page()) {
             $order   = Options::get_option('archive_order', 'basic');
             $orderby = Options::get_option('archive_orderby', 'basic');

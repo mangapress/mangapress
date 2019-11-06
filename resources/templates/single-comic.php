@@ -45,16 +45,21 @@ if (have_posts()) :
          */
         do_action('mangapress_before_article');
 
+        /** This filter is documented in resources/templates/archive-comic.php **/
         echo apply_filters(
             'mangapress_opening_article_tag',
             'article',
             ['style' => mangapress_get_comic_archive_style()]
         );
-        ?>
-        <header class="entry-header mangapress_comic_title">
-            <h2><?php the_title(); ?></h2>
-        </header>
-        <?php
+
+        /**
+         * mangapress_article_header
+         *
+         * Add post header
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_header', $post);
+
         /**
          * mangapress_before_article_content
          *
@@ -118,6 +123,14 @@ do_action('mangapress_after_content');
  * @since 4.0.0
  */
 do_action('mangapress_sidebar');
+
+/**
+ * mangapress_before_footer
+ *
+ * Handle output before footer
+ * @since 4.0.0
+ */
+do_action('mangapress_before_footer');
 
 /**
  * mangapress_get_comic_footer

@@ -107,19 +107,13 @@ if (!function_exists('is_comic_page')) {
     /**
      * Checks if the current query is for a comic page
      * @return boolean
-     * @global \WP_Post $post
      * @global \WP_Query $wp_query
      */
     function is_comic_page()
     {
-        global $wp_query, $post;
+        global $wp_query;
 
-        if ($wp_query->get_queried_object() === null) {
-            return true;
-        }
-
-        $post_type = get_post_field('post_type', $post);
-        return $post_type === \MangaPress\Posts\ComicPages::POST_TYPE && $wp_query->is_singular($post_type);
+        return $wp_query->get('post_type') === \MangaPress\Posts\ComicPages::POST_TYPE;
     }
 }
 /**
@@ -456,7 +450,9 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
     $last_day   = date('t', $unix_month);
 
     $calendar_caption = _x('%1$s %2$s', 'calendar caption');
-    $calendar_output  = '<table id="mangapress-calendar-' . intval(date('m', $unix_month)) . '">
+    $calendar_output  = '<table
+    class="mangapress-calendar" 
+    id="mangapress-calendar-' . intval(date('m', $unix_month)) . '-' . intval(date('Y', $unix_month)) . '">
 	<caption>' . sprintf(
             $calendar_caption,
             $wp_locale->get_month($monthnum),
@@ -502,14 +498,14 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
         if (isset($dayswithposts[date('Y-m-d', $date)])) {
             $week_day = sprintf(
                 '<td%s><a href="%s">%s</a></td>',
-                $is_today ? ' id="today"' : '',
+                $is_today ? ' id="today" class="today"' : '',
                 get_day_link($year, $monthnum, $day),
                 $day
             );
         } else {
             $week_day = sprintf(
                 '<td%s>%s</td>',
-                $is_today ? ' id="today"' : '',
+                $is_today ? ' id="today" class="today"' : '',
                 $day
             );
         }

@@ -52,6 +52,7 @@ if (have_posts()) :
          */
         do_action('mangapress_before_article');
 
+        /** This filter is documented in resources/templates/archive-comic.php **/
         echo apply_filters(
             'mangapress_opening_article_tag',
             'article',
@@ -128,6 +129,14 @@ do_action('mangapress_after_content');
 
 /** This filter is documented in templates/single-comic.php */
 do_action('mangapress_sidebar');
+
+/**
+ * mangapress_before_footer
+ *
+ * Handle output before footer
+ * @since 4.0.0
+ */
+do_action('mangapress_before_footer');
 
 /**
  * mangapress_get_comic_footer
