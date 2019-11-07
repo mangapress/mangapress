@@ -276,6 +276,12 @@ class OptionsGroup implements PluginComponent
             ],
         ];
 
+        /**
+         * mangapress_options_fields
+         * Filter options settings. Allows plugin developers to add their own options.
+         * @param array $options Default options array
+         * @since 2.9
+         */
         return apply_filters('mangapress_options_fields', $options);
     }
 
