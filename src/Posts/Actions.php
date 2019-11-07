@@ -66,5 +66,4 @@ class Actions
      * @var string
      */
     const NONCE_REMOVE_COVER = self::ACTION_REMOVE_COVER;
-
 }
