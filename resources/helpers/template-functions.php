@@ -48,20 +48,6 @@ if (!function_exists('is_latest_comic_page')) {
     }
 }
 
-if (!function_exists('is_latest_comic_endpoint')) {
-    /**
-     * @return bool
-     * @since 4.0.0
-     * @global WP_Query $wp_query
-     *
-     */
-    function is_latest_comic_endpoint()
-    {
-        global $wp_query;
-        return isset($wp_query->query['latest-comic']);
-    }
-}
-
 if (!function_exists('is_comic_archive_page')) {
     /**
      * Are we on an archive page for the comic post-type
@@ -390,7 +376,6 @@ function mangapress_comic_navigation($args = [], $echo = true)
  * @param bool $nav Output navigation
  * @param bool $skip_empty_months Skip over months that don't contain posts
  * @param bool $abbr Optional, default is true. Use initial calendar names.
- * @param bool|array $posts
  * @param bool $echo Optional, default is true. Set to false for return.
  * @return void|string
  */
