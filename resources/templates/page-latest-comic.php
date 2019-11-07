@@ -31,7 +31,7 @@ do_action('mangapress_latest_comic_header');
  */
 do_action('mangapress_before_latest_comic');
 
-if (have_posts()) :
+if (have_posts()) {
 
     /**
      * mangapress_before_latest_comic_loop
@@ -121,8 +121,15 @@ if (have_posts()) :
      * @since 4.0.0
      */
     do_action('mangapress_after_latest_comic_loop');
-
-endif;
+} else {
+    /**
+     * mangapress_output_no_comics_message
+     *
+     * Outputs message if no comics are found for archive or other listings
+     * @since 4.0.0
+     */
+    do_action('mangapress_output_no_comics_message');
+}
 
 /**
  * mangapress_after_latest_comic
@@ -132,10 +139,10 @@ endif;
  */
 do_action('mangapress_after_latest_comic');
 
-/** This filter is documented in templates/single-comic.php */
+/** This filter is documented in resources/templates/single-comic.php */
 do_action('mangapress_after_content');
 
-/** This filter is documented in templates/single-comic.php */
+/** This filter is documented in resources/templates/single-comic.php */
 do_action('mangapress_sidebar');
 
 /**

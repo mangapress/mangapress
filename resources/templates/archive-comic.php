@@ -61,6 +61,7 @@ if (have_posts()) {
              *      Array of accepted arguments
              * @type string $style
              * }
+             * @return string
              * @since 4.0.0
              *
              */
@@ -145,6 +146,12 @@ if (have_posts()) {
         }
     }
 } else {
+    /**
+     * mangapress_output_no_comics_message
+     *
+     * Outputs message if no comics are found for archive or other listings
+     * @since 4.0.0
+     */
     do_action('mangapress_output_no_comics_message');
 }
 

@@ -5,11 +5,12 @@
  * @version    $Id$
  * @author     Jess Green <support@manga-press.com>
  */
-if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
+
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('You are not allowed to call this page directly.');
 }
 
-if(!defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') ) {
+if (!defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN')) {
     exit();
 }
 

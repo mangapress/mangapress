@@ -39,6 +39,7 @@ function theme_init()
 
 /**
  * Load comic page header
+ * @uses mangapress_get_comic_header
  */
 function get_comic_header()
 {
@@ -47,6 +48,7 @@ function get_comic_header()
 
 /**
  * Load comic page footer
+ * @uses mangapress_get_comic_footer
  */
 function get_comic_footer()
 {
@@ -81,7 +83,7 @@ function get_template_part($slug, $name = '')
 /**
  * Get the archive style template partial
  * @param string $style Archive style-type
- * @uses mangapress_archive_style_template action
+ * @uses mangapress_archive_style_template
  */
 function get_archive_style_template($style)
 {
@@ -98,7 +100,7 @@ function get_archive_style_template($style)
  * @param array $params Array of parameters @todo document accepted parameters
  *
  * @return string
- * @uses mangapress_opening_article_tag filter
+ * @uses mangapress_opening_article_tag
  */
 function opening_article_tag($tag, $params)
 {
@@ -131,7 +133,7 @@ function opening_article_tag($tag, $params)
  * @param array $params Array of parameters @todo document accepted parameters
  *
  * @return string
- * @uses mangapress_closing_article_tag filter
+ * @uses mangapress_closing_article_tag
  */
 function closing_article_tag($tag, $params)
 {
@@ -301,9 +303,15 @@ function start_latest_comic()
     do_action('latest_comic_start');
     $wp_query = get_latest_comic();
     if ($wp_query->found_posts == 0) {
+        /**
+         * the_latest_comic_content_error
+         * Outputs error message if no comics are found
+         * @param string $message Message or template to output
+         * @since 2.9
+         */
         apply_filters(
             'the_latest_comic_content_error',
-            '<p class="error">No comics was found.</p>'
+            __('<p class="error">No comics was found.</p>', MP_DOMAIN)
         );
     }
 }
