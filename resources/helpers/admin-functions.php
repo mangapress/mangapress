@@ -56,5 +56,12 @@ function options_tabs()
         ],
     ];
 
+    /**
+     * mangapress_options_sections
+     *
+     * Allow 3rd party themes and plugins to add their own sections to Manga+Press options
+     * @param array $sections
+     * @return array
+     */
     return apply_filters('mangapress_options_sections', $sections);
 }
