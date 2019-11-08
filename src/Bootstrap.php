@@ -8,6 +8,7 @@
 namespace MangaPress;
 
 use MangaPress\Admin\Admin;
+use MangaPress\Admin\Dashboard;
 use MangaPress\Options\OptionsGroup;
 use MangaPress\Options\Options;
 use MangaPress\Posts\ComicPages;
@@ -48,6 +49,7 @@ class Bootstrap
                     OptionsGroup::class,
                     Options::class,
                     Admin::class,
+                    Dashboard::class,
                     WidgetsRegistry::class,
                     ThemeCompat::class,
                     Shortcode::class,
