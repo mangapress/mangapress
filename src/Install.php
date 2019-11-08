@@ -7,6 +7,7 @@
 
 namespace MangaPress;
 
+use MangaPress\Options\Options;
 use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 
@@ -108,7 +109,7 @@ class Install
             add_option('mangapress_upgrade', 'yes', '', 'no');
         } elseif ($version == '') {
             add_option('mangapress_ver', MP_VERSION, '', 'no');
-            add_option('mangapress_options', serialize(Options::get_default_options()), '', 'no');
+            add_option('mangapress_options', serialize(Options::get_options()), '', 'no');
         }
 
         unset($plugin);
@@ -160,39 +161,32 @@ class Install
 
         if (!get_option('mangapress_archive_page')) {
             // create latest comic and comic archive posts
-            $archives = wp_insert_post(
-                [
-                    'post_type'   => ComicPages::POST_TYPE,
-                    'post_title'  => 'Comic Archives',
-                    'post_name'   => 'comic-archives',
-                    'post_status' => 'draft',
-                    'meta_input'  => [
-                        'comic_page__type' => 'archive',
-                    ],
-                ]
-            );
+            $params = [
+                'post_type'   => ComicPages::POST_TYPE,
+                'post_title'  => 'Comic Archives',
+                'post_name'   => 'comic-archives',
+                'post_status' => 'draft',
+            ];
+
+            $archives = wp_insert_post($params);
 
             if (!($archives instanceof \WP_Error)) {
+                add_post_meta($archives, 'comic_page__type', 'archive', true);
                 add_option('mangapress_archive_page', $archives, '', 'no');
             }
         }
 
         if (!get_option('mangapress_latest_page')) {
-            $latest = wp_insert_post(
-                [
-                    'post_type'   => ComicPages::POST_TYPE,
-                    'post_title'  => 'Latest Comic',
-                    'post_name'   => 'latest-comic',
-                    'post_status' => 'draft',
-                    [
-                        'meta_input' => [
-                            'comic_page__type' => 'latest',
-                        ],
-                    ],
-                ]
-            );
+            $params = [
+                'post_type'   => ComicPages::POST_TYPE,
+                'post_title'  => 'Latest Comic',
+                'post_name'   => 'latest-comic',
+                'post_status' => 'draft',
+            ];
+            $latest = wp_insert_post($params);
 
             if (!($latest instanceof \WP_Error)) {
+                add_post_meta($latest, 'comic_page__type', 'latest', true);
                 add_option('mangapress_latest_page', $latest, '', 'no');
             }
         }
