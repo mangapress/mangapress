@@ -106,42 +106,47 @@ if (!function_exists('is_comic_page')) {
         return $wp_query->get('post_type') === \MangaPress\Posts\ComicPages::POST_TYPE;
     }
 }
-/**
- * Check if the current archive style is set to Calendar
- *
- * @return bool
- */
-function comic_archive_is_calendar()
-{
-    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
-    return $archive_style === 'calendar';
-}
 
+if (!function_exists('comic_archive_is_calendar')) :
+    /**
+     * Check if the current archive style is set to Calendar
+     *
+     * @return bool
+     */
+    function comic_archive_is_calendar()
+    {
+        $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
+        return $archive_style === 'calendar';
+    }
 
-/**
- * Check if the current archive style is set to Gallery
- *
- * @return bool
- */
-function comic_archive_is_gallery()
-{
-    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
+endif;
 
-    return $archive_style === 'gallery';
-}
+if (!function_exists('comic_archive_is_gallery')) :
+    /**
+     * Check if the current archive style is set to Gallery
+     *
+     * @return bool
+     */
+    function comic_archive_is_gallery()
+    {
+        $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
 
+        return $archive_style === 'gallery';
+    }
+endif;
 
-/**
- * Check if the current archive style is set to List
- *
- * @return bool
- */
-function comic_archive_is_list()
-{
-    $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
-    return $archive_style === 'list';
-}
-
+if (!function_exists('comic_archive_is_list')) :
+    /**
+     * Check if the current archive style is set to List
+     *
+     * @return bool
+     */
+    function comic_archive_is_list()
+    {
+        $archive_style = \MangaPress\Options\Options::get_option('comicarchive_page_style', 'basic');
+        return $archive_style === 'list';
+    }
+endif;
 
 /**
  * Get current comic archive style
