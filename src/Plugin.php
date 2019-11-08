@@ -7,13 +7,7 @@
 
 namespace MangaPress;
 
-use MangaPress\Admin\Admin;
 use MangaPress\Options\Options;
-use MangaPress\Options\OptionsGroup;
-use MangaPress\Posts\ComicPages;
-use MangaPress\Posts\Comics;
-use MangaPress\Theme\ThemeCompat;
-use MangaPress\PluginComponent;
 
 /**
  * Class Plugin
