@@ -1,6 +1,9 @@
 <?php
 /**
- * Template functions
+ * Theme functions
+ * @package MangaPress\Helpers\Theme_Functions
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Theme\Functions;

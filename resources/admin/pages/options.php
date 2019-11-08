@@ -1,5 +1,5 @@
 <?php
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
+if (!class_exists('WP')) {
     die('You are not allowed to call this page directly.');
 }
 
@@ -12,7 +12,7 @@ if (!current_user_can('manage_options')) {
         )
     );
 }
-$tab = (isset($_GET['tab']) ? $_GET['tab'] : 'basic');
+$tab = (filter_input(INPUT_GET, 'tab') ? filter_input(INPUT_GET, 'tab') : 'basic');
 ?>
 <script>
     hljs.initHighlightingOnLoad();

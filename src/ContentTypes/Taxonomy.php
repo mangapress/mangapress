@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Taxonomy Builder class
+ *
+ * @package MangaPress\ContentTypes
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\ContentTypes;
 

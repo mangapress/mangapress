@@ -1,6 +1,10 @@
 <?php
 /**
  * Provide theme compatibility for TwentySeventeen
+ *
+ * @package MangaPress\Theme\Compatible
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Theme\Compatible;

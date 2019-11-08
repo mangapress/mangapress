@@ -19,7 +19,7 @@ if (empty($image_html) && !($wp instanceof WP)) {
 $action = $is_cover ? \MangaPress\Posts\Actions::ACTION_REMOVE_COVER : \MangaPress\Posts\Actions::ACTION_REMOVE_COMIC;
 $nonce  = $is_cover ? \MangaPress\Posts\Actions::NONCE_REMOVE_COVER : \MangaPress\Posts\Actions::NONCE_REMOVE_COMIC;
 $field  = $is_cover ? \MangaPress\Posts\Actions::FIELD_COVER : \MangaPress\Posts\Actions::FIELD_COMIC;
-$label  = $is_cover ? esc_html(__('Remove Cover image', MP_DOMAIN)) : esc_html(__('Remove Comic image', MP_DOMAIN));
+$label  = $is_cover ? esc_html__('Remove Cover image', MP_DOMAIN) : esc_html__('Remove Comic image', MP_DOMAIN);
 ?>
 
 <div class="hide-if-no-js">

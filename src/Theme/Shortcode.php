@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @package MangaPress\Theme\Shortcode
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Theme;
 

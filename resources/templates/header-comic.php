@@ -1,9 +1,8 @@
 <?php
 /**
- * MangaPress
+ * Manga+Press Header template
  *
- * @package Manga_Press
- * @subpackage Manga_Press_Templates\Header_Comic
+ * @package MangaPress\Templates\Header_Comic
  * @version $Id$
  * @author Jess Green <support@manga-press.com>
  */

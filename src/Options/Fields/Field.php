@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Field class
+ * @package MangaPress\Options\Fields\Types
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Options\Fields;
 
@@ -109,21 +114,6 @@ class Field
     }
 
     /**
-     * Get attributes as represented by $key
-     *
-     * @param string $key Attribute to retrieve
-     * @return null|string
-     */
-    public function get_attributes($key)
-    {
-        if (!isset($this->attr[$key])) {
-            return null;
-        }
-
-        return $this->attr[$key];
-    }
-
-    /**
      * Set attributes
      *
      * @param array $attr
@@ -208,16 +198,18 @@ class Field
     }
 
     /**
-     * Set description
+     * Get attributes as represented by $key
      *
-     * @param string $description
-     * @return $this
+     * @param string $key Attribute to retrieve
+     * @return null|string
      */
-    public function set_description($description)
+    public function get_attributes($key)
     {
-        $this->description = $description;
+        if (!isset($this->attr[$key])) {
+            return null;
+        }
 
-        return $this;
+        return $this->attr[$key];
     }
 
     /**
@@ -232,6 +224,19 @@ class Field
         }
 
         return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return $this
+     */
+    public function set_description($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**

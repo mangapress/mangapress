@@ -1,6 +1,10 @@
 <?php
 /**
  * General functions used for building themes
+ *
+ * @package MangaPress\Helpers\Template_Functions
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 if (!function_exists('is_comic')) {
     /**
@@ -267,13 +271,31 @@ function mangapress_comic_navigation($args = [], $echo = true)
         'items_wrap'      => '<ul%1$s>%2$s</ul>',
         'items_wrap_attr' => ['class' => 'comic-nav-hlist'],
         'link_wrap'       => 'li',
-        'link_before'     => '',
-        'link_after'      => '',
     ];
 
     $parsed_args = wp_parse_args($args, $defaults);
-    $r           = apply_filters('mangapress_comic_navigation_args', $parsed_args);
-    $args        = (object)$r;
+
+    /**
+     * mangapress_comic_navigation_args
+     *
+     * Filter available arguments for mangapress_comic_navigation
+     *
+     * @param array $parsed_args {
+     *  Array of arguments, already parsed by wp_parse_args
+     * @type string $container Container wrapping tag, defaults to 'nav'
+     * @type array $container_attr {
+     *  Array of wrapper tag attributes
+     * @type string $id Element's id attribute, defaults to comic-navigation
+     * @type string $class Element's class attribute. Defaults to comic-nav-hlist-wrapper
+     * }
+     * @param string $items_wrap Inner navigation wrapping markup, defaults to <ul%1$s>%2$s</ul>
+     * @param string $link_wrap Link wrapper tag, defaults to li
+     * }
+     * @return array
+     * @since 2.7
+     */
+    $r    = apply_filters('mangapress_comic_navigation_args', $parsed_args);
+    $args = (object)$r;
 
     $group     = boolval($mp_options['basic']['group_comics']);
     $by_parent = boolval($mp_options['basic']['group_by_parent']);
@@ -352,6 +374,16 @@ function mangapress_comic_navigation($args = [], $echo = true)
     $items['next']  = apply_filters('mangapress_comic_navigation_next', $next_html, $args);
     $items['last']  = apply_filters('mangapress_comic_navigation_last', $last_html, $args);
 
+    /**
+     * mangapress_comic_navigation_items
+     *
+     * Modify comic navigation items. Can be used to add links, or remove links
+     *
+     * @param array $items Array of navigation items
+     * @param array $args Array of arguments passed from function
+     * @return array
+     * @since 2.7
+     */
     $items_str = implode(" ", apply_filters('mangapress_comic_navigation_items', $items, $args));
 
     $comic_nav .= sprintf($args->items_wrap, $items_wrap_attr, $items_str);
@@ -536,6 +568,7 @@ function mangapress_get_calendar($month = 0, $yr = 0, $nav = true, $skip_empty_m
  * @param string $year
  * @param string $month
  * @return string|void
+ * @uses 'month_link'
  */
 function mangapress_month_link($monthlink, $year = '', $month = '')
 {
@@ -554,6 +587,7 @@ function mangapress_month_link($monthlink, $year = '', $month = '')
  * @param string $day Day
  *
  * @return string
+ * @uses 'day_link'
  */
 function mangapress_day_link($daylink, $year = '', $month = '', $day = '')
 {

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Class Checkbox
+ *
+ * @package MangaPress\Options\Fields\Types
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 
 namespace MangaPress\Options\Fields\Types;
@@ -22,18 +29,18 @@ class Checkbox extends Field
     {
         $label = '';
         if (!empty($this->label)) {
-            $id = $this->get_attributes('id');
+            $id    = $this->get_attributes('id');
             $label = vsprintf(
-                '<label for="%1$s" class="label-%1$s">%2$s</label>',
-                [
-                    $id,
-                    $this->label
-                ]
-            ) . CRLF;
+                         '<label for="%1$s" class="label-%1$s">%2$s</label>',
+                         [
+                             $id,
+                             $this->label,
+                         ]
+                     ) . CRLF;
         }
 
-        $default = $this->get_default();
-        $attr_arr = array();
+        $default  = $this->get_default();
+        $attr_arr = [];
         foreach ($this->attr as $name => $value) {
             if ($name != 'value') {
                 $attr_arr[] = "{$name}=\"{$value}\"";

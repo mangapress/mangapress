@@ -1,6 +1,10 @@
 <?php
 /**
  * Functions for Admin class
+ *
+ * @package MangaPress\Helpers\Admin_Functions
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Admin\Functions;

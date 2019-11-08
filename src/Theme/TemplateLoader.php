@@ -1,12 +1,14 @@
 <?php
-
+/**
+ * @package MangaPress\Theme\TemplateLoader
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Theme;
 
 use MangaPress\Options\Options;
 use MangaPress\PluginComponent;
-use MangaPress\Posts\ComicPages;
-use MangaPress\Posts\Comics;
 
 /**
  * Class TemplateLoader

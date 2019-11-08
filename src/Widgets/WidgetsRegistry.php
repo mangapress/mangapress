@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @package MangaPress\Widgets
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Widgets;
 

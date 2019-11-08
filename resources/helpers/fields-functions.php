@@ -1,6 +1,9 @@
 <?php
 /**
  * Output additional fields
+ * @package MangaPress\Helpers\Fields_Functions
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Options\Fields\Functions;

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @package MangaPress\Theme\ThemeCompat
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Theme;
 
@@ -43,7 +47,7 @@ class ThemeCompat implements PluginComponent
         // needs to have FQN to work properly
         $theme_class = '\MangaPress\Theme\Compatible\\' . str_replace('-', '', ucwords($theme, '-'));
 
-        if (! class_exists($theme_class)) {
+        if (!class_exists($theme_class)) {
             /**
              * mangapress_theme_compatible-$theme
              *

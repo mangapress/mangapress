@@ -1,4 +1,11 @@
 <?php
+/**
+ * Parameters trait
+ *
+ * @package MangaPress\ContentTypes
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\ContentTypes;
 
@@ -64,14 +71,19 @@ trait Parameters
     }
 
     /**
-     * Set the object name
+     * Set object options
      *
-     * @param string $object_name
-     * @return Parameters
+     * @param array $options
+     * @return $this
      */
-    public function set_name($object_name)
+    public function set_options($options)
     {
-        $this->name = $object_name;
+        foreach ($options as $option_name => $value) {
+            $method = 'set_' . $option_name;
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
 
         return $this;
     }
@@ -87,19 +99,14 @@ trait Parameters
     }
 
     /**
-     * Set object options
+     * Set the object name
      *
-     * @param array $options
-     * @return $this
+     * @param string $object_name
+     * @return Parameters
      */
-    public function set_options($options)
+    public function set_name($object_name)
     {
-        foreach ($options as $option_name => $value) {
-            $method = 'set_' . $option_name;
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
+        $this->name = $object_name;
 
         return $this;
     }

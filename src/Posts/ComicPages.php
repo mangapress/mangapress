@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @package MangaPress\Posts
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Posts;
 

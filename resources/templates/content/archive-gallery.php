@@ -2,7 +2,9 @@
 /**
  * Simple Archive Gallery template
  *
- * @package Manga_Press
+ * @package MangaPress\Templates\Content\Archive_Gallery
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 ?>
 <a href="<?php the_permalink(); ?>">

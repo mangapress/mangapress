@@ -1,7 +1,10 @@
 <?php
 /**
  * OptionsGroup
- * @package MangaPress
+ *
+ * @package MangaPress\Options
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Options;

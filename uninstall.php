@@ -1,6 +1,6 @@
 <?php
 /**
- * @package    Manga_Press
+ * @package    MangaPress
  * @subpackage Uninstall
  * @version    $Id$
  * @author     Jess Green <support@manga-press.com>

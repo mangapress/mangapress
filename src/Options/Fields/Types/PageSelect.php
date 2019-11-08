@@ -1,8 +1,18 @@
 <?php
-
+/**
+ * Build a select field specifically for pages
+ *
+ * @package MangaPress\Options\Fields\Types
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Options\Fields\Types;
 
+/**
+ * Class PageSelect
+ * @package MangaPress\Options\Fields\Types
+ */
 class PageSelect extends Select
 {
     public function __construct($options = null)

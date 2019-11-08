@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Select input builder
+ *
+ * @package MangaPress\Options\Fields\Types
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Options\Fields\Types;
 
@@ -62,6 +68,16 @@ class Select extends Field
     }
 
     /**
+     * Get default values
+     *
+     * @return array
+     */
+    public function get_default()
+    {
+        return $this->options;
+    }
+
+    /**
      * Set default values
      *
      * @param array $values
@@ -74,15 +90,5 @@ class Select extends Field
         }
 
         return $this;
-    }
-
-    /**
-     * Get default values
-     *
-     * @return array
-     */
-    public function get_default()
-    {
-        return $this->options;
     }
 }

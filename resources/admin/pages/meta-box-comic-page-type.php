@@ -22,7 +22,7 @@ $posts        = $wpdb->get_results($sql, OBJECT_K);
 $current_type = \MangaPress\Posts\ComicPages::get_page_type(get_post_field('ID', $post));
 ?>
 <div>
-    <h3>Designated Pages</h3>
+    <h3><?php _e('Designated Pages', MP_DOMAIN) ?></h3>
     <?php if ($posts) {
         foreach ($posts as $p) {
             if ($p->meta_value === 'latest' || $p->meta_value === 'archive') {
@@ -35,16 +35,15 @@ $current_type = \MangaPress\Posts\ComicPages::get_page_type(get_post_field('ID',
             }
         }
     } else {
-        //
+        _e('No pages assigned to Latest Comic or Comic Archive page', MP_DOMAIN);
     } ?>
 </div>
 <select name="mangapress_comicpage_type">
-    <option value=""> Select Page Type</option>
+    <option value=""><?php _e('Select Page Type', MP_DOMAIN); ?></option>
     <option value="latest" <?php selected('latest', $current_type) ?>>
-        Latest Comic
-        Page
+        <?php _e('Latest Comic Page', MP_DOMAIN) ?>
     </option>
     <option value="archive" <?php selected('archive', $current_type) ?>>
-        Comic Archive Page
+        <?php _e('Comic Archive Page', MP_DOMAIN); ?>
     </option>
 </select>

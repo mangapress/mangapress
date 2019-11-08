@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Options handlers
+ *
+ * @package MangaPress\Options
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Options;
 
@@ -42,14 +48,6 @@ class Options implements PluginComponent
     ];
 
     /**
-     * Initialize options
-     */
-    public function init()
-    {
-        self::$options = maybe_unserialize(get_option(OptionsGroup::OPTIONS_GROUP_NAME));
-    }
-
-    /**
      * Get all currently set options
      * @return array
      */
@@ -72,5 +70,13 @@ class Options implements PluginComponent
         }
 
         return self::$default_options[$section][$name];
+    }
+
+    /**
+     * Initialize options
+     */
+    public function init()
+    {
+        self::$options = maybe_unserialize(get_option(OptionsGroup::OPTIONS_GROUP_NAME));
     }
 }

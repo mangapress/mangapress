@@ -1,6 +1,9 @@
 <?php
 /**
- *
+ * Helper functions for TwentyNineteen
+ * @package MangaPress\Helpers\Theme_Compatibility\TwentyNineteen
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 /**

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @package MangaPress\Posts
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Posts;
 
@@ -7,7 +11,6 @@ use MangaPress\ContentTypes\ContentTypeRegistry;
 use MangaPress\PluginComponent;
 use MangaPress\ContentTypes\Taxonomy;
 use MangaPress\ContentTypes\PostType;
-use MangaPress\Options\Options;
 
 /**
  * Class Posts

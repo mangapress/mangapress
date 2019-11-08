@@ -1,12 +1,18 @@
 <?php
-
+/**
+ * Generic Input class
+ *
+ * @package MangaPress\Options\Fields\Types
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
+ */
 
 namespace MangaPress\Options\Fields\Types;
 
 use MangaPress\Options\Fields\Field;
 
 /**
- * Class Text
+ * Class Input
  * @package MangaPress\Options\Fields\Types
  */
 class Input extends Field

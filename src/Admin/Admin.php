@@ -1,7 +1,10 @@
 <?php
 /**
- * Admin
- * @package MangaPress
+ * Admin page handler
+ *
+ * @package MangaPress\Admin
+ * @version $Id$
+ * @author Jess Green <support@manga-press.com>
  */
 
 namespace MangaPress\Admin;
@@ -23,6 +26,7 @@ class Admin implements PluginComponent
      * @var string
      */
     const ADMIN_PAGE_SLUG = 'mangapress-options-page';
+
     /**
      * @var OptionsGroup $options_group
      */

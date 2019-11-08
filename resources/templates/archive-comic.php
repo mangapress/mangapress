@@ -2,8 +2,7 @@
 /**
  * MangaPress
  *
- * @package Manga_Press
- * @subpackage Manga_Press_Templates\Archive_Comic
+ * @package MangaPress\Templates\Archive_Comic
  * @version $Id$
  * @author Jess Green <support@manga-press.com>
  */
