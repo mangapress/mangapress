@@ -183,13 +183,7 @@ class Plugin implements PluginComponent
      */
     public function admin_enqueue_scripts()
     {
-        wp_enqueue_style(
-            'mangapress-icons',
-            plugins_url('assets/css/font.css', __FILE__),
-            null,
-            MP_VERSION,
-            'screen'
-        );
+        // stub function
     }
 
     /**
