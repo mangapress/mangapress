@@ -21,14 +21,6 @@ do_action('mangapress_before_content');
 do_action('mangapress_comic_archive_header');
 
 /**
- * mangapress_before_archive_comic_loop
- *
- * Run scripts or insert content directly before latest comic loop
- * @since 4.0.0
- */
-do_action('mangapress_before_archive_comic_loop');
-
-/**
  * mangapress_archive_style_opening_tag
  *
  * Output the opening wrapping tag based on the archive style
@@ -38,120 +30,152 @@ do_action('mangapress_before_archive_comic_loop');
  */
 do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style());
 
-if (have_posts()) {
-    if ((comic_archive_is_gallery() || comic_archive_is_list())) {
-        while (have_posts()) :
-            the_post();
+if ((comic_archive_is_gallery() || comic_archive_is_list())) {
+    while (have_posts()) :
+        the_post();
 
-            /**
-             * mangapress_before_article
-             *
-             * Run scripts or insert content before the article tag but after the loop starts
-             * @since 4.0.0
-             */
-            do_action('mangapress_before_article');
-
-            /**
-             * mangapress_opening_article_tag
-             *
-             * Filter and then output the article tag
-             * @param string $archive_style
-             * @param array $args {
-             *      Array of accepted arguments
-             * @type string $style
-             * }
-             * @return string
-             * @since 4.0.0
-             *
-             */
-            echo apply_filters(
-                'mangapress_opening_article_tag',
-                'article',
-                ['style' => mangapress_get_comic_archive_style()]
-            );
-
-            /**
-             * mangapress_before_article_content
-             *
-             * Run scripts or insert content before the article content but after the article opening tag
-             * @since 4.0.0
-             */
-            do_action('mangapress_before_article_content');
-
-            /**
-             * mangapress_archive_style_template
-             *
-             * Output the individual archive entry markup based on archive style
-             * @param string $archive_style
-             * @since 4.0.0
-             *
-             */
-            do_action('mangapress_archive_style_template', mangapress_get_comic_archive_style());
-
-            /**
-             * mangapress_after_article_content
-             *
-             * Run scripts or insert content after the article content but before the article closing tag
-             * @since 4.0.0
-             */
-            do_action('mangapress_after_article_content');
-
-            /**
-             * mangapress_closing_article_tag
-             *
-             * Filter and then output the closing article tag
-             * @param string $archive_style
-             * @param array $args {
-             *      Array of accepted arguments
-             * @type string $style
-             * }
-             * @since 4.0.0
-             *
-             */
-            echo apply_filters(
-                'mangapress_closing_article_tag',
-                'article',
-                ['style' => mangapress_get_comic_archive_style()]
-            );
-
-            /**
-             * mangapress_after_article
-             *
-             * Run scripts or insert content after the closing article tag
-             * but before the main loop ends or iterates to the next post
-             * @since 4.0.0
-             */
-            do_action('mangapress_after_article');
-
-        endwhile;
-    } else {
         /**
-         * @global wpdb $wpdb WordPress DB object
+         * mangapress_before_article
+         *
+         * Run scripts or insert content before the article tag but after the loop starts
+         * @since 4.0.0
          */
-        global $wpdb;
+        do_action('mangapress_before_article');
 
-        $years = $wpdb->get_col(
-            "SELECT DISTINCT YEAR(post_date) as year FROM {$wpdb->posts} 
-                WHERE 1=1 
-                    AND post_type='mangapress_comic'
-                    AND post_status='publish'    
-                ORDER BY post_date DESC"
+        $archive_query = new \WP_Query(
+            [
+                'post_type'      => \MangaPress\Posts\Comics::POST_TYPE,
+                'post_status'    => 'publish',
+                'order'          => \MangaPress\Options\Options::get_option('archive_order', 'basic'),
+                'orderby'        => \MangaPress\Options\Options::get_option('archive_orderby', 'basic'),
+                'posts_per_page' => -1,
+            ]
         );
 
-        foreach ($years as $year) {
-            for ($i = 12; $i > 1; $i--) {
-                mangapress_get_calendar($i, $year, false, true);
-            }
-        }
-    }
+        if ($archive_query->have_posts()) :
+
+            /**
+             * mangapress_before_archive_comic_loop
+             *
+             * Run scripts or insert content directly before latest comic loop
+             * @since 4.0.0
+             */
+            do_action('mangapress_before_archive_comic_loop');
+
+            while ($archive_query->have_posts()) : $archive_query->the_post();
+                /**
+                 * mangapress_opening_article_tag
+                 *
+                 * Filter and then output the article tag
+                 * @param string $archive_style
+                 * @param array $args {
+                 *      Array of accepted arguments
+                 * @type string $style
+                 * }
+                 * @return string
+                 * @since 4.0.0
+                 *
+                 */
+                echo apply_filters(
+                    'mangapress_opening_article_tag',
+                    'article',
+                    ['style' => mangapress_get_comic_archive_style()]
+                );
+
+                /**
+                 * mangapress_before_article_content
+                 *
+                 * Run scripts or insert content before the article content but after the article opening tag
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_before_article_content');
+
+                /**
+                 * mangapress_archive_style_template
+                 *
+                 * Output the individual archive entry markup based on archive style
+                 * @param string $archive_style
+                 * @since 4.0.0
+                 *
+                 */
+                do_action('mangapress_archive_style_template', mangapress_get_comic_archive_style());
+
+                /**
+                 * mangapress_after_article_content
+                 *
+                 * Run scripts or insert content after the article content but before the article closing tag
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_after_article_content');
+
+                /**
+                 * mangapress_closing_article_tag
+                 *
+                 * Filter and then output the closing article tag
+                 * @param string $archive_style
+                 * @param array $args {
+                 *      Array of accepted arguments
+                 * @type string $style
+                 * }
+                 * @since 4.0.0
+                 *
+                 */
+                echo apply_filters(
+                    'mangapress_closing_article_tag',
+                    'article',
+                    ['style' => mangapress_get_comic_archive_style()]
+                );
+            endwhile;
+
+            /**
+             * mangapress_after_archive_comic_loop
+             *
+             * Run scripts or insert content directly after comic archive loop
+             * @since 4.0.0
+             */
+            do_action('mangapress_after_archive_comic_loop');
+        else :
+            /**
+             * mangapress_output_no_comics_message
+             *
+             * Outputs message if no comics are found for archive or other listings
+             * @since 4.0.0
+             */
+            echo apply_filters(
+                'mangapress_output_no_comics_message',
+                '<li class="entry">' . __('No comics found', MP_DOMAIN) . '</li>'
+            );
+        endif;
+
+        /**
+         * mangapress_after_article
+         *
+         * Run scripts or insert content after the closing article tag
+         * but before the main loop ends or iterates to the next post
+         * @since 4.0.0
+         */
+        do_action('mangapress_after_article');
+
+    endwhile;
 } else {
     /**
-     * mangapress_output_no_comics_message
-     *
-     * Outputs message if no comics are found for archive or other listings
-     * @since 4.0.0
+     * @global wpdb $wpdb WordPress DB object
      */
-    do_action('mangapress_output_no_comics_message');
+    global $wpdb;
+
+    $years = $wpdb->get_col(
+        "SELECT DISTINCT YEAR(post_date) as year FROM {$wpdb->posts} 
+            WHERE 1=1 
+                AND post_type='mangapress_comic'
+                AND post_status='publish'    
+            ORDER BY post_date DESC"
+    );
+
+    foreach ($years as $year) {
+        for ($i = 12; $i > 1; $i--) {
+            mangapress_get_calendar($i, $year, false, true);
+        }
+    }
 }
 
 /**
@@ -163,14 +187,6 @@ if (have_posts()) {
  *
  */
 do_action('mangapress_archive_style_closing_tag', mangapress_get_comic_archive_style());
-
-/**
- * mangapress_after_archive_comic_loop
- *
- * Run scripts or insert content directly after comic archive loop
- * @since 4.0.0
- */
-do_action('mangapress_after_archive_comic_loop');
 
 /** This filter is documented in resources/templates/single-comic.php */
 do_action('mangapress_after_content');

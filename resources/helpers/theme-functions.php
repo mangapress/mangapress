@@ -37,6 +37,7 @@ function theme_init()
         '\MangaPress\Theme\Functions\archive_style_closing_tag'
     );
 
+//    add_action('mangapress_output_no_comics_message', [$this, 'no_comics_message']);
     add_action('mangapress_after_article_content', 'MangaPress\Theme\Functions\comic_page__after_article_content');
 }
 
@@ -114,7 +115,7 @@ function opening_article_tag($tag, $params)
         }
     }
 
-    $classes = get_post_class();
+    $classes = get_post_class() ? get_post_class() : 'entry';
 
     if (isset($params['style'])) {
         if (in_array($params['style'], ['list', 'gallery'])) {
@@ -175,8 +176,9 @@ function comic_page__after_article_content($post = null)
 /**
  * Create a wrapper for the archive list. Used for the archive-comic.php template
  * @param string $style Archive style-type
+ * @param string $tag Opening tag
  */
-function archive_style_opening_tag($style)
+function archive_style_opening_tag($style, $tag = 'article')
 {
     $classes = [
         'mangapress-archive-feed',
@@ -189,6 +191,11 @@ function archive_style_opening_tag($style)
             $classes[] = 'mangapress-archive-list';
         }
         $class = sprintf($class, join(' ', $classes));
+
+        $post_classes = get_post_class();
+
+        echo "<$tag class=\"" . join(' ', $post_classes) . "\">";
+        echo "<div class=\"entry-content\">";
         echo "<ul $class>";
     }
 }
@@ -196,12 +203,15 @@ function archive_style_opening_tag($style)
 /**
  * Close the for the archive list. Used for the archive-comic.php template
  * @param string $style Archive style-type
+ * @param string $tag
  * @uses mangapress_archive_style_opening_tag action
  */
-function archive_style_closing_tag($style)
+function archive_style_closing_tag($style, $tag = 'article')
 {
     if (in_array($style, ['list', 'gallery'])) {
+        echo '</div>';
         echo '</ul>';
+        echo "</$tag>";
     }
 }
 
