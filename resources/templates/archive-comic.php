@@ -20,16 +20,6 @@ do_action('mangapress_before_content');
  */
 do_action('mangapress_comic_archive_header');
 
-/**
- * mangapress_archive_style_opening_tag
- *
- * Output the opening wrapping tag based on the archive style
- * @param string $archive_style
- * @since 4.0.0
- *
- */
-do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style());
-
 if ((comic_archive_is_gallery() || comic_archive_is_list())) {
     while (have_posts()) :
         the_post();
@@ -42,6 +32,14 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
          */
         do_action('mangapress_before_article');
 
+        /**
+         * mangapress_article_header
+         *
+         * Add post header
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_header', $post);
+
         $archive_query = new \WP_Query(
             [
                 'post_type'      => \MangaPress\Posts\Comics::POST_TYPE,
@@ -53,6 +51,16 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
         );
 
         if ($archive_query->have_posts()) :
+
+            /**
+             * mangapress_archive_style_opening_tag
+             *
+             * Output the opening wrapping tag based on the archive style
+             * @param string $archive_style
+             * @since 4.0.0
+             *
+             */
+            do_action('mangapress_archive_style_opening_tag', mangapress_get_comic_archive_style());
 
             /**
              * mangapress_before_archive_comic_loop
@@ -83,6 +91,14 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
                 );
 
                 /**
+                 * mangapress_article_header
+                 *
+                 * Add post header
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_article_header', $post);
+
+                /**
                  * mangapress_before_article_content
                  *
                  * Run scripts or insert content before the article content but after the article opening tag
@@ -109,6 +125,14 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
                 do_action('mangapress_after_article_content');
 
                 /**
+                 * mangapress_article_footer
+                 *
+                 * Output article footer
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_article_footer');
+
+                /**
                  * mangapress_closing_article_tag
                  *
                  * Filter and then output the closing article tag
@@ -127,6 +151,18 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
                 );
             endwhile;
 
+            wp_reset_query();
+
+            /**
+             * mangapress_archive_style_closing_tag
+             *
+             * Output the closing wrapping tag based on the archive style
+             * @param string $archive_style
+             * @since 4.0.0
+             *
+             */
+            do_action('mangapress_archive_style_closing_tag', mangapress_get_comic_archive_style());
+
             /**
              * mangapress_after_archive_comic_loop
              *
@@ -143,9 +179,17 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
              */
             echo apply_filters(
                 'mangapress_output_no_comics_message',
-                '<li class="entry">' . __('No comics found', MP_DOMAIN) . '</li>'
+                '<div class="entry-content"><p>' . __('No comics found', MP_DOMAIN) . '</p></div>'
             );
         endif;
+
+        /**
+         * mangapress_article_footer
+         *
+         * Output article footer
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_footer', $post);
 
         /**
          * mangapress_after_article
@@ -177,16 +221,6 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
         }
     }
 }
-
-/**
- * mangapress_archive_style_closing_tag
- *
- * Output the closing wrapping tag based on the archive style
- * @param string $archive_style
- * @since 4.0.0
- *
- */
-do_action('mangapress_archive_style_closing_tag', mangapress_get_comic_archive_style());
 
 /** This filter is documented in resources/templates/single-comic.php */
 do_action('mangapress_after_content');

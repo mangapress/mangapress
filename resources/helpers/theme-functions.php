@@ -22,6 +22,8 @@ function theme_init()
     add_action('mangapress_get_comic_header', '\MangaPress\Theme\Functions\get_comic_header');
     add_action('mangapress_get_comic_footer', '\MangaPress\Theme\Functions\get_comic_footer');
 
+    add_action('mangapress_article_header', '\MangaPress\Theme\Functions\article_header');
+
     add_action(
         'mangapress_archive_style_template',
         '\MangaPress\Theme\Functions\get_archive_style_template'
@@ -106,7 +108,7 @@ function get_archive_style_template($style)
  * @return string
  * @uses mangapress_opening_article_tag
  */
-function opening_article_tag($tag, $params)
+function opening_article_tag($tag, $params = [])
 {
     $attr_string = '';
     if (isset($params['attr'])) {
@@ -123,8 +125,9 @@ function opening_article_tag($tag, $params)
         }
 
         $classes[]   = 'mangapress-archive-' . $params['style'] . '-item';
-        $attr_string .= ' class="' . join(' ', $classes) . '"';
     }
+
+    $attr_string .= ' class="' . join(' ', $classes) . '"';
 
     $tag_string = "<$tag $attr_string>";
 
@@ -215,6 +218,18 @@ function archive_style_closing_tag($style, $tag = 'article')
     }
 }
 
+/**
+ * Output article header for pages and single comics
+ * @param \WP_Post $post WordPress post object
+ */
+function article_header($post)
+{
+    ?>
+    <header class="entry-header">
+        <h1 class="entry-title"><?php echo apply_filters('the_title', get_post_field('post_title', $post)) ?></h1>
+    </header>
+    <?php
+}
 
 /**
  * Creates embedded style-sheet for Manga+Press Gallery archive

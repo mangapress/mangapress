@@ -32,14 +32,6 @@ do_action('mangapress_before_latest_comic');
 
 if (have_posts()) {
 
-    /**
-     * mangapress_before_latest_comic_loop
-     *
-     * Run scripts or insert content directly before latest comic loop
-     * @since 4.0.0
-     */
-    do_action('mangapress_before_latest_comic_loop');
-
     while (have_posts()) :
         the_post();
 
@@ -51,13 +43,6 @@ if (have_posts()) {
          */
         do_action('mangapress_before_article');
 
-        /** This filter is documented in resources/templates/archive-comic.php **/
-        echo apply_filters(
-            'mangapress_opening_article_tag',
-            'article',
-            ['style' => mangapress_get_comic_archive_style()]
-        );
-
         /**
          * mangapress_article_header
          *
@@ -66,34 +51,113 @@ if (have_posts()) {
          */
         do_action('mangapress_article_header', $post);
 
-        /**
-         * mangapress_before_article_content
-         *
-         * Run scripts or insert content before the article content but after the article opening tag
-         * @since 4.0.0
-         */
-        do_action('mangapress_before_article_content');
-
-        /** Output comic image */
-        the_post_thumbnail();
-
-        /**
-         * mangapress_after_article_content
-         *
-         * Run scripts or insert content after the article content but before the article closing tag
-         * @since 4.0.0
-         */
-        do_action('mangapress_after_article_content');
-
-        /** This filter is documented in resources/templates/archive-comic.php **/
-        echo apply_filters(
-            'mangapress_closing_article_tag',
-            'article',
-            ['style' => mangapress_get_comic_archive_style()]
+        $latest = new \WP_Query(
+            [
+                'post_type'      => \MangaPress\Posts\Comics::POST_TYPE,
+                'post_status'    => 'publish',
+                'order'          => \MangaPress\Options\Options::get_option('archive_order', 'basic'),
+                'orderby'        => \MangaPress\Options\Options::get_option('archive_orderby', 'basic'),
+                'posts_per_page' => -1,
+            ]
         );
 
-        /** Output navigation */
-        mangapress_comic_navigation();
+        /**
+         * mangapress_before_latest_comic_loop
+         *
+         * Run scripts or insert content directly before latest comic loop
+         * @since 4.0.0
+         */
+        do_action('mangapress_before_latest_comic_loop');
+
+        if ($latest->have_posts()) :
+            while($latest->have_posts()) : $latest->the_post();
+                /** This filter is documented in resources/templates/archive-comic.php **/
+                echo apply_filters(
+                    'mangapress_opening_article_tag',
+                    'article'
+                );
+
+                /**
+                 * mangapress_article_header
+                 *
+                 * Add post header
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_article_header', $post);
+
+                /**
+                 * mangapress_before_article_content
+                 *
+                 * Run scripts or insert content before the article content but after the article opening tag
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_before_article_content');
+
+                /** Output comic image */
+                the_post_thumbnail();
+
+                /**
+                 * mangapress_after_article_content
+                 *
+                 * Run scripts or insert content after the article content but before the article closing tag
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_after_article_content');
+
+                /**
+                 * mangapress_article_footer
+                 *
+                 * Output article footer
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_article_footer');
+
+                /** Output navigation */
+                mangapress_comic_navigation();
+
+                /** This filter is documented in resources/templates/archive-comic.php **/
+                echo apply_filters(
+                    'mangapress_closing_article_tag',
+                    'article'
+                );
+            endwhile;
+        else :
+            /** This filter is documented in resources/templates/archive-comic.php **/
+            echo apply_filters(
+                'mangapress_opening_article_tag',
+                'article',
+                false
+            );
+
+            /**
+             * mangapress_output_no_comics_message
+             *
+             * Outputs message if no comics are found for archive or other listings
+             * @since 4.0.0
+             */
+            echo apply_filters(
+                'mangapress_output_no_comics_message',
+                '<div class="entry-content"><p>' . __('No comics found', MP_DOMAIN) . '</p></div>'
+            );
+
+            /** This filter is documented in resources/templates/archive-comic.php **/
+            echo apply_filters(
+                'mangapress_closing_article_tag',
+                'article',
+                false
+            );
+
+        endif;
+
+        /**
+         * mangapress_after_latest_comic_loop
+         *
+         * Run scripts or insert content directly after latest comic loop
+         * @since 4.0.0
+         */
+        do_action('mangapress_after_latest_comic_loop');
+
+        wp_reset_query();
 
         /**
          * mangapress_article_footer
@@ -112,22 +176,6 @@ if (have_posts()) {
          */
         do_action('mangapress_after_article');
     endwhile;
-
-    /**
-     * mangapress_after_latest_comic_loop
-     *
-     * Run scripts or insert content directly after latest comic loop
-     * @since 4.0.0
-     */
-    do_action('mangapress_after_latest_comic_loop');
-} else {
-    /**
-     * mangapress_output_no_comics_message
-     *
-     * Outputs message if no comics are found for archive or other listings
-     * @since 4.0.0
-     */
-    do_action('mangapress_output_no_comics_message');
 }
 
 /**
