@@ -48,7 +48,7 @@ if (have_posts()) :
         echo apply_filters(
             'mangapress_opening_article_tag',
             'article',
-            ['style' => mangapress_get_comic_archive_style()]
+            false
         );
 
         /**
@@ -82,7 +82,7 @@ if (have_posts()) :
         echo apply_filters(
             'mangapress_closing_article_tag',
             'article',
-            ['style' => mangapress_get_comic_archive_style()]
+            false
         );
 
         mangapress_comic_navigation();

@@ -57,7 +57,7 @@ if (have_posts()) {
                 'post_status'    => 'publish',
                 'order'          => \MangaPress\Options\Options::get_option('archive_order', 'basic'),
                 'orderby'        => \MangaPress\Options\Options::get_option('archive_orderby', 'basic'),
-                'posts_per_page' => -1,
+                'posts_per_page' => 1,
             ]
         );
 
@@ -70,11 +70,13 @@ if (have_posts()) {
         do_action('mangapress_before_latest_comic_loop');
 
         if ($latest->have_posts()) :
-            while($latest->have_posts()) : $latest->the_post();
+            while ($latest->have_posts()) :
+                $latest->the_post();
                 /** This filter is documented in resources/templates/archive-comic.php **/
                 echo apply_filters(
                     'mangapress_opening_article_tag',
-                    'article'
+                    'article',
+                    false
                 );
 
                 /**
@@ -118,7 +120,8 @@ if (have_posts()) {
                 /** This filter is documented in resources/templates/archive-comic.php **/
                 echo apply_filters(
                     'mangapress_closing_article_tag',
-                    'article'
+                    'article',
+                    false
                 );
             endwhile;
         else :
