@@ -33,6 +33,8 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
 
         add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
         add_filter('use_block_editor_for_post_type', [$this, 'gutenberg_can_edit_post_type'], 20, 2);
+
+        add_action('save_post_' . ComicPages::POST_TYPE, [$this, 'save_post'], 20, 3);
     }
 
     /**
@@ -161,5 +163,22 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
         }
 
         return $can_edit;
+    }
+
+    /**
+     * Save data for Comic Page
+     *
+     * @param int $post_id Post ID
+     * @param \WP_Post $post WordPress post object
+     * @param boolean $update Is the post being updated?
+     */
+    public function save_post($post_id, \WP_Post $post, $update)
+    {
+        $page_type = filter_input(INPUT_POST, 'mangapress_comicpage_type', FILTER_SANITIZE_STRING);
+
+        $option = sprintf('mangapress_%s_page', $page_type);
+        if (get_option($option)) {
+            update_option($option, $post_id);
+        }
     }
 }
