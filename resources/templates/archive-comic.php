@@ -50,7 +50,7 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
             ]
         );
 
-        if ($archive_query->have_posts()) :
+        if ($archive_query->have_posts()) {
 
             /**
              * mangapress_archive_style_opening_tag
@@ -70,7 +70,9 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
              */
             do_action('mangapress_before_archive_comic_loop');
 
-            while ($archive_query->have_posts()) : $archive_query->the_post();
+            while ($archive_query->have_posts()) :
+                $archive_query->the_post();
+
                 /**
                  * mangapress_opening_article_tag
                  *
@@ -170,7 +172,8 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
              * @since 4.0.0
              */
             do_action('mangapress_after_archive_comic_loop');
-        else :
+        } else {
+
             /**
              * mangapress_output_no_comics_message
              *
@@ -181,7 +184,7 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
                 'mangapress_output_no_comics_message',
                 '<div class="entry-content"><p>' . __('No comics found', MP_DOMAIN) . '</p></div>'
             );
-        endif;
+        }
 
         /**
          * mangapress_article_footer

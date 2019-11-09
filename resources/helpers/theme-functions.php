@@ -124,12 +124,12 @@ function opening_article_tag($tag, $params = [])
             $tag = 'li';
         }
 
-        $classes[]   = 'mangapress-archive-' . $params['style'] . '-item';
+        $classes[] = 'mangapress-archive-' . $params['style'] . '-item';
     }
 
-    $attr_string .= ' class="' . join(' ', $classes) . '"';
+    $attr_string .= 'class="' . join(' ', $classes) . '"';
 
-    $tag_string = "<$tag $attr_string>";
+    $tag_string = "\r\n<$tag $attr_string>";
 
     return $tag_string;
 }
@@ -150,7 +150,7 @@ function closing_article_tag($tag, $params)
         }
     }
 
-    $tag_string = "</$tag>";
+    $tag_string = "\r\n</$tag>\r\n";
 
     return $tag_string;
 }
@@ -186,8 +186,9 @@ function archive_style_opening_tag($style, $tag = 'article')
     $classes = [
         'mangapress-archive-feed',
     ];
+
     if (in_array($style, ['list', 'gallery'])) {
-        $class = ' class="%s"';
+        $class = 'class="%s"';
         if ($style == 'gallery') {
             $classes[] = 'mangapress-archive-gallery';
         } else {
@@ -197,9 +198,9 @@ function archive_style_opening_tag($style, $tag = 'article')
 
         $post_classes = get_post_class();
 
-        echo "<$tag class=\"" . join(' ', $post_classes) . "\">";
-        echo "<div class=\"entry-content\">";
-        echo "<ul $class>";
+        echo "\r\n<$tag class=\"" . join(' ', $post_classes) . "\">\r\n";
+        echo "<div class=\"entry-content\">\r\n";
+        echo "<ul $class>\r\n";
     }
 }
 
@@ -212,8 +213,8 @@ function archive_style_opening_tag($style, $tag = 'article')
 function archive_style_closing_tag($style, $tag = 'article')
 {
     if (in_array($style, ['list', 'gallery'])) {
-        echo '</div>';
-        echo '</ul>';
+        echo "</ul>\r\n";
+        echo "</div>\r\n";
         echo "</$tag>";
     }
 }
@@ -224,11 +225,11 @@ function archive_style_closing_tag($style, $tag = 'article')
  */
 function article_header($post)
 {
-    ?>
-    <header class="entry-header">
-        <h1 class="entry-title"><?php echo apply_filters('the_title', get_post_field('post_title', $post)) ?></h1>
-    </header>
-    <?php
+    if (get_post_type($post) === ComicPages::POST_TYPE) : ?>
+        <header class="entry-header">
+            <h1 class="entry-title"><?php echo apply_filters('the_title', get_post_field('post_title', $post)) ?></h1>
+        </header>
+    <?php endif;
 }
 
 /**

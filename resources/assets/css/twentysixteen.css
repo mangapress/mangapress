@@ -1,3 +1,4 @@
+
 .comic-nav-hlist-wrapper {
     display: block;
     margin-top: 20px;
@@ -44,11 +45,24 @@
     display: none;
 }
 
+.type-mangapress_comicpage .mangapress-archive-list {
+    list-style: none;
+    margin-left: 1.25em !important;
+}
+
+@media screen and (min-width: 61.5625em) {
+    .type-mangapress_comicpage > .entry-content {
+        float: none !important;
+        width: 71.42857144%;
+    }
+}
+
 .comic-link-item {
     display: block;
     padding: 15px 10px;
     text-align: center;
 }
+
 .mangapress-archive-gallery {
     display: flex;
     flex-direction: row;
