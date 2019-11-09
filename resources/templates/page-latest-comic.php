@@ -69,7 +69,7 @@ if (have_posts()) {
          */
         do_action('mangapress_before_latest_comic_loop');
 
-        if ($latest->have_posts()) :
+        if ($latest->have_posts()) {
             while ($latest->have_posts()) :
                 $latest->the_post();
                 /** This filter is documented in resources/templates/archive-comic.php **/
@@ -124,7 +124,7 @@ if (have_posts()) {
                     false
                 );
             endwhile;
-        else :
+        } else {
             /** This filter is documented in resources/templates/archive-comic.php **/
             echo apply_filters(
                 'mangapress_opening_article_tag',
@@ -149,8 +149,7 @@ if (have_posts()) {
                 'article',
                 false
             );
-
-        endif;
+        }
 
         /**
          * mangapress_after_latest_comic_loop
