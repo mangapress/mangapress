@@ -42,17 +42,49 @@ class Select extends Field
         $attr = implode(" ", $attr_arr);
 
         $value       = $this->get_value();
-        $options_str = "";
-        foreach ($options as $option_val => $option_text) {
-            $selected    = selected($value, $option_val, false);
-            $options_str .= vsprintf(
-                '<option value="%1$s" %2$s>%3$s</option>',
-                [
-                    $option_val,
-                    $selected,
-                    $option_text,
-                ]
-            );
+        $is_grouped  = isset($options['pages']);
+        $options_str = '<option>' . __('Select a Page', MP_DOMAIN) . '</option>';
+
+        if ($is_grouped) {
+            foreach ($options as $group => $option) {
+                $options = '';
+                if ($group == 'no_val') {
+                    continue;
+                }
+
+                foreach ($option['pages'] as $option_val => $option_text) {
+                    $selected = selected($value, $option_val, false);
+
+                    $options .= vsprintf(
+                        '<option value="%1$s" %2$s>%3$s</option>',
+                        [
+                            $option_val,
+                            $selected,
+                            $option_text,
+                        ]
+                    );
+                }
+
+                $options_str .= vsprintf(
+                    '<optgroup label="%1$s">%2$s</optgroup>',
+                    [
+                        $option['title'],
+                        $options,
+                    ]
+                );
+            }
+        } else {
+            foreach ($options as $option_val => $option_text) {
+                $selected    = selected($value, $option_val, false);
+                $options_str .= vsprintf(
+                    '<option value="%1$s" %2$s>%3$s</option>',
+                    [
+                        $option_val,
+                        $selected,
+                        $option_text,
+                    ]
+                );
+            }
         }
 
         $this->html = vsprintf(

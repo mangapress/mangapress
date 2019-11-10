@@ -9,6 +9,8 @@
 
 namespace MangaPress\Options\Fields\Types;
 
+use MangaPress\Posts\ComicPages;
+
 /**
  * Class PageSelect
  * @package MangaPress\Options\Fields\Types
@@ -19,10 +21,33 @@ class PageSelect extends Select
     {
         parent::__construct($options);
 
-        $pages   = get_pages();
+        $pages['pages']['title'] = __('Pages', MP_DOMAIN);
+        $pages['pages']['pages'] = get_pages();
+
+        $comic_pages = get_pages(
+            ['post_type' => ComicPages::POST_TYPE, 'post_status' => ['publish', 'draft']]
+        );
+
+        if ($comic_pages) {
+            $post_type_obj = get_post_type_object(ComicPages::POST_TYPE);
+
+            $pages[ComicPages::POST_TYPE]['title'] = $post_type_obj->label;
+            $pages[ComicPages::POST_TYPE]['pages'] = $comic_pages;
+        }
+
         $options = array_merge([], ['no_val' => __('Select a Page', MP_DOMAIN)]);
-        foreach ($pages as $page) {
-            $options[$page->post_name] = $page->post_title;
+
+        if (!isset($pages[ComicPages::POST_TYPE])) {
+            foreach ($pages as $page) {
+                $options[$page->post_name] = $page->post_title;
+            }
+        } else {
+            foreach ($pages as $type => $page) {
+                $options[$type]['title'] = $page['title'];
+                foreach ($page['pages'] as $p) {
+                    $options[$type]['pages'][$p->post_name] = esc_html($p->post_title);
+                }
+            }
         }
 
         $this->options = $options;
