@@ -159,7 +159,7 @@ class Install
             }
         }
 
-        if (!get_option('mangapress_archive_page')) {
+        if (!Options::get_option('comicarchive_page', 'basic')) {
             // create latest comic and comic archive posts
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
@@ -168,26 +168,27 @@ class Install
                 'post_status' => 'draft',
             ];
 
-            $archives = wp_insert_post($params);
+            $archive = wp_insert_post($params);
 
-            if (!($archives instanceof \WP_Error)) {
-                add_post_meta($archives, 'comic_page__type', 'archive', true);
-                add_option('mangapress_archive_page', $archives, '', 'no');
+            if (!is_wp_error($archive)) {
+                Options::set_option('comicarchive_page', $params['post_name']);
+                Options::save_options();
             }
         }
 
-        if (!get_option('mangapress_latest_page')) {
+        if (!Options::get_option('latestcomic_page', 'basic')) {
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
                 'post_title'  => 'Latest Comic',
                 'post_name'   => 'latest-comic',
                 'post_status' => 'draft',
             ];
+
             $latest = wp_insert_post($params);
 
-            if (!($latest instanceof \WP_Error)) {
-                add_post_meta($latest, 'comic_page__type', 'latest', true);
-                add_option('mangapress_latest_page', $latest, '', 'no');
+            if (!is_wp_error($latest)) {
+                Options::set_option('latestcomic_page', $params['post_name']);
+                Options::save_options();
             }
         }
     }

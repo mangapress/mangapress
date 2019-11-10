@@ -20,9 +20,24 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     const POST_TYPE = 'mangapress_comicpage';
 
     /**
+     * Stores assigned page types
+     * @var array $page_types
+     */
+    protected static $page_types = ['latest' => false, 'archive' => false];
+
+    /**
      * @var PostType $post_type
      */
     protected $post_type;
+
+    /**
+     * Get all available page types
+     * @return array
+     */
+    public static function get_available_page_types()
+    {
+        return self::$page_types;
+    }
 
     /**
      * Initialize component
@@ -34,7 +49,10 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
         add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
         add_filter('use_block_editor_for_post_type', [$this, 'gutenberg_can_edit_post_type'], 20, 2);
 
-        add_action('save_post_' . ComicPages::POST_TYPE, [$this, 'save_post'], 20, 3);
+        add_action('save_post_' . ComicPages::POST_TYPE, [$this, 'save_post'], 20);
+
+        self::$page_types['latest']  = get_option('mangapress_latest_page');
+        self::$page_types['archive'] = get_option('mangapress_archive_page');
     }
 
     /**
@@ -101,12 +119,13 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
 
     /**
      * Get the current page's type
-     * @param int $id
-     * @return string
+     * @param int $id Page Id
+     *
+     * @return string|false Name of type if successful, otherwise false
      */
     public static function get_page_type($id)
     {
-        return get_post_meta($id, 'comic_page__type', true);
+        return array_search($id, self::$page_types);
     }
 
     /**
@@ -114,7 +133,7 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
      */
     public function comicpage_type_meta_box_cb()
     {
-        include_once MP_ABSPATH . 'resources/admin/pages/meta-box-comic-page-type.php';
+//        include_once MP_ABSPATH . 'resources/admin/pages/meta-box-comic-page-type.php';
     }
 
     /**
@@ -131,7 +150,8 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
             return $post_statuses;
         }
 
-        $is_what = get_post_meta($post->ID, 'comic_page__type', true);
+        $is_what = self::get_page_type(get_post_field('ID', $post));
+
         if ($is_what === 'latest') {
             $post_statuses[] = __('Latest Comic Page', MP_DOMAIN);
         }
@@ -163,22 +183,5 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
         }
 
         return $can_edit;
-    }
-
-    /**
-     * Save data for Comic Page
-     *
-     * @param int $post_id Post ID
-     * @param \WP_Post $post WordPress post object
-     * @param boolean $update Is the post being updated?
-     */
-    public function save_post($post_id, \WP_Post $post, $update)
-    {
-        $page_type = filter_input(INPUT_POST, 'mangapress_comicpage_type', FILTER_SANITIZE_STRING);
-
-        $option = sprintf('mangapress_%s_page', $page_type);
-        if (get_option($option)) {
-            update_option($option, $post_id);
-        }
     }
 }

@@ -73,6 +73,32 @@ class Options implements PluginComponent
     }
 
     /**
+     * Set option prior to save
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param string $section
+     */
+    public static function set_option($name, $value, $section)
+    {
+        if (isset(self::$options[$section][$name])) {
+            self::$options[$section][$name] = $value;
+        }
+    }
+
+    /**
+     * Save options
+     */
+    public static function save_options()
+    {
+        $options_group = new OptionsGroup();
+
+        $sanitized_options = $options_group->sanitize_options(self::$options);
+
+        update_option('mangapress_options', serialize($sanitized_options));
+    }
+
+    /**
      * Initialize options
      */
     public function init()

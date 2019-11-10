@@ -9,29 +9,35 @@
  */
 
 /**
- * @global \wpdb $wpdb
  * @global \WP_Post $posts
  */
 global $wpdb, $post;
 
-$sql = "SELECT * FROM {$wpdb->postmeta} wpm "
-       . "LEFT JOIN {$wpdb->posts} wp ON wp.ID = wpm.post_id "
-       . "WHERE meta_value IN('latest', 'archive')";
-
-$posts        = $wpdb->get_results($sql, OBJECT_K);
+$posts        = \MangaPress\Posts\ComicPages::get_available_page_types();
 $current_type = \MangaPress\Posts\ComicPages::get_page_type(get_post_field('ID', $post));
 ?>
 <div>
     <h3><?php _e('Designated Pages', MP_DOMAIN) ?></h3>
     <?php if ($posts) {
-        foreach ($posts as $p) {
-            if ($p->meta_value === 'latest' || $p->meta_value === 'archive') {
+        foreach ($posts as $type => $p) {
+            $page_title = '';
+            $page_id    = false;
+            if ($p) {
+                $page_title = get_post_field('post_title', $p);
+                $page_id    = get_post_field('ID', $p);
+            }
+            if ($type === 'latest' || $type === 'archive') {
                 echo '<p><strong>'
-                     . (($p->meta_value === 'latest')
+                     . (($type === 'latest')
                         ? __('Latest Comic Page', MP_DOMAIN) : __('Archive Comic Page', MP_DOMAIN))
                      . ':</strong> ';
-                echo '<a href="' . admin_url('post.php?post=' . esc_attr($p->ID) . '&action=edit') . '">'
-                     . esc_html($p->post_title) . '</a></p>';
+
+                if ($page_id) {
+                    echo '<a href="' . admin_url('post.php?post=' . esc_attr($page_id) . '&action=edit') . '">'
+                         . esc_html($page_title) . '</a></p>';
+                } else {
+                    _e('Page not assigned', MP_DOMAIN);
+                }
             }
         }
     } else {
