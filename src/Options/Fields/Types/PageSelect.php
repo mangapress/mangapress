@@ -39,13 +39,20 @@ class PageSelect extends Select
 
         if (!isset($pages[ComicPages::POST_TYPE])) {
             foreach ($pages as $page) {
-                $options[$page->post_name] = $page->post_title;
+                $options[$page->ID] = esc_html($page->post_title);
             }
         } else {
             foreach ($pages as $type => $page) {
                 $options[$type]['title'] = $page['title'];
+                /**
+                 * @var \WP_Post $p
+                 */
                 foreach ($page['pages'] as $p) {
-                    $options[$type]['pages'][$p->post_name] = esc_html($p->post_title);
+                    $options[$type]['pages'][$p->ID] = esc_html($p->post_title)
+                                                       . (
+                                                       $p->post_status === 'draft'
+                                                           ? '(' . esc_html($p->post_status) . ')' : ''
+                                                       );
                 }
             }
         }

@@ -92,9 +92,9 @@ class Install
             );
         }
 
-        if (version_compare($wp_version, '4.9.6', '<=')) {
+        if (version_compare($wp_version, '5.2.4', '<=')) {
             wp_die(
-                'Sorry, only WordPress 4.9.6 and later are supported. Please upgrade to WordPress 4.9.6',
+                'Sorry, only WordPress 5.2.4 and later are supported. Please upgrade to WordPress 5.2.4',
                 'Wrong Version'
             );
         }
@@ -106,7 +106,7 @@ class Install
         // version_compare will still evaluate against an empty string
         // so we have to tell it not to.
         if (version_compare($version, MP_VERSION, '<') && !($version == '')) {
-            add_option('mangapress_upgrade', 'yes', '', 'no');
+            $this->do_upgrade();
         } elseif ($version == '') {
             add_option('mangapress_ver', MP_VERSION, '', 'no');
             add_option('mangapress_options', serialize(Options::get_options()), '', 'no');
@@ -117,6 +117,37 @@ class Install
         (new Bootstrap())->init();
 
         $this->after_plugin_activation();
+
+        flush_rewrite_rules(false);
+    }
+
+    /**
+     * Run upgrades
+     * @global \wpdb $wpdb
+     */
+    public function do_upgrade()
+    {
+        global $wpdb;
+        update_option('mangapress_ver', MP_VERSION);
+
+        // switch to using post ids
+        $latest  = Options::get_option('latestcomic_page', 'basic');
+        $archive = Options::get_option('comicarchive_page', 'basic');
+
+        $raw_sql = "SELECT post_name, ID FROM {$wpdb->posts} "
+                   . "WHERE post_type='page' "
+                   . "AND post_status='publish' "
+                   . "AND post_name IN ('%s', '%s')";
+
+        $sql   = $wpdb->prepare($raw_sql, $latest, $archive);
+        $posts = $wpdb->get_results($sql);
+
+        $post_ids = wp_list_pluck($posts, 'ID', 'post_name');
+
+        Options::set_option('latestcomic_page', $post_ids[$latest], 'basic');
+        Options::set_option('comicarchive_page', $post_ids[$latest], 'basic');
+
+        Options::save_options();
 
         flush_rewrite_rules(false);
     }
@@ -201,19 +232,6 @@ class Install
     public function do_deactivate()
     {
         delete_option('rewrite_rules');
-        flush_rewrite_rules(false);
-    }
-
-    /**
-     * Static function for upgrade
-     *
-     * @return void
-     */
-    public function do_upgrade()
-    {
-        update_option('mangapress_ver', MP_VERSION);
-        delete_option('mangapress_upgrade');
-
         flush_rewrite_rules(false);
     }
 }
