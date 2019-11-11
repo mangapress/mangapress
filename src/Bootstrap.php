@@ -52,6 +52,7 @@ class Bootstrap
                     ThemeCompat::class,
                     Shortcode::class,
                     TemplateLoader::class,
+                    PostInstall::class,
                 ]
             );
     }

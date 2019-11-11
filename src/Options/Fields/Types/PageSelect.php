@@ -51,7 +51,7 @@ class PageSelect extends Select
                     $options[$type]['pages'][$p->ID] = esc_html($p->post_title)
                                                        . (
                                                        $p->post_status === 'draft'
-                                                           ? '(' . esc_html($p->post_status) . ')' : ''
+                                                           ? ' (' . esc_html($p->post_status) . ')' : ''
                                                        );
                 }
             }

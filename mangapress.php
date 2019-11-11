@@ -26,6 +26,10 @@ if (!class_exists('WP')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+if (!defined('MP_VERSION')) {
+    define('MP_VERSION', '4.0.0-beta');
+}
+
 if (!defined('MP_DOMAIN')) {
     define('MP_DOMAIN', 'mangapress');
 }

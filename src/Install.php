@@ -82,11 +82,11 @@ class Install
             wp_die(__('Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN));
         }
 
-        if (version_compare(PHP_VERSION, '7.0', '<=')) {
+        if (version_compare(PHP_VERSION, '7.0', '<')) {
             wp_die(
                 __(
                     'Sorry. Manga+Press is only supported on PHP 7.0 and newer. '
-                    . 'Please upgrade your server PHP version.',
+                    . 'Please upgrade your server\'s PHP version, or contact your hosting provider.',
                     MP_DOMAIN
                 )
             );
@@ -99,8 +99,6 @@ class Install
             );
         }
 
-        $plugin  = new Plugin();
-
         $version = strval(get_option('mangapress_ver'));
 
         // version_compare will still evaluate against an empty string
@@ -112,13 +110,9 @@ class Install
             add_option('mangapress_options', serialize(Options::get_options()), '', 'no');
         }
 
-        unset($plugin);
+        add_option('mangapress_post_activation', true);
 
         (new Bootstrap())->init();
-
-        $this->after_plugin_activation();
-
-        flush_rewrite_rules(false);
     }
 
     /**
@@ -150,84 +144,6 @@ class Install
         Options::save_options();
 
         flush_rewrite_rules(false);
-    }
-
-    /**
-     * Run routines after plugin has been activated
-     *
-     * @return void
-     * @todo   check for existing terms in Series
-     */
-    public function after_plugin_activation()
-    {
-        /**
-         * mangapress_after_plugin_activation
-         * Allow other plugins to add to Manga+Press' activation sequence.
-         *
-         * @return void
-         */
-        do_action('mangapress_after_plugin_activation');
-
-
-        // if the option already exists, exit
-        if (!get_option('mangapress_default_category')) {
-            // create a default series category
-            $term = wp_insert_term(
-                'Default Series',
-                Comics::TAX_SERIES,
-                [
-                    'description' => __(
-                        'Default Series category created when plugin is activated. '
-                        . 'It is suggested that you rename this category.',
-                        MP_DOMAIN
-                    ),
-                    'slug'        => 'default-series',
-                ]
-            );
-
-            if (!($term instanceof \WP_Error)) {
-                add_option('mangapress_default_category', $term['term_id'], '', 'no');
-            }
-        }
-
-        $latest_created = false;
-        if (!Options::get_option('comicarchive_page', 'basic')) {
-            // create latest comic and comic archive posts
-            $params = [
-                'post_type'   => ComicPages::POST_TYPE,
-                'post_title'  => 'Comic Archives',
-                'post_name'   => 'comic-archives',
-                'post_status' => 'draft',
-            ];
-
-            $archive = wp_insert_post($params);
-
-            if (!is_wp_error($archive)) {
-                Options::set_option('comicarchive_page', $archive, 'basic');
-                $latest_created = true;
-            }
-        }
-
-        $archive_created = false;
-        if (!Options::get_option('latestcomic_page', 'basic')) {
-            $params = [
-                'post_type'   => ComicPages::POST_TYPE,
-                'post_title'  => 'Latest Comic',
-                'post_name'   => 'latest-comic',
-                'post_status' => 'draft',
-            ];
-
-            $latest = wp_insert_post($params);
-
-            if (!is_wp_error($latest)) {
-                Options::set_option('latestcomic_page', $latest, 'basic');
-                $archive_created = true;
-            }
-        }
-
-        if ($archive_created || $latest_created) {
-            Options::save_options();
-        }
     }
 
     /**
