@@ -1,10 +1,10 @@
 === Manga+Press Comic Manager ===
 Contributors: ArdathkSheyna
-Donate link: http://www.manga-press.com/
+Donate link: https://www.manga-press.com/
 Tags: webcomics, online comics
-Requires at least: 4.8
-Tested up to: 4.9.4
-Stable tag: 3.0.0
+Requires at least: 5.0
+Tested up to: 5.2.4
+Stable tag: 4.0.0
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -15,7 +15,15 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 == Upgrade Notice ==
 
-WARNING: Child themes have been pulled from the plugin. These themes are now available for download here: https://manga-press.com/download/themes/. If you are using these themes, please move them to the `wp-content/themes` directory before upgrading.
+WARNING: This is a beta version. Use in production at your own risk.
+WARNING: Last/Comic Archive page functionality has been changed. Please back up, and perform tests in a development environment before upgrading.
+
+= 4.0.0 =
+   * Removed `the_content` processing for Latest/Comic Archive pages
+   * Added templates for Latest Comic and Comic Archive pages
+   * Added new "Comic Pages" post-type
+   * Added warnings for assigning Latest/Comic Archive pages
+   * Added shortcode for inserting Latest Comic + navigation into posts or pages.
 
 = 3.0.0 =
   * Removed child themes
@@ -59,7 +67,7 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
       * Updated and fixed loading of Spanish Language files
       * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
       * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-         * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+         * Incidentally corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
 
 = 2.8 =
    * 2.8.3
