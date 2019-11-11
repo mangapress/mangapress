@@ -4,7 +4,7 @@ Donate link: https://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 5.0
 Tested up to: 5.2.4
-Stable tag: 4.0.0
+Stable tag: 4.0.0-beta
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
