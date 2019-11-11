@@ -51,7 +51,6 @@ function theme_init()
         '\MangaPress\Theme\Functions\archive_page_closing_tag'
     );
 
-//    add_action('mangapress_output_no_comics_message', [$this, 'no_comics_message']);
     add_action('mangapress_after_article_content', 'MangaPress\Theme\Functions\comic_page__after_article_content');
 }
 
@@ -320,7 +319,7 @@ function archive_gallery_style()
      * @param string $styles
      * @return string
      */
-    return apply_filters('mangapress_archive_gallery_style', $styles);
+    echo apply_filters('mangapress_archive_gallery_style', $styles);
 }
 
 /**
