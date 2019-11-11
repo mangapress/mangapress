@@ -8,6 +8,7 @@
 namespace MangaPress;
 
 use MangaPress\Options\Options;
+use MangaPress\Posts\ComicPages;
 
 /**
  * Class Plugin
@@ -135,11 +136,11 @@ class Plugin implements PluginComponent
         $archive = (int)Options::get_option('comicarchive_page', 'basic');
 
         if ($latest === $post->ID) {
-            $post_states[] = 'Latest Comic Page';
+            $post_states[] = __('Latest Comic Page', MP_DOMAIN);
         }
 
         if ($archive === $post->ID) {
-            $post_states[] = 'Comic Archive Page';
+            $post_states[] = __('Comic Archive Page', MP_DOMAIN);
         }
 
         return $post_states;
@@ -206,16 +207,16 @@ class Plugin implements PluginComponent
         }
 
         $post      = get_post($post_id);
-        $page_slug = get_post_field('post_name', $post);
+        $post_id   = get_post_field('ID', $post);
         $post_type = get_post_type($post);
 
         if ($post_type !== 'page') {
             return false;
         }
 
-        $archive_page = Options::get_option('comicarchive_page', 'basic');
+        $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
 
-        if ($page_slug == $archive_page) {
+        if ($post_id == $archive_page) {
             if (get_current_screen()->is_block_editor()) {
                 wp_enqueue_script('wp-notices');
 
@@ -249,16 +250,16 @@ class Plugin implements PluginComponent
         }
 
         $post      = get_post($post_id);
-        $page_slug = get_post_field('post_name', $post);
+        $post_id   = get_post_field('ID', $post);
         $post_type = get_post_type($post);
 
-        if ($post_type !== 'page') {
+        if (!in_array($post_type, ['page', ComicPages::POST_TYPE])) {
             return false;
         }
 
-        $latest_page = Options::get_option('latestcomic_page', 'basic');
+        $latest_page = (int)Options::get_option('latestcomic_page', 'basic');
 
-        if ($page_slug == $latest_page) {
+        if ($post_id == $latest_page) {
             if (get_current_screen()->is_block_editor()) {
                 wp_enqueue_script('wp-notices');
 

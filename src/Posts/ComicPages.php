@@ -9,6 +9,7 @@ namespace MangaPress\Posts;
 
 use MangaPress\ContentTypes\ContentTypeRegistry;
 use MangaPress\ContentTypes\PostType;
+use MangaPress\Options\Options;
 use MangaPress\PluginComponent;
 
 /**
@@ -20,24 +21,9 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     const POST_TYPE = 'mangapress_comicpage';
 
     /**
-     * Stores assigned page types
-     * @var array $page_types
-     */
-    protected static $page_types = ['latest' => false, 'archive' => false];
-
-    /**
      * @var PostType $post_type
      */
     protected $post_type;
-
-    /**
-     * Get all available page types
-     * @return array
-     */
-    public static function get_available_page_types()
-    {
-        return self::$page_types;
-    }
 
     /**
      * Initialize component
@@ -46,13 +32,7 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     {
         $this->register_content_types();
 
-        add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
         add_filter('use_block_editor_for_post_type', [$this, 'gutenberg_can_edit_post_type'], 20, 2);
-
-        add_action('save_post_' . ComicPages::POST_TYPE, [$this, 'save_post'], 20);
-
-        self::$page_types['latest']  = get_option('mangapress_latest_page');
-        self::$page_types['archive'] = get_option('mangapress_archive_page');
     }
 
     /**
@@ -101,66 +81,12 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     {
         global $post;
 
-        $comic_type = self::get_page_type(get_post_field('ID', $post));
-        if (in_array($comic_type, ['latest', 'archive'])) {
+        $latest_page  = (int)Options::get_option('latestcomic_page', 'basic');
+        $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
+        if (in_array(get_post_field('ID', $post), [$latest_page, $archive_page])) {
             remove_meta_box('postimagediv', self::POST_TYPE, 'side');
             remove_meta_box('mangapress_seriesdiv', self::POST_TYPE, 'side');
         }
-
-        add_meta_box(
-            'comicpage-type',
-            __('Comic Page Type', MP_DOMAIN),
-            [$this, 'comicpage_type_meta_box_cb'],
-            $this->post_type->get_name(),
-            'side',
-            'high'
-        );
-    }
-
-    /**
-     * Get the current page's type
-     * @param int $id Page Id
-     *
-     * @return string|false Name of type if successful, otherwise false
-     */
-    public static function get_page_type($id)
-    {
-        return array_search($id, self::$page_types);
-    }
-
-    /**
-     * Load associated meta box
-     */
-    public function comicpage_type_meta_box_cb()
-    {
-//        include_once MP_ABSPATH . 'resources/admin/pages/meta-box-comic-page-type.php';
-    }
-
-    /**
-     * Add to statuses to indicate what pages do what
-     *
-     * @param string[] $post_statuses Array of post status
-     * @param \WP_Post $post Current post in the loop
-     *
-     * @return string[]
-     */
-    public function display_post_states($post_statuses, $post)
-    {
-        if (!is_admin() || get_post_type($post) !== ComicPages::POST_TYPE) {
-            return $post_statuses;
-        }
-
-        $is_what = self::get_page_type(get_post_field('ID', $post));
-
-        if ($is_what === 'latest') {
-            $post_statuses[] = __('Latest Comic Page', MP_DOMAIN);
-        }
-
-        if ($is_what === 'archive') {
-            $post_statuses[] = __('Comic Archive Page', MP_DOMAIN);
-        }
-
-        return $post_statuses;
     }
 
     /**
@@ -175,8 +101,12 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     {
         if ($post_type === self::POST_TYPE) {
             $post_id = filter_input(INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT);
-            $is_what = get_post_meta($post_id, 'comic_page__type', true);
-            if (in_array($is_what, ['latest', 'archive'])) {
+
+            $latest_page  = (int)Options::get_option('latestcomic_page', 'basic');
+            $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
+
+
+            if (in_array($post_id, [$latest_page, $archive_page])) {
                 remove_post_type_support(self::POST_TYPE, 'editor');
                 return false;
             }
