@@ -13,8 +13,6 @@ Manga+Press is a webcomic management system for WordPress.
     * [X] Check if page has been set as Blog/Home static page and display a warning
     * [X] Add Latest Comic shortcode for displaying the latest comic in page content
     * [X] Add compatibility for WordPress themes TwentySixteen and newer
-    * [ ] Update documentation
-    * [ ] Update demo site to example/documentation in the form of comics
 
 ## Description
 
@@ -22,9 +20,9 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 ## Upgrade Notice
 
-WARNING: Last/Comic Archive page functionality has been changed. Please back up, and perform tests in a development environment before upgrading.
+WARNING: This is a beta version. Use in production at your own risk.
 
-WARNING: Child themes have been pulled from the plugin and are no longer being maintained.
+WARNING: Last/Comic Archive page functionality has been changed. Please back up, and perform tests in a development environment before upgrading.
 
 ## Changelog
 ### 4.0
