@@ -31,8 +31,6 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
     public function init()
     {
         $this->register_content_types();
-
-        add_filter('use_block_editor_for_post_type', [$this, 'gutenberg_can_edit_post_type'], 20, 2);
     }
 
     /**
@@ -87,31 +85,5 @@ class ComicPages implements PluginComponent, ContentTypeRegistry
             remove_meta_box('postimagediv', self::POST_TYPE, 'side');
             remove_meta_box('mangapress_seriesdiv', self::POST_TYPE, 'side');
         }
-    }
-
-    /**
-     * Disable Gutenberg on Archive & Latest only
-     *
-     * @param boolean $can_edit
-     * @param string $post_type
-     * @return bool
-     * @todo Explore the possibility of adding a setting to turn on the editor
-     */
-    public function gutenberg_can_edit_post_type($can_edit, $post_type)
-    {
-        if ($post_type === self::POST_TYPE) {
-            $post_id = filter_input(INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT);
-
-            $latest_page  = (int)Options::get_option('latestcomic_page', 'basic');
-            $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
-
-
-            if (in_array($post_id, [$latest_page, $archive_page])) {
-                remove_post_type_support(self::POST_TYPE, 'editor');
-                return false;
-            }
-        }
-
-        return $can_edit;
     }
 }

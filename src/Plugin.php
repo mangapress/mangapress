@@ -52,6 +52,7 @@ class Plugin implements PluginComponent
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 4);
         add_action('display_post_states', [$this, 'display_post_states'], 20, 2);
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
+        add_filter('use_block_editor_for_post_type', [$this, 'gutenberg_can_edit_post_type'], 20, 2);
         add_action('current_screen', [$this, 'add_edit_page_warnings']);
         add_action('init', [$this, 'do_rewrite_flush']);
 
@@ -162,7 +163,7 @@ class Plugin implements PluginComponent
         $menu_link           = menu_page_url('mangapress-options-page', false);
         $settings            = __('Settings', MP_DOMAIN);
         $actions['settings'] = vsprintf(
-            '<a href=" % 1$s" aria-label=" % 2$s">%2$s</a>',
+            '<a href="%1$s" aria-label="%2$s">%2$s</a>',
             [
                 $menu_link,
                 $settings,
@@ -197,6 +198,32 @@ class Plugin implements PluginComponent
     }
 
     /**
+     * Disable Gutenberg on Archive & Latest only
+     *
+     * @param boolean $can_edit
+     * @param string $post_type
+     * @return bool
+     * @todo Explore the possibility of adding a setting to turn on the editor
+     */
+    public function gutenberg_can_edit_post_type($can_edit, $post_type)
+    {
+        if ($post_type === 'mangapress_comicpage' || $post_type === 'page') {
+            $post_id = filter_input(INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT);
+
+            $latest_page  = (int)Options::get_option('latestcomic_page', 'basic');
+            $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
+
+
+            if (in_array($post_id, [$latest_page, $archive_page])) {
+                remove_post_type_support($post_type, 'editor');
+                return false;
+            }
+        }
+
+        return $can_edit;
+    }
+
+    /**
      * Warning for Comic Archive Page
      */
     public function notice_archive_page()
@@ -217,25 +244,9 @@ class Plugin implements PluginComponent
         $archive_page = (int)Options::get_option('comicarchive_page', 'basic');
 
         if ($post_id == $archive_page) {
-            if (get_current_screen()->is_block_editor()) {
-                wp_enqueue_script('wp-notices');
-
-                wp_add_inline_script(
-                    'wp-notices',
-                    sprintf(
-                        'wp.data.dispatch( "core / notices" )' .
-                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
-                        __('You are currently editing the page that shows your archived comics.', MP_DOMAIN),
-                        false
-                    ),
-                    'after'
-                );
-            } else {
-                echo '<div class="notice notice-warning inline"><p>'
-                     . __('You are currently editing the page that shows your archived comics.', MP_DOMAIN)
-                     . '</p></div>';
-                remove_post_type_support($post_type, 'editor');
-            }
+            echo '<div class="notice notice-warning inline"><p>'
+                 . __('You are currently editing the page that shows your archived comics.', MP_DOMAIN)
+                 . '</p></div>';
         }
     }
 
@@ -260,25 +271,9 @@ class Plugin implements PluginComponent
         $latest_page = (int)Options::get_option('latestcomic_page', 'basic');
 
         if ($post_id == $latest_page) {
-            if (get_current_screen()->is_block_editor()) {
-                wp_enqueue_script('wp-notices');
-
-                wp_add_inline_script(
-                    'wp-notices',
-                    sprintf(
-                        'wp.data.dispatch( "core / notices" )' .
-                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
-                        __('You are currently editing the page that shows your latest comics.', MP_DOMAIN),
-                        false
-                    ),
-                    'after'
-                );
-            } else {
-                echo '<div class="notice notice-warning inline"><p>'
-                     . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
-                     . '</p></div>';
-                remove_post_type_support($post_type, 'editor');
-            }
+            echo '<div class="notice notice-warning inline"><p>'
+                 . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
+                 . '</p></div>';
         }
     }
 
@@ -296,64 +291,24 @@ class Plugin implements PluginComponent
         $page_on_front  = get_option('page_on_front', false);
 
         if (in_array($post_id, [$page_for_posts, $page_on_front])) {
-            if (get_current_screen()->is_block_editor()) {
-                wp_enqueue_script('wp-notices');
+            echo '<div class="notice notice-error inline">';
+            echo '<p>'
+                 . __(
+                     'You have assigned this page to be the Home Page or the Posts page. '
+                     . 'This option is not compatible with Manga+Press and will break the functionality '
+                     . 'of these two pages.',
+                     MP_DOMAIN
+                 )
+                 . '</p>';
 
-                wp_add_inline_script(
-                    'wp-notices',
-                    sprintf(
-                        'wp.data.dispatch( "core / notices" )' .
-                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
-                        __(
-                            'Either assign Latest/Comic archive to different pages, '
-                            . 'or assign Home Page/Post Page to different pages.',
-                            MP_DOMAIN
-                        ),
-                        wp_json_encode(
-                            [
-                                'url'   => admin_url('options-reading.php'),
-                                'label' => __('Reading Settings'),
-                            ]
-                        )
-                    ),
-                    'after'
-                );
-
-                wp_add_inline_script(
-                    'wp-notices',
-                    sprintf(
-                        'wp.data.dispatch( "core / notices" )' .
-                        '.createWarningNotice( " % s", { actions: [ %s ], isDismissible: false } )',
-                        __(
-                            'You have assigned this page to be the Home Page or the Posts page. '
-                            . 'This option is not compatible with Manga+Press and will break the functionality '
-                            . 'of these two pages.',
-                            MP_DOMAIN
-                        ),
-                        false
-                    ),
-                    'after'
-                );
-            } else {
-                echo '<div class="notice notice-error inline">';
-                echo '<p>'
-                     . __(
-                         'You have assigned this page to be the Home Page or the Posts page. '
-                         . 'This option is not compatible with Manga+Press and will break the functionality '
-                         . 'of these two pages.',
-                         MP_DOMAIN
-                     )
-                     . '</p>';
-
-                echo '<p>'
-                     . __(
-                         'Either assign Latest/Comic archive to different pages, '
-                         . 'or assign Home Page/Post Page to different pages.',
-                         MP_DOMAIN
-                     )
-                     . '</p>';
-                echo '</div>';
-            }
+            echo '<p>'
+                 . __(
+                     'Either assign Latest/Comic archive to different pages, '
+                     . 'or assign Home Page/Post Page to different pages.',
+                     MP_DOMAIN
+                 )
+                 . '</p>';
+            echo '</div>';
         }
     }
 }
