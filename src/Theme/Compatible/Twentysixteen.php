@@ -26,8 +26,6 @@ class Twentysixteen implements Theme
 
         add_action('mangapress_before_content', [$this, 'before_content']);
         add_action('mangapress_after_content', [$this, 'after_content']);
-
-        add_action('mangapress_article_header', [$this, 'article_header']);
     }
 
     public function page_header()
@@ -139,8 +137,8 @@ class Twentysixteen implements Theme
 
     public function article_header()
     {
-//        echo '<header class="entry-header">';
-//        the_title('<h1 class="entry-title">', '</h1>');
-//        echo '</header><!-- .entry-header -->';
+        echo '<header class="entry-header">';
+        the_title('<h1 class="entry-title">', '</h1>');
+        echo '</header><!-- .entry-header -->';
     }
 }

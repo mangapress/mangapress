@@ -39,6 +39,16 @@ function theme_init()
         '\MangaPress\Theme\Functions\archive_style_closing_tag'
     );
 
+    add_action(
+        'mangapress_archive_page_opening_tag',
+        '\MangaPress\Theme\Functions\archive_page_opening_tag'
+    );
+
+    add_action(
+        'mangapress_archive_page_closing_tag',
+        '\MangaPress\Theme\Functions\archive_page_closing_tag'
+    );
+
 //    add_action('mangapress_output_no_comics_message', [$this, 'no_comics_message']);
     add_action('mangapress_after_article_content', 'MangaPress\Theme\Functions\comic_page__after_article_content');
 }
@@ -196,9 +206,6 @@ function archive_style_opening_tag($style, $tag = 'article')
         }
         $class = sprintf($class, join(' ', $classes));
 
-        $post_classes = get_post_class();
-
-        echo "\r\n<$tag class=\"" . join(' ', $post_classes) . "\">\r\n";
         echo "<div class=\"entry-content\">\r\n";
         echo "<ul $class>\r\n";
     }
@@ -215,8 +222,29 @@ function archive_style_closing_tag($style, $tag = 'article')
     if (in_array($style, ['list', 'gallery'])) {
         echo "</ul>\r\n";
         echo "</div>\r\n";
-        echo "</$tag>";
     }
+}
+
+/**
+ * Output archive page's opening content tag
+ *
+ * @param string $tag
+ * @uses 'mangapress_archive_page_opening_tag'
+ */
+function archive_page_opening_tag($tag)
+{
+    echo "<$tag class=\"" . join(' ', get_post_class()) . "\">";
+}
+
+/**
+ * Output archive page's closing content tag
+ *
+ * @param string $tag
+ * @uses 'mangapress_archive_page_closing_tag'
+ */
+function archive_page_closing_tag($tag)
+{
+    echo "</$tag>";
 }
 
 /**
@@ -225,7 +253,8 @@ function archive_style_closing_tag($style, $tag = 'article')
  */
 function article_header($post)
 {
-    if (get_post_type($post) === ComicPages::POST_TYPE) : ?>
+    $post_type = get_post_type($post);
+    if (in_array($post_type, ['page', ComicPages::POST_TYPE])) : ?>
         <header class="entry-header">
             <h1 class="entry-title"><?php echo apply_filters('the_title', get_post_field('post_title', $post)) ?></h1>
         </header>

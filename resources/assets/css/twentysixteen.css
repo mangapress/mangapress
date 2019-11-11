@@ -45,9 +45,10 @@
     display: none;
 }
 
-.type-mangapress_comicpage .mangapress-archive-list {
+.mangapress-archive-list {
     list-style: none;
     margin-left: 1.25em !important;
+    line-height: 2;
 }
 
 @media screen and (min-width: 61.5625em) {
