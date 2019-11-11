@@ -36,6 +36,9 @@ class Twentynineteen implements Theme
         add_action('mangapress_before_article_content', [$this, 'before_article_content']);
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
 
+        add_action('mangapress_archive_page_opening_tag', [$this, 'archive_page_opening_tag'], 20);
+        add_action('mangapress_archive_page_closing_tag', [$this, 'archive_page_closing_tag'], 20);
+
         add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
         add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
 
@@ -61,6 +64,16 @@ class Twentynineteen implements Theme
         echo '<a class="skip-link screen-reader-text" href="#content">'
              . __('Skip to content', 'twentynineteen') .
              '</a>';
+    }
+
+    public function archive_page_opening_tag($tag)
+    {
+        echo '<div class="entry-content">';
+    }
+
+    public function archive_page_closing_tag($tag)
+    {
+        echo '</div>';
     }
 
     /**

@@ -226,6 +226,17 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
 
     endwhile;
 } else {
+
+    /**
+     * mangapress_archive_page_opening_tag
+     *
+     * Output the opening wrapping tag based on theme tags
+     * @param string $tag Opening tag, defaults to 'article'
+     * @since 4.0.0
+     *
+     */
+    do_action('mangapress_archive_page_opening_tag', 'article');
+
     /**
      * @global wpdb $wpdb WordPress DB object
      */
@@ -244,6 +255,17 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
             mangapress_get_calendar($i, $year, false, true);
         }
     }
+
+
+    /**
+     * mangapress_archive_page_closing_tag
+     *
+     * Output the closing wrapping tag based on theme
+     * @param string $tag Closing tag, defaults to article
+     * @since 4.0.0
+     *
+     */
+    do_action('mangapress_archive_page_closing_tag', 'article');
 }
 
 /** This filter is documented in resources/templates/single-comic.php */
