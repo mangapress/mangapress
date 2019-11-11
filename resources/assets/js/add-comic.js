@@ -53,7 +53,7 @@ if (typeof MANGAPRESS === 'undefined') {
             $.post(ajaxurl, data, function (data) {
                 $imageFrame.html(data.html);
             });
-            console.log($thumbnailInput);
+
             // Send the attachment URL to our custom input field via jQuery.
             $thumbnailInput.val(media_attachment.id);
         });

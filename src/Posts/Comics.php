@@ -537,7 +537,7 @@ class Comics implements PluginComponent, ContentTypeRegistry
             }
         }
 
-        if (wp_verify_nonce(filter_input(INPUT_POST, '_insert_cover-image'), Actions::NONCE_INSERT_COMIC)) {
+        if (wp_verify_nonce(filter_input(INPUT_POST, '_insert_cover-image'), Actions::NONCE_INSERT_COVER)) {
             $cover_image_id = (int)filter_input(INPUT_POST, '_mangapress_cover_image', FILTER_SANITIZE_NUMBER_INT);
             if ($cover_image_id) {
                 update_post_meta($post_id, 'mangapress_cover_image_id', $cover_image_id);
