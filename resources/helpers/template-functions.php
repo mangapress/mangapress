@@ -37,7 +37,7 @@ if (!function_exists('is_latest_comic_page')) {
             return false;
         }
 
-        $page_id = \MangaPress\Options\Options::get_option('latestcomic_page', 'basic');
+        $page_id = (int)\MangaPress\Options\Options::get_option('latestcomic_page', 'basic');
 
         return ($page_id === $wp_query->get_queried_object_id());
     }
