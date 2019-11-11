@@ -145,7 +145,7 @@ class Install
         $post_ids = wp_list_pluck($posts, 'ID', 'post_name');
 
         Options::set_option('latestcomic_page', $post_ids[$latest], 'basic');
-        Options::set_option('comicarchive_page', $post_ids[$latest], 'basic');
+        Options::set_option('comicarchive_page', $post_ids[$archive], 'basic');
 
         Options::save_options();
 
