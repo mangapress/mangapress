@@ -43,9 +43,13 @@ class Select extends Field
 
         $value       = $this->get_value();
         $is_grouped  = isset($options['pages']);
-        $options_str = '<option>' . __('Select a Page', MP_DOMAIN) . '</option>';
+        $options_str = '';
 
         if ($is_grouped) {
+            if (isset($options['no_val'])) {
+                $options_str = '<option>' . esc_html($options['no_val']) . '</option>';
+            }
+
             foreach ($options as $group => $option) {
                 $options = '';
                 if ($group == 'no_val') {
