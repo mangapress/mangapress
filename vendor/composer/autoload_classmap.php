@@ -27,6 +27,7 @@ return array(
     'MangaPress\\Options\\OptionsGroup' => $baseDir . '/src/Options/OptionsGroup.php',
     'MangaPress\\Plugin' => $baseDir . '/src/Plugin.php',
     'MangaPress\\PluginComponent' => $baseDir . '/src/PluginComponent.php',
+    'MangaPress\\PostInstall' => $baseDir . '/src/PostInstall.php',
     'MangaPress\\Posts\\Actions' => $baseDir . '/src/Posts/Actions.php',
     'MangaPress\\Posts\\ComicPages' => $baseDir . '/src/Posts/ComicPages.php',
     'MangaPress\\Posts\\Comics' => $baseDir . '/src/Posts/Comics.php',
