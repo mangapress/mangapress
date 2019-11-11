@@ -131,13 +131,14 @@ class Plugin implements PluginComponent
             return $post_states;
         }
 
-        $latest  = Options::get_option('latestcomic_page', 'basic');
-        $archive = Options::get_option('comicarchive_page', 'basic');
-        if ($latest === $post->post_name) {
+        $latest  = (int)Options::get_option('latestcomic_page', 'basic');
+        $archive = (int)Options::get_option('comicarchive_page', 'basic');
+
+        if ($latest === $post->ID) {
             $post_states[] = 'Latest Comic Page';
         }
 
-        if ($archive === $post->post_name) {
+        if ($archive === $post->ID) {
             $post_states[] = 'Comic Archive Page';
         }
 
