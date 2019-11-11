@@ -29,6 +29,8 @@ function theme_init()
         '\MangaPress\Theme\Functions\get_archive_style_template'
     );
 
+    add_action('mangapress_archive_style_opening_tag', '\MangaPress\Theme\Functions\archive_gallery_style');
+
     add_action(
         'mangapress_archive_style_opening_tag',
         '\MangaPress\Theme\Functions\archive_style_opening_tag'
