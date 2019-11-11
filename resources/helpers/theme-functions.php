@@ -254,7 +254,7 @@ function archive_page_closing_tag($tag)
 function article_header($post)
 {
     $post_type = get_post_type($post);
-    if (in_array($post_type, ['page', ComicPages::POST_TYPE])) : ?>
+    if (in_array($post_type, ['page', ComicPages::POST_TYPE]) || is_single($post)) : ?>
         <header class="entry-header">
             <h1 class="entry-title"><?php echo apply_filters('the_title', get_post_field('post_title', $post)) ?></h1>
         </header>

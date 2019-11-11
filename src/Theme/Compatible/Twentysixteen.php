@@ -134,11 +134,4 @@ class Twentysixteen implements Theme
         get_sidebar('content-bottom');
         echo '</div><!-- .content-area -->';
     }
-
-    public function article_header()
-    {
-        echo '<header class="entry-header">';
-        the_title('<h1 class="entry-title">', '</h1>');
-        echo '</header><!-- .entry-header -->';
-    }
 }
