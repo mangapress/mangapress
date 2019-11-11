@@ -53,13 +53,8 @@ class Comics implements PluginComponent, ContentTypeRegistry
      *
      * @var string
      */
-    protected $archive_slug = 'comic-archives';
-    /**
-     * Latest Comic slug
-     *
-     * @var string
-     */
-    protected $latest_comic_slug = 'latest-comic';
+    protected $archive_slug = true;
+
     /**
      * Class for initializing custom post-type
      *
