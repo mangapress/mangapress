@@ -31,7 +31,7 @@ class Plugin implements PluginComponent
             require ABSPATH . '/wp-admin/includes/plugin.php';
         }
 
-        $this->plugin_data = get_plugin_data(MP_ABSPATH);
+        $this->plugin_data = get_plugin_data(MP_ABSPATH . 'mangapress.php');
 
         // define some other constants
         define('MP_VERSION', $this->plugin_data['Version']);

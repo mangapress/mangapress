@@ -81,6 +81,10 @@ class Options implements PluginComponent
      */
     public static function set_option($name, $value, $section)
     {
+        if (empty(self::$options)) {
+            self::$options = self::get_options();
+        }
+
         if (isset(self::$options[$section][$name])) {
             self::$options[$section][$name] = $value;
         }
@@ -95,7 +99,7 @@ class Options implements PluginComponent
 
         $sanitized_options = $options_group->sanitize_options(self::$options);
 
-        update_option('mangapress_options', serialize($sanitized_options));
+        update_option('mangapress_options', $sanitized_options);
     }
 
     /**

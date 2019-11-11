@@ -92,14 +92,14 @@ class Install
             );
         }
 
-        if (version_compare($wp_version, '5.2.4', '<=')) {
+        if (version_compare($wp_version, '5.2.4', '<')) {
             wp_die(
                 'Sorry, only WordPress 5.2.4 and later are supported. Please upgrade to WordPress 5.2.4',
                 'Wrong Version'
             );
         }
 
-        $plugin = new Plugin();
+        $plugin  = new Plugin();
 
         $version = strval(get_option('mangapress_ver'));
 
@@ -190,6 +190,7 @@ class Install
             }
         }
 
+        $latest_created = false;
         if (!Options::get_option('comicarchive_page', 'basic')) {
             // create latest comic and comic archive posts
             $params = [
@@ -202,11 +203,12 @@ class Install
             $archive = wp_insert_post($params);
 
             if (!is_wp_error($archive)) {
-                Options::set_option('comicarchive_page', $params['post_name']);
-                Options::save_options();
+                Options::set_option('comicarchive_page', $archive, 'basic');
+                $latest_created = true;
             }
         }
 
+        $archive_created = false;
         if (!Options::get_option('latestcomic_page', 'basic')) {
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
@@ -218,9 +220,13 @@ class Install
             $latest = wp_insert_post($params);
 
             if (!is_wp_error($latest)) {
-                Options::set_option('latestcomic_page', $params['post_name']);
-                Options::save_options();
+                Options::set_option('latestcomic_page', $latest, 'basic');
+                $archive_created = true;
             }
+        }
+
+        if ($archive_created || $latest_created) {
+            Options::save_options();
         }
     }
 
