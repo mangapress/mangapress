@@ -54,6 +54,7 @@ class ComposerStaticInit6fc4320e22a6f9c85fc3bdaefc609aa0
         'MangaPress\\Posts\\Comics' => __DIR__ . '/../..' . '/src/Posts/Comics.php',
         'MangaPress\\Theme\\Compatible\\Twentynineteen' => __DIR__ . '/../..' . '/src/Theme/Compatible/Twentynineteen.php',
         'MangaPress\\Theme\\Compatible\\Twentyseventeen' => __DIR__ . '/../..' . '/src/Theme/Compatible/Twentyseventeen.php',
+        'MangaPress\\Theme\\Compatible\\Twentysixteen' => __DIR__ . '/../..' . '/src/Theme/Compatible/Twentysixteen.php',
         'MangaPress\\Theme\\Interfaces\\Theme' => __DIR__ . '/../..' . '/src/Theme/Interfaces/Theme.php',
         'MangaPress\\Theme\\Shortcode' => __DIR__ . '/../..' . '/src/Theme/Shortcode.php',
         'MangaPress\\Theme\\TemplateLoader' => __DIR__ . '/../..' . '/src/Theme/TemplateLoader.php',
