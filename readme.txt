@@ -150,10 +150,6 @@ Archive Page to your two newly created pages.
 
 == Frequently Asked Questions ==
 
-*I'm using the bundled theme for TwentyEleven, -Twelve, or -Thirteen but the Custom CSS and/or Insert Navigation options have no effect? Or they add a second navigation bar*
-
-This is because the navigation for the comics is built into the theme. Using a different theme or overriding the default theme's template will allow you to use the options. (however, see [issue #17](https://github.com/jesgs/mangapress/issues/17) for additional issues)
-
 *Is Manga+Press responsive?*
 
 Not by itself. However, Manga+Press doesn't really output markup other than the comic navigation. Responsiveness depends on the theme that is being used. The themes bundled with Manga+Press — the TwentyEleven thru TwentyFourteen child-themes — all have some level of responsiveness that is dependent on their parent themes.
