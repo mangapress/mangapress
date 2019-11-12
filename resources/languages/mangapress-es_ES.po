@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 4.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2019-11-11 19:49-0600\n"
-"PO-Revision-Date: 2019-11-11 19:51-0600\n"
+"POT-Creation-Date: 2019-11-11 19:58-0600\n"
+"PO-Revision-Date: 2019-11-11 19:58-0600\n"
 "Last-Translator: Jess Green <support@manga-press.com>\n"
 "Language-Team: Jess Green <support@manga-press.com>\n"
 "Language: es\n"
@@ -11,28 +11,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.1.1\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: .git\n"
+"X-Poedit-SearchPath-0: resources\n"
+"X-Poedit-SearchPath-1: .\n"
+"X-Poedit-SearchPathExcluded-0: resources/.git\n"
 
-#: admin/pages/help-basic.php:9
+#: resources/admin/pages/help-basic.php:9 src/Admin/Admin.php:108
 msgid "Basic Options Help"
 msgstr "Anula los valores fijados en ajustes de la lectura"
 
-#: admin/pages/help-basic.php:11
+#: resources/admin/pages/help-basic.php:11
 msgid "This section handles the basic setup for your webcomic."
 msgstr ""
 "Esta secci&oacute;n se ocupa de la configuraci&oacute;n b&aacute;sica para "
 "su webcomic."
 
-#: admin/pages/help-basic.php:15
+#: resources/admin/pages/help-basic.php:15
 msgid "Group by Categories"
 msgstr "Grupo por Categor&iacute;as"
 
-#: admin/pages/help-basic.php:17
+#: resources/admin/pages/help-basic.php:17
 msgid ""
 "This option allows you to group your comics according to a category created "
 "under <strong>Series</strong>. When this option is used with the option "
@@ -44,11 +45,11 @@ msgstr ""
 "la opci&oacute;n de abajo &mdash; Grupo de Padres &mdash; c&oacute;mics se "
 "agrupan de acuerdo a la categor&iacute;a padre."
 
-#: admin/pages/help-basic.php:19
+#: resources/admin/pages/help-basic.php:19 src/Options/OptionsGroup.php:167
 msgid "Use Parent Category"
 msgstr "Categor&iacute;a de uso de Padres"
 
-#: admin/pages/help-basic.php:21
+#: resources/admin/pages/help-basic.php:21
 msgid ""
 "This options overrides the option above and groups comics according to the "
 "parent category."
@@ -56,11 +57,11 @@ msgstr ""
 "Esta opci&oacute;n anula la opci&oacute;n anterior y grupos de c&oacute;mics "
 "de acuerdo a la categor&iacute;a padre."
 
-#: admin/pages/help-basic.php:23
+#: resources/admin/pages/help-basic.php:23 src/Options/OptionsGroup.php:180
 msgid "Comic Archive Page Style"
 msgstr "Estilo Archivo Página cómica"
 
-#: admin/pages/help-basic.php:25
+#: resources/admin/pages/help-basic.php:25
 msgid ""
 "Choose an archive page style from the drop-down. This option can be "
 "overridden by adding a <code>archive-*.php</code> template to your theme "
@@ -70,7 +71,7 @@ msgstr ""
 "puede invalidar agregando una <code>archive-*.php</code> plantilla al tema "
 "dentro del <code>comics</code> subdirectorio."
 
-#: admin/pages/help-basic.php:26
+#: resources/admin/pages/help-basic.php:26
 msgid ""
 "Available templates are: <code>archive-list.php</code>, <code>archive-"
 "gallery.php</code>, and <code>archive-calendar.php</code>"
@@ -78,36 +79,37 @@ msgstr ""
 "Las plantillas disponibles son: <code>archive-list.php</code> , "
 "<code>archive-gallery.php</code> , y<code>archive-calendar.php</code>"
 
-#: admin/pages/help-basic.php:28
+#: resources/admin/pages/help-basic.php:28
 msgid "Latest Comic Page and Comic Archive Page"
 msgstr "P&aacute;gina Archive c&oacute;mica"
 
-#: admin/pages/help-basic.php:31
+#: resources/admin/pages/help-basic.php:31
 msgid ""
 "Templates for Latest Comic Page and Comic Archive Page are (respectively) "
 "<code>latest-comic.php</code> and <code>archive-comic.php</code>."
 msgstr ""
 
-#: admin/pages/help-basic.php:32
+#: resources/admin/pages/help-basic.php:32
 msgid ""
 "These templates can be overridden by placing them in your theme directory."
 msgstr ""
 
-#: admin/pages/help-comic-page.php:9
+#: resources/admin/pages/help-comic-page.php:9 src/Admin/Admin.php:113
 msgid "Comic Page Options Help"
 msgstr "Comic P&aacute;gina Opciones de Ayuda"
 
-#: admin/pages/help-comic-page.php:11
+#: resources/admin/pages/help-comic-page.php:11
 msgid "This section controls display of comic posts"
 msgstr ""
 "Esta secci&oacute;n controla la visualizaci&oacute;n de mensajes de "
 "historietas"
 
-#: admin/pages/help-comic-page.php:15
+#: resources/admin/pages/help-comic-page.php:15
+#: src/Options/OptionsGroup.php:234
 msgid "Generate Comic Page"
 msgstr "Generar una p&aacute;gina de c&oacute;mica"
 
-#: admin/pages/help-comic-page.php:17
+#: resources/admin/pages/help-comic-page.php:17
 msgid ""
 "Generate a custom image size based on the values below. Use this if you wish "
 "to display slightly smaller images than the image you have uploaded."
@@ -116,38 +118,40 @@ msgstr ""
 "abajo. Utilice esta opci&oacute;n si desea visualizar las im&aacute;genes "
 "ligeramente m&aacute;s peque&ntilde;o que la imagen que has subido."
 
-#: admin/pages/help-comic-page.php:19
+#: resources/admin/pages/help-comic-page.php:19
+#: src/Options/OptionsGroup.php:243
 msgid "Comic Page Width"
 msgstr "Ancho de p&aacute;gina c&oacute;mica"
 
-#: admin/pages/help-comic-page.php:21
+#: resources/admin/pages/help-comic-page.php:21
 msgid "Set the width of your comic page image."
 msgstr "Ajuste el ancho de la imagen de la p&aacute;gina de historietas."
 
-#: admin/pages/help-comic-page.php:23
+#: resources/admin/pages/help-comic-page.php:23
+#: src/Options/OptionsGroup.php:251
 msgid "Comic Page Height"
 msgstr "Altura p&aacute;gina c&oacute;mica"
 
-#: admin/pages/help-comic-page.php:25
+#: resources/admin/pages/help-comic-page.php:25
 msgid "Set the height of you comic page image."
 msgstr "Ajuste la altura de la imagen de la p&aacute;gina que c&oacute;mico."
 
-#: admin/pages/help-nav.php:9
+#: resources/admin/pages/help-nav.php:9 src/Admin/Admin.php:118
 msgid "Navigation Options Help"
 msgstr "Opciones de navegaci&oacute;n Ayuda"
 
-#: admin/pages/help-nav.php:11
+#: resources/admin/pages/help-nav.php:11
 msgid ""
 "This section handles the appearance of the navigation links for your comic."
 msgstr ""
 "Esta secci&oacute;n se ocupa de la aparici&oacute;n de los enlaces de "
 "navegaci&oacute;n para tu c&oacute;mic."
 
-#: admin/pages/help-nav.php:15
+#: resources/admin/pages/help-nav.php:15
 msgid "Insert Navigation"
 msgstr "Inserte navegaci&oacute;n"
 
-#: admin/pages/help-nav.php:17
+#: resources/admin/pages/help-nav.php:17
 #, fuzzy
 #| msgid ""
 #| "When this option is enabled, comic navigation will automatically be "
@@ -162,11 +166,11 @@ msgstr ""
 "es necesario si est&aacute; utilizando uno de los tema-hijo que se incluye "
 "con Manga+Press."
 
-#: admin/pages/help-nav.php:19
+#: resources/admin/pages/help-nav.php:19 src/Options/OptionsGroup.php:260
 msgid "Navigation CSS"
 msgstr "Navegaci&oacute;n CSS"
 
-#: admin/pages/help-nav.php:21
+#: resources/admin/pages/help-nav.php:21
 msgid ""
 "This option is turned off by default (Custom CSS). Set to Default CSS to use "
 "the included styles if your theme does not provide styles for the links."
@@ -175,64 +179,66 @@ msgstr ""
 "CSS). Establecer por defecto CSS a utilizar los estilos incluidos si su tema "
 "no proporciona estilos para los v&iacute;nculos."
 
-#: admin/pages/meta-box-comic-page-type.php:20
+#: resources/admin/pages/meta-box-comic-page-type.php:20
 msgid "Designated Pages"
 msgstr ""
 
-#: admin/pages/meta-box-comic-page-type.php:32
-#: admin/pages/meta-box-comic-page-type.php:50
+#: resources/admin/pages/meta-box-comic-page-type.php:32
+#: resources/admin/pages/meta-box-comic-page-type.php:50
+#: src/Options/OptionsGroup.php:132 src/Plugin.php:140
 msgid "Latest Comic Page"
 msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
 
-#: admin/pages/meta-box-comic-page-type.php:32
+#: resources/admin/pages/meta-box-comic-page-type.php:32
 #, fuzzy
 #| msgid "Archive Page Comic Order"
 msgid "Archive Comic Page"
 msgstr "Página de Archivo Comic Order"
 
-#: admin/pages/meta-box-comic-page-type.php:39
+#: resources/admin/pages/meta-box-comic-page-type.php:39
 msgid "Page not assigned"
 msgstr ""
 
-#: admin/pages/meta-box-comic-page-type.php:44
+#: resources/admin/pages/meta-box-comic-page-type.php:44
 msgid "No pages assigned to Latest Comic or Comic Archive page"
 msgstr ""
 
-#: admin/pages/meta-box-comic-page-type.php:48
+#: resources/admin/pages/meta-box-comic-page-type.php:48
 #, fuzzy
 #| msgid "Select a Page"
 msgid "Select Page Type"
 msgstr "Seleccionar una p&aacute;gina"
 
-#: admin/pages/meta-box-comic-page-type.php:53
+#: resources/admin/pages/meta-box-comic-page-type.php:53
+#: src/Options/OptionsGroup.php:143 src/Plugin.php:144
 msgid "Comic Archive Page"
 msgstr "P&aacute;gina Archive c&oacute;mica"
 
-#: admin/pages/nav-css.php:12
+#: resources/admin/pages/nav-css.php:12
 msgid ""
 "Copy and paste this code into the <code>style.css</code> file of your theme."
 msgstr ""
 "Copia y pega este c&oacute;digo en el  <code>style.css</ code> de su tema."
 
-#: admin/pages/options.php:9
+#: resources/admin/pages/options.php:9
 msgid "You do not have sufficient permissions to manage options for this blog."
 msgstr ""
 "Usted no tiene los permisos necesarios para la gesti&oacute;n de opciones "
 "para este blog."
 
-#: admin/pages/remove-image-link.php:29
+#: resources/admin/pages/remove-image-link.php:29
 msgid "Set Cover Image"
 msgstr ""
 
-#: admin/pages/remove-image-link.php:31
+#: resources/admin/pages/remove-image-link.php:31
 msgid "Set Comic Image"
 msgstr "Ajuste de imagen Comic"
 
-#: helpers/admin-functions.php:37
+#: resources/helpers/admin-functions.php:37
 msgid "Basic Options"
 msgstr "Opciones b&aacute;sicas"
 
-#: helpers/admin-functions.php:39
+#: resources/helpers/admin-functions.php:39
 msgid ""
 "This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; "
 "pages, number of comics per page, and grouping comics together by category."
@@ -241,11 +247,11 @@ msgstr ""
 "historietas y c&oacute;mic Archivo, as&iacute; agrupar c&oacute;mics juntas "
 "por categor&iacute;a."
 
-#: helpers/admin-functions.php:45
+#: resources/helpers/admin-functions.php:45
 msgid "Comic Page Options"
 msgstr "Opciones de c&oacute;mica p&aacute;gina"
 
-#: helpers/admin-functions.php:47
+#: resources/helpers/admin-functions.php:47
 msgid ""
 "Handles image sizing options for comic pages. Thumbnail support may need to "
 "be enabled for some features to work properly. If page- or thumbnail sizes "
@@ -259,11 +265,11 @@ msgstr ""
 "plugin como Regenerar miniaturas se puede utilizar para crear las nuevas "
 "miniaturas."
 
-#: helpers/admin-functions.php:54
+#: resources/helpers/admin-functions.php:54
 msgid "Navigation Options"
 msgstr "Opciones de navegaci&oacute;n"
 
-#: helpers/admin-functions.php:56
+#: resources/helpers/admin-functions.php:56
 msgid ""
 "Options for comic navigation. Whether to have navigation automatically "
 "inserted on comic pages, or to enable/disable default comic navigation CSS."
@@ -273,94 +279,401 @@ msgstr ""
 "c&oacute;mic, o para activar / desactivar por defecto navegaci&oacute;n "
 "c&oacute;mico CSS."
 
-#: helpers/template-functions.php:331 helpers/template-functions.php:332
+#: resources/helpers/template-functions.php:331
+#: resources/helpers/template-functions.php:332
 msgid "First"
 msgstr "Primero"
 
-#: helpers/template-functions.php:337 helpers/template-functions.php:338
+#: resources/helpers/template-functions.php:337
+#: resources/helpers/template-functions.php:338
 msgid "Last"
 msgstr "&Uacute;ltimo"
 
-#: helpers/template-functions.php:342 helpers/template-functions.php:343
+#: resources/helpers/template-functions.php:342
+#: resources/helpers/template-functions.php:343
 msgid "Next"
 msgstr "Pr&oacute;ximo"
 
-#: helpers/template-functions.php:347 helpers/template-functions.php:348
+#: resources/helpers/template-functions.php:347
+#: resources/helpers/template-functions.php:348
 msgid "Prev"
 msgstr "Anterior"
 
-#: helpers/template-functions.php:448
+#: resources/helpers/template-functions.php:448
 #, php-format
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
-#: helpers/theme-functions.php:385
+#: resources/helpers/theme-functions.php:385
 msgid "<p class=\"error\">No comics was found.</p>"
 msgstr ""
 
-#: templates/archive-comic.php:196 templates/page-latest-comic.php:143
+#: resources/templates/archive-comic.php:196
+#: resources/templates/page-latest-comic.php:143 src/Theme/Shortcode.php:40
 msgid "No comics found"
 msgstr "No se encontr&oacute; c&oacute;mico"
 
-#~ msgid "A calendar of your site&#8217;s archived Comic Posts."
-#~ msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
+#: src/Admin/Admin.php:61 src/Admin/Admin.php:62
+msgid "Manga+Press Options"
+msgstr "Opciones Manga+Press"
 
-#~ msgid "Manga+Press Calendar"
-#~ msgstr "Calendario Manga+Press"
+#: src/ContentTypes/PostType.php:118
+msgid "Add New"
+msgstr "Agregar nuevo"
 
-#~ msgid "Title:"
-#~ msgstr "Título:"
+#: src/ContentTypes/PostType.php:119 src/ContentTypes/Taxonomy.php:93
+#, php-format
+msgid "Add New %s"
+msgstr "Agregar nuevo %s"
 
-#~ msgid "Add New"
-#~ msgstr "Agregar nuevo"
+#: src/ContentTypes/PostType.php:120 src/ContentTypes/Taxonomy.php:91
+#, php-format
+msgid "Edit %s"
+msgstr "Editar %s"
 
-#~ msgid "Add New %s"
-#~ msgstr "Agregar nuevo %s"
+#: src/ContentTypes/PostType.php:121
+#, php-format
+msgid "View %s"
+msgstr "Ver %s"
 
-#~ msgid "Edit %s"
-#~ msgstr "Editar %s"
+#: src/ContentTypes/PostType.php:122 src/ContentTypes/Taxonomy.php:86
+#, php-format
+msgid "Search %s"
+msgstr "B&uacute;squeda en %s"
 
-#~ msgid "View %s"
-#~ msgstr "Ver %s"
+#: src/ContentTypes/PostType.php:123
+#, php-format
+msgid "%s not found"
+msgstr "%s no se encuentra"
 
-#~ msgid "Search %s"
-#~ msgstr "B&uacute;squeda en %s"
+#: src/ContentTypes/PostType.php:124
+#, php-format
+msgid "%s not found in Trash"
+msgstr "%s no encontrado en basura"
 
-#~ msgid "%s not found"
-#~ msgstr "%s no se encuentra"
+#: src/ContentTypes/PostType.php:125
+#, php-format
+msgid "%s: "
+msgstr "%s:"
 
-#~ msgid "%s not found in Trash"
-#~ msgstr "%s no encontrado en basura"
+#: src/ContentTypes/Taxonomy.php:87
+#, php-format
+msgid "Popular %s"
+msgstr "%s populares"
 
-#~ msgid "%s: "
-#~ msgstr "%s:"
+#: src/ContentTypes/Taxonomy.php:88
+#, php-format
+msgid "All %s"
+msgstr "todos los %s de"
 
-#~ msgid "Popular %s"
-#~ msgstr "%s populares"
+#: src/ContentTypes/Taxonomy.php:89
+#, php-format
+msgid "Parent %s"
+msgstr "%s de Padres"
 
-#~ msgid "All %s"
-#~ msgstr "todos los %s de"
+#: src/ContentTypes/Taxonomy.php:90
+#, php-format
+msgid "Parent %s:: "
+msgstr "%s de Padres::"
 
-#~ msgid "Parent %s"
-#~ msgstr "%s de Padres"
+#: src/ContentTypes/Taxonomy.php:92
+#, php-format
+msgid "Update %s"
+msgstr "Actualizaci&oacute;n %s"
 
-#~ msgid "Parent %s:: "
-#~ msgstr "%s de Padres::"
+#: src/ContentTypes/Taxonomy.php:94
+#, php-format
+msgid "New %s name"
+msgstr "Nuevo nombre %s"
 
-#~ msgid "Update %s"
-#~ msgstr "Actualizaci&oacute;n %s"
+#: src/ContentTypes/Taxonomy.php:96
+#, php-format
+msgid "Separate %s with commas"
+msgstr "%s  separado por comas"
 
-#~ msgid "New %s name"
-#~ msgstr "Nuevo nombre %s"
+#: src/ContentTypes/Taxonomy.php:99
+#, php-format
+msgid "Add or remove %s"
+msgstr "A&ntilde;adir o eliminar %s"
 
-#~ msgid "Separate %s with commas"
-#~ msgstr "%s  separado por comas"
+#: src/ContentTypes/Taxonomy.php:101
+#, php-format
+msgid "Choose from most used %s"
+msgstr "Elija entre la mayor&iacute;a de los %s usados"
 
-#~ msgid "Add or remove %s"
-#~ msgstr "A&ntilde;adir o eliminar %s"
+#: src/Install.php:74
+msgid "Sorry, you do not have sufficient permissions to activate this plugin."
+msgstr ""
+"Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
 
-#~ msgid "Choose from most used %s"
-#~ msgstr "Elija entre la mayor&iacute;a de los %s usados"
+#: src/Install.php:82
+msgid "Sorry, you must be an Administrator in order to use Manga+Press"
+msgstr ""
+"Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
+
+#: src/Install.php:88
+msgid ""
+"Sorry. Manga+Press is only supported on PHP 7.0 and newer. Please upgrade "
+"your server's PHP version, or contact your hosting provider."
+msgstr ""
+
+#: src/Options/Fields/Types/PageSelect.php:24
+#, fuzzy
+#| msgid "Pages:"
+msgid "Pages"
+msgstr "P&aacute;ginas:"
+
+#: src/Options/Fields/Types/PageSelect.php:38 src/Options/OptionsGroup.php:134
+#: src/Options/OptionsGroup.php:145
+#, fuzzy
+#| msgid "Select a Page"
+msgid "Select a Page"
+msgstr "Seleccionar una p&aacute;gina"
+
+#: src/Options/OptionsGroup.php:154
+msgid "Group Comics"
+msgstr "Grupo Comics"
+
+#: src/Options/OptionsGroup.php:157
+msgid ""
+"Group comics by category. This option will ignore the parent category, and "
+"group according to the child-category."
+msgstr ""
+"Grupo de c&oacute;mics por categoría. Esta opci&oacute;n har&aacute; caso de "
+"la categor&iacute;a padre, y el grupo de acuerdo a la categor&iacute;a de "
+"ni&ntilde;os."
+
+#: src/Options/OptionsGroup.php:170
+msgid ""
+"Group comics by top-most parent category. Use this option if you have sub-"
+"categories but want your navigation to function using the parent category."
+msgstr ""
+"Grupo de c&oacute;mics por categoría principal de m&aacute;s arriba. Utilice "
+"esta opci&oacute;n si tiene sub-categor&iacute;as, pero quiere que su "
+"navegaci&oacute;n funcione con la categor&iacute;a padre."
+
+#: src/Options/OptionsGroup.php:182
+msgid ""
+"Style used for comic archive page. List, Calendar, or Gallery. Default: List"
+msgstr ""
+"Estilo utilizado para la página del archivo cómico. Lista, Calendario o "
+"Galería. Predeterminado: Lista"
+
+#: src/Options/OptionsGroup.php:186
+msgid "Select a Style"
+msgstr "Seleccione un estilo"
+
+#: src/Options/OptionsGroup.php:187
+msgid "List"
+msgstr "Lista"
+
+#: src/Options/OptionsGroup.php:188
+msgid "Calendar"
+msgstr "Calendar"
+
+#: src/Options/OptionsGroup.php:189
+msgid "Gallery"
+msgstr "Galería"
+
+#: src/Options/OptionsGroup.php:197
+#, fuzzy
+#| msgid "Archive Page Comic Order By"
+msgid "Archive Page Comic Order"
+msgstr "Página de Archivo Comic Order By"
+
+#: src/Options/OptionsGroup.php:199
+msgid "Designates the ascending or descending order of the orderby parameter"
+msgstr "Designa el orden ascendente o descendente del parámetro orderby"
+
+#: src/Options/OptionsGroup.php:204
+msgid "ASC"
+msgstr "ASC"
+
+#: src/Options/OptionsGroup.php:205
+msgid "DESC"
+msgstr "DESC"
+
+#: src/Options/OptionsGroup.php:213
+msgid "Archive Page Comic Order By"
+msgstr "Página de Archivo Comic Order By"
+
+#: src/Options/OptionsGroup.php:214
+msgid "Sort retrieved posts according to selected parameter."
+msgstr "Sort retrieved posts according to selected parameter."
+
+#: src/Options/OptionsGroup.php:217
+msgid "Order by Post ID"
+msgstr "Ordenar por ID de la publicación"
+
+#: src/Options/OptionsGroup.php:218
+msgid "Order by author"
+msgstr "Ordenar por autor"
+
+#: src/Options/OptionsGroup.php:219
+msgid "Order by title"
+msgstr "Ordenar por título"
+
+#: src/Options/OptionsGroup.php:220
+msgid "Order by post name (post slug)"
+msgstr "Ordenar por nombre del post (post slug)"
+
+#: src/Options/OptionsGroup.php:221
+#, fuzzy
+#| msgid "Order by date."
+msgid "Order by date"
+msgstr "Order by date."
+
+#: src/Options/OptionsGroup.php:222
+#, fuzzy
+#| msgid "Order by last modified date."
+msgid "Order by last modified date"
+msgstr "Order by last modified date."
+
+#: src/Options/OptionsGroup.php:223
+msgid "Random order"
+msgstr "Random order"
+
+#: src/Options/OptionsGroup.php:235
+msgid "Generate a comic page based on values below."
+msgstr ""
+"Genere una p&aacute;gina de c&oacute;mic basado en los valores de abajo."
+
+#: src/Options/OptionsGroup.php:262
+msgid ""
+"Include the default CSS for the navigation. Set to Custom CSS (which uses "
+"styles defined by the theme)."
+msgstr ""
+"Include the default CSS for the navigation. Set to Custom CSS (which uses "
+"styles defined by the theme)."
+
+#: src/Options/OptionsGroup.php:268
+msgid "Custom CSS"
+msgstr "Custom CSS"
+
+#: src/Options/OptionsGroup.php:269
+msgid "Default CSS"
+msgstr "Default CSS"
+
+#: src/Plugin.php:111
+msgid "Getting Started"
+msgstr ""
+
+#: src/Plugin.php:113
+msgid "Developer API"
+msgstr ""
+
+#: src/Plugin.php:164
+msgid "Settings"
+msgstr ""
+
+#: src/Plugin.php:248
+msgid "You are currently editing the page that shows your archived comics."
+msgstr ""
+
+#: src/Plugin.php:275
+msgid "You are currently editing the page that shows your latest comics."
+msgstr ""
+
+#: src/Plugin.php:297
+msgid ""
+"You have assigned this page to be the Home Page or the Posts page. This "
+"option is not compatible with Manga+Press and will break the functionality "
+"of these two pages."
+msgstr ""
+
+#: src/Plugin.php:306
+msgid ""
+"Either assign Latest/Comic archive to different pages, or assign Home Page/"
+"Post Page to different pages."
+msgstr ""
+
+#: src/PostInstall.php:43
+msgid ""
+"Default Series category created when plugin is activated. It is suggested "
+"that you rename this category."
+msgstr ""
+"Categor&iacute;a Serie defecto creado cuando se activa plugin. Se sugiere "
+"que cambie el nombre de esta categor&iacute;a."
+
+#: src/Posts/ComicPages.php:45 src/Posts/ComicPages.php:46
+#, fuzzy
+#| msgid "Comic Image"
+msgid "Comic Pages"
+msgstr "Imagen de C&oacute;mica"
+
+#: src/Posts/Comics.php:101 src/Posts/Comics.php:102 src/Posts/Comics.php:349
+msgid "Series"
+msgstr "Series"
+
+#: src/Posts/Comics.php:121
+msgid "Comics"
+msgstr "C&oacute;micos"
+
+#: src/Posts/Comics.php:122
+msgid "Comic"
+msgstr "C&oacute;mico"
+
+#: src/Posts/Comics.php:347
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+#: src/Posts/Comics.php:348
+msgid "Comic Title"
+msgstr "Comic T&iacute;tulo"
+
+#: src/Posts/Comics.php:350
+msgid "Description"
+msgstr "Descripci&oacute;n"
+
+#: src/Posts/Comics.php:351
+msgid "Author"
+msgstr ""
+
+#: src/Posts/Comics.php:367
+#, fuzzy
+#| msgid "Comic Image"
+msgid "Cover Image"
+msgstr "Imagen de C&oacute;mica"
+
+#: src/Posts/Comics.php:377
+msgid "Comic Image"
+msgstr "Imagen de C&oacute;mica"
+
+#: src/Posts/Comics.php:440
+msgid "Upload or Choose Your Comic Image File"
+msgstr "Cargar o Elija su Comic de archivo de imagen"
+
+#: src/Posts/Comics.php:441
+msgid "Insert Comic into Post"
+msgstr "Inserte Comic en Publica"
+
+#: src/Theme/Compatible/Twentynineteen.php:65
+#: src/Theme/Compatible/Twentyseventeen.php:60
+#: src/Theme/Compatible/Twentysixteen.php:37
+msgid "Skip to content"
+msgstr ""
+
+#: src/Theme/Compatible/Twentynineteen.php:216
+#, fuzzy
+#| msgid "Latest Comic Page"
+msgid "Latest Comic"
+msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
+
+#: src/Theme/Compatible/Twentysixteen.php:54
+msgid "Menu"
+msgstr ""
+
+#: src/Widgets/Calendar.php:23
+msgid "A calendar of your site&#8217;s archived Comic Posts."
+msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
+
+#: src/Widgets/Calendar.php:26
+msgid "Manga+Press Calendar"
+msgstr "Calendario Manga+Press"
+
+#: src/Widgets/Calendar.php:80
+msgid "Title:"
+msgstr "Título:"
 
 #~ msgid ""
 #~ "Select an available page from the drop-down to use as your Latest Comic "
@@ -383,143 +696,10 @@ msgstr "No se encontr&oacute; c&oacute;mico"
 #~ msgid "Remove Comic image"
 #~ msgstr "Eliminar imagen Comic"
 
-#~ msgid "Manga+Press Options"
-#~ msgstr "Opciones Manga+Press"
-
 #~ msgid "Sorry, you do not have suffient permissions to activate this plugin."
 #~ msgstr ""
 #~ "Lo sentimos, usted no tiene los permisos necesarios para activar este "
 #~ "plugin."
-
-#~ msgid "Sorry, you must be an Administrator in order to use Manga+Press"
-#~ msgstr ""
-#~ "Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
-
-#~ msgid ""
-#~ "Default Series category created when plugin is activated. It is suggested "
-#~ "that you rename this category."
-#~ msgstr ""
-#~ "Categor&iacute;a Serie defecto creado cuando se activa plugin. Se sugiere "
-#~ "que cambie el nombre de esta categor&iacute;a."
-
-#~ msgid "Group Comics"
-#~ msgstr "Grupo Comics"
-
-#~ msgid ""
-#~ "Group comics by category. This option will ignore the parent category, "
-#~ "and group according to the child-category."
-#~ msgstr ""
-#~ "Grupo de c&oacute;mics por categoría. Esta opci&oacute;n har&aacute; caso "
-#~ "de la categor&iacute;a padre, y el grupo de acuerdo a la categor&iacute;a "
-#~ "de ni&ntilde;os."
-
-#~ msgid ""
-#~ "Group comics by top-most parent category. Use this option if you have sub-"
-#~ "categories but want your navigation to function using the parent category."
-#~ msgstr ""
-#~ "Grupo de c&oacute;mics por categoría principal de m&aacute;s arriba. "
-#~ "Utilice esta opci&oacute;n si tiene sub-categor&iacute;as, pero quiere "
-#~ "que su navegaci&oacute;n funcione con la categor&iacute;a padre."
-
-#~ msgid ""
-#~ "Style used for comic archive page. List, Calendar, or Gallery. Default: "
-#~ "List"
-#~ msgstr ""
-#~ "Estilo utilizado para la página del archivo cómico. Lista, Calendario o "
-#~ "Galería. Predeterminado: Lista"
-
-#~ msgid "Select a Style"
-#~ msgstr "Seleccione un estilo"
-
-#~ msgid "List"
-#~ msgstr "Lista"
-
-#~ msgid "Calendar"
-#~ msgstr "Calendar"
-
-#~ msgid "Gallery"
-#~ msgstr "Galería"
-
-#~ msgid ""
-#~ "Designates the ascending or descending order of the orderby parameter"
-#~ msgstr "Designa el orden ascendente o descendente del parámetro orderby"
-
-#~ msgid "ASC"
-#~ msgstr "ASC"
-
-#~ msgid "DESC"
-#~ msgstr "DESC"
-
-#~ msgid "Archive Page Comic Order By"
-#~ msgstr "Página de Archivo Comic Order By"
-
-#~ msgid "Sort retrieved posts according to selected parameter."
-#~ msgstr "Sort retrieved posts according to selected parameter."
-
-#~ msgid "Order by Post ID"
-#~ msgstr "Ordenar por ID de la publicación"
-
-#~ msgid "Order by author"
-#~ msgstr "Ordenar por autor"
-
-#~ msgid "Order by title"
-#~ msgstr "Ordenar por título"
-
-#~ msgid "Order by post name (post slug)"
-#~ msgstr "Ordenar por nombre del post (post slug)"
-
-#~ msgid "Order by date."
-#~ msgstr "Order by date."
-
-#~ msgid "Order by last modified date."
-#~ msgstr "Order by last modified date."
-
-#~ msgid "Random order"
-#~ msgstr "Random order"
-
-#~ msgid "Generate a comic page based on values below."
-#~ msgstr ""
-#~ "Genere una p&aacute;gina de c&oacute;mic basado en los valores de abajo."
-
-#~ msgid ""
-#~ "Include the default CSS for the navigation. Set to Custom CSS (which uses "
-#~ "styles defined by the theme)."
-#~ msgstr ""
-#~ "Include the default CSS for the navigation. Set to Custom CSS (which uses "
-#~ "styles defined by the theme)."
-
-#~ msgid "Custom CSS"
-#~ msgstr "Custom CSS"
-
-#~ msgid "Default CSS"
-#~ msgstr "Default CSS"
-
-#~ msgid "Series"
-#~ msgstr "Series"
-
-#~ msgid "Comics"
-#~ msgstr "C&oacute;micos"
-
-#~ msgid "Comic"
-#~ msgstr "C&oacute;mico"
-
-#~ msgid "Comic Image"
-#~ msgstr "Imagen de C&oacute;mica"
-
-#~ msgid "Upload or Choose Your Comic Image File"
-#~ msgstr "Cargar o Elija su Comic de archivo de imagen"
-
-#~ msgid "Insert Comic into Post"
-#~ msgstr "Inserte Comic en Publica"
-
-#~ msgid "Thumbnail"
-#~ msgstr "Thumbnail"
-
-#~ msgid "Comic Title"
-#~ msgstr "Comic T&iacute;tulo"
-
-#~ msgid "Description"
-#~ msgstr "Descripci&oacute;n"
 
 #~ msgid "Automatically insert comic navigation code into comic posts."
 #~ msgstr ""
@@ -534,9 +714,6 @@ msgstr "No se encontr&oacute; c&oacute;mico"
 
 #~ msgid "Edit"
 #~ msgstr "Editar"
-
-#~ msgid "Pages:"
-#~ msgstr "P&aacute;ginas:"
 
 #~ msgid ", "
 #~ msgstr ", "
@@ -613,12 +790,6 @@ msgstr "No se encontr&oacute; c&oacute;mico"
 
 #~ msgid "Choose from most used "
 #~ msgstr "Elija entre m&aacute;s utilizado"
-
-#~ msgid ""
-#~ "Sorry, you do not have sufficient permissions to activate this plugin."
-#~ msgstr ""
-#~ "Lo sentimos, usted no tiene los permisos necesarios para activar este "
-#~ "plugin."
 
 #~ msgid "Order By"
 #~ msgstr "Ordenar por"
