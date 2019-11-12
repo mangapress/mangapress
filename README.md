@@ -5,22 +5,11 @@
 
 Manga+Press is a webcomic management system for WordPress.
 
-**Beta Version**
-* Latest/Archive Comics are in-line with WordPress standards
-    * [X] Keep back-compat with selected Latest/Archive pages
-    * [X] Change page option backend to make use of the slug filters to allow users to override these
-    * [X] Add notice to the WordPress admin to inform users which pages are being used for Latest/Archive, similar to WordPress Posts/Home functionality
-    * [X] Check if page has been set as Blog/Home static page and display a warning
-    * [X] Add Latest Comic shortcode for displaying the latest comic in page content
-    * [X] Add compatibility for WordPress themes TwentySixteen and newer
-
 ## Description
 
 Manga+Press is a webcomic management system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.
 
 ## Upgrade Notice
-
-WARNING: This is a beta version. Use in production at your own risk.
 
 WARNING: Last/Comic Archive page functionality has been changed. Please back up, and perform tests in a development environment before upgrading.
 
@@ -28,6 +17,7 @@ WARNING: Last/Comic Archive page functionality has been changed. Please back up,
 ### 4.0
 #### 4.0.0
    * Removed `the_content` processing for Latest/Comic Archive pages
+   * Fixed issue with using Latest/Comic Archive pages as the home/front page
    * Added templates for Latest Comic and Comic Archive pages
    * Added new "Comic Pages" post-type
    * Added warnings for assigning Latest/Comic Archive pages

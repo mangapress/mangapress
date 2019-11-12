@@ -28,11 +28,6 @@ trait Markup
     {
         $this->theme = get_template();
 
-        $latest_comic_page_exists = Options::get_option('latestcomic_page', 'basic');
-        if ($latest_comic_page_exists) {
-            add_action('mangapress_before_latest_comic_loop', '\MangaPress\Theme\Functions\start_latest_comic');
-            add_action('mangapress_after_latest_comic_loop', '\MangaPress\Theme\Functions\end_latest_comic');
-        }
         add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
 
         $template_tags_file = MP_ABSPATH . 'resources/helpers/theme-compatibility/' . $this->theme . '-template-tags.php';
