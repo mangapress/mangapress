@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Manga+Press 3.0\n"
+"Project-Id-Version: Manga+Press 4.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2017-07-22 11:43-0500\n"
-"PO-Revision-Date: 2017-07-22 11:43-0500\n"
+"POT-Creation-Date: 2019-11-11 19:49-0600\n"
+"PO-Revision-Date: 2019-11-11 19:51-0600\n"
 "Last-Translator: Jess Green <support@manga-press.com>\n"
 "Language-Team: Jess Green <support@manga-press.com>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -18,117 +18,21 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .git\n"
 
-#: includes/lib/class-mp-calendar-widget.php:25
-msgid "A calendar of your site&#8217;s archived Comic Posts."
-msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
-
-#: includes/lib/class-mp-calendar-widget.php:28
-msgid "Manga+Press Calendar"
-msgstr "Calendario Manga+Press"
-
-#: includes/lib/class-mp-calendar-widget.php:72
-msgid "Title:"
-msgstr "Título:"
-
-#: includes/lib/class-post-type.php:95
-msgid "Add New"
-msgstr "Agregar nuevo"
-
-#: includes/lib/class-post-type.php:96 includes/lib/class-taxonomy.php:76
-#, php-format
-msgid "Add New %s"
-msgstr "Agregar nuevo %s"
-
-#: includes/lib/class-post-type.php:97 includes/lib/class-taxonomy.php:74
-#, php-format
-msgid "Edit %s"
-msgstr "Editar %s"
-
-#: includes/lib/class-post-type.php:98
-#, php-format
-msgid "View %s"
-msgstr "Ver %s"
-
-#: includes/lib/class-post-type.php:99 includes/lib/class-taxonomy.php:69
-#, php-format
-msgid "Search %s"
-msgstr "B&uacute;squeda en %s"
-
-#: includes/lib/class-post-type.php:100
-#, php-format
-msgid "%s not found"
-msgstr "%s no se encuentra"
-
-#: includes/lib/class-post-type.php:101
-#, php-format
-msgid "%s not found in Trash"
-msgstr "%s no encontrado en basura"
-
-#: includes/lib/class-post-type.php:102
-#, php-format
-msgid "%s: "
-msgstr "%s:"
-
-#: includes/lib/class-taxonomy.php:70
-#, php-format
-msgid "Popular %s"
-msgstr "%s populares"
-
-#: includes/lib/class-taxonomy.php:71
-#, php-format
-msgid "All %s"
-msgstr "todos los %s de"
-
-#: includes/lib/class-taxonomy.php:72
-#, php-format
-msgid "Parent %s"
-msgstr "%s de Padres"
-
-#: includes/lib/class-taxonomy.php:73
-#, php-format
-msgid "Parent %s:: "
-msgstr "%s de Padres::"
-
-#: includes/lib/class-taxonomy.php:75
-#, php-format
-msgid "Update %s"
-msgstr "Actualizaci&oacute;n %s"
-
-#: includes/lib/class-taxonomy.php:77
-#, php-format
-msgid "New %s name"
-msgstr "Nuevo nombre %s"
-
-#: includes/lib/class-taxonomy.php:78
-#, php-format
-msgid "Separate %s with commas"
-msgstr "%s  separado por comas"
-
-#: includes/lib/class-taxonomy.php:79
-#, php-format
-msgid "Add or remove %s"
-msgstr "A&ntilde;adir o eliminar %s"
-
-#: includes/lib/class-taxonomy.php:80
-#, php-format
-msgid "Choose from most used %s"
-msgstr "Elija entre la mayor&iacute;a de los %s usados"
-
-#: includes/pages/help-basic.php:9 mangapress-admin.php:110
+#: admin/pages/help-basic.php:9
 msgid "Basic Options Help"
-msgstr "Anula los valores fijados en ajustes de la lectura."
+msgstr "Anula los valores fijados en ajustes de la lectura"
 
-#: includes/pages/help-basic.php:11
+#: admin/pages/help-basic.php:11
 msgid "This section handles the basic setup for your webcomic."
 msgstr ""
 "Esta secci&oacute;n se ocupa de la configuraci&oacute;n b&aacute;sica para "
 "su webcomic."
 
-#: includes/pages/help-basic.php:15
+#: admin/pages/help-basic.php:15
 msgid "Group by Categories"
 msgstr "Grupo por Categor&iacute;as"
 
-#: includes/pages/help-basic.php:17
+#: admin/pages/help-basic.php:17
 msgid ""
 "This option allows you to group your comics according to a category created "
 "under <strong>Series</strong>. When this option is used with the option "
@@ -140,11 +44,11 @@ msgstr ""
 "la opci&oacute;n de abajo &mdash; Grupo de Padres &mdash; c&oacute;mics se "
 "agrupan de acuerdo a la categor&iacute;a padre."
 
-#: includes/pages/help-basic.php:19 mangapress-options.php:251
+#: admin/pages/help-basic.php:19
 msgid "Use Parent Category"
 msgstr "Categor&iacute;a de uso de Padres"
 
-#: includes/pages/help-basic.php:21
+#: admin/pages/help-basic.php:21
 msgid ""
 "This options overrides the option above and groups comics according to the "
 "parent category."
@@ -152,70 +56,58 @@ msgstr ""
 "Esta opci&oacute;n anula la opci&oacute;n anterior y grupos de c&oacute;mics "
 "de acuerdo a la categor&iacute;a padre."
 
-#: includes/pages/help-basic.php:23 mangapress-options.php:231
-msgid "Latest Comic Page"
-msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
-
-#: includes/pages/help-basic.php:25
-msgid ""
-"Select an available page from the drop-down to use as your Latest Comic "
-"page. This page displays the most recent comic posted."
-msgstr ""
-"Seleccione una p&aacute;gina disponible en el desplegable para utilizar como "
-"su p&aacute;gina &Uacute;ltimas Comic. Esta p&aacute;gina muestra el "
-"c&oacute;mic m&aacute;s reciente publicado."
-
-#: includes/pages/help-basic.php:27 mangapress-options.php:260
-msgid "Comic Archive Page"
-msgstr "P&aacute;gina Archive c&oacute;mica"
-
-#: includes/pages/help-basic.php:29
-msgid ""
-"Select an available page from the drop-down to use as your Comic Archive "
-"page. This page displays all comics in chronological order, starting with "
-"the most recent."
-msgstr ""
-"Seleccione una p&aacute;gina disponible en el desplegable para utilizar como "
-"p&aacute;gina Comic Archivo. Esta p&aacute;gina muestra todos los c&oacute;"
-"mics en orden cronol&oacute;gico, empezando por el m&aacute;s reciente."
-
-#: includes/pages/help-basic.php:31 mangapress-options.php:271
+#: admin/pages/help-basic.php:23
 msgid "Comic Archive Page Style"
 msgstr "Estilo Archivo Página cómica"
 
-#: includes/pages/help-basic.php:33
+#: admin/pages/help-basic.php:25
 msgid ""
-"Select an archive page style from the drop-down. This option can be "
-"overridden by adding a comic-archive-*.php template to your theme inside the "
-"<code>comics</code> sub-directory."
+"Choose an archive page style from the drop-down. This option can be "
+"overridden by adding a <code>archive-*.php</code> template to your theme "
+"inside the <code>comics</code> sub-directory."
 msgstr ""
-"Seleccione un estilo de página de archivo en el menú desplegable. Esta "
-"opción puede ser reemplazada añadiendo una plantilla de archivo de "
-"historietas - * .php a su tema dentro del subdirectorio <code>comics</ code>."
+"Elija un estilo de página de archivo en el menú desplegable. Esta opción se "
+"puede invalidar agregando una <code>archive-*.php</code> plantilla al tema "
+"dentro del <code>comics</code> subdirectorio."
 
-#: includes/pages/help-basic.php:34
+#: admin/pages/help-basic.php:26
 msgid ""
-"Available templates are: comic-archive-list.php, comic-archive-calendar.php, "
-"and comic-archive-gallery.php"
+"Available templates are: <code>archive-list.php</code>, <code>archive-"
+"gallery.php</code>, and <code>archive-calendar.php</code>"
 msgstr ""
-"Las plantillas disponibles son: comic-archive-list.php, comic-archive-"
-"calendar.php y comic-archive-gallery.php"
+"Las plantillas disponibles son: <code>archive-list.php</code> , "
+"<code>archive-gallery.php</code> , y<code>archive-calendar.php</code>"
 
-#: includes/pages/help-comic-page.php:9 mangapress-admin.php:115
+#: admin/pages/help-basic.php:28
+msgid "Latest Comic Page and Comic Archive Page"
+msgstr "P&aacute;gina Archive c&oacute;mica"
+
+#: admin/pages/help-basic.php:31
+msgid ""
+"Templates for Latest Comic Page and Comic Archive Page are (respectively) "
+"<code>latest-comic.php</code> and <code>archive-comic.php</code>."
+msgstr ""
+
+#: admin/pages/help-basic.php:32
+msgid ""
+"These templates can be overridden by placing them in your theme directory."
+msgstr ""
+
+#: admin/pages/help-comic-page.php:9
 msgid "Comic Page Options Help"
 msgstr "Comic P&aacute;gina Opciones de Ayuda"
 
-#: includes/pages/help-comic-page.php:11
+#: admin/pages/help-comic-page.php:11
 msgid "This section controls display of comic posts"
 msgstr ""
 "Esta secci&oacute;n controla la visualizaci&oacute;n de mensajes de "
 "historietas"
 
-#: includes/pages/help-comic-page.php:15 mangapress-options.php:319
+#: admin/pages/help-comic-page.php:15
 msgid "Generate Comic Page"
 msgstr "Generar una p&aacute;gina de c&oacute;mica"
 
-#: includes/pages/help-comic-page.php:17
+#: admin/pages/help-comic-page.php:17
 msgid ""
 "Generate a custom image size based on the values below. Use this if you wish "
 "to display slightly smaller images than the image you have uploaded."
@@ -224,53 +116,57 @@ msgstr ""
 "abajo. Utilice esta opci&oacute;n si desea visualizar las im&aacute;genes "
 "ligeramente m&aacute;s peque&ntilde;o que la imagen que has subido."
 
-#: includes/pages/help-comic-page.php:19 mangapress-options.php:328
+#: admin/pages/help-comic-page.php:19
 msgid "Comic Page Width"
 msgstr "Ancho de p&aacute;gina c&oacute;mica"
 
-#: includes/pages/help-comic-page.php:21
+#: admin/pages/help-comic-page.php:21
 msgid "Set the width of your comic page image."
 msgstr "Ajuste el ancho de la imagen de la p&aacute;gina de historietas."
 
-#: includes/pages/help-comic-page.php:23 mangapress-options.php:336
+#: admin/pages/help-comic-page.php:23
 msgid "Comic Page Height"
 msgstr "Altura p&aacute;gina c&oacute;mica"
 
-#: includes/pages/help-comic-page.php:25
+#: admin/pages/help-comic-page.php:25
 msgid "Set the height of you comic page image."
 msgstr "Ajuste la altura de la imagen de la p&aacute;gina que c&oacute;mico."
 
-#: includes/pages/help-nav.php:9 mangapress-admin.php:120
+#: admin/pages/help-nav.php:9
 msgid "Navigation Options Help"
 msgstr "Opciones de navegaci&oacute;n Ayuda"
 
-#: includes/pages/help-nav.php:11
+#: admin/pages/help-nav.php:11
 msgid ""
 "This section handles the appearance of the navigation links for your comic."
 msgstr ""
 "Esta secci&oacute;n se ocupa de la aparici&oacute;n de los enlaces de "
 "navegaci&oacute;n para tu c&oacute;mic."
 
-#: includes/pages/help-nav.php:15
+#: admin/pages/help-nav.php:15
 msgid "Insert Navigation"
 msgstr "Inserte navegaci&oacute;n"
 
-#: includes/pages/help-nav.php:17
+#: admin/pages/help-nav.php:17
+#, fuzzy
+#| msgid ""
+#| "When this option is enabled, comic navigation will automatically be "
+#| "inserted above the comic image. Not needed if you are using one of the "
+#| "child-theme that ships with Manga+Press."
 msgid ""
 "When this option is enabled, comic navigation will automatically be inserted "
-"above the comic image. Not needed if you are using one of the child-theme "
-"that ships with Manga+Press."
+"above the comic image."
 msgstr ""
 "Cuando se activa esta opci&oacute;n, la navegaci&oacute;n c&oacute;mico "
 "autom&aacute;ticamente se inserta por encima de la imagen c&oacute;mica. No "
 "es necesario si est&aacute; utilizando uno de los tema-hijo que se incluye "
 "con Manga+Press."
 
-#: includes/pages/help-nav.php:19 mangapress-options.php:345
+#: admin/pages/help-nav.php:19
 msgid "Navigation CSS"
 msgstr "Navegaci&oacute;n CSS"
 
-#: includes/pages/help-nav.php:21
+#: admin/pages/help-nav.php:21
 msgid ""
 "This option is turned off by default (Custom CSS). Set to Default CSS to use "
 "the included styles if your theme does not provide styles for the links."
@@ -279,196 +175,64 @@ msgstr ""
 "CSS). Establecer por defecto CSS a utilizar los estilos incluidos si su tema "
 "no proporciona estilos para los v&iacute;nculos."
 
-#: includes/pages/nav-css.php:12
+#: admin/pages/meta-box-comic-page-type.php:20
+msgid "Designated Pages"
+msgstr ""
+
+#: admin/pages/meta-box-comic-page-type.php:32
+#: admin/pages/meta-box-comic-page-type.php:50
+msgid "Latest Comic Page"
+msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
+
+#: admin/pages/meta-box-comic-page-type.php:32
+#, fuzzy
+#| msgid "Archive Page Comic Order"
+msgid "Archive Comic Page"
+msgstr "Página de Archivo Comic Order"
+
+#: admin/pages/meta-box-comic-page-type.php:39
+msgid "Page not assigned"
+msgstr ""
+
+#: admin/pages/meta-box-comic-page-type.php:44
+msgid "No pages assigned to Latest Comic or Comic Archive page"
+msgstr ""
+
+#: admin/pages/meta-box-comic-page-type.php:48
+#, fuzzy
+#| msgid "Select a Page"
+msgid "Select Page Type"
+msgstr "Seleccionar una p&aacute;gina"
+
+#: admin/pages/meta-box-comic-page-type.php:53
+msgid "Comic Archive Page"
+msgstr "P&aacute;gina Archive c&oacute;mica"
+
+#: admin/pages/nav-css.php:12
 msgid ""
 "Copy and paste this code into the <code>style.css</code> file of your theme."
 msgstr ""
 "Copia y pega este c&oacute;digo en el  <code>style.css</ code> de su tema."
 
-#: includes/pages/options.php:8
+#: admin/pages/options.php:9
 msgid "You do not have sufficient permissions to manage options for this blog."
 msgstr ""
 "Usted no tiene los permisos necesarios para la gesti&oacute;n de opciones "
 "para este blog."
 
-#: includes/pages/remove-image-link.php:14
+#: admin/pages/remove-image-link.php:29
+msgid "Set Cover Image"
+msgstr ""
+
+#: admin/pages/remove-image-link.php:31
 msgid "Set Comic Image"
 msgstr "Ajuste de imagen Comic"
 
-#: includes/pages/set-image-link.php:18
-msgid "Remove Comic image"
-msgstr "Eliminar imagen Comic"
-
-#: includes/template-functions.php:254 includes/template-functions.php:255
-msgid "First"
-msgstr "Primero"
-
-#: includes/template-functions.php:260 includes/template-functions.php:261
-msgid "Last"
-msgstr "&Uacute;ltimo"
-
-#: includes/template-functions.php:265 includes/template-functions.php:266
-msgid "Next"
-msgstr "Pr&oacute;ximo"
-
-#: includes/template-functions.php:270 includes/template-functions.php:271
-msgid "Prev"
-msgstr "Anterior"
-
-#: includes/template-functions.php:404
-#, php-format
-msgid "%1$s %2$s"
-msgstr "%1$s %2$s"
-
-#: mangapress-admin.php:63 mangapress-admin.php:64
-msgid "Manga+Press Options"
-msgstr "Opciones Manga+Press"
-
-#: mangapress-install.php:76
-msgid "Sorry, you do not have suffient permissions to activate this plugin."
-msgstr ""
-"Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
-
-#: mangapress-install.php:84
-msgid "Sorry, you must be an Administrator in order to use Manga+Press"
-msgstr ""
-"Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
-
-#: mangapress-install.php:145
-msgid ""
-"Default Series category created when plugin is activated. It is suggested "
-"that you rename this category."
-msgstr ""
-"Categor&iacute;a Serie defecto creado cuando se activa plugin. Se sugiere "
-"que cambie el nombre de esta categor&iacute;a."
-
-#: mangapress-options.php:233 mangapress-options.php:262
-msgid "Select a Page"
-msgstr "Seleccionar una p&aacute;gina"
-
-#: mangapress-options.php:242
-msgid "Group Comics"
-msgstr "Grupo Comics"
-
-#: mangapress-options.php:244
-msgid ""
-"Group comics by category. This option will ignore the parent category, and "
-"group according to the child-category."
-msgstr ""
-"Grupo de c&oacute;mics por categoría. Esta opci&oacute;n har&aacute; caso de "
-"la categor&iacute;a padre, y el grupo de acuerdo a la categor&iacute;a de "
-"ni&ntilde;os."
-
-#: mangapress-options.php:253
-msgid ""
-"Group comics by top-most parent category. Use this option if you have sub-"
-"categories but want your navigation to function using the parent category."
-msgstr ""
-"Grupo de c&oacute;mics por categoría principal de m&aacute;s arriba. Utilice "
-"esta opci&oacute;n si tiene sub-categor&iacute;as, pero quiere que su "
-"navegaci&oacute;n funcione con la categor&iacute;a padre."
-
-#: mangapress-options.php:272
-msgid ""
-"Style used for comic archive page. List, Calendar, or Gallery. Default: List"
-msgstr ""
-"Estilo utilizado para la página del archivo cómico. Lista, Calendario o "
-"Galería. Predeterminado: Lista"
-
-#: mangapress-options.php:274
-msgid "Select a Style"
-msgstr "Seleccione un estilo"
-
-#: mangapress-options.php:275
-msgid "List"
-msgstr "Lista"
-
-#: mangapress-options.php:276
-msgid "Calendar"
-msgstr "Calendar"
-
-#: mangapress-options.php:277
-msgid "Gallery"
-msgstr "Galería"
-
-#: mangapress-options.php:285
-msgid "Archive Page Comic Order"
-msgstr "Página de Archivo Comic Order"
-
-#: mangapress-options.php:286
-msgid "Designates the ascending or descending order of the orderby parameter"
-msgstr "Designa el orden ascendente o descendente del parámetro orderby"
-
-#: mangapress-options.php:289
-msgid "ASC"
-msgstr "ASC"
-
-#: mangapress-options.php:290
-msgid "DESC"
-msgstr "DESC"
-
-#: mangapress-options.php:298
-msgid "Archive Page Comic Order By"
-msgstr "Página de Archivo Comic Order By"
-
-#: mangapress-options.php:299
-msgid "Sort retrieved posts according to selected parameter."
-msgstr "Sort retrieved posts according to selected parameter."
-
-#: mangapress-options.php:302
-msgid "Order by Post ID"
-msgstr "Ordenar por ID de la publicación"
-
-#: mangapress-options.php:303
-msgid "Order by author"
-msgstr "Ordenar por autor"
-
-#: mangapress-options.php:304
-msgid "Order by title"
-msgstr "Ordenar por título"
-
-#: mangapress-options.php:305
-msgid "Order by post name (post slug)"
-msgstr "Ordenar por nombre del post (post slug)"
-
-#: mangapress-options.php:306
-msgid "Order by date."
-msgstr "Order by date."
-
-#: mangapress-options.php:307
-msgid "Order by last modified date."
-msgstr "Order by last modified date."
-
-#: mangapress-options.php:308
-msgid "Random order"
-msgstr "Random order"
-
-#: mangapress-options.php:320
-msgid "Generate a comic page based on values below."
-msgstr ""
-"Genere una p&aacute;gina de c&oacute;mic basado en los valores de abajo."
-
-#: mangapress-options.php:346
-msgid ""
-"Include the default CSS for the navigation. Set to Custom CSS (which uses "
-"styles defined by the theme)."
-msgstr ""
-"Include the default CSS for the navigation. Set to Custom CSS (which uses "
-"styles defined by the theme)."
-
-#: mangapress-options.php:349
-msgid "Custom CSS"
-msgstr "Custom CSS"
-
-#: mangapress-options.php:350
-msgid "Default CSS"
-msgstr "Default CSS"
-
-#: mangapress-options.php:375
+#: helpers/admin-functions.php:37
 msgid "Basic Options"
 msgstr "Opciones b&aacute;sicas"
 
-#: mangapress-options.php:376
+#: helpers/admin-functions.php:39
 msgid ""
 "This section sets the &ldquo;Latest-&rdquo; and &ldquo;Comic Archive&rdquo; "
 "pages, number of comics per page, and grouping comics together by category."
@@ -477,11 +241,11 @@ msgstr ""
 "historietas y c&oacute;mic Archivo, as&iacute; agrupar c&oacute;mics juntas "
 "por categor&iacute;a."
 
-#: mangapress-options.php:379
+#: helpers/admin-functions.php:45
 msgid "Comic Page Options"
 msgstr "Opciones de c&oacute;mica p&aacute;gina"
 
-#: mangapress-options.php:380
+#: helpers/admin-functions.php:47
 msgid ""
 "Handles image sizing options for comic pages. Thumbnail support may need to "
 "be enabled for some features to work properly. If page- or thumbnail sizes "
@@ -495,11 +259,11 @@ msgstr ""
 "plugin como Regenerar miniaturas se puede utilizar para crear las nuevas "
 "miniaturas."
 
-#: mangapress-options.php:383
+#: helpers/admin-functions.php:54
 msgid "Navigation Options"
 msgstr "Opciones de navegaci&oacute;n"
 
-#: mangapress-options.php:384
+#: helpers/admin-functions.php:56
 msgid ""
 "Options for comic navigation. Whether to have navigation automatically "
 "inserted on comic pages, or to enable/disable default comic navigation CSS."
@@ -509,41 +273,253 @@ msgstr ""
 "c&oacute;mic, o para activar / desactivar por defecto navegaci&oacute;n "
 "c&oacute;mico CSS."
 
-#: mangapress-posts.php:116 mangapress-posts.php:117 mangapress-posts.php:387
-msgid "Series"
-msgstr "Series"
+#: helpers/template-functions.php:331 helpers/template-functions.php:332
+msgid "First"
+msgstr "Primero"
 
-#: mangapress-posts.php:131
-msgid "Comics"
-msgstr "C&oacute;micos"
+#: helpers/template-functions.php:337 helpers/template-functions.php:338
+msgid "Last"
+msgstr "&Uacute;ltimo"
 
-#: mangapress-posts.php:132
-msgid "Comic"
-msgstr "C&oacute;mico"
+#: helpers/template-functions.php:342 helpers/template-functions.php:343
+msgid "Next"
+msgstr "Pr&oacute;ximo"
 
-#: mangapress-posts.php:263
-msgid "Comic Image"
-msgstr "Imagen de C&oacute;mica"
+#: helpers/template-functions.php:347 helpers/template-functions.php:348
+msgid "Prev"
+msgstr "Anterior"
 
-#: mangapress-posts.php:320
-msgid "Upload or Choose Your Comic Image File"
-msgstr "Cargar o Elija su Comic de archivo de imagen"
+#: helpers/template-functions.php:448
+#, php-format
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
 
-#: mangapress-posts.php:321
-msgid "Insert Comic into Post"
-msgstr "Inserte Comic en Publica"
+#: helpers/theme-functions.php:385
+msgid "<p class=\"error\">No comics was found.</p>"
+msgstr ""
 
-#: mangapress-posts.php:385
-msgid "Thumbnail"
-msgstr "Thumbnail"
+#: templates/archive-comic.php:196 templates/page-latest-comic.php:143
+msgid "No comics found"
+msgstr "No se encontr&oacute; c&oacute;mico"
 
-#: mangapress-posts.php:386
-msgid "Comic Title"
-msgstr "Comic T&iacute;tulo"
+#~ msgid "A calendar of your site&#8217;s archived Comic Posts."
+#~ msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
 
-#: mangapress-posts.php:388
-msgid "Description"
-msgstr "Descripci&oacute;n"
+#~ msgid "Manga+Press Calendar"
+#~ msgstr "Calendario Manga+Press"
+
+#~ msgid "Title:"
+#~ msgstr "Título:"
+
+#~ msgid "Add New"
+#~ msgstr "Agregar nuevo"
+
+#~ msgid "Add New %s"
+#~ msgstr "Agregar nuevo %s"
+
+#~ msgid "Edit %s"
+#~ msgstr "Editar %s"
+
+#~ msgid "View %s"
+#~ msgstr "Ver %s"
+
+#~ msgid "Search %s"
+#~ msgstr "B&uacute;squeda en %s"
+
+#~ msgid "%s not found"
+#~ msgstr "%s no se encuentra"
+
+#~ msgid "%s not found in Trash"
+#~ msgstr "%s no encontrado en basura"
+
+#~ msgid "%s: "
+#~ msgstr "%s:"
+
+#~ msgid "Popular %s"
+#~ msgstr "%s populares"
+
+#~ msgid "All %s"
+#~ msgstr "todos los %s de"
+
+#~ msgid "Parent %s"
+#~ msgstr "%s de Padres"
+
+#~ msgid "Parent %s:: "
+#~ msgstr "%s de Padres::"
+
+#~ msgid "Update %s"
+#~ msgstr "Actualizaci&oacute;n %s"
+
+#~ msgid "New %s name"
+#~ msgstr "Nuevo nombre %s"
+
+#~ msgid "Separate %s with commas"
+#~ msgstr "%s  separado por comas"
+
+#~ msgid "Add or remove %s"
+#~ msgstr "A&ntilde;adir o eliminar %s"
+
+#~ msgid "Choose from most used %s"
+#~ msgstr "Elija entre la mayor&iacute;a de los %s usados"
+
+#~ msgid ""
+#~ "Select an available page from the drop-down to use as your Latest Comic "
+#~ "page. This page displays the most recent comic posted."
+#~ msgstr ""
+#~ "Seleccione una p&aacute;gina disponible en el desplegable para utilizar "
+#~ "como su p&aacute;gina &Uacute;ltimas Comic. Esta p&aacute;gina muestra el "
+#~ "c&oacute;mic m&aacute;s reciente publicado."
+
+#~ msgid ""
+#~ "Select an available page from the drop-down to use as your Comic Archive "
+#~ "page. This page displays all comics in chronological order, starting with "
+#~ "the most recent."
+#~ msgstr ""
+#~ "Seleccione una p&aacute;gina disponible en el desplegable para utilizar "
+#~ "como p&aacute;gina Comic Archivo. Esta p&aacute;gina muestra todos los "
+#~ "c&oacute;mics en orden cronol&oacute;gico, empezando por el m&aacute;s "
+#~ "reciente."
+
+#~ msgid "Remove Comic image"
+#~ msgstr "Eliminar imagen Comic"
+
+#~ msgid "Manga+Press Options"
+#~ msgstr "Opciones Manga+Press"
+
+#~ msgid "Sorry, you do not have suffient permissions to activate this plugin."
+#~ msgstr ""
+#~ "Lo sentimos, usted no tiene los permisos necesarios para activar este "
+#~ "plugin."
+
+#~ msgid "Sorry, you must be an Administrator in order to use Manga+Press"
+#~ msgstr ""
+#~ "Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
+
+#~ msgid ""
+#~ "Default Series category created when plugin is activated. It is suggested "
+#~ "that you rename this category."
+#~ msgstr ""
+#~ "Categor&iacute;a Serie defecto creado cuando se activa plugin. Se sugiere "
+#~ "que cambie el nombre de esta categor&iacute;a."
+
+#~ msgid "Group Comics"
+#~ msgstr "Grupo Comics"
+
+#~ msgid ""
+#~ "Group comics by category. This option will ignore the parent category, "
+#~ "and group according to the child-category."
+#~ msgstr ""
+#~ "Grupo de c&oacute;mics por categoría. Esta opci&oacute;n har&aacute; caso "
+#~ "de la categor&iacute;a padre, y el grupo de acuerdo a la categor&iacute;a "
+#~ "de ni&ntilde;os."
+
+#~ msgid ""
+#~ "Group comics by top-most parent category. Use this option if you have sub-"
+#~ "categories but want your navigation to function using the parent category."
+#~ msgstr ""
+#~ "Grupo de c&oacute;mics por categoría principal de m&aacute;s arriba. "
+#~ "Utilice esta opci&oacute;n si tiene sub-categor&iacute;as, pero quiere "
+#~ "que su navegaci&oacute;n funcione con la categor&iacute;a padre."
+
+#~ msgid ""
+#~ "Style used for comic archive page. List, Calendar, or Gallery. Default: "
+#~ "List"
+#~ msgstr ""
+#~ "Estilo utilizado para la página del archivo cómico. Lista, Calendario o "
+#~ "Galería. Predeterminado: Lista"
+
+#~ msgid "Select a Style"
+#~ msgstr "Seleccione un estilo"
+
+#~ msgid "List"
+#~ msgstr "Lista"
+
+#~ msgid "Calendar"
+#~ msgstr "Calendar"
+
+#~ msgid "Gallery"
+#~ msgstr "Galería"
+
+#~ msgid ""
+#~ "Designates the ascending or descending order of the orderby parameter"
+#~ msgstr "Designa el orden ascendente o descendente del parámetro orderby"
+
+#~ msgid "ASC"
+#~ msgstr "ASC"
+
+#~ msgid "DESC"
+#~ msgstr "DESC"
+
+#~ msgid "Archive Page Comic Order By"
+#~ msgstr "Página de Archivo Comic Order By"
+
+#~ msgid "Sort retrieved posts according to selected parameter."
+#~ msgstr "Sort retrieved posts according to selected parameter."
+
+#~ msgid "Order by Post ID"
+#~ msgstr "Ordenar por ID de la publicación"
+
+#~ msgid "Order by author"
+#~ msgstr "Ordenar por autor"
+
+#~ msgid "Order by title"
+#~ msgstr "Ordenar por título"
+
+#~ msgid "Order by post name (post slug)"
+#~ msgstr "Ordenar por nombre del post (post slug)"
+
+#~ msgid "Order by date."
+#~ msgstr "Order by date."
+
+#~ msgid "Order by last modified date."
+#~ msgstr "Order by last modified date."
+
+#~ msgid "Random order"
+#~ msgstr "Random order"
+
+#~ msgid "Generate a comic page based on values below."
+#~ msgstr ""
+#~ "Genere una p&aacute;gina de c&oacute;mic basado en los valores de abajo."
+
+#~ msgid ""
+#~ "Include the default CSS for the navigation. Set to Custom CSS (which uses "
+#~ "styles defined by the theme)."
+#~ msgstr ""
+#~ "Include the default CSS for the navigation. Set to Custom CSS (which uses "
+#~ "styles defined by the theme)."
+
+#~ msgid "Custom CSS"
+#~ msgstr "Custom CSS"
+
+#~ msgid "Default CSS"
+#~ msgstr "Default CSS"
+
+#~ msgid "Series"
+#~ msgstr "Series"
+
+#~ msgid "Comics"
+#~ msgstr "C&oacute;micos"
+
+#~ msgid "Comic"
+#~ msgstr "C&oacute;mico"
+
+#~ msgid "Comic Image"
+#~ msgstr "Imagen de C&oacute;mica"
+
+#~ msgid "Upload or Choose Your Comic Image File"
+#~ msgstr "Cargar o Elija su Comic de archivo de imagen"
+
+#~ msgid "Insert Comic into Post"
+#~ msgstr "Inserte Comic en Publica"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Thumbnail"
+
+#~ msgid "Comic Title"
+#~ msgstr "Comic T&iacute;tulo"
+
+#~ msgid "Description"
+#~ msgstr "Descripci&oacute;n"
 
 #~ msgid "Automatically insert comic navigation code into comic posts."
 #~ msgstr ""
@@ -558,9 +534,6 @@ msgstr "Descripci&oacute;n"
 
 #~ msgid "Edit"
 #~ msgstr "Editar"
-
-#~ msgid "No comic found."
-#~ msgstr "No se encontr&oacute; c&oacute;mico."
 
 #~ msgid "Pages:"
 #~ msgstr "P&aacute;ginas:"
@@ -661,9 +634,6 @@ msgstr "Descripci&oacute;n"
 
 #~ msgid "Use theme template for Latest Comic Page."
 #~ msgstr "Use la plantilla para lo &uacute;ltimo tema P&aacute;gina Comic."
-
-#~ msgid "Use theme template for Comic Archive Page."
-#~ msgstr "P&aacute;gina Archive c&oacute;mica"
 
 #~ msgid "Comic Posts to Display"
 #~ msgstr "Cantidad de env&iacute;os c&oacute;mica para mostrar"
