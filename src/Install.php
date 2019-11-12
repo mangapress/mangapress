@@ -128,18 +128,16 @@ class Install
         $latest  = Options::get_option('latestcomic_page', 'basic');
         $archive = Options::get_option('comicarchive_page', 'basic');
 
-        $raw_sql = "SELECT post_name, ID FROM {$wpdb->posts} "
+        $raw_sql = "SELECT ID FROM {$wpdb->posts} "
                    . "WHERE post_type='page' "
                    . "AND post_status='publish' "
-                   . "AND post_name IN ('%s', '%s')";
+                   . "AND post_name = %s";
 
-        $sql   = $wpdb->prepare($raw_sql, $latest, $archive);
-        $posts = $wpdb->get_results($sql);
+        $latest_id  = $wpdb->get_col($wpdb->prepare($raw_sql, $latest));
+        $archive_id = $wpdb->get_col($wpdb->prepare($raw_sql, $archive));
 
-        $post_ids = wp_list_pluck($posts, 'ID', 'post_name');
-
-        Options::set_option('latestcomic_page', $post_ids[$latest], 'basic');
-        Options::set_option('comicarchive_page', $post_ids[$archive], 'basic');
+        Options::set_option('latestcomic_page', $latest_id, 'basic');
+        Options::set_option('comicarchive_page', $archive_id, 'basic');
 
         Options::save_options();
 
