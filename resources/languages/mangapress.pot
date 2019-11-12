@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 4.0\n"
-"POT-Creation-Date: 2019-11-11 19:56-0600\n"
+"POT-Creation-Date: 2019-11-11 20:08-0600\n"
 "PO-Revision-Date: 2017-07-22 11:43-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -489,25 +489,12 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/Plugin.php:248
+#: src/Plugin.php:247
 msgid "You are currently editing the page that shows your archived comics."
 msgstr ""
 
-#: src/Plugin.php:275
+#: src/Plugin.php:274
 msgid "You are currently editing the page that shows your latest comics."
-msgstr ""
-
-#: src/Plugin.php:297
-msgid ""
-"You have assigned this page to be the Home Page or the Posts page. This "
-"option is not compatible with Manga+Press and will break the functionality "
-"of these two pages."
-msgstr ""
-
-#: src/Plugin.php:306
-msgid ""
-"Either assign Latest/Comic archive to different pages, or assign Home Page/"
-"Post Page to different pages."
 msgstr ""
 
 #: src/PostInstall.php:43

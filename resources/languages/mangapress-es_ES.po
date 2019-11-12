@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 4.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2019-11-11 19:58-0600\n"
-"PO-Revision-Date: 2019-11-11 19:58-0600\n"
+"POT-Creation-Date: 2019-11-11 20:07-0600\n"
+"PO-Revision-Date: 2019-11-11 20:07-0600\n"
 "Last-Translator: Jess Green <support@manga-press.com>\n"
 "Language-Team: Jess Green <support@manga-press.com>\n"
 "Language: es\n"
@@ -88,11 +88,15 @@ msgid ""
 "Templates for Latest Comic Page and Comic Archive Page are (respectively) "
 "<code>latest-comic.php</code> and <code>archive-comic.php</code>."
 msgstr ""
+"Las plantillas para la última página de historietas y la página de archivo "
+"de historietas son (respectivamente) <code>latest-comic.php</code> y "
+"<code>archive-comic.php</code>."
 
 #: resources/admin/pages/help-basic.php:32
 msgid ""
 "These templates can be overridden by placing them in your theme directory."
 msgstr ""
+"Estas plantillas se pueden anular colocándolas en su directorio de temas."
 
 #: resources/admin/pages/help-comic-page.php:9 src/Admin/Admin.php:113
 msgid "Comic Page Options Help"
@@ -180,8 +184,9 @@ msgstr ""
 "no proporciona estilos para los v&iacute;nculos."
 
 #: resources/admin/pages/meta-box-comic-page-type.php:20
+#, fuzzy
 msgid "Designated Pages"
-msgstr ""
+msgstr "Páginas designadas"
 
 #: resources/admin/pages/meta-box-comic-page-type.php:32
 #: resources/admin/pages/meta-box-comic-page-type.php:50
@@ -197,11 +202,12 @@ msgstr "Página de Archivo Comic Order"
 
 #: resources/admin/pages/meta-box-comic-page-type.php:39
 msgid "Page not assigned"
-msgstr ""
+msgstr "Página no asignada"
 
 #: resources/admin/pages/meta-box-comic-page-type.php:44
+#, fuzzy
 msgid "No pages assigned to Latest Comic or Comic Archive page"
-msgstr ""
+msgstr "No pages assigned to Latest Comic or Comic Archive page"
 
 #: resources/admin/pages/meta-box-comic-page-type.php:48
 #, fuzzy
@@ -227,8 +233,9 @@ msgstr ""
 "para este blog."
 
 #: resources/admin/pages/remove-image-link.php:29
+#, fuzzy
 msgid "Set Cover Image"
-msgstr ""
+msgstr "Establecer imagen de portada"
 
 #: resources/admin/pages/remove-image-link.php:31
 msgid "Set Comic Image"
@@ -306,7 +313,7 @@ msgstr "%1$s %2$s"
 
 #: resources/helpers/theme-functions.php:385
 msgid "<p class=\"error\">No comics was found.</p>"
-msgstr ""
+msgstr "<p class=\"error\">No se encontraron cómics.</p>"
 
 #: resources/templates/archive-comic.php:196
 #: resources/templates/page-latest-comic.php:143 src/Theme/Shortcode.php:40
@@ -416,6 +423,9 @@ msgid ""
 "Sorry. Manga+Press is only supported on PHP 7.0 and newer. Please upgrade "
 "your server's PHP version, or contact your hosting provider."
 msgstr ""
+"Lo siento. Manga+Press solo es compatible con PHP 7.0 y versiones "
+"posteriores. Actualice la versión PHP de su servidor o póngase en contacto "
+"con su proveedor de alojamiento."
 
 #: src/Options/Fields/Types/PageSelect.php:24
 #, fuzzy
@@ -518,20 +528,16 @@ msgid "Order by post name (post slug)"
 msgstr "Ordenar por nombre del post (post slug)"
 
 #: src/Options/OptionsGroup.php:221
-#, fuzzy
-#| msgid "Order by date."
 msgid "Order by date"
-msgstr "Order by date."
+msgstr "Ordenar por fecha"
 
 #: src/Options/OptionsGroup.php:222
-#, fuzzy
-#| msgid "Order by last modified date."
 msgid "Order by last modified date"
-msgstr "Order by last modified date."
+msgstr "Pedido por última fecha modificada"
 
 #: src/Options/OptionsGroup.php:223
 msgid "Random order"
-msgstr "Random order"
+msgstr "Orden aleatorio"
 
 #: src/Options/OptionsGroup.php:235
 msgid "Generate a comic page based on values below."
@@ -548,44 +554,31 @@ msgstr ""
 
 #: src/Options/OptionsGroup.php:268
 msgid "Custom CSS"
-msgstr "Custom CSS"
+msgstr "CSS personalizado"
 
 #: src/Options/OptionsGroup.php:269
 msgid "Default CSS"
-msgstr "Default CSS"
+msgstr "CSS predeterminado"
 
 #: src/Plugin.php:111
 msgid "Getting Started"
-msgstr ""
+msgstr "Empezando"
 
 #: src/Plugin.php:113
 msgid "Developer API"
-msgstr ""
+msgstr "API para desarrolladores"
 
 #: src/Plugin.php:164
 msgid "Settings"
-msgstr ""
+msgstr "Ajustes"
 
-#: src/Plugin.php:248
+#: src/Plugin.php:247
 msgid "You are currently editing the page that shows your archived comics."
-msgstr ""
+msgstr "Actualmente está editando la página que muestra sus cómics archivados."
 
-#: src/Plugin.php:275
+#: src/Plugin.php:274
 msgid "You are currently editing the page that shows your latest comics."
-msgstr ""
-
-#: src/Plugin.php:297
-msgid ""
-"You have assigned this page to be the Home Page or the Posts page. This "
-"option is not compatible with Manga+Press and will break the functionality "
-"of these two pages."
-msgstr ""
-
-#: src/Plugin.php:306
-msgid ""
-"Either assign Latest/Comic archive to different pages, or assign Home Page/"
-"Post Page to different pages."
-msgstr ""
+msgstr "Actualmente está editando la página que muestra sus últimos cómics."
 
 #: src/PostInstall.php:43
 msgid ""
@@ -627,7 +620,7 @@ msgstr "Descripci&oacute;n"
 
 #: src/Posts/Comics.php:351
 msgid "Author"
-msgstr ""
+msgstr "Autora"
 
 #: src/Posts/Comics.php:367
 #, fuzzy
@@ -651,7 +644,7 @@ msgstr "Inserte Comic en Publica"
 #: src/Theme/Compatible/Twentyseventeen.php:60
 #: src/Theme/Compatible/Twentysixteen.php:37
 msgid "Skip to content"
-msgstr ""
+msgstr "Saltar al contenido"
 
 #: src/Theme/Compatible/Twentynineteen.php:216
 #, fuzzy
@@ -661,7 +654,7 @@ msgstr "&uacute;ltima P&aacute;gina c&oacute;mica"
 
 #: src/Theme/Compatible/Twentysixteen.php:54
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: src/Widgets/Calendar.php:23
 msgid "A calendar of your site&#8217;s archived Comic Posts."
@@ -674,6 +667,14 @@ msgstr "Calendario Manga+Press"
 #: src/Widgets/Calendar.php:80
 msgid "Title:"
 msgstr "Título:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Either assign Latest/Comic archive to different pages, or assign Home "
+#~ "Page/Post Page to different pages."
+#~ msgstr ""
+#~ "Asigne el archivo más reciente / cómico a diferentes páginas, o asigne la "
+#~ "página de inicio / página de publicación a diferentes páginas."
 
 #~ msgid ""
 #~ "Select an available page from the drop-down to use as your Latest Comic "
