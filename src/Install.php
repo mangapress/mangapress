@@ -8,6 +8,7 @@
 namespace MangaPress;
 
 use MangaPress\Options\Options;
+use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 
@@ -122,11 +123,18 @@ class Install
     public function do_upgrade()
     {
         global $wpdb;
+
         update_option('mangapress_ver', MP_VERSION);
 
+        $options = maybe_unserialize(get_option(OptionsGroup::OPTIONS_GROUP_NAME));
+
         // switch to using post ids
-        $latest  = Options::get_option('latestcomic_page', 'basic');
-        $archive = Options::get_option('comicarchive_page', 'basic');
+        $latest  = isset($options['basic']['latestcomic_page']) ? $options['basic']['latestcomic_page'] : false;
+        $archive = isset($options['basic']['comicarchive_page']) ? $options['basic']['comicarchive_page'] : false;
+
+        if (!($latest || $archive)) {
+            return;
+        }
 
         $raw_sql = "SELECT ID FROM {$wpdb->posts} "
                    . "WHERE post_type='page' "
@@ -136,10 +144,10 @@ class Install
         $latest_id  = $wpdb->get_col($wpdb->prepare($raw_sql, $latest));
         $archive_id = $wpdb->get_col($wpdb->prepare($raw_sql, $archive));
 
-        Options::set_option('latestcomic_page', $latest_id, 'basic');
-        Options::set_option('comicarchive_page', $archive_id, 'basic');
+        $options['basic']['latestcomic_page']  = $latest_id;
+        $options['basic']['comicarchive_page'] = $archive_id;
 
-        Options::save_options();
+        update_option(OptionsGroup::OPTIONS_GROUP_NAME, $options);
 
         flush_rewrite_rules(false);
     }
