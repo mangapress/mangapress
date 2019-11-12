@@ -48,15 +48,6 @@ class Options implements PluginComponent
     ];
 
     /**
-     * Get all currently set options
-     * @return array
-     */
-    public static function get_options()
-    {
-        return array_merge(self::$options, self::$default_options);
-    }
-
-    /**
      * Get option value
      *
      * @param string $name
@@ -88,6 +79,15 @@ class Options implements PluginComponent
         if (isset(self::$options[$section][$name])) {
             self::$options[$section][$name] = $value;
         }
+    }
+
+    /**
+     * Get all currently set options
+     * @return array
+     */
+    public static function get_options()
+    {
+        return array_merge(self::$default_options, self::$options);
     }
 
     /**
