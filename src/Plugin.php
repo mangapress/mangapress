@@ -194,7 +194,6 @@ class Plugin implements PluginComponent
 
         add_action('admin_notices', [$this, 'notice_archive_page'], 555);
         add_action('admin_notices', [$this, 'notice_latest_page'], 555);
-        add_action('admin_notices', [$this, 'notice_front_posts_page'], 555);
     }
 
     /**
@@ -274,41 +273,6 @@ class Plugin implements PluginComponent
             echo '<div class="notice notice-warning inline"><p>'
                  . __('You are currently editing the page that shows your latest comics.', MP_DOMAIN)
                  . '</p></div>';
-        }
-    }
-
-    /**
-     * Warning for Front/Home Page
-     */
-    public function notice_front_posts_page()
-    {
-        $post_id = intval(filter_input(INPUT_GET, 'post'));
-        if (!$post_id) {
-            return false;
-        }
-
-        $page_for_posts = get_option('page_for_posts', false);
-        $page_on_front  = get_option('page_on_front', false);
-
-        if (in_array($post_id, [$page_for_posts, $page_on_front])) {
-            echo '<div class="notice notice-error inline">';
-            echo '<p>'
-                 . __(
-                     'You have assigned this page to be the Home Page or the Posts page. '
-                     . 'This option is not compatible with Manga+Press and will break the functionality '
-                     . 'of these two pages.',
-                     MP_DOMAIN
-                 )
-                 . '</p>';
-
-            echo '<p>'
-                 . __(
-                     'Either assign Latest/Comic archive to different pages, '
-                     . 'or assign Home Page/Post Page to different pages.',
-                     MP_DOMAIN
-                 )
-                 . '</p>';
-            echo '</div>';
         }
     }
 }
