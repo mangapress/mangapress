@@ -51,6 +51,8 @@ function theme_init()
         '\MangaPress\Theme\Functions\archive_page_closing_tag'
     );
 
+    add_action('mangapress_comments_template', '\MangaPress\Theme\Functions\comments_template');
+
     add_action('mangapress_after_article_content', 'MangaPress\Theme\Functions\comic_page__after_article_content');
 }
 
@@ -108,6 +110,16 @@ function get_archive_style_template($style)
         get_template_part('content/archive', $style);
     } else {
         get_template_part('content/archive', 'list');
+    }
+}
+
+/**
+ * Add comments template
+ */
+function comments_template()
+{
+    if (comments_open() || get_comments_number()) {
+        \comments_template();
     }
 }
 
