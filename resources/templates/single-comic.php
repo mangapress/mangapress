@@ -78,6 +78,14 @@ if (have_posts()) :
          */
         do_action('mangapress_after_article_content');
 
+        /**
+         * mangapress_article_footer
+         *
+         * Output article footer
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_footer');
+
         /** This filter is documented in resources/templates/archive-comic.php **/
         echo apply_filters(
             'mangapress_closing_article_tag',
@@ -97,12 +105,13 @@ if (have_posts()) :
         do_action('mangapress_after_article');
 
         /**
-         * mangapress_article_footer
+         * mangapress_comments_template
          *
-         * Output article footer
+         * Load theme's comments template
          * @since 4.0.0
          */
-        do_action('mangapress_article_footer');
+        do_action('mangapress_comments_template');
+
     endwhile;
 
     /**
