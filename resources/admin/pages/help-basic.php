@@ -28,10 +28,6 @@
     <dt><strong><?php _e('Latest Comic Page and Comic Archive Page', MP_DOMAIN); ?></strong></dt>
     <dd>
         <p>
-            <?php _e('The Latest Comic and Comic Archive Page options have been deprecated in favor of custom end-points.', MP_DOMAIN); ?>
-            <?php _e('These end-points can be customized by overriding the plugin\'s default theme templates. '); ?>
-        </p>
-        <p>
             <?php _e('Templates for Latest Comic Page and Comic Archive Page are (respectively) <code>latest-comic.php</code> and <code>archive-comic.php</code>.'); ?>
             <?php _e('These templates can be overridden by placing them in your theme directory.'); ?>
         </p>
