@@ -6,6 +6,7 @@ Requires at least: 5.0
 Tested up to: 5.2.4
 Stable tag: 4.0.0-beta
 License: GPLv2
+Requires PHP: 7.0
 
 Manga+Press is a webcomic management system for WordPress.
 
