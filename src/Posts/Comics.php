@@ -42,12 +42,14 @@ class Comics implements PluginComponent, ContentTypeRegistry
      * @var string
      */
     const COMIC_ARCHIVE_DATEFORMAT = 'm.d.Y';
+
     /**
      * Post-type Slug. Defaults to comic.
      *
      * @var string
      */
     protected $slug = 'comic';
+
     /**
      * Comic Archives slug
      *
@@ -157,7 +159,7 @@ class Comics implements PluginComponent, ContentTypeRegistry
          * @return string
          * @since 4.0.0
          */
-        return apply_filters('mangapress_comic_front_slug', 'comics/' . $this->slug);
+        return apply_filters('mangapress_comic_front_slug', $this->slug);
     }
 
     /**
