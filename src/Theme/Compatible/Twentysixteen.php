@@ -131,7 +131,7 @@ class Twentysixteen implements Theme
     public function after_content()
     {
         echo '</main><!-- .site-main -->';
-        get_sidebar('content-bottom');
         echo '</div><!-- .content-area -->';
+        get_sidebar();
     }
 }
