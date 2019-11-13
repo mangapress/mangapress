@@ -21,8 +21,8 @@ class PageSelect extends Select
     {
         parent::__construct($options);
 
-        $pages['pages']['title'] = __('Pages', MP_DOMAIN);
-        $pages['pages']['pages'] = get_pages();
+        $pages['page']['title'] = __('Pages', MP_DOMAIN);
+        $pages['page']['pages'] = get_pages();
 
         $comic_pages = get_pages(
             ['post_type' => ComicPages::POST_TYPE, 'post_status' => ['publish', 'draft']]
@@ -38,7 +38,8 @@ class PageSelect extends Select
         $options = array_merge([], ['no_val' => __('Select a Page', MP_DOMAIN)]);
 
         if (!isset($pages[ComicPages::POST_TYPE])) {
-            foreach ($pages as $page) {
+            $more_pages = $pages['page']['pages'];
+            foreach ($more_pages as $page) {
                 $options[$page->ID] = esc_html($page->post_title);
             }
         } else {
