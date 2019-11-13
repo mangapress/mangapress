@@ -56,7 +56,6 @@ class Options implements PluginComponent
      */
     public static function get_option($name, $section)
     {
-        error_log(print_r(self::$options, true));
         if (isset(self::$options[$section][$name])) {
             return self::$options[$section][$name];
         }
