@@ -16,6 +16,7 @@ use MangaPress\Posts\Comics;
  */
 function theme_init()
 {
+    // wrapping tags for article, or articles in lists
     add_filter('mangapress_opening_article_tag', '\MangaPress\Theme\Functions\opening_article_tag', 10, 2);
     add_filter('mangapress_closing_article_tag', '\MangaPress\Theme\Functions\closing_article_tag', 10, 2);
 
@@ -276,11 +277,23 @@ function article_header($post)
 
 /**
  * Creates embedded style-sheet for Manga+Press Gallery archive
- *
+ * @param string $archive_style Archive style type, 'calender', 'gallery', or 'list'
+ * @param boolean $echo Output stylesheet or return value
  * @return string
  */
-function archive_gallery_style()
+function archive_gallery_style($archive_style, $echo = true)
 {
+    if ($archive_style !== 'gallery') {
+        /**
+         * Filter embedded stylesheet string
+         *
+         * @param string $styles
+         * @param string $archive_style Archive style type, 'calender', 'gallery', or 'list'
+         * @return string
+         */
+        return apply_filters('mangapress_archive_gallery_style', '', $archive_style);
+    }
+
     $styles = "
 <style type=\"text/css\">
     .mangapress-archive-gallery {
@@ -325,13 +338,13 @@ function archive_gallery_style()
 </style>";
 
 
-    /**
-     * Filter embedded stylesheet string
-     *
-     * @param string $styles
-     * @return string
-     */
-    echo apply_filters('mangapress_archive_gallery_style', $styles);
+    if ($echo) {
+        /** This filter is documented at line 285 */
+        echo apply_filters('mangapress_archive_gallery_style', $styles, $archive_style);
+    } else {
+        /** This filter is documented at line 285 */
+        return apply_filters('mangapress_archive_gallery_style', $styles, $archive_style);
+    }
 }
 
 /**

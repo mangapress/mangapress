@@ -34,6 +34,13 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
          */
         do_action('mangapress_archive_page_opening_tag', 'article');
 
+        /**
+         * mangapress_article_header
+         *
+         * Add post header
+         * @since 4.0.0
+         */
+        do_action('mangapress_article_header', $post);
 
         /**
          * mangapress_before_article
@@ -42,14 +49,6 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
          * @since 4.0.0
          */
         do_action('mangapress_before_article');
-
-        /**
-         * mangapress_article_header
-         *
-         * Add post header
-         * @since 4.0.0
-         */
-        do_action('mangapress_article_header', $post);
 
         $archive_query = new \WP_Query(
             [

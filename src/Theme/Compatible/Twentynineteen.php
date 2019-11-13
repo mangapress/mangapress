@@ -36,12 +36,6 @@ class Twentynineteen implements Theme
         add_action('mangapress_before_article_content', [$this, 'before_article_content']);
         add_action('mangapress_after_article_content', [$this, 'after_article_content']);
 
-        add_action('mangapress_archive_page_opening_tag', [$this, 'archive_page_opening_tag'], 20);
-        add_action('mangapress_archive_page_closing_tag', [$this, 'archive_page_closing_tag'], 20);
-
-        add_action('mangapress_before_archive_comic_loop', [$this, 'before_archive_comic_loop']);
-        add_action('mangapress_after_archive_comic_loop', [$this, 'after_archive_comic_loop']);
-
         add_filter('mangapress_the_comic_page_content', [$this, 'the_comic_page_content'], 10, 3);
     }
 
@@ -66,15 +60,6 @@ class Twentynineteen implements Theme
              '</a>';
     }
 
-    public function archive_page_opening_tag($tag)
-    {
-        echo '<div class="entry-content">';
-    }
-
-    public function archive_page_closing_tag($tag)
-    {
-        echo '</div>';
-    }
 
     /**
      * TwentyNineteen adds featured image to header. For comic posts, we don't need that.
