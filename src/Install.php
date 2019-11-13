@@ -136,13 +136,12 @@ class Install
             return;
         }
 
-        $raw_sql = "SELECT ID FROM {$wpdb->posts} "
-                   . "WHERE post_type='page' "
+        $raw_sql = "SELECT ID FROM {$wpdb->posts} WHERE post_type='page' "
                    . "AND post_status='publish' "
                    . "AND post_name = %s";
 
-        $latest_id  = $wpdb->get_col($wpdb->prepare($raw_sql, $latest));
-        $archive_id = $wpdb->get_col($wpdb->prepare($raw_sql, $archive));
+        $latest_id  = $wpdb->get_var($wpdb->prepare($raw_sql, $latest));
+        $archive_id = $wpdb->get_var($wpdb->prepare($raw_sql, $archive));
 
         $options['basic']['latestcomic_page']  = $latest_id;
         $options['basic']['comicarchive_page'] = $archive_id;
