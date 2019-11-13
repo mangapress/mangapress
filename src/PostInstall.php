@@ -8,6 +8,7 @@
 namespace MangaPress;
 
 use MangaPress\Options\Options;
+use MangaPress\Options\OptionsGroup;
 use MangaPress\Posts\ComicPages;
 use MangaPress\Posts\Comics;
 
@@ -33,6 +34,8 @@ class PostInstall implements PluginComponent
      */
     public function post_activation_tasks()
     {
+        $options = maybe_unserialize(get_option(OptionsGroup::OPTIONS_GROUP_NAME));
+
         if (!get_option('mangapress_default_category', false)) {
             // create a default series category
             $term = wp_insert_term(
@@ -54,7 +57,7 @@ class PostInstall implements PluginComponent
         }
 
         $latest_created = false;
-        if (!Options::get_option('comicarchive_page', 'basic')) {
+        if (!isset($options['basic']['comicarchive_page'])) {
             // create latest comic and comic archive posts
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
@@ -72,7 +75,7 @@ class PostInstall implements PluginComponent
         }
 
         $archive_created = false;
-        if (!Options::get_option('latestcomic_page', 'basic')) {
+        if (!isset($options['basic']['latestcomic_page'])) {
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
                 'post_title'  => 'Latest Comic',
@@ -89,7 +92,7 @@ class PostInstall implements PluginComponent
         }
 
         if ($archive_created || $latest_created) {
-            Options::save_options();
+            update_option(OptionsGroup::OPTIONS_GROUP_NAME, $options);
         }
 
         delete_option('mangapress_post_activation');
