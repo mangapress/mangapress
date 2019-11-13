@@ -129,6 +129,15 @@ if (have_posts()) {
                     'article',
                     false
                 );
+
+                /**
+                 * mangapress_comments_template
+                 *
+                 * Load theme's comments template
+                 * @since 4.0.0
+                 */
+                do_action('mangapress_comments_template');
+
             endwhile;
         } else {
             /** This filter is documented in resources/templates/archive-comic.php **/
