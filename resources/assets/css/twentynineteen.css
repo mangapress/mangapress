@@ -58,7 +58,7 @@
     list-style: none;
 }
 
-.mangapress-archive-feed > .entry {
+.mangapress-archive-list > .entry {
     margin: 0 !important;
     padding: 0 !important;
 }

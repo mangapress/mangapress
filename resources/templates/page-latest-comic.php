@@ -31,17 +31,15 @@ do_action('mangapress_latest_comic_header');
 do_action('mangapress_before_latest_comic');
 
 if (have_posts()) {
-
     while (have_posts()) :
         the_post();
 
-        /**
-         * mangapress_before_article
-         *
-         * Run scripts or insert content before the article tag but after the loop starts
-         * @since 4.0.0
-         */
-        do_action('mangapress_before_article');
+        /** This filter is documented in resources/templates/archive-comic.php **/
+        echo apply_filters(
+            'mangapress_opening_article_tag',
+            'article',
+            false
+        );
 
         /**
          * mangapress_article_header
@@ -50,6 +48,14 @@ if (have_posts()) {
          * @since 4.0.0
          */
         do_action('mangapress_article_header', $post);
+
+        /**
+         * mangapress_before_article
+         *
+         * Run scripts or insert content before the article tag but after the loop starts
+         * @since 4.0.0
+         */
+        do_action('mangapress_before_article');
 
         $latest = new \WP_Query(
             [
@@ -177,6 +183,13 @@ if (have_posts()) {
          * @since 4.0.0
          */
         do_action('mangapress_after_article');
+
+        /** This filter is documented in resources/templates/archive-comic.php **/
+        echo apply_filters(
+            'mangapress_closing_article_tag',
+            'article',
+            false
+        );
     endwhile;
 }
 

@@ -27,17 +27,16 @@ class Twentyseventeen implements Theme
     {
 
         add_action('mangapress_head', [$this, 'head']);
-
         add_action('mangapress_after_body_open', [$this, 'after_body_open']);
 
         add_action('mangapress_page_header', [$this, 'page_header']);
         add_action('mangapress_after_page_header', [$this, 'after_page_header']);
+//        add_action('mangapress_article_header', [$this, 'article_header']);
 
         add_action('mangapress_before_content', [$this, 'before_content']);
-        add_action('mangapress_article_header', [$this, 'article_header']);
         add_action('mangapress_after_content', [$this, 'after_content']);
 
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
+        add_filter('body_class', [$this, 'body_classes']);
     }
 
     /**
@@ -59,6 +58,26 @@ class Twentyseventeen implements Theme
         echo '<a class="skip-link screen-reader-text" href="#content">'
              . __('Skip to content', 'twentyseventeen') .
              '</a>';
+    }
+
+    /**
+     * Add needed body-classes
+     *
+     * @param array $classes Default body classes
+     *
+     * @return array
+     */
+    public function body_classes($classes)
+    {
+        if (is_active_sidebar('sidebar-1') && (is_comic_archive_page() || is_latest_comic_page())) {
+            $classes[] = 'has-sidebar';
+        }
+
+        if (is_comic_archive_page() || is_latest_comic_page()) {
+            $classes[] = 'archive';
+        }
+
+        return $classes;
     }
 
     /**
@@ -124,21 +143,5 @@ class Twentyseventeen implements Theme
         get_sidebar();
 
         echo '</div> <!-- /.wrap -->';
-    }
-
-
-    /**
-     * Enqueue Manga+Press-specific stylesheet
-     */
-    public function enqueue_styles()
-    {
-        wp_register_style(
-            'mangapress-twentyseventeen',
-            MP_URLPATH . 'resources/assets/css/twentyseventeen.css',
-            null,
-            MP_VERSION
-        );
-
-        wp_enqueue_style('mangapress-twentyseventeen');
     }
 }
