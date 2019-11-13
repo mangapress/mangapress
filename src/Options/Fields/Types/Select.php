@@ -42,10 +42,12 @@ class Select extends Field
         $attr = implode(" ", $attr_arr);
 
         $value       = $this->get_value();
-        $is_grouped  = isset($options['pages']);
+        $is_grouped  = isset($options['is_grouped']) ? $options['is_grouped'] : false;
         $options_str = '';
 
         if ($is_grouped) {
+            unset($options['is_grouped']);
+
             if (isset($options['no_val'])) {
                 $options_str = '<option>' . esc_html($options['no_val']) . '</option>';
             }

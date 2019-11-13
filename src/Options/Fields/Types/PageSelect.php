@@ -43,6 +43,7 @@ class PageSelect extends Select
                 $options[$page->ID] = esc_html($page->post_title);
             }
         } else {
+            $options['is_grouped'] = true;
             foreach ($pages as $type => $page) {
                 $options[$type]['title'] = $page['title'];
                 /**
