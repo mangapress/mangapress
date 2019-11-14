@@ -45,9 +45,11 @@ class Calendar extends \WP_Widget
         );
 
         echo $args['before_widget'];
+
         if ($title) {
             echo $args['before_title'] . $title . $args['after_title'];
         }
+
         echo '<div id="calendar_wrap">';
         mangapress_get_calendar();
         echo '</div>';

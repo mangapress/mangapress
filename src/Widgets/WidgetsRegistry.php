@@ -17,11 +17,11 @@ class WidgetsRegistry implements PluginComponent
 {
     protected $registered_widgets = [];
 
-    public function __construct($widgets = [])
+    public function __construct()
     {
-        foreach ($widgets as $widget) {
-            $this->registered_widgets[] = $widget;
-        }
+        $this->registered_widgets = [
+            Calendar::class,
+        ];
     }
 
     public function init()
@@ -33,7 +33,7 @@ class WidgetsRegistry implements PluginComponent
     {
         if (!empty($this->registered_widgets)) {
             foreach ($this->registered_widgets as $widget) {
-                register_widget(__NAMESPACE__ . '\\' . $widget);
+                register_widget($widget);
             }
         }
     }
