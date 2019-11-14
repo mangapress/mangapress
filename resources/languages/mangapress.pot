@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 4.0\n"
-"POT-Creation-Date: 2019-11-11 20:08-0600\n"
+"POT-Creation-Date: 2019-11-13 22:02-0600\n"
 "PO-Revision-Date: 2017-07-22 11:43-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -52,29 +52,20 @@ msgid "Comic Archive Page Style"
 msgstr ""
 
 #: resources/admin/pages/help-basic.php:25
-msgid ""
-"Choose an archive page style from the drop-down. This option can be "
-"overridden by adding a <code>archive-*.php</code> template to your theme "
-"inside the <code>comics</code> sub-directory."
+msgid "Choose an archive page style from the drop-down."
 msgstr ""
 
-#: resources/admin/pages/help-basic.php:26
-msgid ""
-"Available templates are: <code>archive-list.php</code>, <code>archive-"
-"gallery.php</code>, and <code>archive-calendar.php</code>"
-msgstr ""
-
-#: resources/admin/pages/help-basic.php:28
+#: resources/admin/pages/help-basic.php:27
 msgid "Latest Comic Page and Comic Archive Page"
 msgstr ""
 
-#: resources/admin/pages/help-basic.php:31
+#: resources/admin/pages/help-basic.php:30
 msgid ""
 "Templates for Latest Comic Page and Comic Archive Page are (respectively) "
-"<code>latest-comic.php</code> and <code>archive-comic.php</code>."
+"<code>page-latest-comic.php</code> and <code>archive-comic.php</code>."
 msgstr ""
 
-#: resources/admin/pages/help-basic.php:32
+#: resources/admin/pages/help-basic.php:31
 msgid ""
 "These templates can be overridden by placing them in your theme directory."
 msgstr ""
@@ -245,17 +236,13 @@ msgstr ""
 msgid "Prev"
 msgstr ""
 
-#: resources/helpers/template-functions.php:448
+#: resources/helpers/template-functions.php:479
 #, php-format
 msgid "%1$s %2$s"
 msgstr ""
 
-#: resources/helpers/theme-functions.php:385
-msgid "<p class=\"error\">No comics was found.</p>"
-msgstr ""
-
-#: resources/templates/archive-comic.php:196
-#: resources/templates/page-latest-comic.php:143 src/Theme/Shortcode.php:40
+#: resources/templates/archive-comic.php:195
+#: resources/templates/page-latest-comic.php:158 src/Theme/Shortcode.php:40
 msgid "No comics found"
 msgstr ""
 
@@ -347,15 +334,15 @@ msgstr ""
 msgid "Choose from most used %s"
 msgstr ""
 
-#: src/Install.php:74
+#: src/Install.php:75
 msgid "Sorry, you do not have sufficient permissions to activate this plugin."
 msgstr ""
 
-#: src/Install.php:82
+#: src/Install.php:83
 msgid "Sorry, you must be an Administrator in order to use Manga+Press"
 msgstr ""
 
-#: src/Install.php:88
+#: src/Install.php:89
 msgid ""
 "Sorry. Manga+Press is only supported on PHP 7.0 and newer. Please upgrade "
 "your server's PHP version, or contact your hosting provider."
@@ -497,7 +484,7 @@ msgstr ""
 msgid "You are currently editing the page that shows your latest comics."
 msgstr ""
 
-#: src/PostInstall.php:43
+#: src/PostInstall.php:46
 msgid ""
 "Default Series category created when plugin is activated. It is suggested "
 "that you rename this category."
@@ -551,13 +538,13 @@ msgstr ""
 msgid "Insert Comic into Post"
 msgstr ""
 
-#: src/Theme/Compatible/Twentynineteen.php:65
-#: src/Theme/Compatible/Twentyseventeen.php:60
+#: src/Theme/Compatible/Twentynineteen.php:59
+#: src/Theme/Compatible/Twentyseventeen.php:59
 #: src/Theme/Compatible/Twentysixteen.php:37
 msgid "Skip to content"
 msgstr ""
 
-#: src/Theme/Compatible/Twentynineteen.php:216
+#: src/Theme/Compatible/Twentynineteen.php:201
 msgid "Latest Comic"
 msgstr ""
 
@@ -573,6 +560,6 @@ msgstr ""
 msgid "Manga+Press Calendar"
 msgstr ""
 
-#: src/Widgets/Calendar.php:80
+#: src/Widgets/Calendar.php:82
 msgid "Title:"
 msgstr ""

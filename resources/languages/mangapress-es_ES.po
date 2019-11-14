@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manga+Press 4.0\n"
 "Report-Msgid-Bugs-To: http://www.manga-press.com/support\n"
-"POT-Creation-Date: 2019-11-11 20:07-0600\n"
-"PO-Revision-Date: 2019-11-11 20:07-0600\n"
+"POT-Creation-Date: 2019-11-13 22:01-0600\n"
+"PO-Revision-Date: 2019-11-13 22:01-0600\n"
 "Last-Translator: Jess Green <support@manga-press.com>\n"
 "Language-Team: Jess Green <support@manga-press.com>\n"
 "Language: es\n"
@@ -62,37 +62,27 @@ msgid "Comic Archive Page Style"
 msgstr "Estilo Archivo Página cómica"
 
 #: resources/admin/pages/help-basic.php:25
-msgid ""
-"Choose an archive page style from the drop-down. This option can be "
-"overridden by adding a <code>archive-*.php</code> template to your theme "
-"inside the <code>comics</code> sub-directory."
-msgstr ""
-"Elija un estilo de página de archivo en el menú desplegable. Esta opción se "
-"puede invalidar agregando una <code>archive-*.php</code> plantilla al tema "
-"dentro del <code>comics</code> subdirectorio."
+msgid "Choose an archive page style from the drop-down."
+msgstr "Elija un estilo de página de archivo en el menú desplegable."
 
-#: resources/admin/pages/help-basic.php:26
-msgid ""
-"Available templates are: <code>archive-list.php</code>, <code>archive-"
-"gallery.php</code>, and <code>archive-calendar.php</code>"
-msgstr ""
-"Las plantillas disponibles son: <code>archive-list.php</code> , "
-"<code>archive-gallery.php</code> , y<code>archive-calendar.php</code>"
-
-#: resources/admin/pages/help-basic.php:28
+#: resources/admin/pages/help-basic.php:27
 msgid "Latest Comic Page and Comic Archive Page"
 msgstr "P&aacute;gina Archive c&oacute;mica"
 
-#: resources/admin/pages/help-basic.php:31
+#: resources/admin/pages/help-basic.php:30
+#, fuzzy
+#| msgid ""
+#| "Templates for Latest Comic Page and Comic Archive Page are (respectively) "
+#| "<code>latest-comic.php</code> and <code>archive-comic.php</code>."
 msgid ""
 "Templates for Latest Comic Page and Comic Archive Page are (respectively) "
-"<code>latest-comic.php</code> and <code>archive-comic.php</code>."
+"<code>page-latest-comic.php</code> and <code>archive-comic.php</code>."
 msgstr ""
 "Las plantillas para la última página de historietas y la página de archivo "
 "de historietas son (respectivamente) <code>latest-comic.php</code> y "
 "<code>archive-comic.php</code>."
 
-#: resources/admin/pages/help-basic.php:32
+#: resources/admin/pages/help-basic.php:31
 msgid ""
 "These templates can be overridden by placing them in your theme directory."
 msgstr ""
@@ -306,17 +296,13 @@ msgstr "Pr&oacute;ximo"
 msgid "Prev"
 msgstr "Anterior"
 
-#: resources/helpers/template-functions.php:448
+#: resources/helpers/template-functions.php:479
 #, php-format
 msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
-#: resources/helpers/theme-functions.php:385
-msgid "<p class=\"error\">No comics was found.</p>"
-msgstr "<p class=\"error\">No se encontraron cómics.</p>"
-
-#: resources/templates/archive-comic.php:196
-#: resources/templates/page-latest-comic.php:143 src/Theme/Shortcode.php:40
+#: resources/templates/archive-comic.php:195
+#: resources/templates/page-latest-comic.php:158 src/Theme/Shortcode.php:40
 msgid "No comics found"
 msgstr "No se encontr&oacute; c&oacute;mico"
 
@@ -408,17 +394,17 @@ msgstr "A&ntilde;adir o eliminar %s"
 msgid "Choose from most used %s"
 msgstr "Elija entre la mayor&iacute;a de los %s usados"
 
-#: src/Install.php:74
+#: src/Install.php:75
 msgid "Sorry, you do not have sufficient permissions to activate this plugin."
 msgstr ""
 "Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
 
-#: src/Install.php:82
+#: src/Install.php:83
 msgid "Sorry, you must be an Administrator in order to use Manga+Press"
 msgstr ""
 "Lo sentimos, debe ser un administrador con el fin de utilizar Manga+Press"
 
-#: src/Install.php:88
+#: src/Install.php:89
 msgid ""
 "Sorry. Manga+Press is only supported on PHP 7.0 and newer. Please upgrade "
 "your server's PHP version, or contact your hosting provider."
@@ -580,7 +566,7 @@ msgstr "Actualmente está editando la página que muestra sus cómics archivados
 msgid "You are currently editing the page that shows your latest comics."
 msgstr "Actualmente está editando la página que muestra sus últimos cómics."
 
-#: src/PostInstall.php:43
+#: src/PostInstall.php:46
 msgid ""
 "Default Series category created when plugin is activated. It is suggested "
 "that you rename this category."
@@ -640,13 +626,13 @@ msgstr "Cargar o Elija su Comic de archivo de imagen"
 msgid "Insert Comic into Post"
 msgstr "Inserte Comic en Publica"
 
-#: src/Theme/Compatible/Twentynineteen.php:65
-#: src/Theme/Compatible/Twentyseventeen.php:60
+#: src/Theme/Compatible/Twentynineteen.php:59
+#: src/Theme/Compatible/Twentyseventeen.php:59
 #: src/Theme/Compatible/Twentysixteen.php:37
 msgid "Skip to content"
 msgstr "Saltar al contenido"
 
-#: src/Theme/Compatible/Twentynineteen.php:216
+#: src/Theme/Compatible/Twentynineteen.php:201
 #, fuzzy
 #| msgid "Latest Comic Page"
 msgid "Latest Comic"
@@ -664,9 +650,28 @@ msgstr "Un calendario de su sitio &#8217; s archivar mensajes de Comic."
 msgid "Manga+Press Calendar"
 msgstr "Calendario Manga+Press"
 
-#: src/Widgets/Calendar.php:80
+#: src/Widgets/Calendar.php:82
 msgid "Title:"
 msgstr "Título:"
+
+#~ msgid ""
+#~ "Choose an archive page style from the drop-down. This option can be "
+#~ "overridden by adding a <code>archive-*.php</code> template to your theme "
+#~ "inside the <code>comics</code> sub-directory."
+#~ msgstr ""
+#~ "Elija un estilo de página de archivo en el menú desplegable. Esta opción "
+#~ "se puede invalidar agregando una <code>archive-*.php</code> plantilla al "
+#~ "tema dentro del <code>comics</code> subdirectorio."
+
+#~ msgid ""
+#~ "Available templates are: <code>archive-list.php</code>, <code>archive-"
+#~ "gallery.php</code>, and <code>archive-calendar.php</code>"
+#~ msgstr ""
+#~ "Las plantillas disponibles son: <code>archive-list.php</code> , "
+#~ "<code>archive-gallery.php</code> , y<code>archive-calendar.php</code>"
+
+#~ msgid "<p class=\"error\">No comics was found.</p>"
+#~ msgstr "<p class=\"error\">No se encontraron cómics.</p>"
 
 #, fuzzy
 #~ msgid ""
