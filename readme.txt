@@ -16,7 +16,7 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 == Upgrade Notice ==
 
-WARNING: Last/Comic Archive page functionality has been changed. Please back up, and perform tests in a development environment before upgrading.
+WARNING: Manga+Press 4.0 features many under-the-hood changes. Please make sure to back up your database before updating and activating the plugin.
 
 == Changelog ==
 
