@@ -4,7 +4,7 @@ Donate link: https://www.manga-press.com/
 Tags: webcomics, online comics
 Requires at least: 5.3
 Tested up to: 5.3
-Stable tag: 4.0.0-rc.1
+Stable tag: 4.0.0-rc.2
 License: GPLv2
 Requires PHP: 7.0
 
