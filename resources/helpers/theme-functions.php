@@ -20,6 +20,9 @@ function theme_init()
     add_filter('mangapress_opening_article_tag', '\MangaPress\Theme\Functions\opening_article_tag', 10, 2);
     add_filter('mangapress_closing_article_tag', '\MangaPress\Theme\Functions\closing_article_tag', 10, 2);
 
+    add_filter('mangapress_calendar_archive_opening_tag', '\MangaPress\Theme\Functions\calendar_archive_opening_tag', 10, 2);
+    add_filter('mangapress_calendar_archive_closing_tag', '\MangaPress\Theme\Functions\calendar_archive_closing_tag');
+
     add_action('mangapress_get_comic_header', '\MangaPress\Theme\Functions\get_comic_header');
     add_action('mangapress_get_comic_footer', '\MangaPress\Theme\Functions\get_comic_footer');
 
@@ -484,4 +487,46 @@ function get_group_by_args($args, $taxonomy, $group_by = false, $group_by_parent
     }
 
     return $args;
+}
+
+/**
+ * Output wrapper tag for archive calendar
+ *
+ * @param string $tag Defaults to div
+ * @param array $attr
+ *
+ * @return string
+ */
+function calendar_archive_opening_tag($tag, $attr = [])
+{
+    $r = wp_parse_args(
+        $attr,
+        [
+            'class' => '',
+        ]
+    );
+
+    $class = '';
+    if ($r['class']) {
+        if (is_array($r['class'])) {
+            $classes = implode(' ', $r['class']);
+        } else {
+            $classes = $r['class'];
+        }
+
+        $class = sprintf(' class="%s"', $classes);
+    }
+
+    return sprintf("<$tag%s>", $class);
+}
+
+/**
+ * Output closing wrapper tag for archive calendar
+ *
+ * @param string $tag
+ * @return string
+ */
+function calendar_archive_closing_tag($tag)
+{
+    return "</$tag>";
 }

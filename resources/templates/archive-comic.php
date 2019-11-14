@@ -241,6 +241,19 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
      */
     global $wpdb;
 
+    /**
+     * mangapress_calendar_archive_opening_tag
+     *
+     * Outputs wrapping tag for archive calendar
+     *
+     * @param string $tag Opening wrapping tag, defaults to 'div'
+     * @param array $attr Array of attributes
+     *
+     * @return string
+     * @since 4.0.0
+     */
+    echo apply_filters('mangapress_calendar_archive_opening_tag', 'div', ['class' => 'entry-content']);
+
     $years = $wpdb->get_col(
         "SELECT DISTINCT YEAR(post_date) as year FROM {$wpdb->posts} 
             WHERE 1=1 
@@ -255,6 +268,16 @@ if ((comic_archive_is_gallery() || comic_archive_is_list())) {
         }
     }
 
+    /**
+     * mangapress_calendar_archive_closing_tag
+     *
+     * Output closing wrapper tag for archive calendar
+     *
+     * @param string $tag Closing tag, defaults to 'div'
+     * @return string
+     * @since 4.0.0
+     */
+    echo apply_filters('mangapress_calendar_archive_closing_tag', 'div');
 
     /**
      * mangapress_archive_page_closing_tag
