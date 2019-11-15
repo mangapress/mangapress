@@ -23,21 +23,6 @@ class Plugin implements PluginComponent
     protected $plugin_data = [];
 
     /**
-     * Plugin constructor.
-     */
-    public function __construct()
-    {
-//        if (!function_exists('get_plugin_data')) {
-//            require ABSPATH . '/wp-admin/includes/plugin.php';
-//        }
-//
-//        $this->plugin_data = get_plugin_data(MP_ABSPATH . 'mangapress.php');
-//
-//        // define some other constants
-//        define('MP_VERSION', $this->plugin_data['Version']);
-    }
-
-    /**
      * Init
      */
     public function init()

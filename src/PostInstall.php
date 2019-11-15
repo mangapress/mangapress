@@ -57,7 +57,7 @@ class PostInstall implements PluginComponent
         }
 
         $latest_created = false;
-        if (!isset($options['basic']['comicarchive_page'])) {
+        if (!isset($options['basic']['comicarchive_page']) || !$options['basic']['comicarchive_page']) {
             // create latest comic and comic archive posts
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
@@ -75,7 +75,7 @@ class PostInstall implements PluginComponent
         }
 
         $archive_created = false;
-        if (!isset($options['basic']['latestcomic_page'])) {
+        if (!isset($options['basic']['latestcomic_page']) || !$options['basic']['latestcomic_page']) {
             $params = [
                 'post_type'   => ComicPages::POST_TYPE,
                 'post_title'  => 'Latest Comic',
