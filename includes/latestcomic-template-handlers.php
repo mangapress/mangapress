@@ -22,8 +22,8 @@ function mangapress_latestcomic_page_template($default_template)
         return $default_template;
     }
 
-    // maintain template hierarchy if not page.php or index.php
-    if (!in_array(basename($default_template), array('page.php', 'index.php'))) {
+	// maintain template hierarchy if not single.php, page.php or index.php
+    if (!in_array(basename($default_template), array('single.php', 'singular.php', 'page.php', 'index.php'))) {
         return $default_template;
     }
 
