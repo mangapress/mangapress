@@ -11,6 +11,11 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Changelog
 ### 3.0
+#### 3.0.1
+  * Fixed issue where templates for Latest Comic page and Comic Archive page weren't loading correctly
+  * Corrected CSS positioning for comic navigation wrapper
+  * Added support for WordPress 5.5.1
+
 #### 3.0.0
    * Removed child themes
    * Added sorting options for Comic Archive Page
@@ -119,7 +124,7 @@ Manga+Press is a webcomic managment system for WordPress. Manga+Press uses WordP
 
 ## Credits
 
-(c) 2008-2014 Jess C. Green
+(c) 2008-2020 Jess C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit [Manga+Press Support @ WordPress.org](http://wordpress.org/support/plugin/mangapress/), or my [GitHub page](https://github.com/jesgs/mangapress/) to make a bug report, or email me at support@manga-press.com. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix) and webserver configuration info. Be as detailed as possible.
 
