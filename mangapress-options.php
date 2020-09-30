@@ -23,13 +23,13 @@ final class MangaPress_Options
      */
     protected static $_default_options =  array(
         'basic' => array(
-            'latestcomic_page'  => 0,
-            'group_comics'      => 0,
-            'group_by_parent'   => 0,
-            'comicarchive_page' => 0,
+            'latestcomic_page'           => 0,
+            'group_comics'               => 0,
+            'group_by_parent'            => 0,
+            'comicarchive_page'          => 0,
             'comicarchive_page_style'    => 'list',
-            'archive_order'     => 'DESC',
-            'archive_orderby'   => 'date',
+            'archive_order'              => 'DESC',
+            'archive_orderby'            => 'date',
         ),
         'comic_page' => array(
             'generate_comic_page' => 0,
@@ -37,7 +37,8 @@ final class MangaPress_Options
             'comic_page_height'   => 1000,
         ),
         'nav' => array(
-            'nav_css'    => 'custom_css',
+        	'enable_random_link' => false,
+            'nav_css'            => 'custom_css',
         ),
     );
 
@@ -141,7 +142,7 @@ final class MangaPress_Options
         }
     }
 
-   /**
+    /**
      * Call-back for outputting settings fields (select drop-downs)
      * with custom values.
      *
@@ -211,7 +212,7 @@ final class MangaPress_Options
         return self::$_default_options;
     }
 
-   /**
+    /**
      * Helper function for creating default options fields.
      *
      * @return array
@@ -340,6 +341,15 @@ final class MangaPress_Options
                 ),
             ),
             'nav' => array(
+	            'enable_random_link' => array(
+		            'id'          => 'enable-random-link',
+		            'title'       => __('Add Random Link', MP_DOMAIN),
+		            'description' => __('Adds a "Random" link to comic navigation', MP_DOMAIN),
+		            'type'        => 'checkbox',
+		            'default'     => false,
+		            'value'       => true,
+		            'callback' => array( $this, 'settings_field_cb' ),
+	            ),
                 'nav_css'    => array(
                     'id'     => 'navigation-css',
                     'title'  => __('Navigation CSS', MP_DOMAIN),
@@ -363,7 +373,7 @@ final class MangaPress_Options
         return apply_filters('mangapress_options_fields', $options);
     }
 
-   /**
+    /**
      * Helper function for setting default options sections.
      *
      * @return array
@@ -427,6 +437,8 @@ final class MangaPress_Options
             } else {
                 $new_options['nav']['nav_css'] = 'default_css';
             }
+
+	        $new_options['nav']['enable_random_link'] = boolval($options['nav']['enable_random_link']);
         }
 
         if ($section == 'basic') {
