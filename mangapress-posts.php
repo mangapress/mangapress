@@ -458,7 +458,7 @@ class MangaPress_Posts
 
 
     /**
-     * Save post meta data. By default, Manga+Press uses the _thumbnail_id
+     * Save post metadata. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
      *
      * @param int $post_id
