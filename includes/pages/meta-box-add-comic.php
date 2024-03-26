@@ -8,14 +8,15 @@
  * @license GPL
  */
 
-$mangapress_image_id = get_post_thumbnail_id();
+$mangapress_image_id     = get_post_thumbnail_id();
+$mangapress_allowed_html = wp_kses_allowed_html( 'post' );
 ?>
 <div id="js-image-frame" class="hide-if-no-js">
 	<?php
 	if ( ! $mangapress_image_id ) {
-		echo esc_html( $this->get_remove_image_html() );
+		echo wp_kses( $this->get_remove_image_html(), $mangapress_allowed_html );
 	} else {
-		echo esc_html( $this->get_image_html( $mangapress_image_id ) );
+		echo wp_kses( $this->get_image_html( $mangapress_image_id ), $mangapress_allowed_html );
 	}
 	?>
 </div>

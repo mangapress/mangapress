@@ -327,27 +327,28 @@ class MangaPress_Posts {
 	public function comics_headers( string $column ) {
 		global $post;
 
+		$allowed_html = wp_kses_allowed_html( 'post' );
 		switch ( $column ) {
 			case 'cb':
 				echo '<input type="checkbox" value="' . esc_attr( $post->ID ) . '" name="post[]" />';
 				break;
 			case 'thumbnail':
-				echo esc_textarea( $this->get_thumbnail( $post ) );
+				echo wp_kses( $this->get_thumbnail( $post ), $allowed_html );
 				break;
 			case 'title':
-				echo esc_textarea( $post->post_title );
+				echo wp_kses( $post->post_title, $allowed_html );
 				break;
 			case 'series':
-				echo esc_textarea( $this->get_series_links( $post ) );
+				echo wp_kses( $this->get_series_links( $post ), $allowed_html );
 				break;
 			case 'post_date':
 				echo date( 'Y/m/d', strtotime( $post->post_date ) ); // @phpcs:ignore -- Sanitization is handled via date() function
 				break;
 			case 'description':
-				echo esc_textarea( $post->post_excerpt );
+				echo wp_kses( $post->post_excerpt, $allowed_html );
 				break;
 			case 'author':
-				echo esc_textarea( $post->post_author );
+				echo wp_kses( $post->post_author, $allowed_html );
 				break;
 		}
 	}
@@ -404,8 +405,8 @@ class MangaPress_Posts {
 	 * @return string
 	 */
 	public function get_image_html( int $image_id ): string {
-		$image_html = wp_get_attachment_image( $image_id, 'medium' );
-		if ( '' === $image_html ) {
+		$mangapress_image_html = wp_get_attachment_image( $image_id, 'medium' );
+		if ( '' === $mangapress_image_html ) {
 			return '';
 		}
 
@@ -482,7 +483,7 @@ class MangaPress_Posts {
 		if ( $thumbnail_html ) {
 			$edit_link = get_edit_post_link( $post->ID, 'display' );
 
-			return '"<a href="' . esc_url( $edit_link ) . '">' . esc_html( $thumbnail_html ) . '</a>"';
+			return '<a href="' . esc_url( $edit_link ) . '">' . $thumbnail_html . '</a>';
 		} else {
 			return 'No image';
 		}

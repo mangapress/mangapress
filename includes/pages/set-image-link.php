@@ -14,7 +14,7 @@ if ( empty( $mangapress_image_html ) && ! ( $wp instanceof WP ) ) {
 ?>
 
 <div class="hide-if-no-js">
-	<?php echo esc_html( $mangapress_image_html ); ?>
+	<?php echo wp_kses( $mangapress_image_html, wp_kses_allowed_html( 'post' ) ); ?>
 	<p>
 		<a href="#" data-action="<?php echo esc_attr( self::ACTION_REMOVE_IMAGE ); ?>" data-nonce="<?php echo esc_attr( self::NONCE_INSERT_COMIC ); ?>" id="js-remove-comic-thumbnail"><?php esc_html_e( 'Remove Comic image', 'mangapress' ); ?></a>
 	</p>
