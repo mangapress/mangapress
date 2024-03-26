@@ -214,7 +214,7 @@ class MangaPress_Bootstrap {
 	 * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\MangaPress_FlashMessages|\WP_Error
 	 */
 	public function get_helper( $helper_name ) {
-		$helper = "_{$helper_name}_helper";
+		$helper = "{$helper_name}_helper";
 		if ( property_exists( $this, $helper ) ) {
 			return $this->$helper;
 		}
