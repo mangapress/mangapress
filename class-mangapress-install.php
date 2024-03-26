@@ -37,9 +37,9 @@ class MangaPress_Install {
 	/**
 	 * Instance of MangaPress_Install
 	 *
-	 * @var \MangaPress_Install
+	 * @var \MangaPress_Install|null
 	 */
-	protected static MangaPress_Install $instance;
+	protected static ?MangaPress_Install $instance = null;
 
 
 	/**
