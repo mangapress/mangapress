@@ -138,7 +138,7 @@ final class MangaPress_Options {
 				)
 			);
 
-			echo esc_html( $form_element );
+			echo $form_element; // @phpcs:ignore -- escaping is handled in the element class
 		}
 	}
 
@@ -175,7 +175,7 @@ final class MangaPress_Options {
 			)
 		);
 
-		echo esc_html( $select_object );
+		echo $select_object; // @phpcs:ignore -- Escaping is handled in the element class
 	}
 
 	/**

@@ -18,7 +18,6 @@ final class MangaPress_Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -28,25 +27,6 @@ final class MangaPress_Admin {
 	 */
 	public function admin_menu() {
 		global $mangapress_page_hook;
-
-		// Syntax highlighter
-		wp_register_script(
-			'mangapress-syntax-highlighter',
-			MP_URLPATH . 'includes/pages/js/syntaxhighlighter/scripts/shCore.js'
-		);
-
-		// the brush we need...
-		wp_register_script(
-			'mangapress-syntax-highlighter-cssbrush',
-			MP_URLPATH . 'includes/pages/js/syntaxhighlighter/scripts/shBrushCss.js',
-			array( 'mangapress-syntax-highlighter' )
-		);
-
-		// the style
-		wp_register_style(
-			'mangapress-syntax-highlighter-css',
-			MP_URLPATH . 'includes/pages/js/syntaxhighlighter/styles/shCoreDefault.css'
-		);
 
 		$mangapress_page_hook = add_options_page(
 			__( 'Manga+Press Options', 'mangapress' ),
@@ -180,26 +160,10 @@ final class MangaPress_Admin {
 		$tabs    = $options->get_options_sections();
 
 		$current_tab = filter_input( INPUT_GET, 'tab' );
-		if ( in_array( $current_tab, $tabs ) ) {
+		if ( in_array( $current_tab, $tabs, true ) ) {
 			return $current_tab;
 		} else {
 			return 'basic';
-		}
-	}
-
-
-	/**
-	 * Enqueue scripts for admin
-	 *
-	 * @global string $mangapress_page_hook
-	 * @param string $hook
-	 */
-	public function enqueue_scripts( $hook ) {
-		global $mangapress_page_hook;
-
-		if ( $hook == $mangapress_page_hook ) {
-			wp_enqueue_script( 'mangapress-syntax-highlighter-cssbrush' );
-			wp_enqueue_style( 'mangapress-syntax-highlighter-css' );
 		}
 	}
 }
