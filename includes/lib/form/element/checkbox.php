@@ -13,46 +13,44 @@
  * @package MangaPress_Checkbox
  * @version $Id$
  */
-class MangaPress_Checkbox extends MangaPress_Element
-{
-    /**
-     * Display form element
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $label = '';
-        if (!empty($this->_label)) {
-            $id = $this->get_attributes('id');
-            $class = " class=\"label-$id\"";
-            $label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
-        }
+class MangaPress_Checkbox extends MangaPress_Element {
 
-        $desc = $this->get_description();
-        if ($desc) {
-            $description = "<span class=\"description\">{$desc}</span>";
-        }
+	/**
+	 * Display form element
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		$label = '';
+		if ( ! empty( $this->_label ) ) {
+			$id    = $this->get_attributes( 'id' );
+			$class = " class=\"label-$id\"";
+			$label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
+		}
 
-        $default = $this->get_default();
-        $attr_arr = array();
-        foreach ($this->_attr as $name => $value) {
-            if ($name != 'value') {
-                $attr_arr[] = "{$name}=\"{$value}\"";
-            } else {
-                $attr_arr[] = "{$name}=\"" . $default . "\"";
-            }
-        }
+		$desc = $this->get_description();
+		if ( $desc ) {
+			$description = "<span class=\"description\">{$desc}</span>";
+		}
 
-        $attr = implode(" ", $attr_arr);
+		$default  = $this->get_default();
+		$attr_arr = array();
+		foreach ( $this->_attr as $name => $value ) {
+			if ( $name != 'value' ) {
+				$attr_arr[] = "{$name}=\"{$value}\"";
+			} else {
+				$attr_arr[] = "{$name}=\"" . $default . '"';
+			}
+		}
 
-        $checked = checked($default, $this->get_value(), false);
+		$attr = implode( ' ', $attr_arr );
 
-        $htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+		$checked = checked( $default, $this->get_value(), false );
 
-        $this->_html = implode(' ', $htmlArray);
+		$htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
 
-        return $this->_html;
+		$this->_html = implode( ' ', $htmlArray );
 
-    }
+		return $this->_html;
+	}
 }

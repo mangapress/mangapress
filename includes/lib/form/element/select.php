@@ -13,72 +13,69 @@
  * @package MangaPress_Select
  * @version $Id$
  */
-class MangaPress_Select extends MangaPress_Element
-{
-    /**
-     * Options
-     *
-     * @var array
-     */
-    protected $_options = array();
+class MangaPress_Select extends MangaPress_Element {
 
-    /**
-     * Echo form element
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $options = $this->get_default();
-        $attr_arr = array();
-        foreach ($this->_attr as $name => $value) {
-            if ($name != 'value')
-                $attr_arr[] = "{$name}=\"{$value}\"";
-        }
+	/**
+	 * Options
+	 *
+	 * @var array
+	 */
+	protected $_options = array();
 
-        $attr = implode(" ", $attr_arr);
+	/**
+	 * Echo form element
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		$options  = $this->get_default();
+		$attr_arr = array();
+		foreach ( $this->_attr as $name => $value ) {
+			if ( $name != 'value' ) {
+				$attr_arr[] = "{$name}=\"{$value}\"";
+			}
+		}
 
-        $desc = $this->get_description();
-        $description = '';
-        if ($desc) {
-            $description = "<span class=\"description\">{$desc}</span>";
-        }
+		$attr = implode( ' ', $attr_arr );
 
+		$desc        = $this->get_description();
+		$description = '';
+		if ( $desc ) {
+			$description = "<span class=\"description\">{$desc}</span>";
+		}
 
-        $value = $this->get_value();
-        $options_str = "";
-        foreach ($options as $option_val => $option_text) {
-            $selected = selected($value, $option_val, false);
-            $options_str .= "<option value=\"$option_val\" $selected>{$option_text}</option>";
-        }
+		$value       = $this->get_value();
+		$options_str = '';
+		foreach ( $options as $option_val => $option_text ) {
+			$selected     = selected( $value, $option_val, false );
+			$options_str .= "<option value=\"$option_val\" $selected>{$option_text}</option>";
+		}
 
-        $this->_html = "<select $attr>\n$options_str</select> {$description}";
+		$this->_html = "<select $attr>\n$options_str</select> {$description}";
 
-        return $this->_html;
-    }
+		return $this->_html;
+	}
 
-    /**
-     * Set default values
-     *
-     * @param array $values
-     * @return \MangaPress_Select
-     */
-    public function set_default($values)
-    {
-        foreach ($values as $key => $value) {
-            $this->_options[$key] = $value;
-        }
+	/**
+	 * Set default values
+	 *
+	 * @param array $values
+	 * @return \MangaPress_Select
+	 */
+	public function set_default( $values ) {
+		foreach ( $values as $key => $value ) {
+			$this->_options[ $key ] = $value;
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get default values
-     *
-     * @return array
-     */
-    public function get_default()
-    {
-        return $this->_options;
-    }
+	/**
+	 * Get default values
+	 *
+	 * @return array
+	 */
+	public function get_default() {
+		return $this->_options;
+	}
 }

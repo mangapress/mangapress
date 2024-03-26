@@ -11,7 +11,7 @@
 <?php mangapress_comic_navigation(); ?>
 
 <div class="mangapress-media-img">
-    <?php echo wp_get_attachment_image( get_post_thumbnail_id(), $thumbnail_size, false );?>
+	<?php echo wp_get_attachment_image( get_post_thumbnail_id(), $thumbnail_size, false ); ?>
 </div>
 
 <?php mangapress_comic_navigation(); ?>
