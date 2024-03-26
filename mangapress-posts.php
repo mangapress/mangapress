@@ -358,7 +358,7 @@ class MangaPress_Posts
                 foreach ($series as $s)
                     array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">'.$s->name."</a>");
 
-                echo implode($series_html, ", ");
+                echo implode( ", ", $series_html );
             }
         } elseif ("post_date" == $column) {
             echo date( "Y/m/d", strtotime($post->post_date) );
@@ -458,7 +458,7 @@ class MangaPress_Posts
 
 
     /**
-     * Save post meta data. By default, Manga+Press uses the _thumbnail_id
+     * Save post metadata. By default, Manga+Press uses the _thumbnail_id
      * meta key. This is the same meta key used for the post featured image.
      *
      * @param int $post_id
