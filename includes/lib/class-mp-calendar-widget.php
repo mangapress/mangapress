@@ -21,10 +21,10 @@ class MangaPress_Widget_Calendar extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'classname'   => 'mangapress_widget_calendar',
-			'description' => __( 'A calendar of your site&#8217;s archived Comic Posts.', MP_DOMAIN ),
+			'description' => __( 'A calendar of your site&#8217;s archived Comic Posts.', 'mangapress' ),
 		);
 
-		parent::__construct( 'mangapress_calendar', __( 'Manga+Press Calendar', MP_DOMAIN ), $widget_ops );
+		parent::__construct( 'mangapress_calendar', __( 'Manga+Press Calendar', 'mangapress' ), $widget_ops );
 	}
 
 
@@ -65,7 +65,7 @@ class MangaPress_Widget_Calendar extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
 		$title    = strip_tags( $instance['title'] );
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', MP_DOMAIN ); ?></label>
+		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'mangapress' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
 		<?php
 	}

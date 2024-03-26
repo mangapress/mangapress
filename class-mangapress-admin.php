@@ -1,16 +1,6 @@
 <?php
 /**
- * MangaPress
- *
- * @package mangapress-admin
- * @author Jess Green <jgreen at psy-dreamer.com>
- * @version $Id$
- * @license GPL
- */
-/**
- * mangapress-admin
- *
- * @author Jess Green <jgreen at psy-dreamer.com>
+ * MangaPress Admin class
  */
 final class MangaPress_Admin {
 
@@ -59,8 +49,8 @@ final class MangaPress_Admin {
 		);
 
 		$mangapress_page_hook = add_options_page(
-			__( 'Manga+Press Options', MP_DOMAIN ),
-			__( 'Manga+Press Options', MP_DOMAIN ),
+			__( 'Manga+Press Options', 'mangapress' ),
+			__( 'Manga+Press Options', 'mangapress' ),
 			'manage_options',
 			self::ADMIN_PAGE_SLUG,
 			array( $this, 'load_page' )

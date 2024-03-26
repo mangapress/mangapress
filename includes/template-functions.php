@@ -242,24 +242,24 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 	// Here, we start processing the urls.
 	// Let's do first page first.
 	$first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ( $first == $current_page )
-				? '<span class="comic-nav-span">' . __( 'First', MP_DOMAIN ) . '</span>'
-				: '<a href="' . $first_url . '">' . __( 'First', MP_DOMAIN ) . '</a>' )
+				? '<span class="comic-nav-span">' . __( 'First', 'mangapress' ) . '</span>'
+				: '<a href="' . $first_url . '">' . __( 'First', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
 
 	$last_html = "<{$args->link_wrap} class=\"link-last\">" .
 				( ( $last == $current_page )
-					? '<span class="comic-nav-span">' . __( 'Last', MP_DOMAIN ) . '</span>'
-					: '<a href="' . $last_url . '">' . __( 'Last', MP_DOMAIN ) . '</a>' )
+					? '<span class="comic-nav-span">' . __( 'Last', 'mangapress' ) . '</span>'
+					: '<a href="' . $last_url . '">' . __( 'Last', 'mangapress' ) . '</a>' )
 				. "</{$args->link_wrap}>";
 
 	$next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ( $next_page == $current_page )
-				? '<span class="comic-nav-span">' . __( 'Next', MP_DOMAIN ) . '</span>'
-				: '<a href="' . $next_url . '">' . __( 'Next', MP_DOMAIN ) . '</a>' )
+				? '<span class="comic-nav-span">' . __( 'Next', 'mangapress' ) . '</span>'
+				: '<a href="' . $next_url . '">' . __( 'Next', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
 
 	$prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ( $prev_page == $current_page )
-				? '<span class="comic-nav-span">' . __( 'Prev', MP_DOMAIN ) . '</span>'
-				: '<a href="' . $prev_url . '">' . __( 'Prev', MP_DOMAIN ) . '</a>' )
+				? '<span class="comic-nav-span">' . __( 'Prev', 'mangapress' ) . '</span>'
+				: '<a href="' . $prev_url . '">' . __( 'Prev', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
 
 	$items['first'] = apply_filters( 'mangapress_comic_navigation_first', $first_html, $args );
@@ -269,8 +269,8 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 		$random_url  = get_permalink( $random->ID );
 		$random_html = "<{$args->link_wrap} class=\"link-last\">" .
 						( ( $random->ID == $current_page )
-							? '<span class="comic-nav-span">' . __( 'Random', MP_DOMAIN ) . '</span>'
-							: '<a href="' . $random_url . '">' . __( 'Random', MP_DOMAIN ) . '</a>' )
+							? '<span class="comic-nav-span">' . __( 'Random', 'mangapress' ) . '</span>'
+							: '<a href="' . $random_url . '">' . __( 'Random', 'mangapress' ) . '</a>' )
 						. "</{$args->link_wrap}>";
 
 		$items['random'] = $random_html;

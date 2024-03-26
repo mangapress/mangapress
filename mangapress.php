@@ -33,18 +33,14 @@ Domain Path: /languages
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
-	die( 'You are not allowed to call this page directly.' );
-}
-
-$plugin_folder = plugin_basename( __DIR__ );
+$mangapress_plugin_folder = plugin_basename( __DIR__ );
 
 if ( ! defined( 'MP_VERSION' ) ) {
 	define( 'MP_VERSION', '3.5.0' );
 }
 
 if ( ! defined( 'MP_FOLDER' ) ) {
-	define( 'MP_FOLDER', $plugin_folder );
+	define( 'MP_FOLDER', $mangapress_plugin_folder );
 }
 
 if ( ! defined( 'MP_ABSPATH' ) ) {
@@ -56,11 +52,7 @@ if ( ! defined( 'MP_URLPATH' ) ) {
 }
 
 if ( ! defined( 'MP_LANG' ) ) {
-	define( 'MP_LANG', $plugin_folder . '/languages' );
-}
-
-if ( ! defined( 'MP_DOMAIN' ) ) {
-	define( 'MP_DOMAIN', 'mangapress' );
+	define( 'MP_LANG', $mangapress_plugin_folder . '/languages' );
 }
 
 require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
@@ -71,15 +63,15 @@ require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
 require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
 require_once MP_ABSPATH . 'includes/functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
-require_once MP_ABSPATH . 'mangapress-install.php';
-require_once MP_ABSPATH . 'mangapress-admin.php';
-require_once MP_ABSPATH . 'mangapress-options.php';
-require_once MP_ABSPATH . 'mangapress-posts.php';
+require_once MP_ABSPATH . 'class-mangapress-install.php';
+require_once MP_ABSPATH . 'class-mangapress-admin.php';
+require_once MP_ABSPATH . 'class-mangapress-options.php';
+require_once MP_ABSPATH . 'class-mangapress-posts.php';
 
-$install = MangaPress_Install::get_instance();
+$mangapress_install = MangaPress_Install::get_instance();
 
-register_activation_hook( __FILE__, array( $install, 'do_activate' ) );
-register_deactivation_hook( __FILE__, array( $install, 'do_deactivate' ) );
+register_activation_hook( __FILE__, array( $mangapress_install, 'do_activate' ) );
+register_deactivation_hook( __FILE__, array( $mangapress_install, 'do_deactivate' ) );
 
 add_action( 'plugins_loaded', array( 'MangaPress_Bootstrap', 'load_plugin' ) );
 
@@ -92,14 +84,12 @@ add_action( 'plugins_loaded', array( 'MangaPress_Bootstrap', 'load_plugin' ) );
  */
 class MangaPress_Bootstrap {
 
-
-
 	/**
 	 * Options array
 	 *
 	 * @var array
 	 */
-	protected array $_options;
+	protected array $options;
 
 
 	/**
@@ -107,7 +97,7 @@ class MangaPress_Bootstrap {
 	 *
 	 * @var MangaPress_Bootstrap
 	 */
-	protected static MangaPress_Bootstrap $_instance;
+	protected static MangaPress_Bootstrap $instance;
 
 
 	/**
@@ -115,7 +105,7 @@ class MangaPress_Bootstrap {
 	 *
 	 * @var \MangaPress_Posts
 	 */
-	protected MangaPress_Posts $_posts_helper;
+	protected MangaPress_Posts $posts_helper;
 
 
 	/**
@@ -123,7 +113,7 @@ class MangaPress_Bootstrap {
 	 *
 	 * @var \MangaPress_Options
 	 */
-	protected MangaPress_Options $_options_helper;
+	protected MangaPress_Options $options_helper;
 
 
 	/**
@@ -131,7 +121,7 @@ class MangaPress_Bootstrap {
 	 *
 	 * @var MangaPress_Admin
 	 */
-	protected MangaPress_Admin $_admin_helper;
+	protected MangaPress_Admin $admin_helper;
 
 
 	/**
@@ -139,7 +129,7 @@ class MangaPress_Bootstrap {
 	 *
 	 * @var MangaPress_FlashMessages
 	 */
-	protected MangaPress_FlashMessages $_flashmessage_helper;
+	protected MangaPress_FlashMessages $flashmessage_helper;
 
 
 	/**
@@ -148,7 +138,7 @@ class MangaPress_Bootstrap {
 	 * @return void
 	 */
 	public static function load_plugin() {
-		self::$_instance = new self();
+		self::$instance = new self();
 	}
 
 
@@ -157,12 +147,12 @@ class MangaPress_Bootstrap {
 	 *
 	 * @return MangaPress_Bootstrap
 	 */
-	public static function get_instance() {
-		if ( null == self::$_instance ) {
-			self::$_instance = new self();
+	public static function get_instance(): MangaPress_Bootstrap {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 
@@ -170,7 +160,7 @@ class MangaPress_Bootstrap {
 	 * PHP5 constructor method
 	 */
 	protected function __construct() {
-		load_plugin_textdomain( MP_DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'mangapress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		add_action( 'init', array( $this, 'init' ), 500 );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
@@ -186,16 +176,16 @@ class MangaPress_Bootstrap {
 	public function init() {
 		$this->set_options();
 
-		$this->_posts_helper        = new MangaPress_Posts();
-		$this->_admin_helper        = new MangaPress_Admin();
-		$this->_options_helper      = new MangaPress_Options();
-		$this->_flashmessage_helper = new MangaPress_FlashMessages(
+		$this->posts_helper        = new MangaPress_Posts();
+		$this->admin_helper        = new MangaPress_Admin();
+		$this->options_helper      = new MangaPress_Options();
+		$this->flashmessage_helper = new MangaPress_FlashMessages(
 			array(
 				'transient_name' => 'mangapress_messages',
 			)
 		);
 
-		$this->_load_current_options();
+		$this->load_current_options();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
@@ -203,7 +193,7 @@ class MangaPress_Bootstrap {
 		add_filter( 'template_include', 'mangapress_latestcomic_page_template' );
 		add_filter( 'template_include', 'mangapress_comicarchive_page_template' );
 
-		if ( get_option( 'mangapress_upgrade' ) == 'yes' ) {
+		if ( get_option( 'mangapress_upgrade' ) === 'yes' ) {
 			MangaPress_Install::get_instance()->do_upgrade();
 		}
 	}
@@ -220,7 +210,7 @@ class MangaPress_Bootstrap {
 	/**
 	 * Get a MangaPress helper
 	 *
-	 * @param string $helper_name Allowed values: admin, options, posts, flashmessages
+	 * @param string $helper_name Allowed values: admin, options, posts, flashmessages.
 	 * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\MangaPress_FlashMessages|\WP_Error
 	 */
 	public function get_helper( $helper_name ) {
@@ -243,7 +233,7 @@ class MangaPress_Bootstrap {
 	 * @return void
 	 */
 	public function set_options() {
-		$this->_options = maybe_unserialize( get_option( 'mangapress_options' ) );
+		$this->options = maybe_unserialize( get_option( 'mangapress_options' ) );
 	}
 
 
@@ -253,23 +243,24 @@ class MangaPress_Bootstrap {
 	 * @return array
 	 */
 	public function get_options() {
-		return $this->_options;
+		return $this->options;
 	}
 
 
 	/**
 	 * Get one option from options array
 	 *
-	 * @param string $section Option section
-	 * @param string $option_name Option name
+	 * @param string $section Option section.
+	 * @param string $option_name Option name.
+	 *
 	 * @return boolean|mixed
 	 */
-	public function get_option( $section, $option_name ) {
-		if ( ! isset( $this->_options[ $section ][ $option_name ] ) ) {
+	public function get_option( string $section, string $option_name ) {
+		if ( ! isset( $this->options[ $section ][ $option_name ] ) ) {
 			return false;
 		}
 
-		return $this->_options[ $section ][ $option_name ];
+		return $this->options[ $section ][ $option_name ];
 	}
 
 
@@ -278,13 +269,13 @@ class MangaPress_Bootstrap {
 	 *
 	 * @return void
 	 */
-	private function _load_current_options() {
+	private function load_current_options() {
 		$mp_options = $this->get_options();
 
 		/*
 		 * Disable/Enable Default Navigation CSS
 		 */
-		if ( $mp_options['nav']['nav_css'] == 'default_css' ) {
+		if ( 'default_css' === $mp_options['nav']['nav_css'] ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 		}
 

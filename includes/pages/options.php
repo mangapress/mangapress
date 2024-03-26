@@ -8,7 +8,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 		__(
 			'You do not have sufficient permissions '
 			. 'to manage options for this blog.',
-			MP_DOMAIN
+			'mangapress'
 		)
 	);
 }
@@ -19,15 +19,15 @@ if ( ! current_user_can( 'manage_options' ) ) {
 </script>
 <div class="wrap">
 	<?php $this->options_page_tabs(); ?>
-	
+
 	<form action="options.php" method="post" id="mangapress_options_form">
 		<?php settings_fields( 'mangapress_options' ); ?>
-		
+
 		<?php do_settings_sections( "mangapress_options-{$tab}" ); ?>
-				
+
 		<p>
 			<?php submit_button(); ?>
 		</p>
-		
+
 	</form>
 </div>

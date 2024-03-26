@@ -101,12 +101,14 @@
 	https://github.com/WordPress/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
 	-->
 	<config name="minimum_wp_version" value="6.0"/>
+	<rule ref="WordPress-Core">
+		<exclude name="Universal.Operators.DisallowShortTernary"/>
+	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="my-textdomain"/>
-				<element value="library-textdomain"/>
+				<element value="mangapress"/>
 			</property>
 		</properties>
 	</rule>
@@ -114,7 +116,9 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="my_prefix"/>
+				<element value="MP_"/>
+				<element value="mangapress_"/>
+				<element value="MangaPress_"/>
 			</property>
 		</properties>
 	</rule>

@@ -6,11 +6,6 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
-/**
- * @subpackage MangaPress_Install
- * @author Jess Green <jgreen@psy-dreamer.com>
- * @version $Id$
- */
 class MangaPress_Install {
 
 
@@ -20,7 +15,7 @@ class MangaPress_Install {
 	 *
 	 * @var string
 	 */
-	protected static $_version;
+	protected static string $version;
 
 
 	/**
@@ -28,7 +23,7 @@ class MangaPress_Install {
 	 *
 	 * @var string
 	 */
-	protected $_type;
+	protected string $type;
 
 
 	/**
@@ -36,7 +31,7 @@ class MangaPress_Install {
 	 *
 	 * @var \MangaPress_Bootstrap
 	 */
-	protected $_bootstrap;
+	protected MangaPress_Bootstrap $bootstrap;
 
 
 	/**
@@ -44,7 +39,7 @@ class MangaPress_Install {
 	 *
 	 * @var \MangaPress_Install
 	 */
-	protected static $_instance;
+	protected static MangaPress_Install $instance;
 
 
 	/**
@@ -52,12 +47,12 @@ class MangaPress_Install {
 	 *
 	 * @return MangaPress_Install
 	 */
-	public static function get_instance() {
-		if ( self::$_instance == null ) {
-			self::$_instance = new self();
+	public static function get_instance(): MangaPress_Install {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 
@@ -71,17 +66,17 @@ class MangaPress_Install {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-		// Check for capability
+		// Check for capability.
 		if ( ! current_user_can( 'activate_plugins' ) ) {
-			wp_die( __( 'Sorry, you do not have suffient permissions to activate this plugin.', MP_DOMAIN ) );
+			wp_die( esc_textarea( 'Sorry, you do not have sufficient permissions to activate this plugin.', 'mangapress' ) );
 		}
 
-		// Get the capabilities for the administrator
+		// Get the capabilities for the administrator.
 		$role = get_role( 'administrator' );
 
 		// Must have admin privileges in order to activate.
 		if ( empty( $role ) ) {
-			wp_die( __( 'Sorry, you must be an Administrator in order to use Manga+Press', MP_DOMAIN ) );
+			wp_die( esc_textarea( 'Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress' ) );
 		}
 
 		if ( version_compare( $wp_version, '3.0', '<=' ) ) {
@@ -92,23 +87,19 @@ class MangaPress_Install {
 			);
 		}
 
-		self::$_version = strval( get_option( 'mangapress_ver' ) );
+		self::$version = strval( get_option( 'mangapress_ver' ) );
 
 		// version_compare will still evaluate against an empty string
 		// so we have to tell it not to.
-		if ( version_compare( self::$_version, MP_VERSION, '<' ) && ! ( self::$_version == '' ) ) {
-
+		if ( version_compare( self::$version, MP_VERSION, '<' ) && ! ( '' === self::$version ) ) {
 			add_option( 'mangapress_upgrade', 'yes', '', 'no' );
-
-		} elseif ( self::$_version == '' ) {
-
+		} elseif ( '' === self::$version ) {
 			add_option( 'mangapress_ver', MP_VERSION, '', 'no' );
-			add_option( 'mangapress_options', serialize( MangaPress_Options::get_default_options() ), '', 'no' );
-
+			add_option( 'mangapress_options', wp_json_encode( MangaPress_Options::get_default_options() ), '', 'no' );
 		}
 
-		$this->_bootstrap = MangaPress_Bootstrap::get_instance();
-		$this->_bootstrap->init();
+		$this->bootstrap = MangaPress_Bootstrap::get_instance();
+		$this->bootstrap->init();
 		$this->after_plugin_activation();
 
 		flush_rewrite_rules( false );
@@ -118,30 +109,28 @@ class MangaPress_Install {
 	/**
 	 * Run routines after plugin has been activated
 	 *
-	 * @todo check for existing terms in Series
-	 *
 	 * @return void
 	 */
 	public function after_plugin_activation() {
 		/**
-		 * mangapress_after_plugin_activation
+		 * Filter mangapress_after_plugin_activation.
 		 * Allow other plugins to add to Manga+Press' activation sequence.
 		 *
 		 * @return void
 		 */
 		do_action( 'mangapress_after_plugin_activation' );
 
-		// if the option already exists, exit
+		// if the option already exists, exit.
 		if ( get_option( 'mangapress_default_category' ) ) {
 			return;
 		}
 
-		// create a default series category
+		// create a default series category.
 		$term = wp_insert_term(
 			'Default Series',
 			MangaPress_Posts::TAX_SERIES,
 			array(
-				'description' => __( 'Default Series category created when plugin is activated. It is suggested that you rename this category.', MP_DOMAIN ),
+				'description' => __( 'Default Series category created when plugin is activated. It is suggested that you rename this category.', 'mangapress' ),
 				'slug'        => 'default-series',
 			)
 		);
@@ -169,9 +158,7 @@ class MangaPress_Install {
 	 */
 	public function do_upgrade() {
 		update_option( 'mangapress_ver', MP_VERSION );
-
 		delete_option( 'mangapress_upgrade' );
-
 		flush_rewrite_rules( false );
 	}
 }

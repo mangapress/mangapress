@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php _e( 'Copy and paste this code into the <code>style.css</code> file of your theme.', MP_DOMAIN ); ?>
+<?php _e( 'Copy and paste this code into the <code>style.css</code> file of your theme.', 'mangapress' ); ?>
 <code style="display: block; width: 550px;"><pre class="brush: css;">
 /* comic navigation */
 .comic-nav-hlist-wrapper {
