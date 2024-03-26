@@ -358,7 +358,7 @@ class MangaPress_Posts
                 foreach ($series as $s)
                     array_push($series_html, '<a href="' . get_term_link($s->slug, 'mangapress_series') . '">'.$s->name."</a>");
 
-                echo implode($series_html, ", ");
+                echo implode( ", ", $series_html );
             }
         } elseif ("post_date" == $column) {
             echo date( "Y/m/d", strtotime($post->post_date) );

@@ -9,14 +9,16 @@
  Plugin Name: Manga+Press Comic Manager
  Plugin URI: http://www.manga-press.com/
  Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
- Version: 3.0.1
+ Version: 3.0.2
+ Requires PHP: 7.4
+ Requires at least: 6.4
  Author: Jess Green
- Author URI: http://www.jessgreen.io
+ Author URI: http://www.jesgs.com
  Text Domain: mangapress
  Domain Path: /languages
 */
 /*
- * (c) 2017 Jessica C Green
+ * (c) 2024 Jessica C Green
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +40,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 $plugin_folder = plugin_basename(dirname(__FILE__));
 
 if (!defined('MP_VERSION'))
-    define('MP_VERSION', '3.0.1');
+    define('MP_VERSION', '3.0.2');
 
 if (!defined('MP_FOLDER'))
     define('MP_FOLDER', $plugin_folder);
@@ -91,7 +93,7 @@ class MangaPress_Bootstrap
      *
      * @var array
      */
-    protected $_options;
+    protected array $_options;
 
 
     /**
@@ -99,7 +101,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_Bootstrap
      */
-    protected static $_instance;
+    protected static MangaPress_Bootstrap $_instance;
 
 
     /**
@@ -107,7 +109,7 @@ class MangaPress_Bootstrap
      *
      * @var \MangaPress_Posts
      */
-    protected $_posts_helper;
+    protected MangaPress_Posts $_posts_helper;
 
 
     /**
@@ -115,7 +117,7 @@ class MangaPress_Bootstrap
      *
      * @var \MangaPress_Options
      */
-    protected $_options_helper;
+    protected MangaPress_Options $_options_helper;
 
 
     /**
@@ -123,7 +125,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_Admin
      */
-    protected $_admin_helper;
+    protected MangaPress_Admin $_admin_helper;
 
 
     /**
@@ -131,7 +133,7 @@ class MangaPress_Bootstrap
      *
      * @var MangaPress_FlashMessages
      */
-    protected $_flashmessage_helper;
+    protected MangaPress_FlashMessages $_flashmessage_helper;
 
 
     /**
@@ -185,7 +187,7 @@ class MangaPress_Bootstrap
         $this->_posts_helper   = new MangaPress_Posts();
         $this->_admin_helper   = new MangaPress_Admin();
         $this->_options_helper = new MangaPress_Options();
-        $this->flashmessages_helper = new MangaPress_FlashMessages(array(
+        $this->_flashmessage_helper = new MangaPress_FlashMessages(array(
             'transient_name' => 'mangapress_messages'
         ));
 
