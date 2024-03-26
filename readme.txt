@@ -37,7 +37,7 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
 == Changelog ==
 
 = 3.0 =
-   3.0.2
+   * 3.0.2
       * Change PHP requirement to 7.4
       * Updated code to be PHP 8-compliant
 
@@ -199,7 +199,7 @@ I do take feature requests, but I also judge each request on the basis of how we
 
 == Credits ==
 
-(c) 2008-2020 Jessica C. Green
+(c) 2008-2024 Jessica C. Green
 
 Found a bug? Or did you find a bug and figure out a fix? Visit http://www.manga-press.com/support/. Please include screenshots, WordPress version, a list of any other plugins you might have installed, or code (if you figured out a fix). Be as detailed as possible.
 
