@@ -1,0 +1,19 @@
+{
+    "name": "mangapress/mangapress",
+    "description": "Manga+Press is a webcomic management system for WordPress. Manga+Press uses WordPress' posts, pages and categories to help you keep track of your comic posts. Manga+Press also includes its own custom template tags to help make creating themes easier.",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.1"
+    },
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "y"
+        }
+    ],
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

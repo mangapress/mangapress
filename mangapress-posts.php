@@ -137,6 +137,7 @@ class MangaPress_Posts
                     'thumbnails',
                     'publicize',
                 ),
+				'show_in_rest' => true,
                 'register_meta_box_cb' => array($this, 'meta_box_cb'),
                 'menu_icon' => null,
                 'rewrite'   => array(
