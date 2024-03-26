@@ -36,16 +36,16 @@ WARNING: Child themes have been pulled from the plugin. These themes are now ava
 
 == Changelog ==
 
-= 3.0.2 =
-  * Change PHP requirement to 7.4
-  * Updated code to be PHP 8-compliant
-
-= 3.0.1 =
-  * Fixed issue where templates for Latest Comic page and Comic Archive page weren't loading correctly
-  * Corrected CSS positioning for comic navigation wrapper
-  * Added support for WordPress 5.5.1
-
 = 3.0 =
+   3.0.2
+      * Change PHP requirement to 7.4
+      * Updated code to be PHP 8-compliant
+
+   * 3.0.1
+      * Fixed issue where templates for Latest Comic page and Comic Archive page weren't loading correctly
+      * Corrected CSS positioning for comic navigation wrapper
+      * Added support for WordPress 5.5.1
+
    * 3.0
       * Removed child themes
       * Added sorting options for Comic Archive Page
