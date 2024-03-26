@@ -36,7 +36,7 @@ class MangaPress_Checkbox extends MangaPress_Element {
 		$default  = $this->get_default();
 		$attr_arr = array();
 		foreach ( $this->_attr as $name => $value ) {
-			if ( $name != 'value' ) {
+			if ( 'value' !== $name ) {
 				$attr_arr[] = "{$name}=\"{$value}\"";
 			} else {
 				$attr_arr[] = "{$name}=\"" . $default . '"';

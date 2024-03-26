@@ -8,8 +8,8 @@
 require_once MP_ABSPATH . '/includes/lib/form/element/class-checkbox.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/class-radio.php';
 require_once MP_ABSPATH . '/includes/lib/form/element/class-select.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-text.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-textarea.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
 /**
  * MangaPress_Element
  * Abstract class used to define basic functionality for extending classes

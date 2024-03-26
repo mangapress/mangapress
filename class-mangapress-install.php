@@ -68,7 +68,7 @@ class MangaPress_Install {
 
 		// Check for capability.
 		if ( ! current_user_can( 'activate_plugins' ) ) {
-			wp_die( esc_textarea( 'Sorry, you do not have sufficient permissions to activate this plugin.', 'mangapress' ) );
+			wp_die( esc_html__( 'Sorry, you do not have sufficient permissions to activate this plugin.', 'mangapress' ) );
 		}
 
 		// Get the capabilities for the administrator.
@@ -76,13 +76,12 @@ class MangaPress_Install {
 
 		// Must have admin privileges in order to activate.
 		if ( empty( $role ) ) {
-			wp_die( esc_textarea( 'Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress' ) );
+			wp_die( esc_html__( 'Sorry, you must be an Administrator in order to use Manga+Press', 'mangapress' ) );
 		}
 
 		if ( version_compare( $wp_version, '3.0', '<=' ) ) {
 			wp_die(
-				'Sorry, only WordPress 3.0 and later are supported.'
-				. ' Please upgrade to WordPress 3.0',
+				esc_html__( 'Sorry, only WordPress 3.0 and later are supported. Please upgrade to WordPress 3.0', 'mangapress' ),
 				'Wrong Version'
 			);
 		}

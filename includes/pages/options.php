@@ -5,14 +5,13 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 
 if ( ! current_user_can( 'manage_options' ) ) {
 	wp_die(
-		__(
-			'You do not have sufficient permissions '
-			. 'to manage options for this blog.',
+		esc_html__(
+			'You do not have sufficient permissions to manage options for this blog.',
 			'mangapress'
 		)
 	);
 }
-	$tab = ( isset( $_GET['tab'] ) ? $_GET['tab'] : 'basic' );
+$mangapress_tab = ( filter_input( INPUT_GET, 'tab' ) ?? 'basic' );
 ?>
 <script type="text/javascript">
 	SyntaxHighlighter.all();
@@ -23,7 +22,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 	<form action="options.php" method="post" id="mangapress_options_form">
 		<?php settings_fields( 'mangapress_options' ); ?>
 
-		<?php do_settings_sections( "mangapress_options-{$tab}" ); ?>
+		<?php do_settings_sections( "mangapress_options-{$mangapress_tab}" ); ?>
 
 		<p>
 			<?php submit_button(); ?>

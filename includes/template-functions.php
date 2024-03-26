@@ -193,10 +193,10 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 
 	$next_post = mangapress_get_adjacent_comic( $group, $by_parent, 'mangapress_series', false, false );
 	$prev_post = mangapress_get_adjacent_comic( $group, $by_parent, 'mangapress_series', false, true );
-	add_filter( 'pre_get_posts', '_mangapress_set_post_type_for_boundary' );
+	add_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
 	$last_post  = mangapress_get_boundary_comic( $group, $by_parent, 'mangapress_series', false, false );
 	$first_post = mangapress_get_boundary_comic( $group, $by_parent, 'mangapress_series', false, true );
-	remove_filter( 'pre_get_posts', '_mangapress_set_post_type_for_boundary' );
+	remove_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
 	$current_page = $post->ID; // use post ID this time.
 
 	$next_page = ! isset( $next_post->ID ) ? $current_page : $next_post->ID;
@@ -287,7 +287,7 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 	}
 
 	if ( $echo ) {
-		echo $comic_nav;
+		echo esc_html( $comic_nav );
 	} else {
 		return $comic_nav;
 	}
@@ -317,7 +317,7 @@ function mangapress_get_random_comic() {
 			return false;
 		}
 
-		$random_post = $post_array[ rand( 0, $total - 1 ) ];
+		$random_post = $post_array[ wp_rand( 0, $total - 1 ) ];
 
 		set_transient( 'mangapress_random_comics', $random_post, 43200 );
 	}
@@ -327,10 +327,10 @@ function mangapress_get_random_comic() {
 /**
  * CPT-neutral Clone of WordPress' get_calendar
  *
- * @param int  $month Month number (1 through 12)
- * @param int  $yr Calendar year
- * @param bool $nav Output navigation
- * @param bool $skip_empty_months Skip over months that don't contain posts
+ * @param int  $month Month number (1 through 12).
+ * @param int  $yr Calendar year.
+ * @param bool $nav Output navigation.
+ * @param bool $skip_empty_months Skip over months that don't contain posts.
  * @param bool $initial Optional, default is true. Use initial calendar names.
  * @param bool $echo    Optional, default is true. Set to false for return.
  * @return mixed|void

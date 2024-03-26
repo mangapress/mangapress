@@ -16,21 +16,22 @@ require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
 require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
 
 
-define( 'MP_CATEGORY_PARENTS', 1 );
-define( 'MP_CATEGORY_CHILDREN', 2 );
-define( 'MP_CATEGORY_ALL', 3 );
+const MP_CATEGORY_PARENTS  = 1;
+const MP_CATEGORY_CHILDREN = 2;
+const MP_CATEGORY_ALL      = 3;
 
 /**
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.
  *
+ * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page.
+ *
+ * @return boolean
  * @since 2.9
  *
  * @global WP_Query $wp_query
- * @param string $option Name of option to retrieve. Should be latestcomic_page or comicarchive_page
- * @return boolean
  */
-function mangapress_is_queried_page( $option ) {
+function mangapress_is_queried_page( string $option ): bool {
 	global $wp_query;
 
 	$page   = MangaPress_Bootstrap::get_instance()->get_option( 'basic', $option );
@@ -47,11 +48,12 @@ function mangapress_is_queried_page( $option ) {
 /**
  * Return plugin-default template location for latest comic or archive
  *
- * @since 2.9
- * @param string $page Which page to get default template for
+ * @param string $page Which page to get default template for.
+ *
  * @return string
+ * @since 2.9
  */
-function mangapress_get_content_template( $page ) {
+function mangapress_get_content_template( string $page ): string {
 	switch ( $page ) {
 		case 'list':
 			$template = 'comic-archive-list.php';
@@ -80,47 +82,48 @@ function mangapress_get_content_template( $page ) {
 /**
  * Add additional templates to the mangapress_comic template stack
  *
+ * @param string $default_template Template filename.
+ *
+ * @return string
  * @since 2.9
  *
- * @global WP_Post $post WordPress post object
- * @param string $template Template filename
- * @return string
+ * @global WP_Post $post WordPress post object.
  */
-function mangapress_single_comic_template( $default_template ) {
+function mangapress_single_comic_template( string $default_template ): string {
 	global $post;
 
 	if ( get_post_type( $post ) !== MangaPress_Posts::POST_TYPE && ! is_single() ) {
-		return $template;
+		return $default_template;
 	}
 
-	$template = locate_template( array( 'comics/single-comic.php', 'single-comic.php' ) );
+	$default_template = locate_template( array( 'comics/single-comic.php', 'single-comic.php' ) );
 
-	if ( $template == '' ) {
+	if ( '' === $default_template ) {
 		add_filter( 'post_thumbnail_html', 'mangapress_disable_post_thumbnail', 500, 2 );
 		add_filter( 'the_content', 'mangapress_single_comic_content_filter' );
 		return $default_template;
-	} else {
-		return $template;
 	}
+
+	return $default_template;
 }
 
 
 /**
  * Filter contents of single comic post
  *
- * @since 2.9
+ * @param string $content Post content.
  *
- * @param string $content Post content
  * @return string
+ * @since 2.9
  */
-function mangapress_single_comic_content_filter( $content ) {
+function mangapress_single_comic_content_filter( string $content ): string {
 	global $post;
 
 	if ( get_post_type( $post ) !== MangaPress_Posts::POST_TYPE ) {
 		return $content;
 	}
 
-	$thumbnail_size = isset( $image_sizes['comic-page'] ) ? $image_sizes['comic-page'] : 'large';
+	$thumbnail_size = $image_sizes['comic-page'] ?? 'large';
 
 	remove_filter( 'the_content', 'mangapress_single_comic_content_filter' );
 	remove_filter( 'post_thumbnail_html', 'mangapress_disable_post_thumbnail' );
@@ -130,9 +133,7 @@ function mangapress_single_comic_content_filter( $content ) {
 	$generated_content = ob_get_contents();
 	ob_end_clean();
 
-	$content = $generated_content . $content;
-
-	return $content;
+	return $generated_content . $content;
 }
 
 
@@ -141,14 +142,14 @@ function mangapress_single_comic_content_filter( $content ) {
  * Remove post thumbnail from Comic Posts since post thumbnails are already
  * assigned when the_content filter is run
  *
- * @since 2.9
+ * @param string $html Generated image html.
+ * @param int    $post_id Post ID.
  *
- * @param string $html Generated image html
- * @param int    $post_id Post ID
  * @return string
+ * @since 2.9
  */
-function mangapress_disable_post_thumbnail( $html, $post_id ) {
-	if ( get_post_type( $post_id ) == MangaPress_Posts::POST_TYPE ) {
+function mangapress_disable_post_thumbnail( string $html, int $post_id ): string {
+	if ( MangaPress_Posts::POST_TYPE === get_post_type( $post_id ) ) {
 		return '';
 	}
 
@@ -159,52 +160,50 @@ function mangapress_disable_post_thumbnail( $html, $post_id ) {
 /**
  * Create a date-archive permalink for Comics (for monthly links)
  *
- * @param string $monthlink Existing link to be modified or replaced
- * @param string $year
- * @param string $month
+ * @param string $monthlink Existing link to be modified or replaced.
+ * @param string $year Year portion of permalink.
+ * @param string $month Month portion of permalink.
+ *
  * @return string|void
  */
-function mangapress_month_link( $monthlink, $year = '', $month = '' ) {
+function mangapress_month_link( string $monthlink, string $year = '', string $month = '' ) {
 	$posts = MangaPress_Bootstrap::get_instance()->get_helper( 'posts' );
 	$slug  = $posts->get_slug();
 
-	$month_permalink = home_url( "/{$slug}/{$year}/{$month}" );
-	return $month_permalink;
+	return home_url( "/{$slug}/{$year}/{$month}" );
 }
 
 
 /**
  * Create a date-archive permalink for Comics
  *
- * @param string $daylink Existing link to be modified or replaced
- * @param string $year Year
- * @param string $month Month
- * @param string $day Day
+ * @param string $daylink Existing link to be modified or replaced.
+ * @param string $year Year portion of permalink.
+ * @param string $month Month portion of permalink.
+ * @param string $day Day portion of permalink.
  *
  * @return string
  */
-function mangapress_day_link( $daylink, $year = '', $month = '', $day = '' ) {
+function mangapress_day_link( string $daylink, string $year = '', string $month = '', string $day = '' ): string {
 
 	$posts = MangaPress_Bootstrap::get_instance()->get_helper( 'posts' );
 	$slug  = $posts->get_slug();
 
-	$relative      = "/{$slug}/{$year}/{$month}/{$day}";
-	$day_permalink = home_url( $relative );
+	$relative = "/{$slug}/{$year}/{$month}/{$day}";
 
-	return $day_permalink;
+	return home_url( $relative );
 }
 
 
 /**
- * mangapress_version()
- * echoes the current version of Manga+Press.
+ * Echoes the current version of Manga+Press.
  * Replaces mpp_comic_version()
  *
  * @since 2.9
  * @return void
  */
 function mangapress_version() {
-	echo MP_VERSION;
+	echo esc_attr( MP_VERSION );
 }
 
 
@@ -213,10 +212,10 @@ function mangapress_version() {
  * Workaround for issue #27094 {@link https://core.trac.wordpress.org/ticket/27094}
  *
  * @access private
- * @param WP_Query $query
+ * @param WP_Query $query WordPress query object.
  * @return void
  */
-function _mangapress_set_post_type_for_boundary( $query ) {
+function mangapress_set_post_type_for_boundary( $query ) {
 	$query->set( 'post_type', 'mangapress_comic' );
 }
 

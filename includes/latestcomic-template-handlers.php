@@ -12,7 +12,7 @@
 /**
  * Template handler for Latest Comic page
  *
- * @param string $template Default template if requested template is not found
+ * @param string $template Default template if requested template is not found.
  * @return string
  */
 function mangapress_latestcomic_page_template( $default_template ) {
@@ -21,8 +21,8 @@ function mangapress_latestcomic_page_template( $default_template ) {
 		return $default_template;
 	}
 
-	// maintain template hierarchy if not single.php, page.php or index.php
-	if ( ! in_array( basename( $default_template ), array( 'single.php', 'singular.php', 'page.php', 'index.php' ) ) ) {
+	// maintain template hierarchy if not single.php, page.php or index.php.
+	if ( ! in_array( basename( $default_template ), array( 'single.php', 'singular.php', 'page.php', 'index.php' ), true ) ) {
 		return $default_template;
 	}
 
@@ -42,7 +42,7 @@ function mangapress_latestcomic_page_template( $default_template ) {
  * Add Latest Comic to page content
  *
  * @global WP_Post $post WordPress post object
- * @param string $content Post content being filtered
+ * @param string $content Post content being filtered.
  * @return string
  */
 function mangapress_add_comic_to_latestcomic_page( $content ) {
@@ -63,8 +63,7 @@ function mangapress_add_comic_to_latestcomic_page( $content ) {
 		);
 	}
 
-	$thumbnail_size = isset( $image_sizes['comic-page'] )
-						? $image_sizes['comic-page'] : 'large';
+	$thumbnail_size = $image_sizes['comic-page'] ?? 'large';
 
 	$post = $wp_query->posts[0];
 

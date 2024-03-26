@@ -1,19 +1,24 @@
 <?php
 /**
- * mangapress
+ * MangaPress Template Handler functions
  *
- * @package comicarchive-template-handlers
- * @author Jess Green <jgreen at psy-dreamer.com>
- * @version $Id$
- * @license GPL
+ * @package MangaPress
  */
-function mangapress_get_comicarchive_template( $style ) {
+
+/**
+ * Get Comic Archive template
+ *
+ * @param string $style Template style. Can be 'list', 'gallery', or 'calendar'.
+ *
+ * @return string
+ */
+function mangapress_get_comicarchive_template( string $style ): string {
 	$fields  = MangaPress_Bootstrap::get_instance()->get_helper( 'options' )->options_fields();
 	$options = $fields['basic']['comicarchive_page_style'];
-	unset( $options['value']['no_val'] ); // remove this, we don't need it
+	unset( $options['value']['no_val'] ); // remove this, we don't need it.
 
-	if ( ! in_array( $style, array_keys( $options['value'] ) ) ) {
-		return 'comic-archive-list.php'; // return the default if the value doesn't match
+	if ( ! in_array( $style, array_keys( $options['value'] ), true ) ) {
+		return 'comic-archive-list.php'; // return the default if the value doesn't match.
 	}
 
 	return "comic-archive-{$style}.php";
@@ -23,22 +28,23 @@ function mangapress_get_comicarchive_template( $style ) {
 /**
  * Template handler for Comic Archive page
  *
- * @param string $default_template Default template if requested template is not found
+ * @param string $default_template Default template if requested template is not found.
+ *
  * @return string
  */
-function mangapress_comicarchive_page_template( $default_template ) {
+function mangapress_comicarchive_page_template( string $default_template ): string {
 	if ( ! mangapress_is_queried_page( 'comicarchive_page' ) ) {
 		return $default_template;
 	}
 
-	// maintain template hierarchy if not page.php or index.php
-	if ( ! in_array( basename( $default_template ), array( 'single.php', 'singular.php', 'page.php', 'index.php' ) ) ) {
+	// maintain template hierarchy if not page.php or index.php.
+	if ( ! in_array( basename( $default_template ), array( 'single.php', 'singular.php', 'page.php', 'index.php' ), true ) ) {
 		return $default_template;
 	}
 
 	$comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option( 'basic', 'comicarchive_page_style' );
 
-	if ( in_array( $comicarchive_page_style, array( 'list', 'gallery', 'calendar' ) ) ) {
+	if ( in_array( $comicarchive_page_style, array( 'list', 'gallery', 'calendar' ), true ) ) {
 		$template = locate_template(
 			array(
 				"comics/comic-archive-{$comicarchive_page_style}.php",
@@ -67,7 +73,7 @@ function mangapress_comicarchive_page_template( $default_template ) {
  * Add comic archive output to Comic Archive page content
  *
  * @access private
- * @param string $content Page content being filtered
+ * @param string $content Page content being filtered.
  * @return string
  */
 function mangapress_create_comicarchive_page( $content ) {
@@ -77,13 +83,10 @@ function mangapress_create_comicarchive_page( $content ) {
 		return $content;
 	}
 	$old_query = $wp_query;
-	$wp_query  = mangapress_get_all_comics_for_archive();
+	$wp_query  = mangapress_get_all_comics_for_archive(); // @phpcs:ignore
 
 	if ( ! $wp_query ) {
-		return apply_filters(
-			'the_comicarchive_content_error',
-			'<p class="error">No comics were found.</p>'
-		);
+		return '<p class="error">No comics were found.</p>';
 	}
 
 	$comicarchive_page_style = MangaPress_Bootstrap::get_instance()->get_option( 'basic', 'comicarchive_page_style' );
@@ -92,9 +95,10 @@ function mangapress_create_comicarchive_page( $content ) {
 	require mangapress_get_content_template( $comicarchive_page_style );
 	$content = ob_get_clean();
 
-	$wp_query = $old_query;
+	$wp_query = $old_query; // @phpcs:ignore
 
-	wp_reset_query();
+	wp_reset_query();  // @phpcs:ignore
 
-	return apply_filters( 'the_comicarchive_content', $content );
+	// todo: need a deprecation catch for the_comicarchive_content filter.
+	return apply_filters( 'mangapress_the_comicarchive_content', $content );
 }

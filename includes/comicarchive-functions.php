@@ -11,10 +11,12 @@
 /**
  * Get all comics for archives page
  *
- * @since 2.9
+ * @param array $params Parameters.
+ *
  * @return \WP_Query
+ * @since 2.9
  */
-function mangapress_get_all_comics_for_archive( $params = array() ) {
+function mangapress_get_all_comics_for_archive( array $params = array() ): WP_Query {
 	$mp_options   = MangaPress_Bootstrap::get_instance()->get_options();
 	$order_params = array(
 		'order'   => $mp_options['basic']['archive_order'],
@@ -38,9 +40,9 @@ function mangapress_get_all_comics_for_archive( $params = array() ) {
  *
  * @return string
  */
-function mangapress_archive_gallery_style() {
+function mangapress_archive_gallery_style(): string {
 	$styles = '
-<style type="text/css">
+<style>
     .mangapress-archive-gallery {
         font-size: 0;
     }
@@ -63,7 +65,7 @@ function mangapress_archive_gallery_style() {
          clear: both;
          height: 0;
     }
-    
+
     .mangapress-archive-gallery .archive-item img {
         display: inline-block;
     }
