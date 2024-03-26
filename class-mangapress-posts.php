@@ -320,11 +320,11 @@ class MangaPress_Posts {
 	/**
 	 * Modify header columns for Comic Post-type
 	 *
-	 * @param array $column Screen column name.
+	 * @param string $column Screen column name.
 	 * @global WP_Post $post
 	 * @return void
 	 */
-	public function comics_headers( array $column ) {
+	public function comics_headers( string $column ) {
 		global $post;
 
 		switch ( $column ) {
