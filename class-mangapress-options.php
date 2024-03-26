@@ -190,11 +190,11 @@ final class MangaPress_Options {
 	/**
 	 * Outputs Settings Sections.
 	 *
-	 * @param string $section Name of section.
+	 * @param array $section Name of section.
 	 *
 	 * @return void
 	 */
-	public function settings_section_cb( string $section ) {
+	public function settings_section_cb( array $section ) {
 		$options = $this->options_sections();
 		$current = ( substr( $section['id'], strpos( $section['id'], '-' ) + 1 ) );
 		echo '<p>' . esc_html( $options[ $current ]['description'] ) . '</p>';
