@@ -5,11 +5,11 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
-require_once MP_ABSPATH . '/includes/lib/form/element/checkbox.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/radio.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/select.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/text.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/textarea.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/class-checkbox.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/class-radio.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/class-select.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/class-text.php';
+require_once MP_ABSPATH . '/includes/lib/form/element/class-textarea.php';
 /**
  * MangaPress_Element
  * Abstract class used to define basic functionality for extending classes
