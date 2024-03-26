@@ -133,7 +133,7 @@ final class MangaPress_Admin {
 
 		$links = array();
 		foreach ( $tabs as $tab => $tab_data ) {
-			if ( $tab == $current ) {
+			if ( $tab === $current ) {
 				$links[] = "<a class=\"nav-tab nav-tab-active\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";
 			} else {
 				$links[] = "<a class=\"nav-tab\" href=\"?page=mangapress-options-page&tab={$tab}\">{$tab_data['title']}</a>";

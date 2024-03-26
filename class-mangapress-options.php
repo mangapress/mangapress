@@ -132,9 +132,9 @@ final class MangaPress_Options {
 			$form_element = new $element(
 				array(
 					'attributes'  => $attributes,
-					'description' => isset( $option['description'] ) ? $option['description'] : '',
-					'default'     => isset( $option['value'] ) ? $option['value'] : $option['default'],
-					'validation'  => $option['valid'],
+					'description' => $option['description'] ?? '',
+					'default'     => $option['value'] ?? $option['default'],
+					'validation'  => $option['valid'] ?? '',
 				)
 			);
 
