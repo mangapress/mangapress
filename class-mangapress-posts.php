@@ -143,6 +143,7 @@ class MangaPress_Posts {
 					'show_in_rest'         => true,
 					'register_meta_box_cb' => array( $this, 'meta_box_cb' ),
 					'menu_icon'            => null,
+					'rest_namespace'       => 'mangapress/v1',
 					'rewrite'              => array(
 						'slug' => $this->get_slug(),
 					),
