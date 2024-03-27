@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="mangapress" default="build">
+
+	<!-- ============================================  -->
+	<!-- Target: prepare                               -->
+	<!-- ============================================  -->
+	<target name="prepare">
+		<echo msg="Making directory ./build/current/mangapress" />
+		<mkdir dir="./build/current/mangapress" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build                                 -->
+	<!-- ============================================  -->
+	<target name="build" depends="prepare">
+		<echo msg="Copying files to build directory..." />
+
+		<echo msg="Copying files to ./build/current/mangapress directory..." />
+		<copy todir="./build/current/mangapress" includeemptydirs="true" >
+			<fileset dir="." defaultexcludes="true">
+				<exclude name="build/**" />
+				<exclude name="vendor/**" />
+				<exclude name=".git/**" />
+				<exclude name=".idea/**" />
+				<exclude name=".gitignore" />
+				<exclude name=".editorconfig" />
+				<exclude name="*.xml" />
+				<exclude name="composer.*" />
+				<exclude name="README.md" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- ============================================  -->
+	<!-- (DEFAULT)  Target: dist                       -->
+	<!-- ============================================  -->
+<!--	<target name="dist" depends="build">-->
+<!--		<echo msg="Creating archive..." />-->
+
+<!--		<tar destfile="./build/current/mangbuild.tar.gz" compression="gzip">-->
+<!--			<fileset dir="./build">-->
+<!--				<include name="*" />-->
+<!--			</fileset>-->
+<!--		</tar>-->
+
+<!--		<echo msg="Files copied and compressed in build directory OK!" />-->
+<!--	</target>-->
+</project>
