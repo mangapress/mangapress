@@ -2,8 +2,6 @@
 /**
  * Manga+Press Template functions
  *
- * @todo Update docblocks
- *
  * @package Manga_Press
  * @subpackage Manga_Press_Template_Functions
  * @version $Id$
@@ -11,162 +9,76 @@
  */
 
 /**
- * is_comic()
- *
  * Used to detect if post contains a comic.
  *
  * @since 0.1
+ * @param WP_Post|int $post WordPress post object or post id.
  *
- * @global object $wpdb
- * @global array $mp_options
- * @global object $post
  * @return bool Returns true if post contains a comic, false if not.
  */
-if ( ! function_exists( 'is_comic' ) ) {
-	function is_comic( $post = null ) {
-		if ( is_integer( $post ) ) {
-			$post = get_post( $post );
-		}
-
-		if ( is_null( $post ) ) {
-			global $post;
-		}
-
-		$post_type = get_post_type( $post );
-
-		return ( $post_type == 'mangapress_comic' );
+function mangapress_is_comic( $post = null ): bool {
+	if ( is_integer( $post ) ) {
+		$post = get_post( $post );
 	}
+
+	if ( is_null( $post ) ) {
+		global $post;
+	}
+
+	$post_type = get_post_type( $post );
+
+	return ( 'mangapress_comic' === $post_type );
 }
 
-
 /**
- * @since 1.0 RC1
- *
- * @global WP_Query $wp_query
- * @return bool
- */
-if ( ! function_exists( 'is_comic_page' ) ) {
-	function is_comic_page() {
-		global $wp_query;
-
-		$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
-		$query = $wp_query->get_queried_object();
-
-		return ( $wp_query->is_page && ( $query->post_name == $mp_options['basic']['latestcomic_page'] ) );
-	}
-}
-
-
-/**
+ * Checks if the page is a comic page.
  *
  * @since 1.0 RC1
  *
  * @global WP_Query $wp_query
  * @return bool
  */
-if ( ! function_exists( 'is_comic_archive_page' ) ) {
-	function is_comic_archive_page() {
-		global $wp_query;
-
-		$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
-
-		$query = $wp_query->get_queried_object();
-
-		$is_comic_archive_page
-			= ( $wp_query->is_page && ( $query->post_name
-										== $mp_options['basic']['comicarchive_page'] ) );
-
-		return $is_comic_archive_page;
-	}
-}
-
-
-/**
- * Retrieve the previous post in The Loop. We have our reasons
- *
- * @global WP_Query $wp_query
- * @return WP_Post|false
- */
-function mangapress_get_previous_post_in_loop() {
+function mangapress_is_comic_page(): bool {
 	global $wp_query;
 
-	if ( $wp_query->current_post == -1 || $wp_query->current_post == 0 ) {
-		return false;
-	}
+	$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
-	return $wp_query->posts[ $wp_query->current_post - 1 ];
+	$query = $wp_query->get_queried_object();
+
+	return ( $wp_query->is_page && ( $query->post_name === $mp_options['basic']['latestcomic_page'] ) );
 }
 
-
 /**
- * Get the next post in the loop. Might come in handy.
+ * Checks if the page is a comic archive page
+ *
+ * @since 1.0 RC1
  *
  * @global WP_Query $wp_query
- * @return WP_Post|false
+ * @return bool
  */
-function mangapress_get_next_post_in_loop() {
+function mangapress_is_comic_archive_page(): bool {
 	global $wp_query;
 
-	if ( $wp_query->current_post == ( $wp_query->found_posts - 1 ) ) {
-		return false;
-	}
+	$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
 
-	return $wp_query->posts[ $wp_query->current_post + 1 ];
+	$query = $wp_query->get_queried_object();
+
+	return ( $wp_query->is_page && ( $query->post_name
+									=== $mp_options['basic']['comicarchive_page'] ) );
 }
 
-
 /**
- * Get comic term ID.
- *
- * @param WP_Post|int $post WordPress post object or post ID
- * @return false|int
- */
-function mangapress_get_comic_term_ID( $post = 0 ) {
-	if ( $post === false ) {
-		return false;
-	}
-
-	$post = get_post( $post );
-	if ( ! isset( $post->term_ID ) ) {
-		return false;
-	}
-
-	return $post->term_ID;
-}
-
-
-
-/**
- * Get comic slug
- *
- * @param WP_Post|int $post WordPress post object or post ID
- * @return false|string
- */
-function mangapress_get_comic_term_title( $post = 0 ) {
-	$post = get_post( $post );
-	if ( ! isset( $post->term_name ) ) {
-		return false;
-	}
-
-	return $post->term_name;
-}
-
-
-/**
- * mangapress_comic_navigation()
- *
  * Displays navigation for post specified by $post_id.
  *
- * @since 0.1b
+ * @param array $args Arguments for navigation output.
+ * @param bool  $echo Specifies whether to echo comic navigation or return it as a string.
  *
+ * @return string Returns navigation string if $echo is set to false.
  * @global object $wpdb
  *
- * @param array $args Arguments for navigation output
- * @param bool  $echo Specifies whether to echo comic navigation or return it as a string
- * @return string Returns navigation string if $echo is set to false.
+ * @since 0.1b
  */
-function mangapress_comic_navigation( $args = array(), $echo = true ) {
+function mangapress_comic_navigation( array $args = array(), bool $echo = true ): string { // @phpcs:ignore -- will be refactored in a future version
 	global $post;
 
 	$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
@@ -188,14 +100,13 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 	$r           = apply_filters( 'mangapress_comic_navigation_args', $parsed_args );
 	$args        = (object) $r;
 
-	$group     = (bool) $mp_options['basic']['group_comics'];
-	$by_parent = (bool) $mp_options['basic']['group_by_parent'];
+	$group = (bool) $mp_options['basic']['group_comics'];
 
-	$next_post = mangapress_get_adjacent_comic( $group, $by_parent, 'mangapress_series', false, false );
-	$prev_post = mangapress_get_adjacent_comic( $group, $by_parent, 'mangapress_series', false, true );
 	add_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
-	$last_post  = mangapress_get_boundary_comic( $group, $by_parent, 'mangapress_series', false, false );
-	$first_post = mangapress_get_boundary_comic( $group, $by_parent, 'mangapress_series', false, true );
+	$next_post  = get_adjacent_post( $group, '', false, 'mangapress_series' );
+	$prev_post  = get_adjacent_post( $group, '', true, 'mangapress_series' );
+	$last_post  = get_boundary_post( $group, '', false, 'mangapress_series' );
+	$first_post = get_boundary_post( $group, '', true, 'mangapress_series' );
 	remove_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
 	$current_page = $post->ID; // use post ID this time.
 
@@ -241,23 +152,23 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 
 	// Here, we start processing the urls.
 	// Let's do first page first.
-	$first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ( $first == $current_page )
+	$first_html = "<{$args->link_wrap} class=\"link-first\">" . ( ( $first === $current_page )
 				? '<span class="comic-nav-span">' . __( 'First', 'mangapress' ) . '</span>'
 				: '<a href="' . $first_url . '">' . __( 'First', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
 
 	$last_html = "<{$args->link_wrap} class=\"link-last\">" .
-				( ( $last == $current_page )
+				( ( $last === $current_page )
 					? '<span class="comic-nav-span">' . __( 'Last', 'mangapress' ) . '</span>'
 					: '<a href="' . $last_url . '">' . __( 'Last', 'mangapress' ) . '</a>' )
 				. "</{$args->link_wrap}>";
 
-	$next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ( $next_page == $current_page )
+	$next_html = "<{$args->link_wrap} class=\"link-next\">" . ( ( $next_page === $current_page )
 				? '<span class="comic-nav-span">' . __( 'Next', 'mangapress' ) . '</span>'
 				: '<a href="' . $next_url . '">' . __( 'Next', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
 
-	$prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ( $prev_page == $current_page )
+	$prev_html = "<{$args->link_wrap} class=\"link-prev\">" . ( ( $prev_page === $current_page )
 				? '<span class="comic-nav-span">' . __( 'Prev', 'mangapress' ) . '</span>'
 				: '<a href="' . $prev_url . '">' . __( 'Prev', 'mangapress' ) . '</a>' )
 			. "</{$args->link_wrap}>";
@@ -268,7 +179,7 @@ function mangapress_comic_navigation( $args = array(), $echo = true ) {
 		$random      = mangapress_get_random_comic();
 		$random_url  = get_permalink( $random->ID );
 		$random_html = "<{$args->link_wrap} class=\"link-last\">" .
-						( ( $random->ID == $current_page )
+						( ( $random->ID === $current_page )
 							? '<span class="comic-nav-span">' . __( 'Random', 'mangapress' ) . '</span>'
 							: '<a href="' . $random_url . '">' . __( 'Random', 'mangapress' ) . '</a>' )
 						. "</{$args->link_wrap}>";
@@ -335,7 +246,8 @@ function mangapress_get_random_comic() {
  * @param bool $echo    Optional, default is true. Set to false for return.
  * @return mixed|void
  */
-function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true ) {
+function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_months = false, $initial = true, $echo = true ) { // @phpcs:ignore -- will be removed in a future version
+	// @phpcs:disable -- this entire function is going away in a future version
 	global $wpdb, $m, $wp_locale, $posts;
 
 	if ( ! $month ) {
@@ -602,6 +514,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 	} else {
 		return apply_filters( 'mangapress_get_calendar', $calendar_output );
 	}
+	// @phpcs:enable
 }
 
 
@@ -625,19 +538,19 @@ add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' )
 /**
  * Retrieve an archive template based on type. This function modifies the global $wp_query object.
  *
- * @param string $type Template type. Values are 'calendar' or 'gallery'
+ * @param string $type Template type. Values are 'calendar' or 'gallery'.
  * @return string|void
  */
 function mangapress_get_archive_template( $type ) {
 	global $wp_query;
 
-	if ( ! in_array( $type, array( 'calendar', 'gallery' ) ) ) {
+	if ( ! in_array( $type, array( 'calendar', 'gallery' ), true ) ) {
 		return '';
 	}
 
-	$wp_query = mangapress_get_all_comics_for_archive();
+	$wp_query = mangapress_get_all_comics_for_archive();  // @phpcs:ignore -- will be removed in a future version
 
 	require MP_ABSPATH . "/templates/content/comic-archive-{$type}.php";
 
-	wp_reset_query();
+	wp_reset_query(); // @phpcs:ignore -- will be removed in a future version
 }

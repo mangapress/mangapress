@@ -5,6 +5,7 @@
  * @package help-basic
  * @author Jess Green <jgreen AT psy-dreamer.com>
  */
+
 ?>
 <h3><?php esc_html_e( 'Basic Options Help', 'mangapress' ); ?></h3>
 <p>

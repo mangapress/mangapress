@@ -7,6 +7,7 @@
  * @version $Id$
  * @license GPL
  */
+
 global $wp;
 if ( empty( $mangapress_image_html ) && ! ( $wp instanceof WP ) ) {
 	die( 'No access allowed!' );

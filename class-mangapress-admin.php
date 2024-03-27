@@ -1,5 +1,11 @@
 <?php
 /**
+ * MangaPress admin class file.
+ *
+ * @package MangaPress
+ */
+
+/**
  * MangaPress Admin class
  */
 final class MangaPress_Admin {
@@ -66,24 +72,25 @@ final class MangaPress_Admin {
 	/**
 	 * Get help tab data for current option tab
 	 *
-	 * @param string $option_tab
+	 * @param string $option_tab Option tab to display.
+	 *
 	 * @return array
 	 */
-	public function get_help_tabs( $option_tab ) {
+	public function get_help_tabs( string $option_tab ): array {
 		$help_tabs = array(
 			'basic'      => array(
 				'id'      => 'help_basic',
-				'title'   => __( 'Basic Options Help' ),
+				'title'   => __( 'Basic Options Help', 'mangapress' ),
 				'content' => $this->get_help_tab_contents(),
 			),
 			'comic_page' => array(
 				'id'      => 'help_comic_page',
-				'title'   => __( 'Comic Page Options Help' ),
+				'title'   => __( 'Comic Page Options Help', 'mangapress' ),
 				'content' => $this->get_help_tab_contents( 'comic_page' ),
 			),
 			'nav'        => array(
 				'id'      => 'help_nav',
-				'title'   => __( 'Navigation Options Help' ),
+				'title'   => __( 'Navigation Options Help', 'mangapress' ),
 				'content' => $this->get_help_tab_contents( 'nav' ),
 			),
 		);
@@ -95,10 +102,11 @@ final class MangaPress_Admin {
 	/**
 	 * Get help tab contents from file
 	 *
-	 * @param string $help_tab Name of tab content to get
+	 * @param string $help_tab Name of tab content to get.
+	 *
 	 * @return string
 	 */
-	public function get_help_tab_contents( $help_tab = 'basic' ) {
+	public function get_help_tab_contents( string $help_tab = 'basic' ): string {
 		ob_start();
 		switch ( $help_tab ) {
 			case 'basic':
@@ -111,7 +119,7 @@ final class MangaPress_Admin {
 				require_once MP_ABSPATH . '/includes/pages/help-nav.php';
 				break;
 			default:
-				// have a default response
+				// have a default response.
 		}
 
 		return ob_get_clean();
@@ -121,12 +129,10 @@ final class MangaPress_Admin {
 	/**
 	 * Display options tabs
 	 *
-	 * @param string $current Current tab
 	 * @return void
 	 */
-	public function options_page_tabs( $current = 'basic' ) {
-		$current = filter_input( INPUT_GET, 'tab' )
-						? filter_input( INPUT_GET, 'tab' ) : 'basic';
+	public function options_page_tabs() {
+		$current = filter_input( INPUT_GET, 'tab' ) ?: 'basic';
 
 		$options = MangaPress_Bootstrap::get_instance()->get_helper( 'options' );
 		$tabs    = $options->options_sections();
@@ -143,7 +149,7 @@ final class MangaPress_Admin {
 		echo '<h2 class="nav-tab-wrapper">';
 
 		foreach ( $links as $link ) {
-			echo $link;
+			echo esc_url( $link );
 		}
 
 		echo '</h2>';

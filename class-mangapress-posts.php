@@ -7,6 +7,15 @@
  * @subpackage MangaPress_Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
+
+/**
+ * MangaPress Posts class
+ * Handles functionality for the Comic post-type
+ *
+ * @package MangaPress
+ * @subpackage MangaPress_Posts
+ * @author Jessica Green <jgreen@psy-dreamer.com>
+ */
 class MangaPress_Posts {
 
 	/**
@@ -261,7 +270,6 @@ class MangaPress_Posts {
 
 		/*
 		 * Because we don't need this...the comic image is the "Featured Image"
-		 * TODO add an option for users to override this "functionality"
 		 */
 		remove_meta_box( 'postimagediv', 'mangapress_comic', 'side' );
 	}

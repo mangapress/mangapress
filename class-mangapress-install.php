@@ -4,6 +4,13 @@
  *
  * @package MangaPress
  * @author Jess Green <jgreen@psy-dreamer.com>
+ */
+
+/**
+ * MangaPress Installation Class
+ *
+ * @package MangaPress
+ * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
 class MangaPress_Install {

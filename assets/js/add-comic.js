@@ -1,8 +1,10 @@
 /**
  * Plugin namespace
  *
- * @type namespace
+ * @type MANGAPRESS
+ * @package MangaPress
  */
+
 var MANGAPRESS = MANGAPRESS || {};
 
 (function ($) {
@@ -51,7 +53,7 @@ var MANGAPRESS = MANGAPRESS || {};
 						action : action
 					};
 
-					// need Ajax call to get attachment HTML
+					// need Ajax call to get attachment HTML.
 					$.post(
 						ajaxurl,
 						data,

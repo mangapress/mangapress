@@ -1,5 +1,7 @@
 <?php
 /**
+ * Functions for modifying WP Query via filters
+ *
  * @package Manga_Press
  * @author Jess Green <jgreen AT psy-dreamer.com>
  * @version $Id$
@@ -14,9 +16,17 @@ function mangapress_distinct_rows() {
 	return 'DISTINCT';
 }
 
-function mangapress_post_limits( $limit, $query ) {
+/**
+ * Modify the query limit.
+ *
+ * @param string   $limit SQL limit string.
+ * @param WP_Query $query WP Query object.
+ *
+ * @return string
+ */
+function mangapress_post_limits( string $limit, WP_Query $query ): string {
 
-	if ( is_admin() || $query->is_main_query() || is_comic_archive_page() ) {
+	if ( is_admin() || $query->is_main_query() || mangapress_is_comic_archive_page() ) {
 		return $limit;
 	}
 

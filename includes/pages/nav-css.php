@@ -7,6 +7,7 @@
  * @version $Id$
  * @license GPL
  */
+
 ?>
 
 <?php esc_html_e( 'Copy and paste this code into the <code>style.css</code> file of your theme.', 'mangapress' ); ?>

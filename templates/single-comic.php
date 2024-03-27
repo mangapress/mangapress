@@ -7,6 +7,7 @@
  * @version $Id$
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
+
 ?>
 <?php mangapress_comic_navigation(); ?>
 

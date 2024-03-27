@@ -79,5 +79,5 @@ function mangapress_end_latest_comic() {
 	global $wp_query;
 	do_action( 'mangapress_latest_comic_end' );
 
-	wp_reset_query();
+	wp_reset_query(); // @phpcs:ignore -- this will be removed or refactored at a later date
 }

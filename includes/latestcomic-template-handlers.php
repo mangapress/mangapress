@@ -1,6 +1,6 @@
 <?php
 /**
- * mangapress
+ * MangaPress Latest Comic template Handlers
  *
  * @package latestcomic-template-handlers
  * @author Jess Green <jgreen at psy-dreamer.com>
@@ -8,14 +8,14 @@
  * @license GPL
  */
 
-
 /**
  * Template handler for Latest Comic page
  *
- * @param string $template Default template if requested template is not found.
+ * @param string $default_template Default template if requested template is not found.
+ *
  * @return string
  */
-function mangapress_latestcomic_page_template( $default_template ) {
+function mangapress_latestcomic_page_template( string $default_template ): string {
 
 	if ( ! mangapress_is_queried_page( 'latestcomic_page' ) ) {
 		return $default_template;
@@ -41,11 +41,12 @@ function mangapress_latestcomic_page_template( $default_template ) {
 /**
  * Add Latest Comic to page content
  *
- * @global WP_Post $post WordPress post object
  * @param string $content Post content being filtered.
+ *
  * @return string
+ * @global WP_Post $post WordPress post object.
  */
-function mangapress_add_comic_to_latestcomic_page( $content ) {
+function mangapress_add_comic_to_latestcomic_page( string $content ): string {
 	global $post, $wp_query;
 
 	if ( ! mangapress_is_queried_page( 'latestcomic_page' ) ) {
@@ -54,18 +55,18 @@ function mangapress_add_comic_to_latestcomic_page( $content ) {
 
 	$image_sizes = get_intermediate_image_sizes();
 	$old_query   = $wp_query;
-	$wp_query    = mangapress_get_latest_comic();
+	$wp_query    = mangapress_get_latest_comic(); // @phpcs:ignore -- will be removed at a later date
 
-	if ( ! $wp_query || ( $wp_query->get( 'name' ) == 'no-comic-found' ) ) {
+	if ( ! $wp_query || ( 'no-comic-found' === $wp_query->get( 'name' ) ) ) {
 		return apply_filters(
-			'the_latest_comic_content_error',
+			'mangapress_the_latest_comic_content_error',
 			'<p class="error">No recent comics were found.</p>'
 		);
 	}
 
 	$thumbnail_size = $image_sizes['comic-page'] ?? 'large';
 
-	$post = $wp_query->posts[0];
+	$post = $wp_query->posts[0]; // @phpcs:ignore -- will be removed at a later date
 
 	setup_postdata( $post );
 
@@ -73,8 +74,8 @@ function mangapress_add_comic_to_latestcomic_page( $content ) {
 	require mangapress_get_content_template( 'latestcomic_page' );
 	$content = ob_get_clean();
 
-	$wp_query = $old_query;
+	$wp_query = $old_query; // @phpcs:ignore -- will be removed in a future version
 	wp_reset_postdata();
 
-	return apply_filters( 'the_latest_comic_content', $content );
+	return apply_filters( 'mangapress_the_latest_comic_content', $content );
 }

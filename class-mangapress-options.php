@@ -1,11 +1,18 @@
 <?php
 /**
- * MangaPress
+ * MangaPress Options Class
  *
- * @package mangapress-options
+ * @package MangaPress
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL
+ */
+
+/**
+ * MangaPress Options Class
+ *
+ * @package MangaPress
+ * @author Jess Green <jgreen at psy-dreamer.com>
  */
 final class MangaPress_Options {
 

@@ -1,3 +1,12 @@
+<?php
+/**
+ * Latest Comic content template
+ *
+ * @package MangaPress
+ */
+
+?>
+
 <h2 class="mangapress-comic-title">
 	<?php the_title(); ?>
 </h2>

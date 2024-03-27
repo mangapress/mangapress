@@ -95,10 +95,10 @@ function mangapress_create_comicarchive_page( $content ) {
 	require mangapress_get_content_template( $comicarchive_page_style );
 	$content = ob_get_clean();
 
-	$wp_query = $old_query; // @phpcs:ignore
+	$wp_query = $old_query; // @phpcs:ignore -- will be removed at a later date
 
-	wp_reset_query();  // @phpcs:ignore
+	wp_reset_query();  // @phpcs:ignore -- will be removed at a later date
 
-	// todo: need a deprecation catch for the_comicarchive_content filter.
+	// @phpcs:ignore -- todo: need a deprecation catch for the_comicarchive_content filter.
 	return apply_filters( 'mangapress_the_comicarchive_content', $content );
 }

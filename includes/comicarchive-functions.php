@@ -1,8 +1,8 @@
 <?php
 /**
- * mangapress
+ * MangaPress Comic Archive Functions
  *
- * @package comicarchive-functions
+ * @package MangaPress
  * @author Jess Green <jgreen at psy-dreamer.com>
  * @version $Id$
  * @license GPL

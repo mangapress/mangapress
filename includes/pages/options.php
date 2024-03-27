@@ -1,4 +1,10 @@
 <?php
+/**
+ * Manga+Press Options page
+ *
+ * @package MangaPress
+ */
+
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'You are not allowed to call this page directly.' );
 }
@@ -13,9 +19,6 @@ if ( ! current_user_can( 'manage_options' ) ) {
 }
 $mangapress_tab = ( filter_input( INPUT_GET, 'tab' ) ?? 'basic' );
 ?>
-<script type="text/javascript">
-	SyntaxHighlighter.all();
-</script>
 <div class="wrap">
 	<?php $this->options_page_tabs(); ?>
 
