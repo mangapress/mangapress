@@ -70,15 +70,17 @@ function mangapress_get_content_template( string $page ): string {
 			$template = 'comic-archive-gallery.php';
 			break;
 
+		case 'single':
+			$template = 'comic.php';
+			break;
+
 		default:
 			$template = 'latest-comic.php';
 	}
 
 	$template_file_found = locate_template( array( "templates/content/{$template}" ) );
-	$file                = $template_file_found
-		? $template_file_found : MP_ABSPATH . "templates/content/{$template}";
 
-	return $file;
+	return $template_file_found ?: MP_ABSPATH . "templates/content/{$template}";
 }
 
 
@@ -99,9 +101,12 @@ function mangapress_single_comic_template( string $default_template ): string {
 		return $default_template;
 	}
 
-	$default_template = locate_template( array( 'comics/single-comic.php', 'single-comic.php' ) );
+	$found = locate_template( array( 'comics/single-comic.php', 'single-comic.php' ) );
+	if ( $found ) {
+		return $found;
+	}
 
-	if ( '' === $default_template ) {
+	if ( '' === $default_template || 'template-canvas.php' === basename( $default_template ) ) {
 		add_filter( 'post_thumbnail_html', 'mangapress_disable_post_thumbnail', 500, 2 );
 		add_filter( 'the_content', 'mangapress_single_comic_content_filter' );
 		return $default_template;

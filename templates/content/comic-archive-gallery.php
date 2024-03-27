@@ -5,8 +5,10 @@
  * @package Manga_Press
  */
 
+$mangapress_allowed_html          = wp_kses_allowed_html( 'post' );
+$mangapress_allowed_html['style'] = true;
 ?>
-<?php echo wp_kses( mangapress_archive_gallery_style(), wp_kses_allowed_html( 'post' ) ); ?>
+<?php echo wp_kses( mangapress_archive_gallery_style(), $mangapress_allowed_html ); ?>
 <?php
 if ( have_posts() ) :
 	$mangapress_count = 0;

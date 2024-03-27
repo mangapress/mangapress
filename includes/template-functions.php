@@ -237,6 +237,7 @@ function mangapress_get_random_comic() {
 
 	return $random_post;
 }
+
 /**
  * CPT-neutral Clone of WordPress' get_calendar
  *
@@ -518,7 +519,6 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 	}
 	// @phpcs:enable
 }
-
 
 /**
  * Purge Manga+Press' calendar cache. Based on delete_get_calendar_cache()

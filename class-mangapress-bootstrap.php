@@ -103,7 +103,7 @@ class MangaPress_Bootstrap {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
-		add_filter( 'single_template', 'mangapress_single_comic_template' );
+		add_filter( 'template_include', 'mangapress_single_comic_template' );
 		add_filter( 'template_include', 'mangapress_latestcomic_page_template' );
 		add_filter( 'template_include', 'mangapress_comicarchive_page_template' );
 
