@@ -198,7 +198,9 @@ function mangapress_comic_navigation( array $args = array(), bool $echo = true )
 	}
 
 	if ( $echo ) {
-		echo esc_html( $comic_nav );
+		echo wp_kses( $comic_nav, wp_kses_allowed_html( 'post' ) );
+
+		return '';
 	} else {
 		return $comic_nav;
 	}
