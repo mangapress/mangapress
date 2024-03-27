@@ -23,9 +23,9 @@ class MangaPress_Bootstrap {
 	/**
 	 * Instance of MangaPress_Bootstrap
 	 *
-	 * @var MangaPress_Bootstrap
+	 * @var MangaPress_Bootstrap|null
 	 */
-	protected static MangaPress_Bootstrap $instance;
+	protected static ?MangaPress_Bootstrap $instance = null;
 
 
 	/**
@@ -147,7 +147,7 @@ class MangaPress_Bootstrap {
 	 * @return void
 	 */
 	public function set_options() {
-		$this->options = maybe_unserialize( get_option( 'mangapress_options' ) );
+		$this->options = json_decode( get_option( 'mangapress_options' ), true );
 	}
 
 

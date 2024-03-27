@@ -27,7 +27,6 @@ final class MangaPress_Options {
 		'basic'      => array(
 			'latestcomic_page'        => 0,
 			'group_comics'            => 0,
-			'group_by_parent'         => 0,
 			'comicarchive_page'       => 0,
 			'comicarchive_page_style' => 'list',
 			'archive_order'           => 'DESC',
@@ -45,7 +44,7 @@ final class MangaPress_Options {
 	);
 
 	/**
-	 * PHP5 Constructor function
+	 * PHP Constructor function
 	 *
 	 * @return void
 	 */
@@ -251,15 +250,6 @@ final class MangaPress_Options {
 					'default'     => 1,
 					'callback'    => array( $this, 'settings_field_cb' ),
 				),
-				'group_by_parent'         => array(
-					'id'          => 'group-by-parent',
-					'type'        => 'checkbox',
-					'title'       => __( 'Use Parent Category', 'mangapress' ),
-					'valid'       => 'boolean',
-					'description' => __( 'Group comics by top-most parent category. Use this option if you have sub-categories but want your navigation to function using the parent category.', 'mangapress' ),
-					'default'     => 1,
-					'callback'    => array( $this, 'settings_field_cb' ),
-				),
 				'comicarchive_page'       => array(
 					'id'       => 'archive-page',
 					'type'     => 'select',
@@ -458,7 +448,6 @@ final class MangaPress_Options {
 										? $options['basic']['archive_orderby']
 										: $available_options['basic']['archive_orderby']['default'],
 				'group_comics'    => $this->_sanitize_integer( $options, 'basic', 'group_comics' ),
-				'group_by_parent' => $this->_sanitize_integer( $options, 'basic', 'group_by_parent' ),
 			);
 
 			if ( 'no_val' !== $options['basic']['latestcomic_page'] ) {
