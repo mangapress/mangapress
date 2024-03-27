@@ -149,7 +149,7 @@ final class MangaPress_Admin {
 		echo '<h2 class="nav-tab-wrapper">';
 
 		foreach ( $links as $link ) {
-			echo esc_url( $link );
+			echo wp_kses( $link, wp_kses_allowed_html( 'post' ) );
 		}
 
 		echo '</h2>';

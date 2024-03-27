@@ -101,7 +101,7 @@ class MangaPress_Install {
 			add_option( 'mangapress_upgrade', 'yes', '', 'no' );
 		} elseif ( '' === self::$version ) {
 			add_option( 'mangapress_ver', MP_VERSION, '', 'no' );
-			add_option( 'mangapress_options', wp_json_encode( MangaPress_Options::get_default_options() ), '', 'no' );
+			add_option( 'mangapress_options', MangaPress_Options::get_default_options(), '', 'no' );
 		}
 
 		$this->bootstrap = MangaPress_Bootstrap::get_instance();

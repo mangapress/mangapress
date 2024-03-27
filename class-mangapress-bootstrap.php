@@ -147,7 +147,7 @@ class MangaPress_Bootstrap {
 	 * @return void
 	 */
 	public function set_options() {
-		$this->options = json_decode( get_option( 'mangapress_options' ), true );
+		$this->options = get_option( 'mangapress_options' );
 	}
 
 
