@@ -29,7 +29,7 @@
 	<!-- Exclude minified Javascript files. -->
 	<exclude-pattern>*.min.js</exclude-pattern>
 	<!-- Exclude lib/ these files will be updated in a later version -->
-	<exclude-pattern>lib/</exclude-pattern>
+<!--	<exclude-pattern>lib/</exclude-pattern>-->
 
 	<!-- Strip the filepaths down to the relevant bit. -->
 	<arg name="basepath" value="."/>

@@ -10,6 +10,7 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+
 /**
  * MangaPress_ContentType
  * This abstract class contains basic properties and methods
@@ -26,36 +27,28 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @var string
 	 */
-	protected $_name;
+	protected string $name;
 
 	/**
 	 * Object singular (human-readable) label
 	 *
 	 * @var string
 	 */
-	protected $_label_single;
+	protected string $label_single;
 
 	/**
 	 * Object plural (human-readable) label
 	 *
 	 * @var string
 	 */
-	protected $_label_plural;
-
-	/**
-	 * Text domain string for i8n
-	 * Must be set before arguments!
-	 *
-	 * @var string
-	 */
-	protected $_textdomain = '';
+	protected string $label_plural;
 
 	/**
 	 * Object arguments
 	 *
 	 * @var array
 	 */
-	protected $_args;
+	protected array $args;
 
 	/**
 	 * Object init
@@ -67,9 +60,9 @@ abstract class MangaPress_ContentType {
 	/**
 	 * PHP5 Constructor method
 	 *
-	 * @param array $options Optional. Pass Object parameters on construct
+	 * @param array|null $options Optional. Pass Object parameters on construct.
 	 */
-	public function __construct( $options = null ) {
+	public function __construct( array $options = null ) {
 		if ( is_array( $options ) ) {
 			$this->set_options( $options )
 				->init();
@@ -79,11 +72,12 @@ abstract class MangaPress_ContentType {
 	/**
 	 * Set the object name
 	 *
-	 * @param string $object_name
+	 * @param string $object_name Name of object.
+	 *
 	 * @return MangaPress_ContentType
 	 */
-	public function set_name( $object_name ) {
-		$this->_name = $object_name;
+	public function set_name( string $object_name ): MangaPress_ContentType {
+		$this->name = $object_name;
 
 		return $this;
 	}
@@ -93,17 +87,18 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @return string
 	 */
-	public function get_name() {
-		return $this->_name;
+	public function get_name(): string {
+		return $this->name;
 	}
 
 	/**
 	 * Set object options
 	 *
-	 * @param array $options
+	 * @param array $options Array of object options to parse.
+	 *
 	 * @return MangaPress_ContentType
 	 */
-	public function set_options( $options ) {
+	public function set_options( array $options ): MangaPress_ContentType {
 		foreach ( $options as $option_name => $value ) {
 			$method = 'set_' . $option_name;
 			if ( method_exists( $this, $method ) ) {
@@ -115,13 +110,14 @@ abstract class MangaPress_ContentType {
 	}
 
 	/**
-	 * Set the object's singular label
+	 * Set the object's singular label.
 	 *
-	 * @param string $object_single_name
+	 * @param string $object_single_name Object singular label name.
+	 *
 	 * @return MangaPress_ContentType
 	 */
-	public function set_singlename( $object_single_name ) {
-		$this->_label_single = $object_single_name;
+	public function set_singlename( string $object_single_name ): MangaPress_ContentType {
+		$this->label_single = $object_single_name;
 
 		return $this;
 	}
@@ -129,18 +125,13 @@ abstract class MangaPress_ContentType {
 	/**
 	 * Set the object's plural label
 	 *
-	 * @param string $object_pluralname
+	 * @param string $object_pluralname Object plural name.
+	 *
 	 * @return MangaPress_ContentType
 	 */
-	public function set_pluralname( $object_pluralname ) {
+	public function set_pluralname( string $object_pluralname ): MangaPress_ContentType {
 
-		$this->_label_plural = $object_pluralname;
-
-		return $this;
-	}
-
-	public function set_textdomain( $textdomain ) {
-		$this->_textdomain = $textdomain;
+		$this->label_plural = $object_pluralname;
 
 		return $this;
 	}
@@ -148,11 +139,12 @@ abstract class MangaPress_ContentType {
 	/**
 	 * Set object arguments
 	 *
-	 * @param array $args
+	 * @param array $args Array of arguments.
+	 *
 	 * @return MangaPress_ContentType
 	 */
-	public function set_arguments( $args = array() ) {
-		$this->_args = $args;
+	public function set_arguments( array $args = array() ): ?MangaPress_ContentType {
+		$this->args = $args;
 
 		return $this;
 	}

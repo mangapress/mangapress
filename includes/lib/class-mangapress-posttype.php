@@ -7,6 +7,7 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
+
 /**
  * MangaPress_PostType
  *
@@ -36,14 +37,14 @@ class MangaPress_PostType extends MangaPress_ContentType {
 	 *
 	 * @var array
 	 */
-	protected $_taxonomies = array();
+	protected $taxonomies = array();
 
 	/**
 	 * Object arguments
 	 *
 	 * @var array
 	 */
-	protected $_args = array(
+	protected array $args = array(
 		'labels'               => '',
 		'description'          => '',
 		'public'               => true,
@@ -72,32 +73,41 @@ class MangaPress_PostType extends MangaPress_ContentType {
 	 */
 	public function init() {
 
-		register_post_type( $this->_name, $this->_args );
+		register_post_type( $this->name, $this->args );
 	}
 
 
 	/**
 	 * Set object arguments
 	 *
-	 * @param array $args Array of arguments. Optional
-	 * @return JesGS_PostType
+	 * @param array $args Array of arguments. Optional.
+	 *
+	 * @return MangaPress_PostType
 	 */
-	public function set_arguments( $args = array() ) {
-		$args = array_merge( $this->_args, $args );
-		extract( $args );
+	public function set_arguments( array $args = array() ): MangaPress_PostType {
+		$args = array_merge( $this->args, $args );
+		extract( $args ); // @phpcs:ignore -- disabling warning for now.
 
 		$labels
 			= array(
-				'name'               => __( $this->_label_plural, $this->_textdomain ),
-				'singular_name'      => __( $this->_label_single, $this->_textdomain ),
-				'add_new'            => __( 'Add New', $this->_textdomain ),
-				'add_new_item'       => sprintf( __( 'Add New %s', $this->_textdomain ), $this->_label_single ),
-				'edit_item'          => sprintf( __( 'Edit %s', $this->_textdomain ), $this->_label_single ),
-				'view_item'          => sprintf( __( 'View %s', $this->_textdomain ), $this->_label_single ),
-				'search_items'       => sprintf( __( 'Search %s', $this->_textdomain ), $this->_label_plural ),
-				'not_found'          => sprintf( __( '%s not found', $this->_textdomain ), $this->_label_single ),
-				'not_found_in_trash' => sprintf( __( '%s not found in Trash', $this->_textdomain ), $this->_label_single ),
-				'parent_item_colon'  => sprintf( __( '%s: ', $this->_textdomain ), $this->_label_single ),
+				'name'               => $this->label_plural,
+				'singular_name'      => $this->label_single,
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'add_new'            => __( 'Add New', 'mangapress' ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'add_new_item'       => sprintf( __( 'Add New %s', 'mangapress' ), $this->label_single ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'edit_item'          => sprintf( __( 'Edit %s', 'mangapress' ), $this->label_single ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'view_item'          => sprintf( __( 'View %s', 'mangapress' ), $this->label_single ),
+				// translators: %s is the plural form of the object label set by the label_plural object property.
+				'search_items'       => sprintf( __( 'Search %s', 'mangapress' ), $this->label_plural ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'not_found'          => sprintf( __( '%s not found', 'mangapress' ), $this->label_single ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'not_found_in_trash' => sprintf( __( '%s not found in Trash', 'mangapress' ), $this->label_single ),
+				// translators: %s is the singular form of the object label defined by the label_single object property.
+				'parent_item_colon'  => sprintf( __( '%s: ', 'mangapress' ), $this->label_single ),
 			);
 
 		$args =
@@ -123,7 +133,7 @@ class MangaPress_PostType extends MangaPress_ContentType {
 				'show_in_nav_menus'    => $show_in_nav_menus,
 			);
 
-		$this->_args = $args;
+		$this->args = $args;
 
 		return $this;
 	}
@@ -131,11 +141,12 @@ class MangaPress_PostType extends MangaPress_ContentType {
 	/**
 	 * Set object taxonomies
 	 *
-	 * @param array $taxonomies
-	 * @return JesGS_PostType
+	 * @param array $taxonomies Array of taxonomies to assign to post-type.
+	 *
+	 * @return MangaPress_PostType
 	 */
-	public function set_taxonomies( $taxonomies ) {
-		$this->_taxonomies = $taxonomies;
+	public function set_taxonomies( array $taxonomies ): MangaPress_PostType {
+		$this->taxonomies = $taxonomies;
 
 		return $this;
 	}

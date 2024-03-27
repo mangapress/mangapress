@@ -22,10 +22,10 @@ class MangaPress_Checkbox extends MangaPress_Element {
 	 */
 	public function __toString() {
 		$label = '';
-		if ( ! empty( $this->_label ) ) {
+		if ( ! empty( $this->label ) ) {
 			$id    = $this->get_attributes( 'id' );
 			$class = " class=\"label-$id\"";
-			$label = "<label for=\"$id\"$class>$this->_label</label>\r\n";
+			$label = "<label for=\"$id\"$class>$this->label</label>\r\n";
 		}
 
 		$desc = $this->get_description();
@@ -35,7 +35,7 @@ class MangaPress_Checkbox extends MangaPress_Element {
 
 		$default  = $this->get_default();
 		$attr_arr = array();
-		foreach ( $this->_attr as $name => $value ) {
+		foreach ( $this->attr as $name => $value ) {
 			if ( 'value' !== $name ) {
 				$attr_arr[] = "{$name}=\"{$value}\"";
 			} else {
@@ -47,10 +47,10 @@ class MangaPress_Checkbox extends MangaPress_Element {
 
 		$checked = checked( $default, $this->get_value(), false );
 
-		$htmlArray['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+		$html_array['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
 
-		$this->_html = implode( ' ', $htmlArray );
+		$this->html = implode( ' ', $html_array );
 
-		return $this->_html;
+		return $this->html;
 	}
 }

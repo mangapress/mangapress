@@ -55,12 +55,11 @@ if ( ! defined( 'MP_LANG' ) ) {
 	define( 'MP_LANG', $mangapress_plugin_folder . '/languages' );
 }
 
-require_once MP_ABSPATH . 'includes/lib/form/class-element.php';
-require_once MP_ABSPATH . 'includes/lib/class-flash-messages.php';
-require_once MP_ABSPATH . 'includes/lib/class-content-type.php';
-require_once MP_ABSPATH . 'includes/lib/class-post-type.php';
-require_once MP_ABSPATH . 'includes/lib/class-taxonomy.php';
-require_once MP_ABSPATH . 'includes/lib/class-mp-calendar-widget.php';
+require_once MP_ABSPATH . 'includes/lib/form/class-mangapress-element.php';
+require_once MP_ABSPATH . 'includes/lib/class-mangapress-contenttype.php';
+require_once MP_ABSPATH . 'includes/lib/class-mangapress-posttype.php';
+require_once MP_ABSPATH . 'includes/lib/class-mangapress-taxonomy.php';
+require_once MP_ABSPATH . 'includes/lib/class-mangapress-widget-calendar.php';
 require_once MP_ABSPATH . 'includes/functions.php';
 require_once MP_ABSPATH . 'includes/template-functions.php';
 require_once MP_ABSPATH . 'class-mangapress-install.php';
@@ -123,15 +122,6 @@ class MangaPress_Bootstrap {
 	 */
 	protected MangaPress_Admin $admin_helper;
 
-
-	/**
-	 * Flash Message helper
-	 *
-	 * @var MangaPress_FlashMessages
-	 */
-	protected MangaPress_FlashMessages $flashmessage_helper;
-
-
 	/**
 	 * Static function used to initialize Bootstrap
 	 *
@@ -176,14 +166,9 @@ class MangaPress_Bootstrap {
 	public function init() {
 		$this->set_options();
 
-		$this->posts_helper        = new MangaPress_Posts();
-		$this->admin_helper        = new MangaPress_Admin();
-		$this->options_helper      = new MangaPress_Options();
-		$this->flashmessage_helper = new MangaPress_FlashMessages(
-			array(
-				'transient_name' => 'mangapress_messages',
-			)
-		);
+		$this->posts_helper   = new MangaPress_Posts();
+		$this->admin_helper   = new MangaPress_Admin();
+		$this->options_helper = new MangaPress_Options();
 
 		$this->load_current_options();
 
@@ -210,8 +195,8 @@ class MangaPress_Bootstrap {
 	/**
 	 * Get a MangaPress helper
 	 *
-	 * @param string $helper_name Allowed values: admin, options, posts, flashmessages.
-	 * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\MangaPress_FlashMessages|\WP_Error
+	 * @param string $helper_name Allowed values: admin, options, posts.
+	 * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\WP_Error
 	 */
 	public function get_helper( $helper_name ) {
 		$helper = "{$helper_name}_helper";
