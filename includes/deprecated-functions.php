@@ -161,7 +161,7 @@ function mangapress_get_boundary_comic( $in_same_cat = false, $group_by_parent =
  * @deprecated 3.0.3
  * @return array
  */
-function mangapress_get_object_terms( int $object_id, $taxonomy, int $get = MP_CATEGORY_PARENTS ): array {
+function mangapress_get_object_terms( int $object_id, $taxonomy, int $get = 1 ): array {
 	_deprecated_function( __FUNCTION__, 'This function is deprecated. Please use wp_get_object_terms instead.' );
 	return wp_get_object_terms( $object_id, $taxonomy );
 }

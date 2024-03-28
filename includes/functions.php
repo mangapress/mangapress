@@ -10,20 +10,6 @@
  */
 
 /**
- * Includes of template files.
- */
-//require_once MP_ABSPATH . 'includes/query.php';
-//require_once MP_ABSPATH . 'includes/latestcomic-functions.php';
-//require_once MP_ABSPATH . 'includes/comicarchive-functions.php';
-//require_once MP_ABSPATH . 'includes/latestcomic-template-handlers.php';
-//require_once MP_ABSPATH . 'includes/comicarchive-template-handlers.php';
-
-
-const MP_CATEGORY_PARENTS  = 1;
-const MP_CATEGORY_CHILDREN = 2;
-const MP_CATEGORY_ALL      = 3;
-
-/**
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.
  *

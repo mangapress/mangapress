@@ -526,13 +526,6 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 function mangapress_delete_get_calendar_cache() {
 	wp_cache_delete( 'mangapress_get_calendar', 'mangapress_calendar' );
 }
-add_action( 'save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache' );
-add_action( 'delete_post', 'mangapress_delete_get_calendar_cache' );
-add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
-add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' );
-
-
-
 
 /**
  * Retrieve an archive template based on type. This function modifies the global $wp_query object.

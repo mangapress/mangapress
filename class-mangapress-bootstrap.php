@@ -101,6 +101,11 @@ class MangaPress_Bootstrap {
 
 		$this->load_current_options();
 
+		add_action( 'save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache' );
+		add_action( 'delete_post', 'mangapress_delete_get_calendar_cache' );
+		add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
+		add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 		add_filter( 'template_include', 'mangapress_single_comic_template' );

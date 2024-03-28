@@ -28,6 +28,7 @@
 				<exclude name="*.xml" />
 				<exclude name="composer.*" />
 				<exclude name="README.md" />
+				<exclude name="function-stubs.php" />
 			</fileset>
 		</copy>
 	</target>
