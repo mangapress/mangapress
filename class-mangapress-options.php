@@ -33,9 +33,10 @@ final class MangaPress_Options {
 			'archive_orderby'         => 'date',
 		),
 		'comic_page' => array(
-			'generate_comic_page' => 0,
-			'comic_page_width'    => 600,
-			'comic_page_height'   => 1000,
+			'generate_comic_page'   => 0,
+			'comic_page_width'      => 600,
+			'comic_page_height'     => 1000,
+			'enable_opengraph_tags' => 0,
 		),
 		'nav'        => array(
 			'enable_random_link' => false,
@@ -309,7 +310,7 @@ final class MangaPress_Options {
 				),
 			),
 			'comic_page' => array(
-				'generate_comic_page' => array(
+				'generate_comic_page'   => array(
 					'id'          => 'generate-page',
 					'type'        => 'checkbox',
 					'title'       => __( 'Generate Comic Page', 'mangapress' ),
@@ -318,7 +319,7 @@ final class MangaPress_Options {
 					'default'     => 1,
 					'callback'    => array( $this, 'settings_field_cb' ),
 				),
-				'comic_page_width'    => array(
+				'comic_page_width'      => array(
 					'id'       => 'page-width',
 					'type'     => 'text',
 					'title'    => __( 'Comic Page Width', 'mangapress' ),
@@ -326,13 +327,22 @@ final class MangaPress_Options {
 					'default'  => 600,
 					'callback' => array( $this, 'settings_field_cb' ),
 				),
-				'comic_page_height'   => array(
+				'comic_page_height'     => array(
 					'id'       => 'page-height',
 					'type'     => 'text',
 					'title'    => __( 'Comic Page Height', 'mangapress' ),
 					'valid'    => '/[0-9]/',
 					'default'  => 1000,
 					'callback' => array( $this, 'settings_field_cb' ),
+				),
+				'enable_opengraph_tags' => array(
+					'id'          => 'opengraph-tag',
+					'type'        => 'checkbox',
+					'title'       => __( 'Enable Open Graph (OG) Tags', 'mangapress' ),
+					'description' => __( 'Enable Open Graph (og:*) tags on comic pages.', 'mangapress' ),
+					'valid'       => 'boolean',
+					'default'     => 1,
+					'callback'    => array( $this, 'settings_field_cb' ),
 				),
 			),
 			'nav'        => array(

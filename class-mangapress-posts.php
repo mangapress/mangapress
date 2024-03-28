@@ -136,6 +136,7 @@ class MangaPress_Posts {
 				'arguments'  => array(
 					'supports'             => array(
 						'title',
+						'excerpt',
 						'comments',
 						'thumbnails',
 						'publicize',

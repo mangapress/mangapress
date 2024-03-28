@@ -212,3 +212,15 @@ function mangapress_version() {
 function mangapress_set_post_type_for_boundary( $query ) {
 	$query->set( 'post_type', 'mangapress_comic' );
 }
+
+/**
+ * Load Open Graph tags template
+ */
+function mangapress_add_opengraph_tags() {
+	$theme_template = locate_template( array( 'comic/opengraph-tags.php' ), false, false );
+	if ( ! $theme_template ) {
+		require_once MP_ABSPATH . 'templates/opengraph-tags.php';
+	} else {
+		require_once $theme_template;
+	}
+}

@@ -100,7 +100,10 @@ class MangaPress_Bootstrap {
 		$this->options_helper = new MangaPress_Options();
 
 		$this->load_current_options();
-
+		$enable_opengraph_tags = $this->get_option( 'comic_page', 'enable_opengraph_tags' );
+		if ( $enable_opengraph_tags ) {
+			add_action( 'wp_head', 'mangapress_add_opengraph_tags', 5 );
+		}
 		add_action( 'save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache' );
 		add_action( 'delete_post', 'mangapress_delete_get_calendar_cache' );
 		add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
