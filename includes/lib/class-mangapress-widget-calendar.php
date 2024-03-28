@@ -13,7 +13,7 @@
  * @package MangaPress_Widget_Calendar
  * @version $Id$
  */
-class MangaPress_Widget_Calendar extends WP_Widget {
+class MangaPress_Widget_Calendar extends \WP_Widget {
 
 
 	/**

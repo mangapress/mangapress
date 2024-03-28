@@ -8,12 +8,38 @@
     "license": "GPL2",
     "authors": [
         {
-            "name": "y"
+            "name": "Jess Green"
         }
     ],
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "autoload": {
+      "files": [
+        "includes/lib/form/class-mangapress-element.php",
+        "includes/lib/form/element/class-mangapress-checkbox.php",
+        "includes/lib/form/element/class-mangapress-radio.php",
+        "includes/lib/form/element/class-mangapress-select.php",
+        "includes/lib/form/element/class-mangapress-text.php",
+        "includes/lib/form/element/class-mangapress-textarea.php",
+        "includes/lib/class-mangapress-contenttype.php",
+        "includes/lib/class-mangapress-posttype.php",
+        "includes/lib/class-mangapress-taxonomy.php",
+        "includes/query.php",
+        "includes/latestcomic-functions.php",
+        "includes/comicarchive-functions.php",
+        "includes/latestcomic-template-handlers.php",
+        "includes/comicarchive-template-handlers.php",
+        "includes/functions.php",
+        "includes/deprecated-functions.php",
+        "includes/template-functions.php",
+        "class-mangapress-install.php",
+        "class-mangapress-admin.php",
+        "class-mangapress-options.php",
+        "class-mangapress-posts.php",
+        "class-mangapress-bootstrap.php"
+      ]
     }
 }

@@ -252,9 +252,9 @@ class MangaPress_Element {
 		return $attr;
 	}
 }
-
-require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-checkbox.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-radio.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-select.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-text.php';
-require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-textarea.php';
+//
+//require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-checkbox.php';
+//require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-radio.php';
+//require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-select.php';
+//require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-text.php';
+//require_once MP_ABSPATH . '/includes/lib/form/element/class-mangapress-textarea.php';

@@ -59,19 +59,7 @@ if ( ! defined( 'MP_LANG' ) ) {
 	define( 'MP_LANG', $mangapress_plugin_folder . '/languages' );
 }
 
-require_once MP_ABSPATH . 'includes/lib/form/class-mangapress-element.php';
-require_once MP_ABSPATH . 'includes/lib/class-mangapress-contenttype.php';
-require_once MP_ABSPATH . 'includes/lib/class-mangapress-posttype.php';
-require_once MP_ABSPATH . 'includes/lib/class-mangapress-taxonomy.php';
-require_once MP_ABSPATH . 'includes/lib/class-mangapress-widget-calendar.php';
-require_once MP_ABSPATH . 'includes/functions.php';
-require_once MP_ABSPATH . 'includes/deprecated-functions.php';
-require_once MP_ABSPATH . 'includes/template-functions.php';
-require_once MP_ABSPATH . 'class-mangapress-install.php';
-require_once MP_ABSPATH . 'class-mangapress-admin.php';
-require_once MP_ABSPATH . 'class-mangapress-options.php';
-require_once MP_ABSPATH . 'class-mangapress-posts.php';
-require_once MP_ABSPATH . 'class-mangapress-bootstrap.php';
+require_once MP_ABSPATH . 'vendor/autoload.php';
 
 $mangapress_install = MangaPress_Install::get_instance();
 

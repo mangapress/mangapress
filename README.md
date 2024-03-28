@@ -15,6 +15,7 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
    * Add support for block themes and full site editing.
    * Add Page indicators to Page screen in Admin.
    * Add file autoloading (non PSR-4).
+   * Add JSON-LD for Comic post-type?
    * Add unit tests?
    * Bring over features from cancelled 4.0/4.1 release.
      * [ ] Comic bookmarking (#24)
