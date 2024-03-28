@@ -5,7 +5,7 @@ Tags: webcomics, comics, art
 Requires at least: 6.4
 Requires PHP: 7.4
 Tested up to: 6.5
-Stable tag: 3.5
+Stable tag: 3.2
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
