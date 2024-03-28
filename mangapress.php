@@ -60,6 +60,7 @@ if ( ! defined( 'MP_LANG' ) ) {
 }
 
 require_once MP_ABSPATH . 'vendor/autoload.php';
+require_once MP_ABSPATH . 'includes/lib/class-mangapress-widget-calendar.php';
 
 $mangapress_install = MangaPress_Install::get_instance();
 

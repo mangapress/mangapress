@@ -26,11 +26,21 @@
 				<exclude name=".gitignore" />
 				<exclude name=".editorconfig" />
 				<exclude name="*.xml" />
-				<exclude name="composer.*" />
+				<exclude name="composer.lock" />
 				<exclude name="README.md" />
-				<exclude name="function-stubs.php" />
 			</fileset>
 		</copy>
+
+		<echo msg="Running composer install --no-dev in build directory" />
+		<exec executable="composer" dir="build/current/mangapress" passthru="yes">
+			<arg value="install"/>
+			<arg value="--no-dev"/>
+		</exec>
+
+		<echo msg="Remove composer files..." />
+		<exec executable="rm" dir="build/current/mangapress" passthru="yes">
+			<arg value="composer.*" />
+		</exec>
 	</target>
 
 	<!-- ============================================  -->
