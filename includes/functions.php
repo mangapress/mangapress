@@ -106,7 +106,7 @@ function mangapress_single_comic_template( string $default_template ): string {
 		return $found;
 	}
 
-	if ( '' === $default_template || 'template-canvas.php' === basename( $default_template ) ) {
+	if ( '' === $default_template || 'template-canvas.php' === basename( $default_template ) || 'single.php' === basename( $default_template ) ) {
 		add_filter( 'post_thumbnail_html', 'mangapress_disable_post_thumbnail', 500, 2 );
 		add_filter( 'the_content', 'mangapress_single_comic_content_filter' );
 		return $default_template;

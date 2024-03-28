@@ -14,14 +14,15 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 #### 3.5.0 — Planned
    * Add support for block themes and full site editing
 
-### 3.0
-#### 3.0.3
+### 3.1 — Stable
+#### 3.1.0
    * Refactoring and code cleanup
    * Deprecation of functions in favor of WordPress Core functions
    * Added better block theme support
    * Removed Group By parent option due to code complexity and ease of maintenance
    * Added WordPress REST api support
 
+### 3.0
 #### 3.0.2
    * Change PHP requirement to 7.4
    * Updated code to be PHP 8-compliant
