@@ -7,15 +7,17 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
+namespace MangaPress\Form;
+
 /**
- * MangaPress_Element
+ * Element
  * Abstract class used to define basic functionality for extending classes
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Element
+ * @package Element
  * @version $Id$
  */
-class MangaPress_Element {
+class Element {
 
 	/**
 	 * Elements HTML attributes array
@@ -91,9 +93,9 @@ class MangaPress_Element {
 	 *
 	 * @param array $options Array of element options.
 	 *
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_options( array $options ): MangaPress_Element {
+	public function set_options( array $options ): Element {
 		foreach ( $options as $option_name => $value ) {
 			$method = 'set_' . $option_name;
 			if ( method_exists( $this, $method ) ) {
@@ -108,9 +110,9 @@ class MangaPress_Element {
 	 * Add attributes to element
 	 *
 	 * @param array $attributes Array of attributes.
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function add_attributes( array $attributes = array() ): MangaPress_Element {
+	public function add_attributes( array $attributes = array() ): Element {
 		foreach ( $attributes as $attr => $value ) {
 			$this->set_attributes( $attr );
 		}
@@ -138,9 +140,9 @@ class MangaPress_Element {
 	 *
 	 * @param array $attr Array of element attributes.
 	 *
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_attributes( array $attr ): MangaPress_Element {
+	public function set_attributes( array $attr ): Element {
 		foreach ( $attr as $key => $value ) {
 			$this->attr[ $key ] = $value;
 		}
@@ -153,9 +155,9 @@ class MangaPress_Element {
 	 *
 	 * @param string $text Element label text.
 	 *
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_label( string $text = '' ): MangaPress_Element {
+	public function set_label( string $text = '' ): Element {
 
 		$this->label = $text;
 
@@ -166,9 +168,9 @@ class MangaPress_Element {
 	 * Set default value
 	 *
 	 * @param mixed $default_value Default value of element.
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_default( $default_value ): MangaPress_Element {
+	public function set_default( $default_value ): Element {
 		$this->default_value = $default_value;
 
 		return $this;
@@ -197,9 +199,9 @@ class MangaPress_Element {
 	 *
 	 * @param string $data_type Data type of element.
 	 *
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_data_type( string $data_type ): MangaPress_Element {
+	public function set_data_type( string $data_type ): Element {
 		$this->data_type = $data_type;
 
 		return $this;
@@ -219,9 +221,9 @@ class MangaPress_Element {
 	 *
 	 * @param string $description Form element description.
 	 *
-	 * @return \MangaPress_Element
+	 * @return \Element
 	 */
-	public function set_description( string $description ): MangaPress_Element {
+	public function set_description( string $description ): Element {
 		$this->description = $description;
 
 		return $this;

@@ -22,7 +22,7 @@ function mangapress_get_latest_comic() {
 	$post_name = $wpdb->get_var(
 		$wpdb->prepare(
 			'SELECT post_name FROM ' . $wpdb->posts . '  WHERE post_type=%s AND post_status="publish" ORDER BY post_date DESC LIMIT 1',
-			MangaPress_Posts::POST_TYPE
+			MangaPress\Posts::POST_TYPE
 		)
 	);
 

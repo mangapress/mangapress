@@ -16,7 +16,7 @@ if ( have_posts() ) :
 		?>
 	<li class="archive-item archive-item-<?php echo esc_attr( $mangapress_c ); ?>"><a href="<?php the_permalink(); ?>">
 		<?php the_title(); ?></a>
-		<span class="comic-post-date"><?php the_time( MangaPress_Posts::COMIC_ARCHIVE_DATEFORMAT ); ?></span>
+		<span class="comic-post-date"><?php the_time( MangaPress\Posts::COMIC_ARCHIVE_DATEFORMAT ); ?></span>
 		</li>
 	<?php endwhile; ?>
 

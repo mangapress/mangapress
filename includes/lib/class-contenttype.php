@@ -6,20 +6,22 @@
  * Namespaces would be very handy
  *
  * @package WordPress_PostType_Framework
- * @subpackage MangaPress_FrameWork_Helper
+ * @subpackage FrameWork_Helper
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
 
+namespace MangaPress\ContentType;
+
 /**
- * MangaPress_ContentType
+ * ContentType
  * This abstract class contains basic properties and methods
  * used by the PostType and Taxonomy classes.
  *
- * @package MangaPress_ContentType
+ * @package ContentType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-abstract class MangaPress_ContentType {
+abstract class ContentType {
 
 
 	/**
@@ -74,9 +76,9 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @param string $object_name Name of object.
 	 *
-	 * @return MangaPress_ContentType
+	 * @return ContentType
 	 */
-	public function set_name( string $object_name ): MangaPress_ContentType {
+	public function set_name( string $object_name ): ContentType {
 		$this->name = $object_name;
 
 		return $this;
@@ -96,9 +98,9 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @param array $options Array of object options to parse.
 	 *
-	 * @return MangaPress_ContentType
+	 * @return ContentType
 	 */
-	public function set_options( array $options ): MangaPress_ContentType {
+	public function set_options( array $options ): ContentType {
 		foreach ( $options as $option_name => $value ) {
 			$method = 'set_' . $option_name;
 			if ( method_exists( $this, $method ) ) {
@@ -114,9 +116,9 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @param string $object_single_name Object singular label name.
 	 *
-	 * @return MangaPress_ContentType
+	 * @return ContentType
 	 */
-	public function set_singlename( string $object_single_name ): MangaPress_ContentType {
+	public function set_singlename( string $object_single_name ): ContentType {
 		$this->label_single = $object_single_name;
 
 		return $this;
@@ -127,9 +129,9 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @param string $object_pluralname Object plural name.
 	 *
-	 * @return MangaPress_ContentType
+	 * @return ContentType
 	 */
-	public function set_pluralname( string $object_pluralname ): MangaPress_ContentType {
+	public function set_pluralname( string $object_pluralname ): ContentType {
 
 		$this->label_plural = $object_pluralname;
 
@@ -141,9 +143,9 @@ abstract class MangaPress_ContentType {
 	 *
 	 * @param array $args Array of arguments.
 	 *
-	 * @return MangaPress_ContentType
+	 * @return ContentType
 	 */
-	public function set_arguments( array $args = array() ): ?MangaPress_ContentType {
+	public function set_arguments( array $args = array() ): ?ContentType {
 		$this->args = $args;
 
 		return $this;

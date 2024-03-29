@@ -3,18 +3,20 @@
  * WordPress_PostType_Framework
  *
  * @package WordPress_PostType_Framework
- * @subpackage MangaPress_Taxonomy
+ * @subpackage Taxonomy
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
 
+namespace MangaPress\ContentType;
+
 /**
- * MangaPress_Taxonomy
+ * Taxonomy
  *
- * @package MangaPress_Taxonomy
+ * @package Taxonomy
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_Taxonomy extends MangaPress_ContentType {
+class Taxonomy extends ContentType {
 
 
 	/**
@@ -55,9 +57,9 @@ class MangaPress_Taxonomy extends MangaPress_ContentType {
 	 *
 	 * @param array $args Array of object arguments.
 	 *
-	 * @return MangaPress_Taxonomy
+	 * @return Taxonomy
 	 */
-	public function set_arguments( array $args = array() ): MangaPress_Taxonomy {
+	public function set_arguments( array $args = array() ): Taxonomy {
 
 		$args = array_merge( $this->args, $args );
 		extract( $args ); // @phpcs:ignore -- suppressing for now.
@@ -114,9 +116,9 @@ class MangaPress_Taxonomy extends MangaPress_ContentType {
 	 *
 	 * @param array $object_types Objects to set.
 	 *
-	 * @return MangaPress_Taxonomy
+	 * @return Taxonomy
 	 */
-	public function set_objects( array $object_types ): MangaPress_Taxonomy {
+	public function set_objects( array $object_types ): Taxonomy {
 		$this->object_types = $object_types;
 
 		return $this;

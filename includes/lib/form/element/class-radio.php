@@ -1,22 +1,26 @@
 <?php
 /**
- * MangaPress_Framework
+ * Framework
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
 
+namespace MangaPress\Form\Element;
+use MangaPress\Form\Element as Element;
+
 /**
- * MangaPress_Checkbox
+ * Radio
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Checkbox
+ * @package Radio
  * @version $Id$
  */
-class MangaPress_Checkbox extends MangaPress_Element {
+class Radio extends Element {
+
 
 	/**
-	 * Display form element
+	 * Echo form element
 	 *
 	 * @return string
 	 */

@@ -3,18 +3,20 @@
  * WordPress_PostType_Framework
  *
  * @package WordPress_PostType_Framework
- * @subpackage MangaPress_PostType
+ * @subpackage PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
 
+namespace MangaPress\ContentType;
+
 /**
- * MangaPress_PostType
+ * PostType
  *
- * @package MangaPress_PostType
+ * @package PostType
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_PostType extends MangaPress_ContentType {
+class PostType extends ContentType {
 
 
 	/**
@@ -82,9 +84,9 @@ class MangaPress_PostType extends MangaPress_ContentType {
 	 *
 	 * @param array $args Array of arguments. Optional.
 	 *
-	 * @return MangaPress_PostType
+	 * @return PostType
 	 */
-	public function set_arguments( array $args = array() ): MangaPress_PostType {
+	public function set_arguments( array $args = array() ): PostType {
 		$args = array_merge( $this->args, $args );
 		extract( $args ); // @phpcs:ignore -- disabling warning for now.
 
@@ -143,9 +145,9 @@ class MangaPress_PostType extends MangaPress_ContentType {
 	 *
 	 * @param array $taxonomies Array of taxonomies to assign to post-type.
 	 *
-	 * @return MangaPress_PostType
+	 * @return PostType
 	 */
-	public function set_taxonomies( array $taxonomies ): MangaPress_PostType {
+	public function set_taxonomies( array $taxonomies ): PostType {
 		$this->taxonomies = $taxonomies;
 
 		return $this;

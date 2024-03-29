@@ -6,6 +6,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
+namespace MangaPress;
+
 /**
  * MangaPress Installation Class
  *
@@ -13,7 +15,7 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @version $Id$
  */
-class MangaPress_Install {
+class Install {
 
 
 
@@ -36,25 +38,25 @@ class MangaPress_Install {
 	/**
 	 * Instance of Bootstrap class
 	 *
-	 * @var \MangaPress_Bootstrap
+	 * @var \Bootstrap
 	 */
-	protected MangaPress_Bootstrap $bootstrap;
+	protected Bootstrap $bootstrap;
 
 
 	/**
-	 * Instance of MangaPress_Install
+	 * Instance of Install
 	 *
-	 * @var \MangaPress_Install|null
+	 * @var \Install|null
 	 */
-	protected static ?MangaPress_Install $instance = null;
+	protected static ?Install $instance = null;
 
 
 	/**
 	 * Get instance of
 	 *
-	 * @return MangaPress_Install
+	 * @return Install
 	 */
-	public static function get_instance(): MangaPress_Install {
+	public static function get_instance(): Install {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
@@ -101,10 +103,10 @@ class MangaPress_Install {
 			add_option( 'mangapress_upgrade', 'yes', '', 'no' );
 		} elseif ( '' === self::$version ) {
 			add_option( 'mangapress_ver', MP_VERSION, '', 'no' );
-			add_option( 'mangapress_options', MangaPress_Options::get_default_options(), '', 'no' );
+			add_option( 'mangapress_options', Options::get_default_options(), '', 'no' );
 		}
 
-		$this->bootstrap = MangaPress_Bootstrap::get_instance();
+		$this->bootstrap = Bootstrap::get_instance();
 		$this->bootstrap->init();
 		$this->after_plugin_activation();
 
@@ -134,7 +136,7 @@ class MangaPress_Install {
 		// create a default series category.
 		$term = wp_insert_term(
 			'Default Series',
-			MangaPress_Posts::TAX_SERIES,
+			Posts::TAX_SERIES,
 			array(
 				'description' => __( 'Default Series category created when plugin is activated. It is suggested that you rename this category.', 'mangapress' ),
 				'slug'        => 'default-series',

@@ -3,14 +3,16 @@
  * Plugin bootstrap class
  *
  * @package MangaPress
- * @subpackage MangaPress_Bootstrap
+ * @subpackage Bootstrap
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
+
+namespace MangaPress;
 
 /**
  * Plugin bootstrap class.
  */
-class MangaPress_Bootstrap {
+class Bootstrap {
 
 	/**
 	 * Options array
@@ -21,35 +23,35 @@ class MangaPress_Bootstrap {
 
 
 	/**
-	 * Instance of MangaPress_Bootstrap
+	 * Instance of Bootstrap
 	 *
-	 * @var MangaPress_Bootstrap|null
+	 * @var Bootstrap|null
 	 */
-	protected static ?MangaPress_Bootstrap $instance = null;
+	protected static ?Bootstrap $instance = null;
 
 
 	/**
 	 * MangaPress Posts object
 	 *
-	 * @var \MangaPress_Posts
+	 * @var Posts
 	 */
-	protected MangaPress_Posts $posts_helper;
+	protected Posts $posts_helper;
 
 
 	/**
 	 * Options helper object
 	 *
-	 * @var \MangaPress_Options
+	 * @var Options
 	 */
-	protected MangaPress_Options $options_helper;
+	protected Options $options_helper;
 
 
 	/**
 	 * Admin page helper
 	 *
-	 * @var MangaPress_Admin
+	 * @var Admin
 	 */
-	protected MangaPress_Admin $admin_helper;
+	protected Admin $admin_helper;
 
 	/**
 	 * Static function used to initialize Bootstrap
@@ -62,11 +64,11 @@ class MangaPress_Bootstrap {
 
 
 	/**
-	 * Get instance of MangaPress_Bootstrap
+	 * Get instance of Bootstrap
 	 *
-	 * @return MangaPress_Bootstrap
+	 * @return Bootstrap
 	 */
-	public static function get_instance(): MangaPress_Bootstrap {
+	public static function get_instance(): Bootstrap {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
@@ -95,9 +97,9 @@ class MangaPress_Bootstrap {
 	public function init() {
 		$this->set_options();
 
-		$this->posts_helper   = new MangaPress_Posts();
-		$this->admin_helper   = new MangaPress_Admin();
-		$this->options_helper = new MangaPress_Options();
+		$this->posts_helper   = new Posts();
+		$this->admin_helper   = new Admin();
+		$this->options_helper = new Options();
 
 		$this->load_current_options();
 		$enable_opengraph_tags = $this->get_option( 'comic_page', 'enable_opengraph_tags' );
@@ -114,7 +116,7 @@ class MangaPress_Bootstrap {
 		add_filter( 'template_include', 'mangapress_comicarchive_page_template' );
 
 		if ( get_option( 'mangapress_upgrade' ) === 'yes' ) {
-			MangaPress_Install::get_instance()->do_upgrade();
+			Install::get_instance()->do_upgrade();
 		}
 	}
 
@@ -123,7 +125,7 @@ class MangaPress_Bootstrap {
 	 * Register widgets
 	 */
 	public function widgets_init() {
-		register_widget( 'MangaPress_Widget_Calendar' );
+		register_widget( 'MangaPress\Widget_Calendar' );
 	}
 
 
@@ -131,7 +133,7 @@ class MangaPress_Bootstrap {
 	 * Get a MangaPress helper
 	 *
 	 * @param string $helper_name Allowed values: admin, options, posts.
-	 * @return \MangaPress_Admin|\MangaPress_Options|\MangaPress_Posts|\WP_Error
+	 * @return \Admin|\Options|\Posts|\WP_Error
 	 */
 	public function get_helper( $helper_name ) {
 		$helper = "{$helper_name}_helper";
@@ -148,7 +150,7 @@ class MangaPress_Bootstrap {
 	 * MangaPress options are updated.
 	 *
 	 * @uses init()
-	 * @see MangaPress_Bootstrap::init()
+	 * @see Bootstrap::init()
 	 *
 	 * @return void
 	 */

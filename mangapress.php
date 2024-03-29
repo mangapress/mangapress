@@ -60,11 +60,11 @@ if ( ! defined( 'MP_LANG' ) ) {
 }
 
 require_once MP_ABSPATH . 'vendor/autoload.php';
-require_once MP_ABSPATH . 'includes/lib/class-mangapress-widget-calendar.php';
+require_once MP_ABSPATH . 'includes/lib/class-widget-calendar.php';
 
-$mangapress_install = MangaPress_Install::get_instance();
+$mangapress_install = MangaPress\Install::get_instance();
 
 register_activation_hook( __FILE__, array( $mangapress_install, 'do_activate' ) );
 register_deactivation_hook( __FILE__, array( $mangapress_install, 'do_deactivate' ) );
 
-add_action( 'plugins_loaded', array( 'MangaPress_Bootstrap', 'load_plugin' ) );
+add_action( 'plugins_loaded', array( 'MangaPress\Bootstrap', 'load_plugin' ) );

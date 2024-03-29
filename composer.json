@@ -18,15 +18,15 @@
     },
     "autoload": {
       "files": [
-        "includes/lib/form/class-mangapress-element.php",
-        "includes/lib/form/element/class-mangapress-checkbox.php",
-        "includes/lib/form/element/class-mangapress-radio.php",
-        "includes/lib/form/element/class-mangapress-select.php",
-        "includes/lib/form/element/class-mangapress-text.php",
-        "includes/lib/form/element/class-mangapress-textarea.php",
-        "includes/lib/class-mangapress-contenttype.php",
-        "includes/lib/class-mangapress-posttype.php",
-        "includes/lib/class-mangapress-taxonomy.php",
+        "includes/lib/form/class-element.php",
+        "includes/lib/form/element/class-checkbox.php",
+        "includes/lib/form/element/class-radio.php",
+        "includes/lib/form/element/class-select.php",
+        "includes/lib/form/element/class-text.php",
+        "includes/lib/form/element/class-textarea.php",
+        "includes/lib/class-contenttype.php",
+        "includes/lib/class-posttype.php",
+        "includes/lib/class-taxonomy.php",
         "includes/query.php",
         "includes/latestcomic-functions.php",
         "includes/comicarchive-functions.php",
@@ -35,11 +35,11 @@
         "includes/functions.php",
         "includes/deprecated-functions.php",
         "includes/template-functions.php",
-        "class-mangapress-install.php",
-        "class-mangapress-admin.php",
-        "class-mangapress-options.php",
-        "class-mangapress-posts.php",
-        "class-mangapress-bootstrap.php"
+        "class-install.php",
+        "class-admin.php",
+        "class-options.php",
+        "class-posts.php",
+        "class-bootstrap.php"
       ]
     }
 }

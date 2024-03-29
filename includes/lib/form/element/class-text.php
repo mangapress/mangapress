@@ -1,19 +1,22 @@
 <?php
 /**
- * MangaPress_Framework
+ * Framework
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
 
+namespace MangaPress\Form\Element;
+use MangaPress\Form\Element as Element;
+
 /**
- * MangaPress_Radio
+ * Text
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Radio
+ * @package Text
  * @version $Id$
  */
-class MangaPress_Radio extends MangaPress_Element {
+class Text extends Element {
 
 
 	/**
@@ -29,26 +32,15 @@ class MangaPress_Radio extends MangaPress_Element {
 			$label = "<label for=\"$id\"$class>$this->label</label>\r\n";
 		}
 
-		$desc = $this->get_description();
+		$desc        = $this->get_description();
+		$description = '';
 		if ( $desc ) {
 			$description = "<span class=\"description\">{$desc}</span>";
 		}
 
-		$default  = $this->get_default();
-		$attr_arr = array();
-		foreach ( $this->attr as $name => $value ) {
-			if ( 'value' !== $name ) {
-				$attr_arr[] = "{$name}=\"{$value}\"";
-			} else {
-				$attr_arr[] = "{$name}=\"" . $default . '"';
-			}
-		}
+		$attr = $this->build_attr_string();
 
-		$attr = implode( ' ', $attr_arr );
-
-		$checked = checked( $default, $this->get_value(), false );
-
-		$html_array['content'] = "{$label}<input type=\"checkbox\" $attr $checked />\r\n{$description}";
+		$html_array['content'] = "{$label}<input type=\"text\" $attr />\r\n{$description}";
 
 		$this->html = implode( ' ', $html_array );
 

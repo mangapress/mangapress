@@ -5,10 +5,12 @@
  * @package MangaPress
  */
 
+namespace MangaPress;
+
 /**
  * MangaPress Admin class
  */
-final class MangaPress_Admin {
+class Admin {
 
 	/**
 	 * Page slug constant
@@ -24,6 +26,7 @@ final class MangaPress_Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'display_post_states', array( $this, 'display_post_states' ), 20, 2 );
 	}
 
 	/**
@@ -134,7 +137,7 @@ final class MangaPress_Admin {
 	public function options_page_tabs() {
 		$current = filter_input( INPUT_GET, 'tab' ) ?: 'basic';
 
-		$options = MangaPress_Bootstrap::get_instance()->get_helper( 'options' );
+		$options = Bootstrap::get_instance()->get_helper( 'options' );
 		$tabs    = $options->options_sections();
 
 		$links = array();
@@ -162,7 +165,7 @@ final class MangaPress_Admin {
 	 * @return string
 	 */
 	public function get_current_tab() {
-		$options = MangaPress_Bootstrap::get_instance()->get_helper( 'options' );
+		$options = Bootstrap::get_instance()->get_helper( 'options' );
 		$tabs    = $options->get_options_sections();
 
 		$current_tab = filter_input( INPUT_GET, 'tab' );
@@ -171,5 +174,31 @@ final class MangaPress_Admin {
 		} else {
 			return 'basic';
 		}
+	}
+
+	/**
+	 * Add to statuses to indicate what pages do what
+	 *
+	 * @param string[] $post_statuses Array of post status.
+	 * @param \WP_Post $post Current post in the loop.
+	 *
+	 * @return string[]
+	 */
+	public function display_post_states( $post_statuses, $post ): array {
+		return $post_statuses;
+		if ( ! is_admin() || 'page' !== get_post_type( $post ) ) {
+			return $post_statuses;
+		}
+
+		$is_what = get_post_meta( $post->ID, 'comic_page__type', true );
+		if ( 'latest' === $is_what ) {
+			$post_statuses[] = __( 'Latest Comic Page', 'mangapress' );
+		}
+
+		if ( 'archive' === $is_what ) {
+			$post_statuses[] = __( 'Comic Archive Page', 'mangapress' );
+		}
+
+		return $post_statuses;
 	}
 }

@@ -8,13 +8,17 @@
  * @license GPL
  */
 
+namespace MangaPress;
+
+use MangaPress\Form\Element\Select;
+
 /**
  * MangaPress Options Class
  *
  * @package MangaPress
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
-final class MangaPress_Options {
+class Options {
 
 	const OPTIONS_GROUP_NAME = 'mangapress_options';
 
@@ -91,7 +95,7 @@ final class MangaPress_Options {
 	 * @return void
 	 */
 	public function output_settings_fields() {
-		$admin = MangaPress_Bootstrap::get_instance()->get_helper( 'admin' );
+		$admin = Bootstrap::get_instance()->get_helper( 'admin' );
 
 		$field_sections = $this->options_fields();
 		$current_tab    = $admin->get_current_tab();
@@ -123,7 +127,7 @@ final class MangaPress_Options {
 	 * @return void
 	 */
 	public function settings_field_cb( $option ) {
-		$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+		$mp_options = Bootstrap::get_instance()->get_options();
 
 		$class = ucwords( $option['type'] );
 		$value = $mp_options[ $option['section'] ][ $option['name'] ] ?? self::$default_options[ $option['section'] ][ $option['name'] ];
@@ -135,7 +139,7 @@ final class MangaPress_Options {
 				'value' => $value,
 			);
 
-			$element      = "MangaPress_{$class}";
+			$element      = 'MangaPress\Form\Element\\' . $class;
 			$form_element = new $element(
 				array(
 					'attributes'  => $attributes,
@@ -159,7 +163,7 @@ final class MangaPress_Options {
 	 */
 	public function ft_basic_page_dropdowns_cb( array $option ) {
 
-		$mp_options = MangaPress_Bootstrap::get_instance()->get_options();
+		$mp_options = Bootstrap::get_instance()->get_options();
 
 		$value = $mp_options[ $option['section'] ][ $option['name'] ];
 
@@ -169,7 +173,7 @@ final class MangaPress_Options {
 			$options[ $page->post_name ] = $page->post_title;
 		}
 
-		$select_object = new MangaPress_Select(
+		$select_object = new Select(
 			array(
 				'attributes'  => array(
 					'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
@@ -210,7 +214,7 @@ final class MangaPress_Options {
 
 	/**
 	 * Returns default options
-	 * Used by MangaPress_Install to handle defaults on activation
+	 * Used by Install to handle defaults on activation
 	 *
 	 * @return array
 	 */
@@ -425,7 +429,7 @@ final class MangaPress_Options {
 			return $options;
 		}
 
-		$mp_options        = MangaPress_Bootstrap::get_instance()->get_options();
+		$mp_options        = Bootstrap::get_instance()->get_options();
 		$section           = key( $options );
 		$available_options = $this->options_fields();
 		$new_options       = $mp_options;

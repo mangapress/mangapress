@@ -1,19 +1,22 @@
 <?php
 /**
- * MangaPress_Framework
+ * Framework
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
  * @package MangaPress
  */
 
+namespace MangaPress\Form\Element;
+use MangaPress\Form\Element as Element;
+
 /**
- * MangaPress_Select
+ * Select
  *
  * @author Jess Green <jgreen@psy-dreamer.com>
- * @package MangaPress_Select
+ * @package Select
  * @version $Id$
  */
-class MangaPress_Select extends MangaPress_Element {
+class Select extends Element {
 
 	/**
 	 * Options
@@ -60,9 +63,9 @@ class MangaPress_Select extends MangaPress_Element {
 	 * Set default values
 	 *
 	 * @param array $defaults Option values to set.
-	 * @return \MangaPress_Select
+	 * @return \MangaPress\Form\Element
 	 */
-	public function set_default( $defaults ): MangaPress_Select {
+	public function set_default( $defaults ): Element {
 		foreach ( $defaults as $key => $value ) {
 			$this->_options[ $key ] = $value;
 		}

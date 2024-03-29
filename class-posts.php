@@ -4,19 +4,24 @@
  * Handles functionality for the Comic post-type
  *
  * @package MangaPress
- * @subpackage MangaPress_Posts
+ * @subpackage Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
+
+namespace MangaPress;
+
+use MangaPress\ContentType\Taxonomy;
+use MangaPress\ContentType\PostType;
 
 /**
  * MangaPress Posts class
  * Handles functionality for the Comic post-type
  *
  * @package MangaPress
- * @subpackage MangaPress_Posts
+ * @subpackage Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
-class MangaPress_Posts {
+class Posts {
 
 	/**
 	 * Get image html
@@ -69,9 +74,9 @@ class MangaPress_Posts {
 	/**
 	 * Class for initializing custom post-type
 	 *
-	 * @var MangaPress_PostType
+	 * @var PostType
 	 */
-	private MangaPress_PostType $post_type;
+	private PostType $post_type;
 
 
 	/**
@@ -110,7 +115,7 @@ class MangaPress_Posts {
 	 */
 	private function register_post_type() {
 		// register taxonomy.
-		$taxonomy = new MangaPress_Taxonomy(
+		$taxonomy = new Taxonomy(
 			array(
 				'name'       => self::TAX_SERIES,
 				'textdomain' => 'mangapress',
@@ -127,7 +132,7 @@ class MangaPress_Posts {
 			)
 		);
 
-		$this->post_type = new MangaPress_PostType(
+		$this->post_type = new PostType(
 			array(
 				'name'       => self::POST_TYPE,
 				'textdomain' => 'mangapress',
@@ -290,7 +295,7 @@ class MangaPress_Posts {
 	/**
 	 * Enqueue scripts for post-edit and post-add screens
 	 *
-	 * @global WP_Post $post
+	 * @global \WP_Post $post
 	 * @return void
 	 */
 	public function enqueue_scripts() {
@@ -331,7 +336,7 @@ class MangaPress_Posts {
 	 * Modify header columns for Comic Post-type
 	 *
 	 * @param string $column Screen column name.
-	 * @global WP_Post $post
+	 * @global \WP_Post $post
 	 * @return void
 	 */
 	public function comics_headers( string $column ) {
@@ -449,12 +454,12 @@ class MangaPress_Posts {
 	 * Save post metadata. By default, Manga+Press uses the _thumbnail_id
 	 * meta key. This is the same meta key used for the post featured image.
 	 *
-	 * @param int     $post_id Post ID.
-	 * @param WP_Post $post WordPress Post object.
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post WordPress Post object.
 	 *
 	 * @return int
 	 */
-	public function save_post( int $post_id, WP_Post $post ): int {
+	public function save_post( int $post_id, \WP_Post $post ): int {
 		if ( self::POST_TYPE !== $post->post_type || empty( $_POST ) ) {
 			return $post_id;
 		}
@@ -483,11 +488,11 @@ class MangaPress_Posts {
 	/**
 	 * Get post thumbnail for column.
 	 *
-	 * @param WP_Post $post WordPress post object.
+	 * @param \WP_Post $post WordPress post object.
 	 *
 	 * @return string
 	 */
-	public function get_thumbnail( WP_Post $post ): string {
+	public function get_thumbnail( \WP_Post $post ): string {
 		$thumbnail_html = get_the_post_thumbnail( $post->ID, 'comic-admin-thumb', array( 'class' => 'wp-caption' ) );
 
 		if ( $thumbnail_html ) {
@@ -502,11 +507,11 @@ class MangaPress_Posts {
 	/**
 	 * Get series links for screen columns.
 	 *
-	 * @param WP_Post $post WordPress post object.
+	 * @param \WP_Post $post WordPress post object.
 	 *
 	 * @return string
 	 */
-	public function get_series_links( WP_Post $post ): string {
+	public function get_series_links( \WP_Post $post ): string {
 		$series = wp_get_object_terms( $post->ID, 'mangapress_series' );
 		if ( empty( $series ) ) {
 			return '';

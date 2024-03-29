@@ -121,6 +121,7 @@
 				<element value="MP_"/>
 				<element value="mangapress_"/>
 				<element value="MangaPress_"/>
+				<element value="MangaPress"/>
 			</property>
 		</properties>
 	</rule>
