@@ -109,8 +109,6 @@ class MangaPress_Bootstrap {
 		add_action( 'update_option_start_of_week', 'mangapress_delete_get_calendar_cache' );
 		add_action( 'update_option_gmt_offset', 'mangapress_delete_get_calendar_cache' );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-
 		add_filter( 'template_include', 'mangapress_single_comic_template' );
 		add_filter( 'template_include', 'mangapress_latestcomic_page_template' );
 		add_filter( 'template_include', 'mangapress_comicarchive_page_template' );
@@ -238,21 +236,5 @@ class MangaPress_Bootstrap {
 		);
 
 		wp_enqueue_style( 'mangapress-nav' );
-	}
-
-
-	/**
-	 * Enqueue admin-related styles
-	 *
-	 * @return void
-	 */
-	public function admin_enqueue_scripts() {
-		wp_enqueue_style(
-			'mangapress-icons',
-			plugins_url( 'assets/css/font.css', __FILE__ ),
-			null,
-			MP_VERSION,
-			'screen'
-		);
 	}
 }
