@@ -11,6 +11,7 @@ namespace MangaPress;
  * MangaPress Admin class
  */
 class Admin {
+	use Singleton;
 
 	/**
 	 * Page slug constant
@@ -24,7 +25,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'display_post_states', array( $this, 'display_post_states' ), 20, 2 );
 	}
@@ -55,7 +56,7 @@ class Admin {
 	 * @return void
 	 */
 	public function load_page() {
-		require_once MP_ABSPATH . '/includes/pages/options.php';
+		require_once MP_ABSPATH . '/src/pages/options.php';
 	}
 
 
@@ -113,13 +114,13 @@ class Admin {
 		ob_start();
 		switch ( $help_tab ) {
 			case 'basic':
-				require_once MP_ABSPATH . '/includes/pages/help-basic.php';
+				require_once MP_ABSPATH . '/src/pages/help-basic.php';
 				break;
 			case 'comic_page':
-				require_once MP_ABSPATH . '/includes/pages/help-comic-page.php';
+				require_once MP_ABSPATH . '/src/pages/help-comic-page.php';
 				break;
 			case 'nav':
-				require_once MP_ABSPATH . '/includes/pages/help-nav.php';
+				require_once MP_ABSPATH . '/src/pages/help-nav.php';
 				break;
 			default:
 				// have a default response.
@@ -137,7 +138,7 @@ class Admin {
 	public function options_page_tabs() {
 		$current = filter_input( INPUT_GET, 'tab' ) ?: 'basic';
 
-		$options = Bootstrap::get_instance()->get_helper( 'options' );
+		$options = Options::get_instance();
 		$tabs    = $options->options_sections();
 
 		$links = array();
@@ -165,8 +166,7 @@ class Admin {
 	 * @return string
 	 */
 	public function get_current_tab() {
-		$options = Bootstrap::get_instance()->get_helper( 'options' );
-		$tabs    = $options->get_options_sections();
+		$tabs = Options::get_instance()->get_options_sections();
 
 		$current_tab = filter_input( INPUT_GET, 'tab' );
 		if ( in_array( $current_tab, $tabs, true ) ) {

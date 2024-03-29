@@ -8,6 +8,8 @@
  * @author Jess Green <jgreen@psy-dreamer.com>
  */
 
+use MangaPress\Settings;
+
 /**
  * Used to detect if post contains a comic.
  *
@@ -41,7 +43,7 @@ function mangapress_is_comic( $post = null ): bool {
 function mangapress_is_comic_page(): bool {
 	global $wp_query;
 
-	$mp_options = MangaPress\Bootstrap::get_instance()->get_options();
+	$mp_options = Settings::get_options();
 
 	$query = $wp_query->get_queried_object();
 
@@ -59,7 +61,7 @@ function mangapress_is_comic_page(): bool {
 function mangapress_is_comic_archive_page(): bool {
 	global $wp_query;
 
-	$mp_options = MangaPress\Bootstrap::get_instance()->get_options();
+	$mp_options = Settings::get_options();
 
 	$query = $wp_query->get_queried_object();
 
@@ -81,7 +83,7 @@ function mangapress_is_comic_archive_page(): bool {
 function mangapress_comic_navigation( array $args = array(), bool $echo = true ): string { // @phpcs:ignore -- will be refactored in a future version
 	global $post;
 
-	$mp_options = MangaPress\Bootstrap::get_instance()->get_options();
+	$mp_options = Settings::get_options();
 
 	$defaults = array(
 		'container'       => 'nav',

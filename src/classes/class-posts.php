@@ -22,6 +22,7 @@ use MangaPress\ContentType\PostType;
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 class Posts {
+	use Singleton;
 
 	/**
 	 * Get image html
@@ -86,11 +87,10 @@ class Posts {
 	 */
 	protected string $slug = 'comic';
 
-
 	/**
-	 * Constructor
+	 * Init method
 	 */
-	public function __construct() {
+	public function init() {
 		$this->register_post_type();
 		$this->rewrite_rules();
 
@@ -288,7 +288,7 @@ class Posts {
 	 * @return void
 	 */
 	public function comic_meta_box_cb() {
-		require_once MP_ABSPATH . 'includes/pages/meta-box-add-comic.php';
+		require_once MP_ABSPATH . 'src/pages/meta-box-add-comic.php';
 	}
 
 
@@ -426,7 +426,7 @@ class Posts {
 		}
 
 		ob_start();
-		require_once MP_ABSPATH . 'includes/pages/set-image-link.php';
+		require_once MP_ABSPATH . 'src/pages/set-image-link.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 
@@ -442,7 +442,7 @@ class Posts {
 	public function get_remove_image_html(): string {
 
 		ob_start();
-		require_once MP_ABSPATH . 'includes/pages/remove-image-link.php';
+		require_once MP_ABSPATH . 'src/pages/remove-image-link.php';
 		$html = ob_get_contents();
 		ob_end_clean();
 

@@ -9,6 +9,8 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
+use MangaPress\Posts;
+
 /**
  * Checks queried object against settings to see if query is for either
  * latest comic or comic archive.
@@ -23,7 +25,7 @@
 function mangapress_is_queried_page( string $option ): bool {
 	global $wp_query;
 
-	$page   = MangaPress\Bootstrap::get_instance()->get_option( 'basic', $option );
+	$page   = MangaPress\Settings::get_option( 'basic', $option );
 	$object = $wp_query->get_queried_object();
 
 	if ( ! isset( $object->post_name ) || $object->post_name !== $page ) {
@@ -143,7 +145,7 @@ function mangapress_single_comic_content_filter( string $content ): string {
  * @since 2.9
  */
 function mangapress_disable_post_thumbnail( string $html, int $post_id ): string {
-	if ( MangaPress\Posts::POST_TYPE === get_post_type( $post_id ) ) {
+	if ( Posts::POST_TYPE === get_post_type( $post_id ) ) {
 		return '';
 	}
 
@@ -161,8 +163,7 @@ function mangapress_disable_post_thumbnail( string $html, int $post_id ): string
  * @return string|void
  */
 function mangapress_month_link( string $monthlink, string $year = '', string $month = '' ) {
-	$posts = MangaPress\Bootstrap::get_instance()->get_helper( 'posts' );
-	$slug  = $posts->get_slug();
+	$slug = Posts::get_instance()->get_slug();
 
 	return home_url( "/{$slug}/{$year}/{$month}" );
 }
@@ -180,8 +181,7 @@ function mangapress_month_link( string $monthlink, string $year = '', string $mo
  */
 function mangapress_day_link( string $daylink, string $year = '', string $month = '', string $day = '' ): string {
 
-	$posts = MangaPress\Bootstrap::get_instance()->get_helper( 'posts' );
-	$slug  = $posts->get_slug();
+	$slug = Posts::get_instance()->get_slug();
 
 	$relative = "/{$slug}/{$year}/{$month}/{$day}";
 

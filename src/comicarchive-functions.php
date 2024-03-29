@@ -8,6 +8,8 @@
  * @license GPL
  */
 
+use MangaPress\Settings;
+
 /**
  * Get all comics for archives page
  *
@@ -17,7 +19,7 @@
  * @since 2.9
  */
 function mangapress_get_all_comics_for_archive( array $params = array() ): WP_Query {
-	$mp_options   = MangaPress\Bootstrap::get_instance()->get_options();
+	$mp_options   = Settings::get_options();
 	$order_params = array(
 		'order'   => $mp_options['basic']['archive_order'],
 		'orderby' => $mp_options['basic']['archive_orderby'],

@@ -5,6 +5,9 @@
  * @package MangaPress
  */
 
+use MangaPress\Options;
+use MangaPress\Settings;
+
 /**
  * Get Comic Archive template
  *
@@ -13,7 +16,7 @@
  * @return string
  */
 function mangapress_get_comicarchive_template( string $style ): string {
-	$fields  = Bootstrap::get_instance()->get_helper( 'options' )->options_fields();
+	$fields  = Options::get_instance()->options_fields();
 	$options = $fields['basic']['comicarchive_page_style'];
 	unset( $options['value']['no_val'] ); // remove this, we don't need it.
 
@@ -42,7 +45,7 @@ function mangapress_comicarchive_page_template( string $default_template ): stri
 		return $default_template;
 	}
 
-	$comicarchive_page_style = MangaPress\Bootstrap::get_instance()->get_option( 'basic', 'comicarchive_page_style' );
+	$comicarchive_page_style = Settings::get_option( 'basic', 'comicarchive_page_style' );
 
 	if ( in_array( $comicarchive_page_style, array( 'list', 'gallery', 'calendar' ), true ) ) {
 		$template = locate_template(
@@ -89,7 +92,7 @@ function mangapress_create_comicarchive_page( $content ) {
 		return '<p class="error">No comics were found.</p>';
 	}
 
-	$comicarchive_page_style = MangaPress\Bootstrap::get_instance()->get_option( 'basic', 'comicarchive_page_style' );
+	$comicarchive_page_style = Settings::get_option( 'basic', 'comicarchive_page_style' );
 
 	ob_start();
 	require mangapress_get_content_template( $comicarchive_page_style );

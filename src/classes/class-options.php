@@ -19,6 +19,7 @@ use MangaPress\Form\Element\Select;
  * @author Jess Green <jgreen at psy-dreamer.com>
  */
 class Options {
+	use Singleton;
 
 	const OPTIONS_GROUP_NAME = 'mangapress_options';
 
@@ -53,7 +54,7 @@ class Options {
 	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 	}
 
@@ -95,7 +96,7 @@ class Options {
 	 * @return void
 	 */
 	public function output_settings_fields() {
-		$admin = Bootstrap::get_instance()->get_helper( 'admin' );
+		$admin = Admin::get_instance();
 
 		$field_sections = $this->options_fields();
 		$current_tab    = $admin->get_current_tab();
@@ -127,7 +128,7 @@ class Options {
 	 * @return void
 	 */
 	public function settings_field_cb( $option ) {
-		$mp_options = Bootstrap::get_instance()->get_options();
+		$mp_options = Settings::get_options();
 
 		$class = ucwords( $option['type'] );
 		$value = $mp_options[ $option['section'] ][ $option['name'] ] ?? self::$default_options[ $option['section'] ][ $option['name'] ];
@@ -163,7 +164,7 @@ class Options {
 	 */
 	public function ft_basic_page_dropdowns_cb( array $option ) {
 
-		$mp_options = Bootstrap::get_instance()->get_options();
+		$mp_options = Settings::get_options();
 
 		$value = $mp_options[ $option['section'] ][ $option['name'] ];
 
@@ -195,7 +196,7 @@ class Options {
 	 * @return void
 	 */
 	public function ft_navigation_css_display_cb() {
-		require_once MP_ABSPATH . 'includes/pages/nav-css.php';
+		require_once MP_ABSPATH . 'src/pages/nav-css.php';
 	}
 
 	/**
@@ -429,7 +430,7 @@ class Options {
 			return $options;
 		}
 
-		$mp_options        = Bootstrap::get_instance()->get_options();
+		$mp_options        = Settings::get_options();
 		$section           = key( $options );
 		$available_options = $this->options_fields();
 		$new_options       = $mp_options;
@@ -446,7 +447,7 @@ class Options {
 				$new_options['nav']['nav_css'] = 'default_css';
 			}
 
-			$new_options['nav']['enable_random_link'] = boolval( $options['nav']['enable_random_link'] );
+			$new_options['nav']['enable_random_link'] = isset( $options['nav']['enable_random_link'] ) && boolval( $options['nav']['enable_random_link'] );
 		}
 
 		if ( 'basic' === $section ) {

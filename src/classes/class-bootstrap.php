@@ -95,14 +95,14 @@ class Bootstrap {
 	 * @return void
 	 */
 	public function init() {
-		$this->set_options();
-
-		$this->posts_helper   = new Posts();
-		$this->admin_helper   = new Admin();
-		$this->options_helper = new Options();
+		Settings::get_instance()->init();
+		Posts::get_instance()->init();
+		Admin::get_instance()->init();
+		Options::get_instance()->init();
 
 		$this->load_current_options();
-		$enable_opengraph_tags = $this->get_option( 'comic_page', 'enable_opengraph_tags' );
+
+		$enable_opengraph_tags = Settings::get_option( 'comic_page', 'enable_opengraph_tags' );
 		if ( $enable_opengraph_tags ) {
 			add_action( 'wp_head', 'mangapress_add_opengraph_tags', 5 );
 		}
@@ -128,71 +128,13 @@ class Bootstrap {
 		register_widget( 'MangaPress\Widget_Calendar' );
 	}
 
-
-	/**
-	 * Get a MangaPress helper
-	 *
-	 * @param string $helper_name Allowed values: admin, options, posts.
-	 * @return \Admin|\Options|\Posts|\WP_Error
-	 */
-	public function get_helper( $helper_name ) {
-		$helper = "{$helper_name}_helper";
-		if ( property_exists( $this, $helper ) ) {
-			return $this->$helper;
-		}
-
-		return new WP_Error( '_mangapress_helper_access', 'No helper exists by that name' );
-	}
-
-
-	/**
-	 * Set MangaPress options. This method should run every time
-	 * MangaPress options are updated.
-	 *
-	 * @uses init()
-	 * @see Bootstrap::init()
-	 *
-	 * @return void
-	 */
-	public function set_options() {
-		$this->options = get_option( 'mangapress_options' );
-	}
-
-
-	/**
-	 * Get MangaPress options
-	 *
-	 * @return array
-	 */
-	public function get_options() {
-		return $this->options;
-	}
-
-
-	/**
-	 * Get one option from options array
-	 *
-	 * @param string $section Option section.
-	 * @param string $option_name Option name.
-	 *
-	 * @return boolean|mixed
-	 */
-	public function get_option( string $section, string $option_name ) {
-		if ( ! isset( $this->options[ $section ][ $option_name ] ) ) {
-			return false;
-		}
-
-		return $this->options[ $section ][ $option_name ];
-	}
-
-
 	/**
 	 * Load current plugin options
 	 *
 	 * @return void
 	 */
 	private function load_current_options() {
-		$mp_options = $this->get_options();
+		$mp_options = Settings::get_options();
 
 		/*
 		 * Disable/Enable Default Navigation CSS
