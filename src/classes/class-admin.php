@@ -184,18 +184,21 @@ class Admin {
 	 *
 	 * @return string[]
 	 */
-	public function display_post_states( $post_statuses, $post ): array {
-		return $post_statuses;
+	public function display_post_states( array $post_statuses, \WP_Post $post ): array {
 		if ( ! is_admin() || 'page' !== get_post_type( $post ) ) {
 			return $post_statuses;
 		}
 
-		$is_what = get_post_meta( $post->ID, 'comic_page__type', true );
-		if ( 'latest' === $is_what ) {
+		$post_slug = get_post_field( 'post_name', $post );
+
+		$latestcomic_page  = Settings::get_option( 'basic', 'latestcomic_page' );
+		$comicarchive_page = Settings::get_option( 'basic', 'comicarchive_page' );
+
+		if ( $latestcomic_page === $post_slug ) {
 			$post_statuses[] = __( 'Latest Comic Page', 'mangapress' );
 		}
 
-		if ( 'archive' === $is_what ) {
+		if ( $comicarchive_page === $post_slug ) {
 			$post_statuses[] = __( 'Comic Archive Page', 'mangapress' );
 		}
 
