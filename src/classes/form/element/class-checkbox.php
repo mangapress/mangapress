@@ -7,7 +7,8 @@
  */
 
 namespace MangaPress\Form\Element;
-use MangaPress\Form\Element as Element;
+
+use MangaPress\Form\Element;
 
 /**
  * Checkbox
@@ -31,7 +32,8 @@ class Checkbox extends Element {
 			$label = "<label for=\"$id\"$class>$this->label</label>\r\n";
 		}
 
-		$desc = $this->get_description();
+		$desc        = $this->get_description();
+		$description = '';
 		if ( $desc ) {
 			$description = "<span class=\"description\">{$desc}</span>";
 		}

@@ -23,7 +23,7 @@ class Select extends Element {
 	 *
 	 * @var array
 	 */
-	protected $_options = array();
+	protected array $options = array();
 
 	/**
 	 * Echo form element
@@ -31,15 +31,9 @@ class Select extends Element {
 	 * @return string
 	 */
 	public function __toString() {
-		$options  = $this->get_default();
-		$attr_arr = array();
-		foreach ( $this->attr as $name => $value ) {
-			if ( 'value' !== $name ) {
-				$attr_arr[] = "{$name}=\"{$value}\"";
-			}
-		}
+		$options = $this->get_default();
 
-		$attr = implode( ' ', $attr_arr );
+		$attr = $this->build_attr_string();
 
 		$desc        = $this->get_description();
 		$description = '';
@@ -63,11 +57,11 @@ class Select extends Element {
 	 * Set default values
 	 *
 	 * @param array $defaults Option values to set.
-	 * @return \MangaPress\Form\Element
+	 * @return Element
 	 */
 	public function set_default( $defaults ): Element {
 		foreach ( $defaults as $key => $value ) {
-			$this->_options[ $key ] = $value;
+			$this->options[ $key ] = $value;
 		}
 
 		return $this;
@@ -78,7 +72,7 @@ class Select extends Element {
 	 *
 	 * @return array
 	 */
-	public function get_default() {
-		return $this->_options;
+	public function get_default(): array {
+		return $this->options;
 	}
 }

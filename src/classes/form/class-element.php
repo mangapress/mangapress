@@ -93,7 +93,7 @@ class Element {
 	 *
 	 * @param array $options Array of element options.
 	 *
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_options( array $options ): Element {
 		foreach ( $options as $option_name => $value ) {
@@ -110,7 +110,7 @@ class Element {
 	 * Add attributes to element
 	 *
 	 * @param array $attributes Array of attributes.
-	 * @return \Element
+	 * @return Element
 	 */
 	public function add_attributes( array $attributes = array() ): Element {
 		foreach ( $attributes as $attr => $value ) {
@@ -140,7 +140,7 @@ class Element {
 	 *
 	 * @param array $attr Array of element attributes.
 	 *
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_attributes( array $attr ): Element {
 		foreach ( $attr as $key => $value ) {
@@ -155,7 +155,7 @@ class Element {
 	 *
 	 * @param string $text Element label text.
 	 *
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_label( string $text = '' ): Element {
 
@@ -168,7 +168,7 @@ class Element {
 	 * Set default value
 	 *
 	 * @param mixed $default_value Default value of element.
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_default( $default_value ): Element {
 		$this->default_value = $default_value;
@@ -199,7 +199,7 @@ class Element {
 	 *
 	 * @param string $data_type Data type of element.
 	 *
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_data_type( string $data_type ): Element {
 		$this->data_type = $data_type;
@@ -212,7 +212,7 @@ class Element {
 	 *
 	 * @return string
 	 */
-	public function get_name(): ?string {
+	public function get_name(): string {
 		return $this->get_attributes( 'name' );
 	}
 
@@ -221,7 +221,7 @@ class Element {
 	 *
 	 * @param string $description Form element description.
 	 *
-	 * @return \Element
+	 * @return Element
 	 */
 	public function set_description( string $description ): Element {
 		$this->description = $description;
@@ -234,7 +234,7 @@ class Element {
 	 *
 	 * @return string
 	 */
-	public function get_description() {
+	public function get_description(): string {
 		return $this->description;
 	}
 
@@ -243,14 +243,12 @@ class Element {
 	 *
 	 * @return string
 	 */
-	public function build_attr_string() {
+	public function build_attr_string(): string {
 		$attr_arr = array();
 		foreach ( $this->attr as $name => $value ) {
-			$attr_arr[] = "{$name}=\"{$value}\"";
+			$attr_arr[] = vsprint( '%1$s="%2$s"', array( esc_attr( $name ), esc_attr( $value ) ) );
 		}
 
-		$attr = implode( ' ', $attr_arr );
-
-		return $attr;
+		return implode( ' ', $attr_arr );
 	}
 }

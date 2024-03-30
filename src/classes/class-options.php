@@ -162,7 +162,7 @@ class Options {
 	 *
 	 * @return void
 	 */
-	public function ft_basic_page_dropdowns_cb( array $option ) {
+	public function basic_page_dropdowns_cb( array $option ) {
 
 		$mp_options = Settings::get_options();
 
@@ -195,7 +195,7 @@ class Options {
 	 *
 	 * @return void
 	 */
-	public function ft_navigation_css_display_cb() {
+	public function navigation_css_display_cb() {
 		require_once MP_ABSPATH . 'src/pages/nav-css.php';
 	}
 
@@ -245,7 +245,7 @@ class Options {
 					),
 					'valid'    => 'array',
 					'default'  => 0,
-					'callback' => array( $this, 'ft_basic_page_dropdowns_cb' ),
+					'callback' => array( $this, 'basic_page_dropdowns_cb' ),
 				),
 				'group_comics'            => array(
 					'id'          => 'group-comics',
@@ -265,7 +265,7 @@ class Options {
 					),
 					'valid'    => 'array',
 					'default'  => 0,
-					'callback' => array( $this, 'ft_basic_page_dropdowns_cb' ),
+					'callback' => array( $this, 'basic_page_dropdowns_cb' ),
 				),
 				'comicarchive_page_style' => array(
 					'id'          => 'archive-page-style',
@@ -375,7 +375,7 @@ class Options {
 				),
 				'display_css'        => array(
 					'id'       => 'display',
-					'callback' => array( $this, 'ft_navigation_css_display_cb' ),
+					'callback' => array( $this, 'navigation_css_display_cb' ),
 				),
 			),
 		);
@@ -413,7 +413,7 @@ class Options {
 	 *
 	 * @return array
 	 */
-	public function get_options_sections() {
+	public function get_options_sections(): array {
 		return array_keys( $this->options_sections() );
 	}
 
