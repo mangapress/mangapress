@@ -1,5 +1,6 @@
-== Changelog ==
-= 3.1 =
+## Changelog
+
+### 3.1
   * 3.1.0
     * Refactoring and code cleanup
     * Deprecation of functions in favor of WordPress Core functions
@@ -8,7 +9,7 @@
     * Added WordPress REST api support
     * Added random link option
 
-= 3.0 =
+### 3.0
   * 3.0.2
     * Change PHP requirement to 7.4
     * Updated code to be PHP 8-compliant
@@ -24,7 +25,7 @@
     * Added comic archive calendar template
     * Added comic archive gallery template
 
-= 2.9 =
+### 2.9
   * 2.9.3
     * Spanish language updates to embedded themes.
   * 2.9.2
@@ -53,7 +54,7 @@
     * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
        * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
 
-= 2.8 =
+### 2.8
   * 2.8.3
     * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
 
@@ -77,7 +78,7 @@
     * Code review and cleanup
     * Removed legacy options (Comic Banner)
 
-= 2.7 =
+### 2.7
   * 2.7.5
     * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
     * Fixed undefined index errors caused by checkboxes when settings page is updated
