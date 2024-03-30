@@ -18,9 +18,9 @@ trait Singleton {
 	/**
 	 * Return instance of class
 	 *
-	 * @return ?Singleton|null
+	 * @return ?self
 	 */
-	public static function get_instance() {
+	public static function get_instance(): self {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}

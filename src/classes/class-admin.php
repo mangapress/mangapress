@@ -165,7 +165,7 @@ class Admin {
 	 *
 	 * @return string
 	 */
-	public function get_current_tab() {
+	public function get_current_tab(): string {
 		$tabs = Options::get_instance()->get_options_sections();
 
 		$current_tab = filter_input( INPUT_GET, 'tab' );
