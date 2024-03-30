@@ -165,6 +165,21 @@ class Element {
 	}
 
 	/**
+	 * Return label markup.
+	 *
+	 * @return string
+	 */
+	public function get_label(): string {
+		if ( empty( $this->get_attributes( 'label' ) ) ) {
+			return '';
+		}
+
+		$id    = $this->get_attributes( 'id' );
+		$class = " class=\"label-$id\"";
+		return "<label for=\"$id\"$class>$this->label</label>\r\n";
+	}
+
+	/**
 	 * Set default value
 	 *
 	 * @param mixed $default_value Default value of element.
@@ -235,7 +250,11 @@ class Element {
 	 * @return string
 	 */
 	public function get_description(): string {
-		return $this->description;
+		if ( empty( $this->description ) ) {
+			return '';
+		}
+
+		return "<span class=\"description\">{$this->description}</span>";
 	}
 
 	/**
@@ -246,7 +265,10 @@ class Element {
 	public function build_attr_string(): string {
 		$attr_arr = array();
 		foreach ( $this->attr as $name => $value ) {
-			$attr_arr[] = vsprint( '%1$s="%2$s"', array( esc_attr( $name ), esc_attr( $value ) ) );
+			if ( 'value' === $name ) {
+				$value = $this->get_default();
+			}
+			$attr_arr[] = vsprintf( '%1$s="%2$s"', array( esc_attr( $name ), esc_attr( $value ) ) );
 		}
 
 		return implode( ' ', $attr_arr );

@@ -7,7 +7,8 @@
  */
 
 namespace MangaPress\Form\Element;
-use MangaPress\Form\Element as Element;
+
+use MangaPress\Form\Element;
 
 /**
  * Text
@@ -25,24 +26,11 @@ class Text extends Element {
 	 * @return string
 	 */
 	public function __toString() {
-		$label = '';
-		if ( ! empty( $this->label ) ) {
-			$id    = $this->get_attributes( 'id' );
-			$class = " class=\"label-$id\"";
-			$label = "<label for=\"$id\"$class>$this->label</label>\r\n";
-		}
-
-		$desc        = $this->get_description();
-		$description = '';
-		if ( $desc ) {
-			$description = "<span class=\"description\">{$desc}</span>";
-		}
-
 		$attr = $this->build_attr_string();
+		$html = $this->get_label() . "<input type=\"text\" $attr />\r\n"
+				. $this->get_description();
 
-		$html_array['content'] = "{$label}<input type=\"text\" $attr />\r\n{$description}";
-
-		$this->html = implode( ' ', $html_array );
+		$this->html = $html;
 
 		return $this->html;
 	}

@@ -30,9 +30,9 @@ class Options {
 	 */
 	protected static $default_options = array(
 		'basic'      => array(
-			'latestcomic_page'        => 0,
+			'latestcomic_page'        => '',
 			'group_comics'            => 0,
-			'comicarchive_page'       => 0,
+			'comicarchive_page'       => '',
 			'comicarchive_page_style' => 'list',
 			'archive_order'           => 'DESC',
 			'archive_orderby'         => 'date',
@@ -138,6 +138,7 @@ class Options {
 				'name'  => "mangapress_options[{$option['section']}][{$option['name']}]",
 				'id'    => $option['id'],
 				'value' => $value,
+				'type'  => strtolower( $class ),
 			);
 
 			$element      = 'MangaPress\Form\Element\\' . $class;
@@ -244,7 +245,7 @@ class Options {
 						'no_val' => __( 'Select a Page', 'mangapress' ),
 					),
 					'valid'    => 'array',
-					'default'  => 0,
+					'default'  => '',
 					'callback' => array( $this, 'basic_page_dropdowns_cb' ),
 				),
 				'group_comics'            => array(
@@ -264,7 +265,7 @@ class Options {
 						'no_val' => __( 'Select a Page', 'mangapress' ),
 					),
 					'valid'    => 'array',
-					'default'  => 0,
+					'default'  => '',
 					'callback' => array( $this, 'basic_page_dropdowns_cb' ),
 				),
 				'comicarchive_page_style' => array(

@@ -26,6 +26,20 @@ class Select extends Element {
 	protected array $options = array();
 
 	/**
+	 * Build attribute string for select element.
+	 *
+	 * @return string
+	 */
+	public function build_attr_string(): string {
+		$attr_arr = array();
+		foreach ( $this->attr as $name => $value ) {
+			$attr_arr[] = vsprintf( '%1$s="%2$s"', array( esc_attr( $name ), esc_attr( $value ) ) );
+		}
+
+		return implode( ' ', $attr_arr );
+	}
+
+	/**
 	 * Echo form element
 	 *
 	 * @return string
@@ -35,12 +49,6 @@ class Select extends Element {
 
 		$attr = $this->build_attr_string();
 
-		$desc        = $this->get_description();
-		$description = '';
-		if ( $desc ) {
-			$description = "<span class=\"description\">{$desc}</span>";
-		}
-
 		$value       = $this->get_value();
 		$options_str = '';
 		foreach ( $options as $option_val => $option_text ) {
@@ -48,7 +56,7 @@ class Select extends Element {
 			$options_str .= "<option value=\"$option_val\" $selected>{$option_text}</option>";
 		}
 
-		$this->html = "<select $attr>\n$options_str</select> {$description}";
+		$this->html = "<select $attr>\n$options_str</select> " . $this->get_description();
 
 		return $this->html;
 	}
