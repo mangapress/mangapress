@@ -6,7 +6,9 @@
  * @version $Id$
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
+
 namespace MangaPress;
+
 /**
  * Manga+Press-specific clone of WP_Widget_Calendar
  *
