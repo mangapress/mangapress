@@ -26,7 +26,7 @@ class Settings {
 	 * @return void
 	 */
 	public function init() {
-		$this->set_options();
+		self::set_options();
 	}
 
 	/**
