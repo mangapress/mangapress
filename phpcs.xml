@@ -105,6 +105,7 @@
 	<config name="minimum_wp_version" value="6.0"/>
 	<rule ref="WordPress-Core">
 		<exclude name="Universal.Operators.DisallowShortTernary"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">

@@ -63,7 +63,7 @@ require_once MP_ABSPATH . 'vendor/autoload.php';
 require_once MP_ABSPATH . 'src/classes/class-widget-calendar.php';
 
 $mangapress_install = MangaPress\Install::get_instance();
-
+$mangapress_ver     = [];
 register_activation_hook( __FILE__, array( $mangapress_install, 'do_activate' ) );
 register_deactivation_hook( __FILE__, array( $mangapress_install, 'do_deactivate' ) );
 
