@@ -12,9 +12,26 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 ## Changelog
 ### 3.2 — Development Version
 #### 3.2.0 — Planned
-   * ~~Add file autoloading (non PSR-4).~~
-   * [ ] Add Page indicators to Page screen in Admin.
-   * [ ] Add JSON-LD for Comic post-type.
+   * [x] Add file autoloading (non PSR-4).
+   * [x] Add Page indicators to Page screen in Admin.
+   * [ ] Add JSON-LD support for Comic post-type and Series taxonomy. Look at https://schema.org/ComicSeries for examples.
+     * Requirements:
+       * New settings for Basic Options tab
+         * JSON-LD Integration checkbox (will be unchecked by default)
+         * Additional settings for comic name and description
+           * If JSON-LD Integration is checked but these boxes are left blank, they will pull from site settings by default.
+       * New fields for Comic post-type:
+         * Description (can be pulled from Excerpt)
+         * Name (can be pulled from Title)
+         * Fields for Author, Artist, Colorist, Editor, Letterer
+           * Author will be displayed by default, and populated by the currently logged-in user.
+           * These fields can be repeating meta fields with name/value for easier integration.
+       * Comic Cover Art (`"@type":"ComicCoverArt`)
+         * Should this be a post-type or a checkbox on the existing Comic post-type?
+         * If post-type, will share the Series taxonomy with Comic.
+         * If checkbox, will automatically appear at the start
+       * [ ] Unit test for this feature should be added
+
    * [ ] Bring over features from cancelled 4.0/4.1 release.
      * [ ] Comic bookmarking (#24)
      * [ ] Lightbox (#79)
@@ -27,7 +44,6 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
    * Refactoring and code cleanup
    * Deprecation of functions in favor of WordPress Core functions
    * Added better block theme support
-   * Removed Group By parent option due to code complexity and ease of maintenance
    * Added WordPress REST api support
 
 ### 3.0
