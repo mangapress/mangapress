@@ -42,6 +42,7 @@ class Options {
 			'comic_page_width'      => 600,
 			'comic_page_height'     => 1000,
 			'enable_opengraph_tags' => 0,
+			'enable_comic_lightbox' => 0,
 		),
 		'nav'        => array(
 			'enable_random_link' => false,
@@ -350,6 +351,15 @@ class Options {
 					'default'     => 1,
 					'callback'    => array( $this, 'settings_field_cb' ),
 				),
+				'enable_comic_lightbox' => array(
+					'id'          => 'enable-comic-lightbox',
+					'type'        => 'checkbox',
+					'title'       => __( 'Enable Lightbox', 'mangapress' ),
+					'description' => __( 'Allow comic to be displayed in a full-screen lightbox.', 'mangapress' ),
+					'default'     => false,
+					'value'       => true,
+					'callback'    => array( $this, 'settings_field_cb' ),
+				),
 			),
 			'nav'        => array(
 				'enable_random_link' => array(
@@ -489,9 +499,10 @@ class Options {
 
 		if ( 'comic_page' === $section ) {
 			$new_options['comic_page'] = array(
-				'generate_comic_page' => $this->_sanitize_integer( $options, 'comic_page', 'generate_comic_page' ),
-				'comic_page_width'    => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_width' ),
-				'comic_page_height'   => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_height' ),
+				'generate_comic_page'   => $this->_sanitize_integer( $options, 'comic_page', 'generate_comic_page' ),
+				'comic_page_width'      => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_width' ),
+				'comic_page_height'     => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_height' ),
+				'enable_comic_lightbox' => boolval( $options['comic_page']['enable_comic_lightbox'] ),
 			);
 		}
 

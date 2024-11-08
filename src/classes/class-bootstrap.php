@@ -136,11 +136,11 @@ class Bootstrap {
 	private function load_current_options() {
 		$mp_options = Settings::get_options();
 
-		/*
-		 * Disable/Enable Default Navigation CSS
-		 */
-		if ( 'default_css' === $mp_options['nav']['nav_css'] ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+
+		if ( Settings::get_option( 'comic_page', 'enable_comic_lightbox' ) ) {
+			add_action( 'wp_footer', 'mangapress_add_lightbox_markup' );
+			add_filter( 'mangapress_comic_image', 'mangapress_add_lightbox_anchor' );
 		}
 
 		/*
@@ -179,6 +179,31 @@ class Bootstrap {
 			'screen'
 		);
 
-		wp_enqueue_style( 'mangapress-nav' );
+		wp_register_style(
+			'mangapress-lightbox',
+			MP_URLPATH . 'assets/css/lightbox.css',
+			null,
+			MP_VERSION,
+			'screen'
+		);
+
+		wp_register_script(
+			'mangapress-lightbox',
+			MP_URLPATH . 'assets/js/lightbox.js',
+			array( 'jquery' ),
+			MP_VERSION
+		);
+
+		/*
+		 * Disable/Enable Default Navigation CSS
+		 */
+		if ( 'default_css' === Settings::get_option( 'nav', 'nav_css' ) ) {
+			wp_enqueue_style( 'mangapress-nav' );
+		}
+
+		if ( Settings::get_option( 'comic_page', 'enable_comic_lightbox' ) ) {
+			wp_enqueue_script( 'mangapress-lightbox' );
+			wp_enqueue_style( 'mangapress-lightbox' );
+		}
 	}
 }

@@ -55,12 +55,13 @@ class Settings {
 	 *
 	 * @param string $section Option section.
 	 * @param string $option_name Option name.
+	 * @param mixed  $default Default option value if not populated
 	 *
 	 * @return boolean|mixed
 	 */
-	public static function get_option( string $section, string $option_name ) {
+	public static function get_option( string $section, string $option_name, $default = false ) {
 		if ( ! isset( self::$options[ $section ][ $option_name ] ) ) {
-			return false;
+			return $default;
 		}
 
 		return self::$options[ $section ][ $option_name ];

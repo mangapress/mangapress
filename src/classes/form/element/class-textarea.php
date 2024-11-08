@@ -8,7 +8,7 @@
 
 namespace MangaPress\Form\Element;
 
-use MangaPress\Form\Element as Element;
+use MangaPress\Form\Element;
 
 /**
  * Textarea

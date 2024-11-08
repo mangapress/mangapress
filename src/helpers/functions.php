@@ -224,3 +224,34 @@ function mangapress_add_opengraph_tags() {
 		require_once $theme_template;
 	}
 }
+
+/**
+ * Add the markup for the lightbox to comic pages
+ */
+function mangapress_add_lightbox_markup() {
+	global $post;
+	if ( mangapress_is_comic( $post ) || is_latest_comic_page() ) {
+		require_once MP_ABSPATH . 'templates/comic-lightbox.php';
+	}
+}
+
+
+/**
+ * Add anchor for lightbox to comic image
+ *
+ * @param string $html
+ */
+function mangapress_add_lightbox_anchor( $html ) {
+	global $post;
+
+	list($lightbox_image, $lightbox_image_width, $lightbox_image_height)
+		= wp_get_attachment_image_src( get_post_thumbnail_id( $post ), 'large', false );
+
+	$link   = esc_url( $lightbox_image );
+	$width  = intval( $lightbox_image_width );
+	$height = intval( $lightbox_image_height );
+
+	$a = '<a href="#" id="mangapress-lightbox-trigger" data-src="%1$s" data-img-width="%2$d" data-img-height="%3$d">%4$s</a>';
+
+	vprintf( $a, [ $link, $width, $height, $html ] );
+}
