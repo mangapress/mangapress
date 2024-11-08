@@ -9,7 +9,7 @@
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
-use MangaPress\Posts;
+use MangaPress\Comics;
 
 /**
  * Checks queried object against settings to see if query is for either
@@ -85,7 +85,7 @@ function mangapress_get_content_template( string $page ): string {
 function mangapress_single_comic_template( string $default_template ): string {
 	global $post;
 
-	if ( get_post_type( $post ) !== MangaPress\Posts::POST_TYPE && ! is_single() ) {
+	if ( get_post_type( $post ) !== MangaPress\Comics::POST_TYPE && ! is_single() ) {
 		return $default_template;
 	}
 
@@ -115,7 +115,7 @@ function mangapress_single_comic_template( string $default_template ): string {
 function mangapress_single_comic_content_filter( string $content ): string {
 	global $post;
 
-	if ( get_post_type( $post ) !== MangaPress\Posts::POST_TYPE ) {
+	if ( get_post_type( $post ) !== MangaPress\Comics::POST_TYPE ) {
 		return $content;
 	}
 
@@ -145,7 +145,7 @@ function mangapress_single_comic_content_filter( string $content ): string {
  * @since 2.9
  */
 function mangapress_disable_post_thumbnail( string $html, int $post_id ): string {
-	if ( Posts::POST_TYPE === get_post_type( $post_id ) ) {
+	if ( Comics::POST_TYPE === get_post_type( $post_id ) ) {
 		return '';
 	}
 
@@ -163,7 +163,7 @@ function mangapress_disable_post_thumbnail( string $html, int $post_id ): string
  * @return string|void
  */
 function mangapress_month_link( string $monthlink, string $year = '', string $month = '' ) {
-	$slug = Posts::get_instance()->get_slug();
+	$slug = Comics::get_instance()->get_slug();
 
 	return home_url( "/{$slug}/{$year}/{$month}" );
 }
@@ -181,7 +181,7 @@ function mangapress_month_link( string $monthlink, string $year = '', string $mo
  */
 function mangapress_day_link( string $daylink, string $year = '', string $month = '', string $day = '' ): string {
 
-	$slug = Posts::get_instance()->get_slug();
+	$slug = Comics::get_instance()->get_slug();
 
 	$relative = "/{$slug}/{$year}/{$month}/{$day}";
 

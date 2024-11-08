@@ -27,9 +27,8 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
            * Author will be displayed by default, and populated by the currently logged-in user.
            * These fields can be repeating meta fields with name/value for easier integration.
        * Comic Cover Art (`"@type":"ComicCoverArt`)
-         * Should this be a post-type or a checkbox on the existing Comic post-type?
-         * If post-type, will share the Series taxonomy with Comic.
-         * If checkbox, will automatically appear at the start
+         * Post-type will be easier to manage and will share the Series taxonomy with Comic.
+         * Checkbox will be for legacy comics, with an option to "export" that comic to the Comic Cover Art post-type
        * [ ] Unit test for this feature should be added
 
    * [ ] Bring over features from cancelled 4.0/4.1 release.

@@ -231,7 +231,7 @@ function mangapress_get_random_comic() {
 			array(
 				'posts_per_page' => -1,
 				'post__not_in'   => array( $post->ID ),
-				'post_type'      => MangaPress\Posts::POST_TYPE,
+				'post_type'      => MangaPress\Comics::POST_TYPE,
 				'post_status'    => 'publish',
 			)
 		);
@@ -299,7 +299,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 
 	// Quick check. If we have no posts at all, abort!
 	if ( ! $posts ) {
-		$gotsome = $wpdb->get_var( "SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish' LIMIT 1" );
+		$gotsome = $wpdb->get_var( "SELECT 1 as test FROM $wpdb->posts WHERE post_type = '" . MangaPress\Comics::POST_TYPE . "' AND post_status = 'publish' LIMIT 1" );
 		if ( ! $gotsome ) {
 			$cache[ $key ] = '';
 			wp_cache_set( 'mangapress_get_calendar', $cache, 'mangapress_calendar' );
@@ -346,7 +346,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 			"SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
             FROM $wpdb->posts
             WHERE post_date < '$thisyear-$thismonth-01'
-            AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
+            AND post_type = '" . MangaPress\Comics::POST_TYPE . "' AND post_status = 'publish'
                 ORDER BY post_date DESC
                 LIMIT 1"
 		);
@@ -421,7 +421,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 	$dayswithposts = $wpdb->get_results(
 		"SELECT DISTINCT DAYOFMONTH(post_date)
 		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
-		AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'
+		AND post_type = '" . MangaPress\Comics::POST_TYPE . "' AND post_status = 'publish'
 		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'",
 		ARRAY_N
 	);
@@ -450,7 +450,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 		. "FROM $wpdb->posts "
 		. "WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
 		. "AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-		. "AND post_type = '" . MangaPress\Posts::POST_TYPE . "' AND post_status = 'publish'"
+		. "AND post_type = '" . MangaPress\Comics::POST_TYPE . "' AND post_status = 'publish'"
 	);
 
 	if ( $ak_post_titles ) {

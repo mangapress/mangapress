@@ -33,9 +33,9 @@ class Bootstrap {
 	/**
 	 * MangaPress Posts object
 	 *
-	 * @var Posts
+	 * @var Comics
 	 */
-	protected Posts $posts_helper;
+	protected Comics $posts_helper;
 
 
 	/**
@@ -96,7 +96,7 @@ class Bootstrap {
 	 */
 	public function init() {
 		Settings::get_instance()->init();
-		Posts::get_instance()->init();
+		Comics::get_instance()->init();
 		Admin::get_instance()->init();
 		Options::get_instance()->init();
 

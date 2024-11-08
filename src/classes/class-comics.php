@@ -21,7 +21,7 @@ use MangaPress\ContentType\PostType;
  * @subpackage Posts
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
-class Posts {
+class Comics {
 	use Singleton;
 
 	/**

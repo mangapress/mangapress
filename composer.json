@@ -40,7 +40,7 @@
         "src/classes/class-install.php",
         "src/classes/class-admin.php",
         "src/classes/class-options.php",
-        "src/classes/class-posts.php",
+        "src/classes/class-comics.php",
         "src/classes/class-bootstrap.php"
       ]
     }

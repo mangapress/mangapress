@@ -136,7 +136,7 @@ class Install {
 		// create a default series category.
 		$term = wp_insert_term(
 			'Default Series',
-			Posts::TAX_SERIES,
+			Comics::TAX_SERIES,
 			array(
 				'description' => __( 'Default Series category created when plugin is activated. It is suggested that you rename this category.', 'mangapress' ),
 				'slug'        => 'default-series',
