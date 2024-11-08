@@ -148,6 +148,7 @@ class Bootstrap {
 		}
 
 		if ( Settings::get_option( 'comic_page', 'enable_comic_bookmark' ) ) {
+			add_action('wp_enqueue_scripts', array( $this, 'enqueue_bookmark_assets' ) );
 			add_shortcode( 'bookmark_comic', 'mangapress_bookmark_button_shortcode' );
 			add_filter( 'mangapress_bookmark_styles', 'mangapress_bookmark_styles' );
 		}
