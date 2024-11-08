@@ -32,8 +32,8 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
          * If checkbox, will automatically appear at the start
        * [ ] Unit test for this feature should be added
 
-   * [ ] Bring over features from cancelled 4.0/4.1 release.
-     * [ ] Comic bookmarking (#24)
+   * [x] Bring over features from cancelled 4.0/4.1 release.
+     * [x] Comic bookmarking (#24)
      * [x] Lightbox (#79)
      * [x] Social media integration (#78)
    * Add unit tests?
