@@ -159,6 +159,9 @@ class Bootstrap {
 		 * Comic Thumbnail size for Comics Listing screen
 		 */
 		add_image_size( 'comic-admin-thumb', 60, 80, true );
+
+		add_shortcode( 'bookmark_comic', 'mangapress_bookmark_button_shortcode' );
+		add_filter( 'mangapress_bookmark_styles', 'mangapress_bookmark_styles' );
 	}
 
 
@@ -205,5 +208,29 @@ class Bootstrap {
 			wp_enqueue_script( 'mangapress-lightbox' );
 			wp_enqueue_style( 'mangapress-lightbox' );
 		}
+
+		wp_register_script(
+			'mangapress-bookmark',
+			MP_URLPATH . 'assets/js/bookmark.js',
+			array( 'jquery' ),
+			MP_VERSION,
+			true
+		);
+
+		$bookmark_styles       = apply_filters( 'mangapress_bookmark_styles', array() );
+		$bookmark_localization = array(
+			'bookmarkCloseLabel' => __( 'close', 'mangapress' ),
+			'bookmarkNoHistory'  => __( 'No bookmark history available.', 'mangapress' ),
+			'bookmarkTitle'      => __( 'Title', 'mangapress' ),
+			'bookmarkDate'       => __( 'Date', 'mangapress' ),
+		);
+
+		wp_localize_script(
+			'mangapress-bookmark',
+			'MANGAPRESS',
+			array_merge( $bookmark_styles, $bookmark_localization )
+		);
+
+		wp_enqueue_script( 'mangapress-bookmark' );
 	}
 }

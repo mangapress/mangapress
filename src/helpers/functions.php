@@ -256,3 +256,27 @@ function mangapress_add_lightbox_anchor( $html ) {
 
 	vprintf( $a, [ $link, $width, $height, $html ] );
 }
+
+/**
+ * Allow developers to override inline styles for bookmark feature
+ *
+ * @param array $styles Inline styles for bookmark feature
+ *
+ * @return array[]
+ */
+function mangapress_bookmark_styles( $styles ) {
+	$styles = array(
+		'bookmarkStyles' => array(
+			'width'            => '400px',
+			'z-index'          => 9999,
+			'border'           => '1px solid black',
+			'background-color' => '#fff',
+			'position'         => 'absolute',
+			'padding'          => '5px',
+			'left'             => '50%',
+			'margin-left'      => '-150px',
+		),
+	);
+
+	return $styles;
+}

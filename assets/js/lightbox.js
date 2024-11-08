@@ -17,7 +17,7 @@
 			this.lightbox = document.getElementById( 'mangapress-lightbox' );
 			this.content  = document.getElementById( 'mangapress-lightbox-content' );
 
-			if (!this.trigger && !this.lightbox && !this.content) {
+			if ( ! this.trigger && ! this.lightbox && ! this.content) {
 				return false;
 			}
 
