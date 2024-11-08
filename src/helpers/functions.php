@@ -230,7 +230,8 @@ function mangapress_add_opengraph_tags() {
  */
 function mangapress_add_lightbox_markup() {
 	global $post;
-	if ( mangapress_is_comic( $post ) || is_latest_comic_page() ) {
+
+	if ( mangapress_is_comic( $post ) || mangapress_is_comic_page() ) {
 		require_once MP_ABSPATH . 'templates/comic-lightbox.php';
 	}
 }

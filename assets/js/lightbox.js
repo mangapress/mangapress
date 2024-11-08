@@ -17,8 +17,13 @@
 			this.lightbox = document.getElementById( 'mangapress-lightbox' );
 			this.content  = document.getElementById( 'mangapress-lightbox-content' );
 
+			if (!this.trigger && !this.lightbox && !this.content) {
+				return false;
+			}
+
 			this.trigger.addEventListener( 'click', this.open );
 			this.lightbox.addEventListener( 'click', this.close );
+
 			this.buildImg();
 		}.bind( this );
 
