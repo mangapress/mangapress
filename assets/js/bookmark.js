@@ -1,42 +1,39 @@
-(function ($) {
-	$(
-		function () {
-			var $bookmark         = $( '#bookmark-comic' ),
-			$bookmarkComicHistory = $( '#bookmark-comic-history' );
+(function () {
+	// 	var $bookmark         = $( '#bookmark-comic' ),
+	// 		$bookmarkComicHistory = $( '#bookmark-comic-history' );
+	//
+	// 	if (typeof(localStorage) !== 'object') {
+	// 		console.log( 'Browser does not support LocalStorage' );
+	// 		$bookmark.hide();
+	// 		$bookmarkComicHistory.hide();
+	// 		return;
+	// 	}
+	//
+	// 	Bookmark.init();
+	//
+	// 	// KISS
+	// 	$bookmark.on(
+	// 		'click',
+	// 		function (e) {
+	// 			e.preventDefault();
+	//
+	// 			// store date, page title, and URL
+	// 			Bookmark.bookmark();
+	// 		}
+	// 	);
+	//
+	// 	$bookmarkComicHistory.on(
+	// 		'click',
+	// 		function (e) {
+	// 			// show a list of recently bookmarked comics, starting with most recent
+	// 			e.preventDefault();
+	// 			Bookmark.history();
+	// 		}
+	// 	);
+	//
+	// }
 
-			if (typeof(localStorage) !== 'object') {
-				console.log( 'Browser does not support LocalStorage' );
-				$bookmark.hide();
-				$bookmarkComicHistory.hide();
-				return;
-			}
-
-			Bookmark.init();
-
-			// KISS
-			$bookmark.on(
-				'click',
-				function (e) {
-					e.preventDefault();
-
-					// store date, page title, and URL
-					Bookmark.bookmark();
-				}
-			);
-
-			$bookmarkComicHistory.on(
-				'click',
-				function (e) {
-					// show a list of recently bookmarked comics, starting with most recent
-					e.preventDefault();
-					Bookmark.history();
-				}
-			);
-
-		}
-	);
-
-	function Bookmark {
+	function Bookmark () {
 		this.storage         = null;
 		this.bookmarkHistory = 'mangapress-bookmark-history';
 		this.bookmarkElem    = 'mangapress-bookmark';
@@ -61,7 +58,7 @@
 			if (this.bookmarkExists( id )) {
 				this.$bookmark.text( this.$bookmark.data( 'bookmarkedLabel' ) );
 			}
-		},
+		}
 
 		this.bookmark = function () {
 			const href      = (this.$bookmark.data( 'href' ) !== undefined) ? this.$bookmark.data( 'href' ) : window.location.href;
@@ -85,7 +82,7 @@
 				this.removeFromHistory( data );
 				this.$bookmark.text( this.$bookmark.data( 'label' ) );
 			}
-		},
+		}
 
 		this.history = function () {
 			const self               = this;
@@ -139,86 +136,86 @@
 					$historyModal.remove();
 				}
 			);
-		},
+		}
 
-		getBookmark : function () {
+		this.getBookmark = function () {
 			return JSON.parse( this.storage.getItem( this.BOOKMARK ) );
-		},
+		}
 
-		setBookmark : function (bookmark) {
+		this.setBookmark = function (bookmark) {
 			this.storage.setItem(
 				this.BOOKMARK,
 				JSON.stringify( bookmark )
 			);
-		},
+		}
 
-		getHistory : function () {
-			var history = JSON.parse( this.storage.getItem( this.BOOKMARK_HISTORY ) );
+		this.getHistory = function () {
+			const history = JSON.parse( this.storage.getItem( this.BOOKMARK_HISTORY ) );
 			if (history === null) {
 				return []; // return empty array
 			}
 
 			return history;
-		},
+		}
 
-		setHistory : function (history) {
+		this.setHistory = function (history) {
 			this.storage.setItem(
 				this.BOOKMARK_HISTORY,
 				JSON.stringify( history )
 			);
-		},
+		}
 
-		addToHistory : function (bookmark) {
-			var history = this.getHistory();
+		this.addToHistory = function (bookmark) {
+			const history = this.getHistory();
 
 			history.push( bookmark );
 			this.setHistory( history );
-		},
+		}
 
-		removeFromHistory : function (bookmark) {
-			var history    = this.getHistory(),
-				newHistory = [],
-				i          = this.getIndexOfBookmark( bookmark.id );
+		this.removeFromHistory = function (bookmark) {
+			const history    = this.getHistory();
+			const newHistory = [];
+			const i = this.getIndexOfBookmark( bookmark.id );
 
 			delete history[i];
 
 			// OFFS JS
-			for (var i in history) {
-				if (typeof history[i] !== 'undefined') {
-					newHistory.push( history[i] )
+			for (let j in history) {
+				if (typeof history[j] !== 'undefined') {
+					newHistory.push( history[j] )
 				}
 			}
 
 			this.setHistory( newHistory );
-		},
+		}
 
-		hasHistory : function () {
+		this.hasHistory = function () {
 			return this.getHistory().length;
-		},
+		}
 
-		hasBookmark : function () {
+		this.hasBookmark = function () {
 			return this.getBookmark();
-		},
+		}
 
-		bookmarkExists : function (id) {
-			var history = this.getHistory();
+		this.bookmarkExists = function (id) {
+			const history = this.getHistory();
 
-			return $.grep(
-				history,
+			return history.filter(
 				function (e) {
 					return e.id === id;
 				}
 			).length;
-		},
+		}
 
-		getIndexOfBookmark : function (id) {
-			var history = this.getHistory();
-			for (var i in history) {
+		this.getIndexOfBookmark = function (id) {
+			const history = this.getHistory();
+			for (let i in history) {
 				if (history[i].id === id) {
 					return i;
 				}
 			}
 		}
+	}
 
-	};
+	new Bookmark()
 }());
