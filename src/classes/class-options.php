@@ -43,6 +43,7 @@ class Options {
 			'comic_page_height'     => 1000,
 			'enable_opengraph_tags' => 0,
 			'enable_comic_lightbox' => 0,
+			'enable_comic_bookmark' => 0,
 		),
 		'nav'        => array(
 			'enable_random_link' => false,
@@ -360,6 +361,15 @@ class Options {
 					'value'       => true,
 					'callback'    => array( $this, 'settings_field_cb' ),
 				),
+				'enable_comic_bookmark' => array(
+					'id'          => 'enable-comic-bookmark',
+					'type'        => 'checkbox',
+					'title'       => __( 'Enable Bookmark', 'mangapress' ),
+					'description' => __( 'Allow users to bookmark their place while reading.', 'mangapress' ),
+					'default'     => false,
+					'value'       => true,
+					'callback'    => array( $this, 'settings_field_cb' ),
+				),
 			),
 			'nav'        => array(
 				'enable_random_link' => array(
@@ -503,6 +513,7 @@ class Options {
 				'comic_page_width'      => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_width' ),
 				'comic_page_height'     => $this->_sanitize_integer( $options, 'comic_page', 'comic_page_height' ),
 				'enable_comic_lightbox' => boolval( $options['comic_page']['enable_comic_lightbox'] ),
+				'enable_comic_bookmark' => boolval( $options['comic_page']['enable_comic_bookmark'] ),
 			);
 		}
 
