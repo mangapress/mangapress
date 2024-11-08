@@ -33,7 +33,7 @@ function mangapress_is_comic( $post = null ): bool {
 }
 
 /**
- * Checks if the page is a comic page.
+ * Checks if the page is a comic page (Latest Comic or Archive).
  *
  * @since 1.0 RC1
  *
@@ -41,6 +41,15 @@ function mangapress_is_comic( $post = null ): bool {
  * @return bool
  */
 function mangapress_is_comic_page(): bool {
+	return mangapress_is_latest_comic_page() || mangapress_is_comic_archive_page();
+}
+
+/**
+ * Check if the current page is the Latest Comic page
+ *
+ * @return bool
+ */
+function mangapress_is_latest_comic_page(): bool {
 	global $wp_query;
 
 	$mp_options = Settings::get_options();
