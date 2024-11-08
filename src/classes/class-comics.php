@@ -4,7 +4,7 @@
  * Handles functionality for the Comic post-type
  *
  * @package MangaPress
- * @subpackage Posts
+ * @subpackage Comics
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 
@@ -18,7 +18,7 @@ use MangaPress\ContentType\PostType;
  * Handles functionality for the Comic post-type
  *
  * @package MangaPress
- * @subpackage Posts
+ * @subpackage Comics
  * @author Jessica Green <jgreen@psy-dreamer.com>
  */
 class Comics {
