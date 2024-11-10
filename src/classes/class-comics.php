@@ -313,7 +313,7 @@ class Comics {
 		wp_enqueue_media();
 		wp_register_script(
 			'mangapress-media-popup',
-			plugins_url( '/assets/js/add-comic.js', __FILE__ ),
+			 MP_URLPATH . 'assets/js/add-comic.js' ,
 			array( 'jquery' ),
 			MP_VERSION,
 			true
@@ -377,16 +377,13 @@ class Comics {
 	 * @return array
 	 */
 	public function comics_columns( array $columns ): array {
-
-		$columns = array(
+		return array(
 			'cb'          => '<input type="checkbox" />',
 			'thumbnail'   => __( 'Thumbnail', 'mangapress' ),
 			'title'       => __( 'Comic Title', 'mangapress' ),
 			'series'      => __( 'Series', 'mangapress' ),
 			'description' => __( 'Description', 'mangapress' ),
 		);
-
-		return $columns;
 	}
 
 
