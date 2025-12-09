@@ -1,0 +1,119 @@
+name: Create WordPress Plugin Release
+
+on:
+  push:
+    tags:
+      - '*'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build and Upload Release Asset
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to upload release assets
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install production dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Get plugin slug
+        id: slug
+        run: |
+          PLUGIN_SLUG=$(basename $(pwd))
+          echo "slug=${PLUGIN_SLUG}" >> $GITHUB_OUTPUT
+          echo "Plugin slug: ${PLUGIN_SLUG}"
+
+      - name: Update version in plugin file
+        run: |
+          # Extract version from tag (remove "v" prefix if present)
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "Version: ${VERSION}"
+
+          # Replace {{VERSION}} placeholder in plugin file
+          sed -i "s/{{VERSION}}/${VERSION}/g" mangapress.php
+
+          # Verify the replacement
+          echo "Updated plugin file:"
+          grep "* Version:" mangapress.php
+          grep "const string VERSION" mangapress.php
+
+      - name: Create plugin zip
+        run: |
+          PLUGIN_SLUG="${{ steps.slug.outputs.slug }}"
+
+          # Create temporary directory for the plugin
+          mkdir -p /tmp/plugin-build/${PLUGIN_SLUG}
+
+          # Copy all files
+          rsync -av --progress . /tmp/plugin-build/${PLUGIN_SLUG}/ \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.circleci' \
+            --exclude='.babelrc' \
+            --exclude='.deployignore' \
+            --exclude='.distignore' \
+            --exclude='.editorconfig' \
+            --exclude='.eslintignore' \
+            --exclude='.eslintrc' \
+            --exclude='.gitignore' \
+            --exclude='.gitlab-ci.yml' \
+            --exclude='.travis.yml' \
+            --exclude='.DS_Store' \
+            --exclude='.*~' \
+            --exclude='Thumbs.db' \
+            --exclude='behat.yml' \
+            --exclude='bitbucket-pipelines.yml' \
+            --exclude='bin' \
+            --exclude='composer.json' \
+            --exclude='composer.lock' \
+            --exclude='dependencies.yml' \
+            --exclude='Gruntfile.js' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='phpunit.xml' \
+            --exclude='phpunit.xml.dist' \
+            --exclude='multisite.xml' \
+            --exclude='multisite.xml.dist' \
+            --exclude='.phpcs.xml' \
+            --exclude='phpcs.xml' \
+            --exclude='.phpcs.xml.dist' \
+            --exclude='phpcs.xml.dist' \
+            --exclude='phpcs.dist.xml' \
+            --exclude='README.md' \
+            --exclude='webpack.config.js' \
+            --exclude='wp-cli.local.yml' \
+            --exclude='yarn.lock' \
+            --exclude='tests' \
+            --exclude='node_modules' \
+            --exclude='*.sql' \
+            --exclude='*.tar.gz' \
+            --exclude='*.zip'
+
+          # Create zip file
+          cd /tmp/plugin-build
+          zip -r ${PLUGIN_SLUG}.zip ${PLUGIN_SLUG}
+
+          # Move zip to workspace
+          mv ${PLUGIN_SLUG}.zip ${GITHUB_WORKSPACE}/
+
+          echo "Created ${PLUGIN_SLUG}.zip"
+          ls -lh ${GITHUB_WORKSPACE}/${PLUGIN_SLUG}.zip
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ steps.slug.outputs.slug }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
