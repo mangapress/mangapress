@@ -100,6 +100,11 @@ class Bootstrap {
 		Admin::get_instance()->init();
 		Options::get_instance()->init();
 
+		// Initialize JSON-LD output for MangaPress.
+		if ( class_exists( 'MangaPress_JSONLD' ) ) {
+			MangaPress_JSONLD::instance();
+		}
+
 		$this->load_current_options();
 
 		add_action( 'save_post_mangapress_comic', 'mangapress_delete_get_calendar_cache' );
