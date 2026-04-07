@@ -78,15 +78,16 @@ class MangaPress_JSONLD {
 		$comic_post_type = class_exists( 'MangaPress\Posts' ) ? \MangaPress\Posts::POST_TYPE : 'mangapress_comic';
 		$series_tax      = class_exists( 'MangaPress\Posts' ) ? \MangaPress\Posts::TAX_SERIES : 'mangapress_series';
 
-		$post = null;
-		$term = null;
+		$current_post = null;
+		$term         = null;
 
 		if ( is_singular( $comic_post_type ) ) {
 			global $post;
-			if ( ! $post ) {
+			$current_post = $post;
+			if ( ! $current_post ) {
 				return;
 			}
-			$data = $this->get_jsonld_for_post( $post );
+			$data = $this->get_jsonld_for_post( $current_post );
 		} elseif ( is_tax( $series_tax ) ) {
 			$term = get_queried_object();
 			if ( ! $term || empty( $term->term_id ) ) {
@@ -97,7 +98,7 @@ class MangaPress_JSONLD {
 			return;
 		}
 
-		$context = null !== $post ? $post : $term;
+		$context = null !== $current_post ? $current_post : $term;
 
 		$data = apply_filters( 'mangapress_jsonld_data', $data, $context );
 		do_action( 'mangapress_jsonld_before_output', $data, $context );
@@ -105,7 +106,8 @@ class MangaPress_JSONLD {
 		$json = wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		$json = apply_filters( 'mangapress_jsonld_output', $json, $data, $context );
 
-		if ( ! empty( $json ) ) {
+		// Only output if the result is a non-empty, valid JSON string.
+		if ( ! empty( $json ) && null !== json_decode( $json ) ) {
 			echo '<script type="application/ld+json">' . $json . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
@@ -171,7 +173,7 @@ class MangaPress_JSONLD {
 		$name        = get_term_meta( $term_id, 'mp_jsonld_series_name', true );
 		$name        = $name ? $name : $term->name;
 		$description = get_term_meta( $term_id, 'mp_jsonld_series_description', true );
-		$description = $description ? $description : term_description( $term_id );
+		$description = $description ? $description : wp_strip_all_tags( term_description( $term_id ) );
 
 		$image    = null;
 		$cover_id = get_term_meta( $term_id, 'mp_jsonld_series_cover_attachment_id', true );
