@@ -18,8 +18,8 @@
     },
     "autoload": {
       "files": [
-        "includes/class-mangapress-jsonld.php",
         "src/classes/trait-singleton.php",
+        "src/classes/class-jsonld.php",
         "src/classes/form/class-element.php",
         "src/classes/form/element/class-checkbox.php",
         "src/classes/form/element/class-radio.php",

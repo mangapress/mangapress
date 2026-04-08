@@ -9,24 +9,16 @@
  * @package MangaPress
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+namespace MangaPress;
 
 /**
- * MangaPress JSON-LD singleton class.
+ * JSON-LD singleton class.
  *
  * Builds and outputs JSON-LD structured data for single comic posts (ComicIssue)
  * and series term archives (ComicSeries).
  */
-class MangaPress_JSONLD {
-
-	/**
-	 * Singleton instance.
-	 *
-	 * @var MangaPress_JSONLD|null
-	 */
-	protected static $instance;
+class JSONLD {
+	use Singleton;
 
 	/**
 	 * Option name for JSON-LD settings.
@@ -34,19 +26,6 @@ class MangaPress_JSONLD {
 	 * @var string
 	 */
 	protected $option_name = 'mangapress_jsonld_options';
-
-	/**
-	 * Return or create the singleton instance and call init().
-	 *
-	 * @return MangaPress_JSONLD
-	 */
-	public static function instance() {
-		if ( null === self::$instance ) {
-			self::$instance = new self();
-			self::$instance->init();
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * Register WordPress hooks.
@@ -63,7 +42,7 @@ class MangaPress_JSONLD {
 	 * Reads the 'mangapress_jsonld_options' option and passes the result
 	 * through the 'mangapress_jsonld_enabled' filter.
 	 *
-	 * @param WP_Post|WP_Term|null $post Context object (post or term).
+	 * @param \WP_Post|\WP_Term|null $post Context object (post or term).
 	 * @return bool
 	 */
 	public function is_enabled( $post = null ): bool {
@@ -82,17 +61,14 @@ class MangaPress_JSONLD {
 			return;
 		}
 
-		$comic_post_type = class_exists( 'MangaPress\\Posts' ) ? \MangaPress\Posts::POST_TYPE : 'mangapress_comic';
-		$series_tax      = class_exists( 'MangaPress\\Posts' ) ? \MangaPress\Posts::TAX_SERIES : 'mangapress_series';
-
-		if ( is_singular( $comic_post_type ) ) {
+		if ( is_singular( Posts::POST_TYPE ) ) {
 			global $post;
 			if ( ! $post ) {
 				return;
 			}
 			$data        = $this->get_jsonld_for_post( $post );
 			$context_obj = $post;
-		} elseif ( is_tax( $series_tax ) ) {
+		} elseif ( is_tax( Posts::TAX_SERIES ) ) {
 			$term = get_queried_object();
 			if ( ! $term || empty( $term->term_id ) ) {
 				return;
@@ -106,16 +82,16 @@ class MangaPress_JSONLD {
 		/**
 		 * Filter the JSON-LD data array before encoding.
 		 *
-		 * @param array                $data        JSON-LD data.
-		 * @param WP_Post|WP_Term|null $context_obj Current post or term.
+		 * @param array                    $data        JSON-LD data.
+		 * @param \WP_Post|\WP_Term|null   $context_obj Current post or term.
 		 */
 		$data = apply_filters( 'mangapress_jsonld_data', $data, $context_obj );
 
 		/**
 		 * Action fired before the JSON-LD script tag is output.
 		 *
-		 * @param array                $data        JSON-LD data.
-		 * @param WP_Post|WP_Term|null $context_obj Current post or term.
+		 * @param array                    $data        JSON-LD data.
+		 * @param \WP_Post|\WP_Term|null   $context_obj Current post or term.
 		 */
 		do_action( 'mangapress_jsonld_before_output', $data, $context_obj );
 
@@ -124,9 +100,9 @@ class MangaPress_JSONLD {
 		/**
 		 * Filter the encoded JSON-LD string.
 		 *
-		 * @param string               $json        Encoded JSON string.
-		 * @param array                $data        JSON-LD data array.
-		 * @param WP_Post|WP_Term|null $context_obj Current post or term.
+		 * @param string                   $json        Encoded JSON string.
+		 * @param array                    $data        JSON-LD data array.
+		 * @param \WP_Post|\WP_Term|null   $context_obj Current post or term.
 		 */
 		$json = apply_filters( 'mangapress_jsonld_output', $json, $data, $context_obj );
 
@@ -137,8 +113,8 @@ class MangaPress_JSONLD {
 		/**
 		 * Action fired after the JSON-LD script tag is output.
 		 *
-		 * @param array                $data        JSON-LD data.
-		 * @param WP_Post|WP_Term|null $context_obj Current post or term.
+		 * @param array                    $data        JSON-LD data.
+		 * @param \WP_Post|\WP_Term|null   $context_obj Current post or term.
 		 */
 		do_action( 'mangapress_jsonld_after_output', $data, $context_obj );
 	}
@@ -146,10 +122,10 @@ class MangaPress_JSONLD {
 	/**
 	 * Build the JSON-LD data array for a single comic post.
 	 *
-	 * @param WP_Post $post Comic post object.
+	 * @param \WP_Post $post Comic post object.
 	 * @return array
 	 */
-	public function get_jsonld_for_post( WP_Post $post ): array {
+	public function get_jsonld_for_post( \WP_Post $post ): array {
 		$name        = get_post_meta( $post->ID, '_mp_jsonld_name', true ) ?: get_the_title( $post );
 		$description = get_post_meta( $post->ID, '_mp_jsonld_description', true )
 			?: ( $post->post_excerpt ?: wp_strip_all_tags( wp_trim_words( $post->post_content, 55 ) ) );
@@ -190,10 +166,10 @@ class MangaPress_JSONLD {
 	/**
 	 * Build the JSON-LD data array for a series taxonomy term.
 	 *
-	 * @param WP_Term $term Series taxonomy term.
+	 * @param \WP_Term $term Series taxonomy term.
 	 * @return array
 	 */
-	public function get_jsonld_for_series( WP_Term $term ): array {
+	public function get_jsonld_for_series( \WP_Term $term ): array {
 		$term_id     = $term->term_id;
 		$name        = get_term_meta( $term_id, 'mp_jsonld_series_name', true ) ?: $term->name;
 		$description = get_term_meta( $term_id, 'mp_jsonld_series_description', true )
@@ -245,13 +221,13 @@ class MangaPress_JSONLD {
 	 * Falls back to: explicit meta attachment → featured image → site icon →
 	 * publisher logo option.
 	 *
-	 * @param WP_Post|null $obj Post object or null for site-level fallback.
+	 * @param \WP_Post|null $obj Post object or null for site-level fallback.
 	 * @return array{url: string, width: int|null, height: int|null}|null
 	 */
 	public function get_cover_image( $obj = null ): ?array {
 		$attachment_id = null;
 
-		if ( $obj instanceof WP_Post ) {
+		if ( $obj instanceof \WP_Post ) {
 			$attachment_id = (int) get_post_meta( $obj->ID, '_mp_jsonld_cover_attachment_id', true );
 			if ( ! $attachment_id ) {
 				$attachment_id = (int) get_post_thumbnail_id( $obj->ID );
@@ -328,10 +304,10 @@ class MangaPress_JSONLD {
 	 *
 	 * Falls back to: explicit meta → WordPress user display name.
 	 *
-	 * @param WP_Post $post Post object.
+	 * @param \WP_Post $post Post object.
 	 * @return string
 	 */
-	protected function get_post_author_name( WP_Post $post ): string {
+	protected function get_post_author_name( \WP_Post $post ): string {
 		$author = get_post_meta( $post->ID, '_mp_jsonld_author_name', true );
 		if ( $author ) {
 			return (string) $author;

@@ -99,10 +99,7 @@ class Bootstrap {
 		Posts::get_instance()->init();
 		Admin::get_instance()->init();
 		Options::get_instance()->init();
-
-		if ( class_exists( 'MangaPress_JSONLD' ) ) {
-			MangaPress_JSONLD::instance();
-		}
+		JSONLD::get_instance()->init();
 
 		$this->load_current_options();
 
