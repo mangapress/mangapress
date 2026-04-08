@@ -173,7 +173,7 @@ class JSONLD {
 		$term_id     = $term->term_id;
 		$name        = get_term_meta( $term_id, 'mp_jsonld_series_name', true ) ?: $term->name;
 		$description = get_term_meta( $term_id, 'mp_jsonld_series_description', true )
-			?: term_description( $term_id );
+			?: wp_strip_all_tags( term_description( $term_id ) );
 
 		$image    = null;
 		$cover_id = (int) get_term_meta( $term_id, 'mp_jsonld_series_cover_attachment_id', true );
@@ -249,7 +249,11 @@ class JSONLD {
 		if ( function_exists( 'get_site_icon_url' ) ) {
 			$url = get_site_icon_url();
 			if ( $url ) {
-				return array( 'url' => $url );
+				return array(
+					'url'    => $url,
+					'width'  => null,
+					'height' => null,
+				);
 			}
 		}
 
