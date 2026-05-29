@@ -391,6 +391,12 @@ class MangaPress_Posts {
 	 * @return void
 	 */
 	public function get_image_html_ajax() {
+		check_ajax_referer( self::NONCE_INSERT_COMIC, 'nonce' );
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
 		$image_id = filter_input( INPUT_POST, 'id' ) ?: false;
 		$action   = filter_input( INPUT_POST, 'action' ) ?: self::ACTION_REMOVE_IMAGE;
 

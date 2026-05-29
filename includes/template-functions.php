@@ -452,7 +452,8 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 		return;
 	}
 
-	if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'MSIE' ) !== false || stripos( $_SERVER['HTTP_USER_AGENT'], 'camino' ) !== false || stripos( $_SERVER['HTTP_USER_AGENT'], 'safari' ) !== false ) {
+	$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	if ( strpos( $user_agent, 'MSIE' ) !== false || stripos( $user_agent, 'camino' ) !== false || stripos( $user_agent, 'safari' ) !== false ) {
 		$ak_title_separator = "\n";
 	} else {
 		$ak_title_separator = ', ';
