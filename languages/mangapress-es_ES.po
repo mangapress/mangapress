@@ -324,10 +324,9 @@ msgstr "%1$s %2$s"
 msgid "Manga+Press Options"
 msgstr "Opciones Manga+Press"
 
-#: mangapress-install.php:76
-msgid "Sorry, you do not have suffient permissions to activate this plugin."
-msgstr ""
-"Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
+#: class-mangapress-install.php:78
+msgid "Sorry, you do not have sufficient permissions to activate this plugin."
+msgstr "Lo sentimos, usted no tiene los permisos necesarios para activar este plugin."
 
 #: mangapress-install.php:84
 msgid "Sorry, you must be an Administrator in order to use Manga+Press"
@@ -641,11 +640,6 @@ msgstr "Descripci&oacute;n"
 #~ msgid "Choose from most used "
 #~ msgstr "Elija entre m&aacute;s utilizado"
 
-#~ msgid ""
-#~ "Sorry, you do not have sufficient permissions to activate this plugin."
-#~ msgstr ""
-#~ "Lo sentimos, usted no tiene los permisos necesarios para activar este "
-#~ "plugin."
 
 #~ msgid "Order By"
 #~ msgstr "Ordenar por"

@@ -64,7 +64,7 @@ abstract class ContentType {
 	 *
 	 * @param array|null $options Optional. Pass Object parameters on construct.
 	 */
-	public function __construct( array $options = null ) {
+	public function __construct( ?array $options ) {
 		if ( is_array( $options ) ) {
 			$this->set_options( $options )
 				->init();

@@ -13,7 +13,7 @@ Plugin URI: http://www.manga-press.com/
 Description: Turns WordPress into a full-featured Webcomic Manager. Be sure to visit <a href="http://www.manga-press.com/">Manga+Press</a> for more info.
 Version: 3.2
 Requires PHP: 7.4
-Requires at least: 6.6
+Requires at least: 7.0
 Author: Jess Green
 Author URI: http://www.jesgs.com
 Text Domain: mangapress
