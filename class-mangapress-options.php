@@ -432,7 +432,7 @@ final class MangaPress_Options {
 				$new_options['nav']['nav_css'] = 'default_css';
 			}
 
-			$new_options['nav']['enable_random_link'] = boolval( $options['nav']['enable_random_link'] );
+			$new_options['nav']['enable_random_link'] = boolval( $options['nav']['enable_random_link'] ?? false );
 		}
 
 		if ( 'basic' === $section ) {
