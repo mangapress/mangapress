@@ -100,6 +100,7 @@ class MangaPress_Posts {
 		 */
 		add_action( 'manage_posts_custom_column', array( $this, 'comics_headers' ) );
 		add_filter( 'manage_edit-mangapress_comic_columns', array( $this, 'comics_columns' ) );
+		add_filter( 'use_block_editor_for_post_type', array( $this, 'disable_block_editor' ), 10, 2 );
 	}
 
 
@@ -393,16 +394,28 @@ class MangaPress_Posts {
 		$image_id = filter_input( INPUT_POST, 'id' ) ?: false;
 		$action   = filter_input( INPUT_POST, 'action' ) ?: self::ACTION_REMOVE_IMAGE;
 
-		header( 'Content-type: application/json' );
-		if ( self::ACTION_GET_IMAGE_HTML === $action ) {
-			if ( $image_id ) {
-				echo wp_json_encode( array( 'html' => $this->get_image_html( $image_id ) ) );
-			}
-		} else {
-			echo wp_json_encode( array( 'html' => $this->get_remove_image_html() ) );
+		if ( self::ACTION_GET_IMAGE_HTML === $action && $image_id ) {
+			wp_send_json( array( 'html' => $this->get_image_html( $image_id ) ) );
 		}
 
-		die();
+		wp_send_json( array( 'html' => $this->get_remove_image_html() ) );
+	}
+
+
+	/**
+	 * Disable the block editor for the comic post type.
+	 * The classic editor workflow is required for the comic image meta box.
+	 *
+	 * @param bool   $use_block_editor Whether to use the block editor.
+	 * @param string $post_type        Post type slug.
+	 *
+	 * @return bool
+	 */
+	public function disable_block_editor( bool $use_block_editor, string $post_type ): bool {
+		if ( self::POST_TYPE === $post_type ) {
+			return false;
+		}
+		return $use_block_editor;
 	}
 
 
