@@ -2,10 +2,10 @@
 Contributors: ArdathkSheyna
 Donate link: http://www.manga-press.com/
 Tags: webcomics, comics, art
-Requires at least: 6.4
+Requires at least: 7.0
 Requires PHP: 7.4
-Tested up to: 6.7
-Stable tag: 3.1.0
+Tested up to: 7.0
+Stable tag: 3.1.1
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -18,15 +18,16 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 This upgrade eliminates the Group By Parent option. If you rely on this feature, please refrain from updating. It was removed due to the challenges involved in maintenance.
 
-= 3.1 =
-  * Refactoring and code cleanup
-  * Deprecation of functions in favor of WordPress Core functions
-  * Added better block theme support
-  * Removed Group By parent option due to code complexity and ease of maintenance
-  * Added WordPress REST api support
+= 3.1.1 =
+  * Fixes to ensure compatibility with WordPress 7.0
+  * Addressing security issues and legacy code.
 
 == Changelog ==
 = 3.1 =
+  = 3.1.1 =
+    * Fixes to ensure compatibility with WordPress 7.0
+    * Addressing security issues and legacy code.
+
   * 3.1.0
     * Refactoring and code cleanup
     * Deprecation of functions in favor of WordPress Core functions
