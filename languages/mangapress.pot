@@ -278,6 +278,10 @@ msgstr ""
 msgid "Prev"
 msgstr ""
 
+#: includes/template-functions.php:183 includes/template-functions.php:184
+msgid "Random"
+msgstr ""
+
 #: includes/template-functions.php:404
 #, php-format
 msgid "%1$s %2$s"
@@ -287,8 +291,12 @@ msgstr ""
 msgid "Manga+Press Options"
 msgstr ""
 
-#: mangapress-install.php:76
-msgid "Sorry, you do not have suffient permissions to activate this plugin."
+#: class-mangapress-install.php:78
+msgid "Sorry, you do not have sufficient permissions to activate this plugin."
+msgstr ""
+
+#: class-mangapress-install.php:91
+msgid "Sorry, only WordPress 3.0 and later are supported. Please upgrade to WordPress 3.0"
 msgstr ""
 
 #: mangapress-install.php:84
@@ -396,6 +404,10 @@ msgstr ""
 
 #: mangapress-options.php:320
 msgid "Generate a comic page based on values below."
+msgstr ""
+
+#: class-mangapress-options.php:341
+msgid "Add Random Link"
 msgstr ""
 
 #: mangapress-options.php:346
