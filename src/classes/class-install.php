@@ -143,7 +143,7 @@ class Install {
 			)
 		);
 
-		if ( ! ( $term instanceof WP_Error ) ) {
+		if ( ! is_wp_error( $term ) ) {
 			add_option( 'mangapress_default_category', $term['term_id'], '', 'no' );
 		}
 	}

@@ -81,7 +81,7 @@ class Bootstrap {
 	 * PHP5 constructor method
 	 */
 	protected function __construct() {
-		load_plugin_textdomain( 'mangapress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'mangapress' );
 
 		add_action( 'init', array( $this, 'init' ), 500 );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );

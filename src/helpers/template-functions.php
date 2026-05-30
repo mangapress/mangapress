@@ -111,14 +111,24 @@ function mangapress_comic_navigation( array $args = array(), bool $echo = true )
 	$r           = apply_filters( 'mangapress_comic_navigation_args', $parsed_args );
 	$args        = (object) $r;
 
-	$group = (bool) $mp_options['basic']['group_comics'];
+	$group         = (bool) $mp_options['basic']['group_comics'];
+	$current_terms = wp_get_object_terms( $post->ID, MangaPress\Posts::TAX_SERIES, array( 'fields' => 'ids' ) );
+	$uncategorized = $group && ( empty( $current_terms ) || is_wp_error( $current_terms ) );
 
-	add_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
-	$next_post  = get_adjacent_post( $group, '', false, 'mangapress_series' );
-	$prev_post  = get_adjacent_post( $group, '', true, 'mangapress_series' );
-	$last_post  = get_boundary_post( $group, '', false, 'mangapress_series' );
-	$first_post = get_boundary_post( $group, '', true, 'mangapress_series' );
-	remove_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
+	if ( $uncategorized ) {
+		// Grouped mode but this comic has no series: navigate among other uncategorized comics.
+		$next_post  = mangapress_get_adjacent_uncategorized_comic( $post, false );
+		$prev_post  = mangapress_get_adjacent_uncategorized_comic( $post, true );
+		$last_post  = mangapress_get_boundary_uncategorized_comic( false );
+		$first_post = mangapress_get_boundary_uncategorized_comic( true );
+	} else {
+		add_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
+		$next_post  = get_adjacent_post( $group, '', false, 'mangapress_series' );
+		$prev_post  = get_adjacent_post( $group, '', true, 'mangapress_series' );
+		$last_post  = get_boundary_post( $group, '', false, 'mangapress_series' );
+		$first_post = get_boundary_post( $group, '', true, 'mangapress_series' );
+		remove_filter( 'pre_get_posts', 'mangapress_set_post_type_for_boundary' );
+	}
 	$current_page = $post->ID; // use post ID this time.
 
 	$next_page = ! isset( $next_post->ID ) ? $current_page : $next_post->ID;
@@ -247,6 +257,65 @@ function mangapress_get_random_comic() {
 }
 
 /**
+ * Get the adjacent uncategorized comic (no mangapress_series terms).
+ * Used when Group Comics is enabled but the current comic has no series.
+ *
+ * @param \WP_Post $post     Current post.
+ * @param bool     $previous True for previous, false for next.
+ * @return \WP_Post|null
+ */
+function mangapress_get_adjacent_uncategorized_comic( \WP_Post $post, bool $previous ): ?\WP_Post {
+	$posts = get_posts(
+		array(
+			'post_type'      => MangaPress\Posts::POST_TYPE,
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'orderby'        => 'date',
+			'order'          => $previous ? 'DESC' : 'ASC',
+			'date_query'     => array(
+				array(
+					( $previous ? 'before' : 'after' ) => $post->post_date,
+					'inclusive'                        => false,
+				),
+			),
+			'tax_query'      => array(
+				array(
+					'taxonomy' => MangaPress\Posts::TAX_SERIES,
+					'operator' => 'NOT EXISTS',
+				),
+			),
+		)
+	);
+
+	return $posts ? $posts[0] : null;
+}
+
+/**
+ * Get the first or last uncategorized comic (no mangapress_series terms).
+ * Used when Group Comics is enabled but the current comic has no series.
+ *
+ * @param bool $start True for first/oldest, false for last/newest.
+ * @return \WP_Post[]
+ */
+function mangapress_get_boundary_uncategorized_comic( bool $start ): array {
+	return get_posts(
+		array(
+			'post_type'      => MangaPress\Posts::POST_TYPE,
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'orderby'        => 'date',
+			'order'          => $start ? 'ASC' : 'DESC',
+			'tax_query'      => array(
+				array(
+					'taxonomy' => MangaPress\Posts::TAX_SERIES,
+					'operator' => 'NOT EXISTS',
+				),
+			),
+		)
+	);
+}
+
+/**
  * CPT-neutral Clone of WordPress' get_calendar
  *
  * @param int  $month Month number (1 through 12).
@@ -302,7 +371,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 		$gotsome = $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT 1 as test FROM {$wpdb->posts} WHERE post_type = %s AND post_status = 'publish' LIMIT 1",
-				MangaPress_Posts::POST_TYPE
+				MangaPress\Posts::POST_TYPE
 			)
 		);
 
@@ -363,7 +432,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 				ORDER BY post_date DESC
 				LIMIT 1",
 				"{$thisyear}-{$thismonth}-01",
-				MangaPress_Posts::POST_TYPE
+				MangaPress\Posts::POST_TYPE
 			)
 		);
 		$next     = $wpdb->get_row(
@@ -375,7 +444,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 				ORDER BY post_date ASC
 				LIMIT 1",
 				"{$thisyear}-{$thismonth}-{$last_day} 23:59:59",
-				MangaPress_Posts::POST_TYPE
+				MangaPress\Posts::POST_TYPE
 			)
 		);
 	}
@@ -446,7 +515,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 			AND post_type = %s AND post_status = 'publish'
 			AND post_date <= %s",
 			"{$thisyear}-{$thismonth}-01 00:00:00",
-			MangaPress_Posts::POST_TYPE,
+			MangaPress\Posts::POST_TYPE,
 			"{$thisyear}-{$thismonth}-{$last_day} 23:59:59"
 		),
 		ARRAY_N
@@ -481,7 +550,7 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 			AND post_type = %s AND post_status = 'publish'",
 			"{$thisyear}-{$thismonth}-01 00:00:00",
 			"{$thisyear}-{$thismonth}-{$last_day} 23:59:59",
-			MangaPress_Posts::POST_TYPE
+			MangaPress\Posts::POST_TYPE
 		)
 	);
 

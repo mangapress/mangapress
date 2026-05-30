@@ -358,7 +358,7 @@ class Posts {
 				echo wp_kses( $this->get_series_links( $post ), $allowed_html );
 				break;
 			case 'post_date':
-				echo date( 'Y/m/d', strtotime( $post->post_date ) ); // @phpcs:ignore -- Sanitization is handled via date() function
+				echo wp_date( 'Y/m/d', strtotime( $post->post_date ) );
 				break;
 			case 'description':
 				echo wp_kses( $post->post_excerpt, $allowed_html );
@@ -490,12 +490,12 @@ class Posts {
 		}
 
 		// if no terms have been assigned, assign the default.
-		if ( ! isset( $_POST['tax_input'][ self::TAX_SERIES ][0] ) || ( 0 === $_POST['tax_input'][ self::TAX_SERIES ][0] && 1 === count( $_POST['tax_input'][ self::TAX_SERIES ] ) ) ) {
+		if ( ! isset( $_POST['tax_input'][ self::TAX_SERIES ][0] ) || ( 0 === (int) $_POST['tax_input'][ self::TAX_SERIES ][0] && 1 === count( $_POST['tax_input'][ self::TAX_SERIES ] ) ) ) {
 			$default_cat = get_option( 'mangapress_default_category' );
 			wp_set_post_terms( $post_id, $default_cat, self::TAX_SERIES );
 		} else {
-			// continue as normal.
-			wp_set_post_terms( $post_id, $_POST['tax_input'][ self::TAX_SERIES ], self::TAX_SERIES );
+			$term_ids = array_map( 'intval', (array) $_POST['tax_input'][ self::TAX_SERIES ] );
+			wp_set_post_terms( $post_id, $term_ids, self::TAX_SERIES );
 		}
 
 		return $post_id;

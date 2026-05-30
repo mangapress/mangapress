@@ -10,7 +10,7 @@
 
 global $wp;
 if ( empty( $mangapress_image_html ) && ! ( $wp instanceof WP ) ) {
-	die( 'No access allowed!' );
+	wp_die( 'No access allowed!' );
 }
 ?>
 
