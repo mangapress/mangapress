@@ -1,117 +1,221 @@
-## Changelog
+# Changelog
 
-### 3.1
-  * 3.1.0
-    * Refactoring and code cleanup
-    * Deprecation of functions in favor of WordPress Core functions
-    * Added better block theme support
-    * Removed Group By parent option due to code complexity and ease of maintenance
-    * Added WordPress REST api support
-    * Added random link option
+All notable changes to Manga+Press will be documented in this file.
 
-### 3.0
-  * 3.0.2
-    * Change PHP requirement to 7.4
-    * Updated code to be PHP 8-compliant
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-  * 3.0.1
-    * Fixed issue where templates for Latest Comic page and Comic Archive page weren't loading correctly
-    * Corrected CSS positioning for comic navigation wrapper
-    * Added support for WordPress 5.5.1
+> **Note on 2.7.4:** This version does not appear in the WordPress.org SVN and has no
+> Trac entry. It may have been a hotfix folded into 2.7.5 or only tagged on the old
+> Google Code / GitHub repo. Date is unknown.
 
-  * 3.0
-    * Removed child themes
-    * Added sorting options for Comic Archive Page
-    * Added comic archive calendar template
-    * Added comic archive gallery template
+## [Unreleased]
 
-### 2.9
-  * 2.9.3
-    * Spanish language updates to embedded themes.
-  * 2.9.2
-    * Added support for Jetpack Publicize feature.
-  * 2.9.1
-    * Corrects an issue where Comic posts were not getting assigned to a default Series taxonomy on save.
-    * Corrects Comic post 404 error/Missing Comic post issue.
-    * Corrects appearance of comic navigation on Latest Comic page
+### Added
+- File autoloading (non PSR-4)
+- Page indicators to the Page screen in Admin
+- JSON-LD support for the Comic post-type and Series taxonomy (see [schema.org/ComicSeries](https://schema.org/ComicSeries))
+  - New Basic Options settings: JSON-LD Integration checkbox (unchecked by default), comic name and description fields (fall back to site settings if blank)
+  - New Comic post-type fields: Description (from Excerpt), Name (from Title), contributor roles (Author, Artist, Colorist, Editor, Letterer) as repeating meta fields
+  - Comic Cover Art support (`"@type": "ComicCoverArt"`) — implementation TBD (dedicated post-type vs. checkbox on existing Comic post-type)
+- Comic bookmarking ([#24](https://github.com/mangapress/mangapress/issues/24))
+- Lightbox ([#79](https://github.com/mangapress/mangapress/issues/79))
+- Social media integration ([#78](https://github.com/mangapress/mangapress/issues/78))
 
-  * 2.9.0
-    * Updated navigation CSS
-    * Removed "Order By" Option. Now defaults to date.
-    * Removed "Use Theme Template" options. Now defaults to using theme templates.
-    * Added contextual help tabs
-    * Added Calendar template tag for comics
-    * Added filter for changing Comic post-type front slug (defaults to `comic`)
-    * Fixed missing "No comics" message for Latest Comic page.
-    * Corrected issue with Comic Post terms getting updated on post-save.
-    * Updated Spanish Language files.
-    * Updated child-themes to handle styling for Comic Calendar widget
-    * Corrected issues in comic navigation when Group Comics/Group By Parent options are used.
-    * Added Manga+Press-specific version of WordPress calendar widget
-    * Updated Comic date permalink structure
-    * Updated and fixed loading of Spanish Language files
-    * Adjusted template hierarchy for Latest Comic and Comic Archive pages to use WordPress' defaults (page-{slug-name}.php and {custom-page-template}.php)
-    * Brought default Single Comic template in line with default Latest Comic and Comic Archive template handling
-       * Incidently corrects an issue where a Single Comic post might not display correctly due to markup being incompatible with a user's selected theme.
+## [3.1.1] - 2026-05-29
 
-### 2.8
-  * 2.8.3
-    * Correcting blank issue when "Use Theme Template" is selected when used with third-party themes
+### Fixed
+- Compatibility with WordPress 7.0
+- Various security issues and legacy code
 
-  * 2.8.2
-    * Correcting Latest Comic template error when Latest Comic is used as front page.
+## [3.1.0] - 2024-03-28
 
-  * 2.8.1.1
-    * Correcting problem with undefined function error appearing when Latest Comic template in TwentyFourteen theme is used
+### Added
+- Improved block theme support
+- WordPress REST API support
+- Random comic link option
 
-  * 2.8.1
-   * Corrected E_STRICT notice on plugin activation
-   * Updated font icons
+### Changed
+- Refactoring and general code cleanup
 
-  * 2.8
-    * Added bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
-    * Corrected 404 issues for custom post-type after activation
-    * Updated admin interface to fit WordPress 3.8
-    * Adjusted template stack for single comics
-    * Added new Media Library popup (eliminating legacy ThickBox dependency)
-       * Added WordPress 3.5 Media Library window
-    * Code review and cleanup
-    * Removed legacy options (Comic Banner)
+### Deprecated
+- Several functions superseded by WordPress Core equivalents
 
-### 2.7
-  * 2.7.5
-    * Fixed 404 when visiting comic pages after update (ported from upcoming 2.8 release)
-    * Fixed undefined index errors caused by checkboxes when settings page is updated
-    * Tested works with WordPress 3.8
+### Removed
+- Group By Parent option (code complexity and maintenance burden)
 
-  * 2.7.4
-    * Fixed SQL bugs relating to "Group By Category" option
+## [3.0.2] - 2024-03-26
 
-  * 2.7.3
-    * Added "Group By Category" parent option
+### Changed
+- Minimum PHP requirement raised to 7.4
+- Codebase updated for PHP 8 compliance
+- Tested with WordPress 6.4
 
-  * 2.7.2
-    * Added Spanish Language support
-    * Fixed issues with comic navigation.
-    * Addressing query-usage on Latest Comic page.
+## [3.0.1] - 2020-09-29
 
-  * 2.7.1
-    * Fixed undefined index notices (WP_DEBUG turned on)
+### Added
+- Support for WordPress 5.5.1
 
-  * 2.7 RC 1
-   * Moved partial templates to sub-directory inside templates.
-   * Corrected issues in comic-specific conditional functions.
-   * Changed Ajax hooks to be admin-specific.
+### Fixed
+- Templates for Latest Comic page and Comic Archive page not loading correctly
+- CSS positioning for the comic navigation wrapper
 
-  * 2.7 Beta 3
-   * Fixed missing template issues.
-   * Fixed issues with "Use theme template" settings.
+## [3.0.0] - 2017-07-23
 
-  * 2.7 Beta 2
-   * Corrected issue with framework paths which prevented the Manga+Press Options forms from displaying properly.
-   * Added closing PHP tags for servers that have short open tags disabled.
+### Added
+- Sorting options for the Comic Archive page
+- Comic archive calendar template
+- Comic archive gallery template
 
-  * 2.7 Beta
-   * Eliminated "Insert Banner" and Comic Update codes. These features may return in future versions.
-   * Added custom taxonomies, and post thumbnail support.
-   * Eliminated TimThumb.
+### Removed
+- Child themes
+- Insert navigation option
+
+## [2.9.3] - 2015-10-04
+
+### Changed
+- Spanish language updates for embedded themes
+
+## [2.9.2] - 2015-05-01
+
+### Added
+- Support for Jetpack Publicize feature
+
+## [2.9.1] - 2015-01-09
+
+### Fixed
+- Comic posts not assigned to the default Series taxonomy on save
+- Comic post 404 / missing Comic post issue
+- Appearance of comic navigation on the Latest Comic page
+
+## [2.9.0] - 2014-12-24
+
+### Added
+- Contextual help tabs
+- Calendar template tag for comics
+- Filter for overriding the Comic post-type front slug (defaults to `comic`)
+- Manga+Press-specific version of the WordPress calendar widget
+
+### Changed
+- Updated navigation CSS
+- Updated Comic date permalink structure
+- Updated Spanish language files
+- Updated child-themes to include styling for the Comic Calendar widget
+- Adjusted template hierarchy for Latest Comic and Comic Archive pages to follow WordPress defaults (`page-{slug}.php`, `{custom-page-template}.php`)
+- Aligned the default Single Comic template with Latest Comic and Comic Archive template handling
+
+### Fixed
+- Missing "No comics" message on the Latest Comic page
+- Comic Post terms being incorrectly updated on post-save
+- Spanish language file loading
+- Comic navigation issues when Group Comics / Group By Parent options are active
+- Single Comic post display incompatibilities with third-party themes
+
+### Removed
+- "Order By" option — now always orders by date
+- "Use Theme Template" option — now always uses theme templates
+
+## [2.8.3] - 2014-11-30
+
+### Fixed
+- Blank output when "Use Theme Template" is selected with third-party themes
+
+## [2.8.2] - 2014-09-26
+
+### Fixed
+- Latest Comic template error when the Latest Comic page is set as the front page
+
+## [2.8.1.1] - 2014-09-09
+
+### Fixed
+- Undefined function error when the Latest Comic template is used inside the TwentyFourteen theme
+
+## [2.8.1] - 2014-09-06
+
+### Changed
+- Updated font icons
+
+### Fixed
+- E_STRICT notice on plugin activation
+
+## [2.8.0] - 2014-02-23
+
+### Added
+- Bundled child-themes for TwentyEleven, TwentyTwelve, TwentyThirteen, and TwentyFourteen
+- New Media Library popup (removes legacy ThickBox dependency)
+
+### Changed
+- Admin interface updated for WordPress 3.8
+- Adjusted template stack for single comics
+- Code review and general cleanup
+
+### Fixed
+- 404 errors for the custom post-type immediately after activation
+
+### Removed
+- Legacy Comic Banner option
+
+## [2.7.5] - 2013-12-13
+
+### Fixed
+- 404 when visiting comic pages after updating the plugin (ported from upcoming 2.8)
+- Undefined index errors caused by checkboxes when the settings page is saved
+
+## [2.7.4] - YYYY-MM-DD
+
+### Fixed
+- SQL bugs related to the "Group By Category" option
+
+## [2.7.3] - 2012-11-21
+
+### Added
+- "Group By Category" parent option
+
+## [2.7.2] - 2012-09-13
+
+### Added
+- Spanish language support
+
+### Changed
+- Query handling on the Latest Comic page
+
+### Fixed
+- Various comic navigation issues
+
+## [2.7.1] - 2012-08-08
+
+### Fixed
+- Undefined index notices when `WP_DEBUG` is enabled
+
+## [2.7.0] - 2012-06-20
+
+### Changed
+- Partial templates moved to a sub-directory inside `templates/`
+- Ajax hooks scoped to admin-only contexts
+- Updated template processing logic
+
+### Fixed
+- Issues in comic-specific conditional functions
+- Path issue in the options framework that could prevent option fields from rendering
+
+[Unreleased]: https://github.com/mangapress/mangapress/compare/3.1.1...HEAD
+[3.1.1]: https://github.com/mangapress/mangapress/compare/3.1.0...3.1.1
+[3.1.0]: https://github.com/mangapress/mangapress/compare/3.0.2...3.1.0
+[3.0.2]: https://github.com/mangapress/mangapress/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/mangapress/mangapress/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/mangapress/mangapress/compare/2.9.3...3.0.0
+[2.9.3]: https://github.com/mangapress/mangapress/compare/2.9.2...2.9.3
+[2.9.2]: https://github.com/mangapress/mangapress/compare/2.9.1...2.9.2
+[2.9.1]: https://github.com/mangapress/mangapress/compare/2.9.0...2.9.1
+[2.9.0]: https://github.com/mangapress/mangapress/compare/2.8.4...2.9.0
+[2.8.3]: https://github.com/mangapress/mangapress/compare/2.8.2...2.8.3
+[2.8.2]: https://github.com/mangapress/mangapress/compare/2.8.1.1...2.8.2
+[2.8.1.1]: https://github.com/mangapress/mangapress/compare/2.8.1...2.8.1.1
+[2.8.1]: https://github.com/mangapress/mangapress/compare/2.8.0...2.8.1
+[2.8.0]: https://github.com/mangapress/mangapress/compare/2.7.5...2.8.0
+[2.7.5]: https://github.com/mangapress/mangapress/compare/2.7.4...2.7.5
+[2.7.4]: https://github.com/mangapress/mangapress/compare/2.7.3...2.7.4
+[2.7.3]: https://github.com/mangapress/mangapress/compare/2.7.2...2.7.3
+[2.7.2]: https://github.com/mangapress/mangapress/compare/2.7.1...2.7.2
+[2.7.1]: https://github.com/mangapress/mangapress/compare/2.7.0...2.7.1
+[2.7.0]: https://github.com/mangapress/mangapress/releases/tag/2.7
