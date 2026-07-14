@@ -99,6 +99,7 @@ class Bootstrap {
 		Posts::get_instance()->init();
 		Admin::get_instance()->init();
 		Options::get_instance()->init();
+		JSONLD::get_instance()->init();
 
 		$this->load_current_options();
 
