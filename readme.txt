@@ -4,8 +4,8 @@ Donate link: http://www.manga-press.com/
 Tags: webcomics, comics, art
 Requires at least: 7.0
 Requires PHP: 7.4
-Tested up to: 7.0
-Stable tag: 3.1.1
+Tested up to: 7.1
+Stable tag: 3.1.2
 License: GPLv2
 
 Manga+Press is a webcomic management system for WordPress.
@@ -18,12 +18,22 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
 
 This upgrade eliminates the Group By Parent option. If you rely on this feature, please refrain from updating. It was removed due to the challenges involved in maintenance.
 
+= 3.1.2 =
+  * Tested and confirmed compatible with WordPress 7.1.
+  * Fixed malformed deprecation notices in the legacy function shim.
+  * Fixed the comic calendar cache so it is read and purged correctly.
+
 = 3.1.1 =
   * Fixes to ensure compatibility with WordPress 7.0
   * Addressing security issues and legacy code.
 
 == Changelog ==
 = 3.1 =
+  = 3.1.2 =
+    * Tested and confirmed compatible with WordPress 7.1.
+    * Fixed malformed _deprecated_function() calls in includes/deprecated-functions.php (invalid version argument, duplicate notice).
+    * Fixed a cache-group mismatch that stopped the comic calendar cache from being read or purged.
+
   = 3.1.1 =
     * Fixes to ensure compatibility with WordPress 7.0
     * Addressing security issues and legacy code.

@@ -263,7 +263,9 @@ function mangapress_get_calendar( $month = 0, $yr = 0, $nav = true, $skip_empty_
 	}
 
 	$key = md5( $m . $monthnum . $year );
-	if ( $cache = wp_cache_get( 'mangapress_get_calendar', 'calendar' ) ) {
+
+	// Cache group must match the set/delete calls below and in mangapress_delete_get_calendar_cache().
+	if ( $cache = wp_cache_get( 'mangapress_get_calendar', 'mangapress_calendar' ) ) {
 		if ( is_array( $cache ) && isset( $cache[ $key ] ) ) {
 			if ( $echo ) {
 				/**
