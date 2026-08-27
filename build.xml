@@ -23,6 +23,7 @@
 				<exclude name="vendor/**" />
 				<exclude name=".git/**" />
 				<exclude name=".idea/**" />
+				<exclude name=".claude/**" />
 				<exclude name=".gitignore" />
 				<exclude name=".editorconfig" />
 				<exclude name="*.xml" />
