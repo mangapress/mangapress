@@ -22,6 +22,7 @@ This upgrade eliminates the Group By Parent option. If you rely on this feature,
   * Tested and confirmed compatible with WordPress 7.1.
   * Fixed malformed deprecation notices in the legacy function shim.
   * Fixed the comic calendar cache so it is read and purged correctly.
+  * Removed a redundant echo on the Comic Archive Page Style help text. Props DAnn2012.
 
 = 3.1.1 =
   * Fixes to ensure compatibility with WordPress 7.0
@@ -33,6 +34,7 @@ This upgrade eliminates the Group By Parent option. If you rely on this feature,
     * Tested and confirmed compatible with WordPress 7.1.
     * Fixed malformed _deprecated_function() calls in includes/deprecated-functions.php (invalid version argument, duplicate notice).
     * Fixed a cache-group mismatch that stopped the comic calendar cache from being read or purged.
+    * Removed a redundant echo before esc_html_e() in the Comic Archive Page Style help text. Props DAnn2012.
 
   = 3.1.1 =
     * Fixes to ensure compatibility with WordPress 7.0

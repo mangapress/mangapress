@@ -17,6 +17,7 @@ Manga+Press is a webcomic management system for WordPress. Manga+Press uses Word
    * Tested and confirmed compatible with WordPress 7.1.
    * Fixed malformed `_deprecated_function()` calls in the legacy function shim (invalid version argument, duplicate notice).
    * Fixed a cache-group mismatch that stopped the comic calendar cache from being read or purged.
+   * Removed a redundant `echo` before `esc_html_e()` in the Comic Archive Page Style help text. Props DAnn2012.
 
 #### 3.1.1
    * Fixes to ensure compatibility with WordPress 7.0
